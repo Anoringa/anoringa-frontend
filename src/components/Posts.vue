@@ -5,6 +5,10 @@
     
     :content="content"
     -->
+      <!--
+    
+    :content="content"
+    -->
       <call-dialog-link
         :id="id"
         :url="url"
@@ -31,7 +35,7 @@
         :url="url"
         :photo="photo"
         :title="item.title"
-        :content="item.body"
+        :content="item.content"
         message="Are you sure you wish to remove this record?"
         label="Remove"
         css-classes="alert">
@@ -56,7 +60,9 @@ export default {
   data() {
     return {
       posts: [],
-      endpoint: "https://jsonplaceholder.typicode.com/posts/",
+      postexample: [],
+      endpoint: "http://127.0.0.1:8080/api/posts",
+      examplesource: "https://jsonplaceholder.typicode.com/posts/",
 
       id: "asdasdasd",
       url: "asdasdasd",
@@ -74,12 +80,25 @@ export default {
   },
 
   methods: {
+    getPostsExample() {
+      axios
+        .get(this.examplesource)
+        .then((response) => {
+          this.postexample = response.data;
+          console.log("-----data-------");
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log("-----error-------");
+          console.log(error);
+        });
+    },
     getAllPosts() {
       axios
         .get(this.endpoint)
         .then((response) => {
           this.posts = response.data;
-          console.log("-----data-------");
+          console.log("-----posts data-------");
           console.log(response.data);
         })
         .catch((error) => {

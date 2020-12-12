@@ -7,20 +7,24 @@
 <script>
 
 
+
 export default {
   name: 'App',
 }
 </script>
 
+<style src="vodal/common.css">
+    /* global styles */
+</style> 
+<style src="vodal/rotate.css">
+    /* global styles */
+</style> 
+
 <style lang="scss" scoped>
-/*
-body {
-   overflow-x: hidden !important;
-}
-#app {
-   overflow-x: hidden !important;
-}
-*/
+
+// include animation styles
+//@import "vodal/common.css";
+//@import "vodal/rotate.css";
 
 #app {
   //width: 80%;
@@ -28,4 +32,26 @@ body {
   padding: 0px;
   text-align: center;
 }
+
+@import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+//@import '../node_modules/bootstrap/dist/css/bootstrap.css';
+//@import "node_modules/bootstrap-vue/src/index.scss";
+/*
+body {
+   overflow-x: hidden !important;
+}
+#app {
+   overflow-x: hidden !important;
+}
+#app {
+  //width: 80%;
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+}
+*/
+
+
 </style>

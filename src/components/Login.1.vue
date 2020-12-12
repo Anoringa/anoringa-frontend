@@ -1,16 +1,11 @@
 <template>
   <div class="flex flex-wrap">
     <div v-if="loggedstate === false">
-      <!--
-
       <button @click="showModal = true">Postear algo</button>
-
-
+      <!--
       <button type="button" id="convert-btn" @click="openModal()">Login</button>
       <div>My hcaptcha Token is <input v-model="hcaptchatoken" /></div>
         -->
-
-      <ModalLogin v-on:event_child="eventChild"></ModalLogin>
     </div>
 
     <div v-else-if="loggedstate === true">
@@ -18,36 +13,88 @@
         You already logged in
         <p v-text="username" />
       </div>
+      <button type="button" id="convert-btn" @click="openCreatePostModal()">
+        Create Post
+      </button>
       <ModalCreatePost></ModalCreatePost>
-      <button type="button" id="convert-btn" @click="cerrarSecion()">Salir</button>
     </div>
     <div v-else>Si no es A, B o C</div>
 
-    <!-- 
-    <button type="button" id="convert-btn" @click="openForm()">Open</button>
+    <!--
+        <vue-hcaptcha sitekey="51cf4065-0907-4910-8931-f90223761fb6" @verify="onVerify" theme="dark"></vue-hcaptcha>
       -->
 
-    <!-- 
-    <vodal :show="show" animation="rotate" @hide="show = false">
-      <div>A vue modal with animations.</div>
-    </vodal>
-      -->
-
-    <!-- 
-    <Captcha v-on:event_child="eventChild"></Captcha>
-      -->
+    <div v-if="showModal">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title">Nuevo Post</h3>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true" @click="showModal = false"
+                      >&times;</span
+                    >
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <Captcha v-on:event_child="eventChild"></Captcha>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    @click="showModal = false"
+                  >
+                    Cerrar
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Publicar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
+    <button @click="showModal = true">Postear algo</button>
   </div>
+  <!--
+  <header id="header">
+    <div class="container">
+      <h1>{{appName}}</h1>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><p>im a header</p></li>
+          <li><button type="button" id="convert-btn" @click="openModal()">Login</button></li>
+    
+    
+        </ul>
+      </nav>
+    </div>
+  </header>
+      -->
 </template>
+
 
 <script>
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import swal from "sweetalert";
-//import Captcha from "./Captcha";
+import Captcha from "./Captcha";
 import axios from "axios";
 import store from "../store";
 import ModalCreatePost from "./modals/ModalCreatePost";
-import ModalLogin from "./modals/ModalLogin";
 
 //import VueModal from "@kouts/vue-modal";
 //import "@kouts/vue-modal/dist/vue-modal.css";
@@ -87,9 +134,8 @@ export default {
   name: "Header",
   components: {
     //History,
-    //Captcha,
+    Captcha,
     ModalCreatePost,
-    ModalLogin,
     //VueModal,
   },
   data() {
@@ -214,11 +260,6 @@ export default {
           swal("Your imaginary file is safe!");
         }
       });
-    },
-    cerrarSecion(){
-      this.username = "";
-      this.password = "";
-      this.loggedstate = false;
     },
     openCreatePostModal() {
       //https://vuejsexamples.com/tag/popup/
