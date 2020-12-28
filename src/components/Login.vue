@@ -19,7 +19,9 @@
         <p v-text="username" />
       </div>
       <ModalCreatePost></ModalCreatePost>
-      <button type="button" id="convert-btn" @click="cerrarSecion()">Salir</button>
+      <button type="button" id="convert-btn" @click="cerrarSecion()">
+        Salir
+      </button>
     </div>
     <div v-else>Si no es A, B o C</div>
 
@@ -108,6 +110,8 @@ export default {
       result: 0,
       convertClicked: false,
       loading: false,
+      //loginurl:"http://mediawiki.test:8080/api/users"
+      loginurl: "http://localhost:3000/api/user/register",
     };
   },
 
@@ -155,18 +159,23 @@ export default {
     userStore(response) {
       console.log("User Created", response);
       console.log("User Created", response.data);
-
-      this.username = response.data.username;
-      this.password = response.data.password;
-      this.credenciales["username"] = response.data.username;
-      this.credenciales["password"] = response.data.password;
+      var credenciales = response.data.data;
+      this.username = credenciales.username;
+      this.password = credenciales.password;
+      this.credenciales["username"] = credenciales.username;
+      this.credenciales["password"] = credenciales.password;
       console.log("credencial", this.credenciales);
       store.commit("SET_PRODUCTS", this.credenciales);
       this.loggedstate = true;
     },
     userCreate(hcaptchatoken) {
+
+      var params = new URLSearchParams();
+      params.append("token", hcaptchatoken);
+      //axios.post("/foo", params);
+
       axios
-        .post("http://mediawiki.test:8080/api/users", { token: hcaptchatoken })
+        .post(this.loginurl, params)
         .then((response) => this.userStore(response))
         .catch(function (error) {
           if (error.response) {
@@ -215,7 +224,7 @@ export default {
         }
       });
     },
-    cerrarSecion(){
+    cerrarSecion() {
       this.username = "";
       this.password = "";
       this.loggedstate = false;

@@ -29,16 +29,19 @@
         label="Remove"
         css-classes="alert"
       ></call-dialog-link>
-      
-      <call-dialog-link v-for="item in posts" :key="item.id"
-        :id="item.id"
+
+      <call-dialog-link
+        v-for="item in posts"
+        :key="item._id"
+        :id="item._id"
         :url="url"
         :photo="photo"
         :title="item.title"
-        :content="item.content"
+        :content="item.description"
         message="Are you sure you wish to remove this record?"
         label="Remove"
-        css-classes="alert">
+        css-classes="alert"
+      >
         <!-- content -->
       </call-dialog-link>
     </div>
@@ -61,7 +64,7 @@ export default {
     return {
       posts: [],
       postexample: [],
-      endpoint: "http://127.0.0.1:8080/api/posts",
+      endpoint: "http://localhost:3000/api/post",
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
 
       id: "asdasdasd",
@@ -78,7 +81,39 @@ export default {
   created() {
     this.getAllPosts();
   },
+  sockets: {
+    connect: function () {
+      console.log("socket connected");
+    },
+    post: function (data) {
+      console.log(
+        'this method was fired by the socket server. eg: io.emit("customEmit", data)',
+        data
+      );
 
+      //  :key="item._id""item._id" "url" "photo" title description
+
+      //this.item = ['<call-dialog-link :id="id" :url="url" :photo="photo" :title="new message socket" message="Are you sure you wish to remove this record?" content="Are you sure you wish to remove this record?" label="Remove" css-classes="alert" ></call-dialog-link>'];
+      this.posts.push(data);
+    },
+  },
+  mounted() {
+    /*
+            window.EventHandler.listen('remove-dialog-' + this.id + '-called', (data) => {
+                window.location.reload(true);
+                console.log(data);
+            });*/
+    this.$root.$on("component1", () => {
+      // your code goes here
+      //this.c1method()
+      console.log("from other component");
+    });
+    Event.$on("createImage", (item, response) => {
+      // your code goes here
+      console.log("from other component",item, response);
+      this.posts.push(response);
+    });
+  },
   methods: {
     getPostsExample() {
       axios
@@ -97,7 +132,7 @@ export default {
       axios
         .get(this.endpoint)
         .then((response) => {
-          this.posts = response.data;
+          this.posts = response.data.data;
           console.log("-----posts data-------");
           console.log(response.data);
         })

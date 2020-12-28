@@ -104,7 +104,6 @@
 
 
 <script>
-import axios from "axios";
 //import History from "./History";
 //import { mapGetters } from "vuex";
 
@@ -193,6 +192,27 @@ export default {
       loading: false,
     };
   },
+  sockets: {
+    connect: function () {
+      console.log("socket connected");
+    },
+    /*
+    post: function (data) {
+      //console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)',data);
+
+      //  :key="item._id""item._id" "url" "photo" title description
+
+      //this.item = ['<call-dialog-link :id="id" :url="url" :photo="photo" :title="new message socket" message="Are you sure you wish to remove this record?" content="Are you sure you wish to remove this record?" label="Remove" css-classes="alert" ></call-dialog-link>'];
+      //this.posts.push(data);
+    },
+    */
+  },
+  mounted() {
+    /*this.$socket.subscribe("post", function (data) {
+      console.log("This event was fired by eg. sio.emit('post')", data);
+    });
+    */
+  },
   methods: {
     publicar() {
       if (this.nuevoposttitulo != "" && this.nuevopostcomment != "") {
@@ -219,6 +239,118 @@ export default {
         "content":"hola mundo este es mi nuevo blog"
       }
       */
+
+      var data = {
+        title: titulox,
+        description: contenidox,
+        username: "raul7925",
+        password: "req.body.password",
+        photo: "String",
+      };
+
+      this.$socket.emit("post", data, function (datos) {
+        console.log("socket.io emit");
+        //console.log(datos);
+        //this.posts.push(datos);
+        //this.$root.$emit("component1"); //like this
+        Event.$emit('createImage', "datos", datos)
+      });
+      /*
+
+      WORKS
+      import axios from "axios";
+      var qs = require("qs");
+      var data = qs.stringify({
+        title: titulox,
+        description: contenidox,
+        photo: "3214htrff4",
+      });
+      var config = {
+        method: "post",
+        url: "http://localhost:3000/api/post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmU3ODgzNjM0NGMwMDRkM2NlNWExNDgiLCJ1c2VybmFtZSI6InJhdWw0NjIyIiwicGFzc3dvcmQiOiIkMmIkMTAkdXdYbFMvd2o3QXRVbmVVMnZVb3FoZWpZUW1rZWl3TnFRazBiMGR0UDF4VDJvMWFmTEFPR1ciLCJpYXQiOjE2MDkxMzU3NDksImV4cCI6MTYwOTE0Mjk0OX0.iAC3NVGRnu3xz6qpZxh6Hpx7AReSAkY33_s424Hw5VE",
+        },
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+        })
+        .then((response) => console.log(response))
+        .catch(function (error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+
+
+
+        */
+
+      /*
+      var config = {
+        method: "post",
+        url: "http://localhost:3000/api/post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmU3ODgzNjM0NGMwMDRkM2NlNWExNDgiLCJ1c2VybmFtZSI6InJhdWw0NjIyIiwicGFzc3dvcmQiOiIkMmIkMTAkdXdYbFMvd2o3QXRVbmVVMnZVb3FoZWpZUW1rZWl3TnFRazBiMGR0UDF4VDJvMWFmTEFPR1ciLCJpYXQiOjE2MDkxMzU3NDksImV4cCI6MTYwOTE0Mjk0OX0.iAC3NVGRnu3xz6qpZxh6Hpx7AReSAkY33_s424Hw5VE",
+        },
+        data: {
+          username: localStorage.username,
+          password: localStorage.password,
+          title: titulox,
+          photo: "somephoto",
+          description: contenidox,
+        },
+      };
+      */
+      /*
+      axios
+        .request({
+          method: config.method,
+          url: config.url,
+          data: config.data,
+          headers: config.headers,
+        })
+        .then((response) => console.log(response))
+        .catch(function (error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+        */
+      /*
       axios
         .post("http://127.0.0.1:8080/api/posts", {
           username: localStorage.username,
@@ -246,6 +378,7 @@ export default {
           }
           console.log(error.config);
         });
+        */
     },
     toggleBind(attr) {
       this[attr] = !this[attr];
@@ -257,7 +390,6 @@ export default {
       this.show = true;
     },
   },
-  mounted() {},
 };
 </script>
 

@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
-import store from './store'
+import store from '../../store'
 import VueRouter from 'vue-router'
-import routes from './router/index'
+import routes from '../../router/index'
 import Vodal from 'vodal';
 
 
@@ -44,12 +44,6 @@ Vue.use(new VueSocketIO({
 }))
 
 /////
-
-window.Event = new Vue();
-
-
-
-
 Vue.use(BootstrapVue)
 
 import 'bootstrap/dist/css/bootstrap.css'

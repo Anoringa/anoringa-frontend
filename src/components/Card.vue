@@ -3,7 +3,8 @@
     <div class="image">
       <img v-bind:src="photo" alt="image" width="200" height="200" />
     </div>
-    <div class="content">{{ title }}</div>
+    <div class="content">title: {{ title }}</div>
+    <p class="content">content: {{ content }}</p>
   </div>
 
   <!--
