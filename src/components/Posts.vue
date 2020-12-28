@@ -64,7 +64,8 @@ export default {
     return {
       posts: [],
       postexample: [],
-      endpoint: "http://localhost:3000/api/post",
+      //endpoint: "http://localhost:3000/api/post",
+      endpoint: "https://agile-everglades-15507.herokuapp.com/api/post",
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
 
       id: "asdasdasd",
@@ -103,16 +104,18 @@ export default {
                 window.location.reload(true);
                 console.log(data);
             });*/
+            /*
     this.$root.$on("component1", () => {
       // your code goes here
       //this.c1method()
       console.log("from other component");
-    });
-    Event.$on("createImage", (item, response) => {
+    });*/
+    window.Evento.$on("createImage", (item, response) => {
       // your code goes here
       console.log("from other component",item, response);
       this.posts.push(response);
     });
+    /**/
   },
   methods: {
     getPostsExample() {

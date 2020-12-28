@@ -111,7 +111,8 @@ export default {
       convertClicked: false,
       loading: false,
       //loginurl:"http://mediawiki.test:8080/api/users"
-      loginurl: "http://localhost:3000/api/user/register",
+      //loginurl: "http://localhost:3000/api/user/register",
+      loginurl: "https://agile-everglades-15507.herokuapp.com/api/user/register",
     };
   },
 

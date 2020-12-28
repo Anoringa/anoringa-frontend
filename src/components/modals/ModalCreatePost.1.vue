@@ -133,6 +133,8 @@ export default {
   },
   data() {
     return {
+      username: "",
+      password: "",
       nuevoposttitulo: "",
       nuevopostcomment: "",
       show: false,
@@ -212,12 +214,36 @@ export default {
       console.log("This event was fired by eg. sio.emit('post')", data);
     });
     */
+    /*
+    if (localStorage.hcaptchatoken) {
+      this.hcaptchatoken = localStorage.hcaptchatoken;
+    }*/
+    if (localStorage.username) {
+      this.username = localStorage.username;
+    }
+    if (localStorage.password) {
+      this.password = localStorage.password;
+    }
+    if (localStorage.username && localStorage.password) {
+      console.log("user has been logged previusly");
+      this.loggedstate = true;
+    } else {
+      console.log("user needs to log in");
+      this.loggedstate = false;
+      //https://es.vuejs.org/v2/guide/conditional.html
+    }
   },
   watch: {
     /*
     hcaptchatoken(newName) {
       localStorage.hcaptchatoken = newName;
     },*/
+    username(newName) {
+      localStorage.username = newName;
+    },
+    password(newName) {
+      localStorage.password = newName;
+    },
   },
   methods: {
     publicar() {
@@ -250,19 +276,18 @@ export default {
       var data = {
         title: titulox,
         description: contenidox,
-        username: localStorage.username,
-        //password: "req.body.password",
-        password: localStorage.password,
+        username: "raul7925",
+        password: "req.body.password",
         photo: "String",
       };
 
       this.$socket.emit("post", data, function (datos) {
         console.log("socket.io emit");
-        console.log(datos);
-        //this.$root.$emit("component1"); //like this
-        //this.$root.$emit("component1", "datos", datos);
-        window.Evento.$emit('createImage', "datos", datos)
+        //console.log(datos);
         //this.posts.push(datos);
+        //this.$root.$emit("component1"); //like this
+        this.$root.$emit("component1", "datos", datos);
+        //window.Evento.$emit('createImage', "datos", datos)
       });
       /*
 
