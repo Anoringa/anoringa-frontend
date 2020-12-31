@@ -27,3 +27,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 npm run serve -- --port 80
 
+
+
+https://getbootstrap.com/docs/4.0/layout/grid/

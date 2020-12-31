@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Anoringa</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+
+
+
+
+    <style>
+        body {
+            background: #e2e1e0;
+            text-align: center;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 2px;
+            display: inline-block;
+            height: 300px;
+            margin: 1rem;
+            position: relative;
+            width: 300px;
+        }
+
+        .card-1 {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+        }
+
+        .card-1:hover {
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+        }
+
+        .card-2 {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        .card-3 {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        .card-4 {
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+        }
+
+        .card-5 {
+            box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+        }
+    </style>
+
+
+
+
+
+    <style>
+        /* 
+.navbar {
+  background-color: #fff;
+  margin: 10px 0 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.write-link {
+  color: #1c9963;
+}
+
+.navbar-icon {
+  color: rgba(0,0,0,.44);
+}
+
+.btn-circle {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-image: url(https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_normal.jpg);
+}
+
+.content {
+  padding: 35px 0 0 0;
+}
+
+.card-panel {
+  display: inline-block;
+  margin: 30px 0 40px 0;
+  width: 100%;
+}
+.card-panel-header {
+  border-bottom: 1px solid rgba(0,0,0,.15);
+  margin-bottom: 25px;
+}
+
+.card-panel-heading {
+  color: rgba(0,0,0,.8);
+  display: inline-block;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  font-weight: 700;
+  font-style: normal;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0,0,0,.44)!important;
+}
+
+.more-link {
+  rgba(0, 0, 0, 0.44);
+  float:right;
+  letter-spacing: 0;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.padding-right-10 {
+  padding-right:10px!important;
+}
+
+.padding-left-10 {
+  padding-left:10px!important;
+}
+.card-container {
+  margin-bottom: 20px;
+}
+
+.card {
+  display: inline-block;
+  padding:20px;
+}
+
+.card-header-image {
+  display: block;
+  margin: -20px -20px 0 -20px;
+  background-image: url(https://cdn-images-1.medium.com/max/400/1*rJo10rUQ8WCmCsgTJP5uPg.jpeg);
+    background-position: 50% 50%;
+  background-size: cover;
+      height: 100px;
+}
+
+.img-2 {
+  background-image: url("https://cdn-images-1.medium.com/max/400/1*vVU_pFSzCLQG2N97oyEnyg.jpeg") !important;
+}
+
+.img-3{
+  background-image: url("https://cdn-images-1.medium.com/max/400/1*407SlzNJ_XBHm2a8x61Nkg.jpeg")!important;
+}
+.card-subheading {
+  color: rgba(0,0,0,.44);
+  font-size: 12px!important;
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+
+.heading {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2 !important;
+  max-height: 2.4em !important;
+  min-height: 70px;
+}
+
+.article-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-basis: auto;
+}
+
+.article-info-left {
+  display: flex;
+}
+
+.profile-avatar {
+  display: block;
+  padding-right: 10px;
+}
+
+.avatar-image {
+  width: 40px;
+    height: 40px;
+      display: inline-block;
+    vertical-align: middle;
+    border-radius: 100%;
+}
+
+.username {
+  color: rgba(0,0,0,.8);
+  font-size: 12px;
+}
+
+.date, .read-time {
+  color: rgba(0,0,0,.44)!important;
+  font-size: 12px;
+}
+
+.bookmark-link {
+  color: rgba(0,0,0,.44);
+  display: inline-block;
+  font-size: 19px;
+  height: 24px;
+  vertical-align: sub;
+}
+
+.more-options-link {
+  color: rgba(0,0,0,.44);
+  display: inline-block;
+  font-size: 19px;
+  height: 24px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+*/
+    </style>
+
+
+
+</head>
+
+<body style="height:1500px">
+
+
+
+    <!--
+
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">
+      <img src="https://cdn-images-1.medium.com/max/2000/1*wjH1PAiwbJ2LCeIJMJ-3Sw.png" width="30" height="30" class="d-inline-block align-top" alt=""> Medium Bootstrap v4
+    </a>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        </li>
+      </ul>
+      <a class="nav-link write-link" href="#">write a story</a>
+      <a class="nav-link navbar-icon" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+      <a class="nav-link navbar-icon" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+
+      <div class="dropdown navbar-user-dropdown">
+        <button class="btn btn-secondary dropdown-toggle btn-circle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Become a member</a>
+          <a class="dropdown-item" href="#">New story</a>
+          <a class="dropdown-item" href="#">Stories</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  -->
+    <!--
+    <form class="form-inline col-md-2 my-2 my-md-0">
+      <input class="form-control mr-sm-2 col" type="text" placeholder="Search">
+      <button class="btn btn-success my-2 my-sm-0" type="button">Search</button>
+    </form>
+    -->
+
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between fixed-top">
+
+
+
+        <a class="navbar-brand" href="#">
+            <h1>Anoringa</h1>
+        </a>
+
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Top</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Categorias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">die Regeln</a>
+                </li>
+            </ul>
+        </div>
+        <a href="/" class="navbar-brand">Usuario</a>
+        <div class="row pr-2">
+
+            <div class="btn-group navbar-brand">
+
+                <a href="#" id="imageDropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <img src="https://picsum.photos/50">
+                </a>
+
+
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Another action</button>
+                    <button class="dropdown-item" type="button">Something else here</button>
+                </div>
+            </div>
+            <div class="dropdown dropleft">
+                <a class="nav-link dropdown-toggle dropleft" href="#" id="navbarDropdownMenuLink" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg"
+                        width="40" height="40" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropleft" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Dashboard</a>
+                    <a class="dropdown-item" href="#">Edit Profile</a>
+                    <a class="dropdown-item" href="#">Log Out</a>
+                </div>
+            </div>
+            <button class="navbar-toggler dropleft" type="button" data-toggle="collapse"
+                data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon dropleft"></span>
+            </button>
+        </div>
+
+    </nav>
+
+    <div class="container-fluid" style="margin-top:100px">
+        <h3>Top Fixed Navbar</h3>
+        <p>A fixed navigation bar stays visible in a fixed position (top or bottom) independent of the page scroll.</p>
+        <h1>Scroll this page to see the effect</h1>
+    </div>
+
+
+    <div class="container-fluid">
+        <h3>Brand / Logo</h3>
+        <p>When using the .navbar-brand class on images, Bootstrap 4 will automatically style the image to fit the
+            navbar.</p>
+    </div>
+    <div class="container">
+        <h2>Posteos</h2>
+        <div class="card"></div>
+        <div class="card card-1"></div>
+        <div class="card card-2"></div>
+        <div class="card card-2"></div>
+        <div class="card card-2"></div>
+        <div class="card card-2"></div>
+        <div class="card card-2"></div>
+        <div class="card card-2"></div>
+        <div class="card card-3"></div>
+        <div class="card card-4"></div>
+        <div class="card card-5"></div>
+        <!--/.container -->
+    </div>
+</body>
+
+</html>

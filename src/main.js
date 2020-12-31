@@ -50,7 +50,8 @@ Vue.use(new VueSocketIO({
 window.Evento = new Vue();
 
 
-
+///#
+///#
 
 Vue.use(BootstrapVue)
 
