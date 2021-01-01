@@ -15,8 +15,7 @@
 
     <div v-else-if="loggedstate === true">
       <div>
-        You already logged in
-        <p v-text="username" />
+        Estas logueado como <p v-text="username" />
       </div>
       <ModalCreatePost></ModalCreatePost>
       <button type="button" id="convert-btn" @click="cerrarSecion()">
