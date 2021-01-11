@@ -64,6 +64,24 @@
                         id="comment"
                       ></textarea>
                     </div>
+
+                    <label class="file-select">
+                      <!-- We can't use a normal button element here, as it would become the target of the label. -->
+                      <div class="select-button">
+                        <!-- Display the filename if a file has been selected. -->
+                        <span v-if="value"
+                          >Selected File: {{ value.name }}</span
+                        >
+                        <span v-else>Select File</span>
+                      </div>
+                      <!-- Now, the file input that we hide. -->
+                      <input type="file" @change="handleFileChange" />
+                    </label>
+
+                    <input id="inp" type="file" />
+                    <p id="b64"></p>
+                    <img id="img" height="150" />
+
                     <div class="form-group form-check">
                       <label class="form-check-label">
                         <input
@@ -261,7 +279,7 @@ export default {
         console.log(datos);
         //this.$root.$emit("component1"); //like this
         //this.$root.$emit("component1", "datos", datos);
-        window.Evento.$emit('createImage', "datos", datos)
+        window.Evento.$emit("createImage", "datos", datos);
         //this.posts.push(datos);
       });
       /*
@@ -418,11 +436,30 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
   display: table;
   transition: opacity 0.3s ease;
+  color: black;
 }
 
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
+}
+
+
+.file-select > .select-button {
+  padding: 1rem;
+
+  color: white;
+  background-color: #2EA169;
+
+  border-radius: .3rem;
+
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Don't forget to hide the original file input! */
+.file-select > input[type="file"] {
+  display: none;
 }
 
 //@import "vodal/common.css";

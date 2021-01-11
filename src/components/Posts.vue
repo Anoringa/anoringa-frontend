@@ -110,11 +110,13 @@ export default {
       //this.c1method()
       console.log("from other component");
     });*/
+    /*
     window.Evento.$on("createImage", (item, response) => {
       // your code goes here
       console.log("from other component",item, response);
       this.posts.push(response);
     });
+    */
     /**/
   },
   methods: {
@@ -158,6 +160,9 @@ export default {
   padding: 0;
 }
 
+body {
+  background: #e2e1e0;
+}
 /*
 #index {
   width: 80%;
@@ -245,20 +250,23 @@ main {
 }
 
 .card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(200px, 1fr));
-  grid-gap: 1rem;
+  
+  text-align: center;
+  font: 14px/1.4 sans-serif;
+  //display: grid;
+ // grid-template-columns: repeat(3, minmax(200px, 1fr));
+  //grid-gap: 1rem;
 }
 
 // Responsive
 @media (max-width: 768px) {
   .card-grid {
-    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    //grid-template-columns: repeat(2, minmax(200px, 1fr));
   }
 }
 @media (max-width: 540px) {
   .card-grid {
-    grid-template-columns: repeat(1, minmax(200px, 1fr));
+    //grid-template-columns: repeat(1, minmax(200px, 1fr));
   }
 }
 </style>

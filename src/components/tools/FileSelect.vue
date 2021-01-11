@@ -83,7 +83,12 @@ export default {
     appName: {
       type: String,
       required: true,
-    }},
+    },
+    appName: {
+      type: String,
+      required: true,
+    }
+    },
   name: "Header",
   components: {
     //History,
@@ -108,37 +113,8 @@ export default {
     },
     clickConvert() {},
     convert() {},
-    openModal() {
-
-      //https://vuejsexamples.com/tag/popup/
-      //https://vuejsexamples.com/a-small-wrapper-for-integrating-sweetalert-to-vuejs/
-      //https://sweetalert.js.org/guides/#installation
- 
-
-      //https://vuejsexamples.com/simple-lightweight-and-elegant-global-notification-popup-for-vue-js/
-
-      //https://stackoverflow.com/questions/50015336/google-recaptcha-within-sweetalert-modal-window
-      swal({
-        title: "Are you sure?",
-        text:
-          "Once deleted, you will not be able to recover this imaginary file!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
-          console.log('LOGGED IN');
-          
-          swal("Poof! Your imaginary file has been deleted!", {
-            icon: "success",
-          });
-        } else {
-          console.log('NOT LOGGED IN');
-          swal("Your imaginary file is safe!");
-        }
-      });
-    },
-  },
+    openModal() {}
+    }
 };
 </script>
 
@@ -153,97 +129,4 @@ $dark: #555;
 $bright: #ddd;
 
 
-.navbar {
-    background-color: #F95453;
-    margin-bottom: 20px;
-  font-family: "Segoe UI", "Roboto", Arial, Helvetica, sans-serif;
-}
-h1.white-header {
-    color: #FFFFFF;
-    font-size: 2em;
-}
-/**/
-* {
-  box-sizing: border-box;
-  margin: 0;
-}
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-a {
-  text-decoration: none;
-  &:hover {
-  }
-}
-header {
-  margin: 0;
-    width: 100%;
-    padding: 0.5rem 0;
-    background: $darker;
-    color: $bright;
-    position: fixed;
-    z-index: 0;
-    > .container {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-}
-
-
-body {
-  margin: 0;
-  color: $dark;
-  background: $bright;
-  font-family: "Segoe UI", "Roboto", Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  > header {
-    width: 100%;
-    padding: 0.5rem 0;
-    background: $darker;
-    color: $bright;
-    position: fixed;
-    z-index: 1;
-    > .container {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-  > footer {
-    background-color: $darker;
-    color: $bright;
-    padding: 1rem;
-    text-align: center;
-  } // End Footer
-}
-nav {
-  padding: 0.5rem 0;
-  a {
-    color: $bright;
-    &:hover {
-      color: white;
-      text-decoration: underline;
-    }
-  }
-  ul {
-    list-style: none;
-    display: flex;
-    li {
-      padding-left: 1rem;
-    }
-  }
-}
-main {
-  padding-top: 5rem;
-  padding-bottom: 3rem;
-}
-.container {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
 </style>
