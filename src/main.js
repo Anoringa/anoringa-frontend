@@ -6,8 +6,7 @@ import routes from './router/index'
 import Vodal from 'vodal';
 
 
-import PortalVue from 'portal-vue'
-Vue.use(PortalVue)
+
 
 
 Vue.component(Vodal.name, Vodal);
@@ -48,8 +47,7 @@ Vue.use(new VueSocketIO({
 
 /////
 
-
-//window.Evento = new Vue();
+window.Evento = new Vue();
 
 
 ///#

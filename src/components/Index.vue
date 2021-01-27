@@ -5,7 +5,6 @@
       <p>{{appName}}</p>
     -->
     <Posts></Posts>
-    <PortalTarget name="destination"/>
 
   </div>
 </template>
