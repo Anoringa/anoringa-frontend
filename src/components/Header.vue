@@ -19,7 +19,7 @@
           <b-form-input size="sm" class="mr-sm-2" placeholder="Buscar"></b-form-input>
           <b-button size="sm" class="my-2 my-sm-0" type="submit">Buscar</b-button>
         </b-nav-form>
-        <--
+        <!--
         <b-nav-item-dropdown text="Idioma" right>
           <b-dropdown-item href="#">ES</b-dropdown-item>
           <b-dropdown-item href="#">EN</b-dropdown-item>
@@ -27,7 +27,7 @@
           <b-dropdown-item href="#">DE</b-dropdown-item>
           <b-dropdown-item href="#">JP</b-dropdown-item>
         </b-nav-item-dropdown>
-
+-->
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
           <template #button-content>
