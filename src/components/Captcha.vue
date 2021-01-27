@@ -8,7 +8,7 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h3 class="modal-title">Nuevo Post</h3>
+                  <h3 class="modal-title">Crear un Usuario</h3>
                   <button
                     type="button"
                     class="close"

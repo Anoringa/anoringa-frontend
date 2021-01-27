@@ -4,9 +4,15 @@
     <!--
       <p>{{appName}}</p>
     -->
-    <Posts></Posts>
-    <PortalTarget name="destination"/>
+    <PostsDetail></PostsDetail>
 
+    <footer>
+      <p>
+        <a href="#">Contact Us</a> | <a href="#">Sitemap</a> |
+        <a href="#">Privacy Policy</a>
+      </p>
+      <p>&copy;2020 Copyright info here...</p>
+    </footer>
   </div>
 </template>
 
@@ -15,13 +21,13 @@
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import Header from "./Header";
-import Posts from "./Posts";
+import PostsDetail from "./PostsDetail";
 export default {
   name: "Index",
   components: {
     //History,
     Header,
-    Posts
+    PostsDetail
   },
   data() {
     return {

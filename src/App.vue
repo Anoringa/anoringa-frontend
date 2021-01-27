@@ -1,27 +1,27 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
+      <!--
+  This component can be located anywhere in your App.
+  The slot content of the above portal component will be rendered here.
+  -->
   </div>
 </template>
 
 <script>
-
-
-
 export default {
-  name: 'App',
-}
+  name: "App",
+};
 </script>
 
 <style src="vodal/common.css">
-    /* global styles */
+/* global styles */
 </style> 
 <style src="vodal/rotate.css">
-    /* global styles */
+/* global styles */
 </style> 
 
 <style lang="scss" scoped>
-
 // include animation styles
 //@import "vodal/common.css";
 //@import "vodal/rotate.css";
@@ -52,6 +52,4 @@ body {
   text-align: center;
 }
 */
-
-
 </style>

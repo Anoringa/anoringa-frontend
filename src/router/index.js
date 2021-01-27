@@ -1,17 +1,18 @@
 import Index from "../components/Index";
 import HelloWorld from "../components/HelloWorld";
+import PostsPage from "../components/PostPage";
 ///#
 const Foo = { template: "<div>foo</div>" };
 const Bar = { template: "<div>bar</div>" };
-const User = {
-  template: "<div>User {{ $route.params.id }}</div>",
-};
+//var User = {template: "<div>User {{ $route.params.id }}</div>",};
 
 const routesx = [
   { name: "Foo",path: "/foo", component: Foo },
   { name: "Bar",path: "/bar", component: Bar },
   { name: "HelloWorld",path: "/hello", component: HelloWorld },
-  { name: "User",path: "/user/:id", component: User },
+  //{ name: "User",path: "/user/:id", component: User },
+  //{ name: "Post",path: "/post/:id", component: About },
+  { name: "Post",path: "/post/:id", component: PostsPage },
   { name: "Index",path: "/",component: Index,},
 ];
 /*

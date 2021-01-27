@@ -6,7 +6,6 @@ module.exports = {
     //public: "localhost:8080",
     public: "localhost:80",
   },
-  /*
   pages: {
     'index': {
       entry: './src/pages/Home/main.js',
@@ -14,12 +13,13 @@ module.exports = {
       title: 'Home',
       chunks: [ 'chunk-vendors', 'chunk-common', 'index' ]
     },
-    'about': {
+    'l': {
       entry: './src/pages/PostDetail/main.js',
       template: 'public/index.html',
       title: 'Post',
       chunks: [ 'chunk-vendors', 'chunk-common', 'post' ]
     }
-  }*/
+  }
+  /**/
 };
 

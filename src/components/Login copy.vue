@@ -14,54 +14,15 @@
     </div>
 
     <div v-else-if="loggedstate === true">
-    
-        <b-nav>
-          <b-nav-item
-            >Bienvenido <a v-text="username"> </a></b-nav-item>
-          <b-nav-item><ModalCreatePost></ModalCreatePost></b-nav-item>
-          <b-nav-item
-            ><button type="button" id="convert-btn" @click="cerrarSecion()">
-              Salir
-            </button></b-nav-item
-          >
-        </b-nav>
-
-      <!--
-      <b-dropdown text="Button text via Prop">
-        <b-dropdown-item href="#">An item</b-dropdown-item>
-        <b-dropdown-item href="#">Another item</b-dropdown-item>
-        <b-dropdown-item><ModalCreatePost></ModalCreatePost></b-dropdown-item>
-        <b-dropdown-item>
-          <button type="button" id="convert-btn" @click="cerrarSecion()">
-            Salir
-          </button>
-        </b-dropdown-item>
-      </b-dropdown>
-
-      <b-dropdown id="dropdown-1" v-text="username" class="m-md-2">
-        <b-dropdown-item><ModalCreatePost></ModalCreatePost></b-dropdown-item>
-        <b-dropdown-item>
-          <button type="button" id="convert-btn" @click="cerrarSecion()">
-            Salir
-          </button>
-        </b-dropdown-item>
-        <b-dropdown-item>Third Action</b-dropdown-item>
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item active>Active action</b-dropdown-item>
-        <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-      </b-dropdown>
-      -->
-      <!--
       <div>
-        Estas logueado como <p v-text="username" />
+        You already logged in
+        <p v-text="username" />
       </div>
       <ModalCreatePost></ModalCreatePost>
       <button type="button" id="convert-btn" @click="cerrarSecion()">
         Salir
       </button>
-        -->
     </div>
-
     <div v-else>Si no es A, B o C</div>
 
     <!-- 
@@ -151,8 +112,7 @@ export default {
       loading: false,
       //loginurl:"http://mediawiki.test:8080/api/users"
       //loginurl: "http://localhost:3000/api/user/register",
-      loginurl:
-        "https://agile-everglades-15507.herokuapp.com/api/user/register",
+      loginurl: "https://agile-everglades-15507.herokuapp.com/api/user/register",
     };
   },
 
@@ -210,6 +170,7 @@ export default {
       this.loggedstate = true;
     },
     userCreate(hcaptchatoken) {
+
       var params = new URLSearchParams();
       params.append("token", hcaptchatoken);
       //axios.post("/foo", params);

@@ -10,40 +10,41 @@
       -->
 
     <div>
-      <div v-if="showModal">
-        <transition name="modal">
-          <div class="modal-mask">
-            <div class="modal-wrapper">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h3 class="modal-title">Nuevo Post</h3>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true" @click="showModal = false"
-                        >&times;</span
+      <portal to="destination">
+        <div v-if="showModal">
+          <transition name="modal">
+            <div class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="modal-title">Nuevo Post</h3>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
                       >
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <p></p>
-
-                    <div class="form-group">
-                      <label for="nuevo-post-titulo">Titulo</label>
-                      <input
-                        v-model="nuevoposttitulo"
-                        type="text"
-                        class="form-control"
-                        id="nuevo-post-titulo"
-                        placeholder="Ingresa un nombre atractivo"
-                        name="nuevo-post-titulo"
-                      />
+                        <span aria-hidden="true" @click="showModal = false"
+                          >&times;</span
+                        >
+                      </button>
                     </div>
-                    <!--
+                    <div class="modal-body">
+                      <p></p>
+
+                      <div class="form-group">
+                        <label for="nuevo-post-titulo">Titulo</label>
+                        <input
+                          v-model="nuevoposttitulo"
+                          type="text"
+                          class="form-control"
+                          id="nuevo-post-titulo"
+                          placeholder="Ingresa un nombre atractivo"
+                          name="nuevo-post-titulo"
+                        />
+                      </div>
+                      <!--
                       <div class="form-group">
                         <label for="pwd">Password:</label>
                         <input
@@ -55,48 +56,68 @@
                         />
                       </div>
                       -->
-                    <div class="form-group">
-                      <label for="comment">Contenido</label>
-                      <textarea
-                        v-model="nuevopostcomment"
-                        class="form-control"
-                        rows="5"
-                        id="comment"
-                      ></textarea>
-                    </div>
-                    <div class="form-group form-check">
-                      <label class="form-check-label">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="remember"
-                        />
-                        Acepto los terminos y condiciones
+                      <div class="form-group">
+                        <label for="comment">Contenido</label>
+                        <textarea
+                          v-model="nuevopostcomment"
+                          class="form-control"
+                          rows="5"
+                          id="comment"
+                        ></textarea>
+                      </div>
+
+                      <label class="file-select">
+                        <!-- We can't use a normal button element here, as it would become the target of the label. -->
+                        <div class="select-button">
+                          <!-- Display the filename if a file has been selected. -->
+                          <span v-if="value"
+                            >Selected File: {{ value.name }}</span
+                          >
+                          <span v-else>Select File</span>
+                        </div>
+                        <!-- Now, the file input that we hide. -->
+                        <input type="file" @change="handleFileChange" />
                       </label>
+
+                      <input id="inp" type="file" />
+                      <p id="b64"></p>
+                      <img id="img" height="150" />
+
+                      <div class="form-group form-check">
+                        <label class="form-check-label">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="remember"
+                          />
+                          Acepto los terminos y condiciones
+                        </label>
+                      </div>
                     </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      @click="showModal = false"
-                    >
-                      Cerrar
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      @click="publicar"
-                    >
-                      Publicar
-                    </button>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        @click="showModal = false"
+                      >
+                        Cerrar
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="publicar"
+                      >
+                        Publicar
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </transition>
-      </div>
+          </transition>
+        </div>
+      </portal>
+
       <button @click="showModal = true">Crear Post</button>
     </div>
   </div>
@@ -104,6 +125,7 @@
 
 
 <script>
+import { EventBus } from "../../event-bus";
 //import History from "./History";
 //import { mapGetters } from "vuex";
 
@@ -261,7 +283,9 @@ export default {
         console.log(datos);
         //this.$root.$emit("component1"); //like this
         //this.$root.$emit("component1", "datos", datos);
-        window.Evento.$emit('createImage', "datos", datos)
+        //this.$root.$emit("createImage", "datos", datos);
+        EventBus.$emit("createImage", "datos", datos);
+        //window.Evento.$emit("createImage", "datos", datos);
         //this.posts.push(datos);
       });
       /*
@@ -418,11 +442,29 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
   display: table;
   transition: opacity 0.3s ease;
+  color: black;
 }
 
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
+}
+
+.file-select > .select-button {
+  padding: 1rem;
+
+  color: white;
+  background-color: #2ea169;
+
+  border-radius: 0.3rem;
+
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Don't forget to hide the original file input! */
+.file-select > input[type="file"] {
+  display: none;
 }
 
 //@import "vodal/common.css";

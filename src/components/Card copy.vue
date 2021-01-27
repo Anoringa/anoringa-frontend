@@ -1,17 +1,17 @@
 <template>
-<div 
+  <div
     class="card card-1 clickAble"
     :id="id"
     @click="clicked()"
-    :href="postlink"
-    v-bind:style="{ 'background-image': 'url(' + photo + ')' }">
-  <div class="thumb-anim">
-    <h3 class="thumb-title">{{ title }}</h3>
+    v-bind:style="{ 'background-image': 'url(' + photo + ')' }"
+  >
+    <div class="thumb-gradient"></div>
+    <div class="thumb-anim">
+      <h3 class="thumb-title">{{ title }}</h3>
       <p class="thumb-description">{{ content }}</p>
+    </div>
+    <div class="thumb-author">{{ photo }}</div>
   </div>
-  <div class="thumb-author">{{ photo }}</div>
-</div>
-
   <!--
 
 :style="{ 'background-image':  photo }"
@@ -96,11 +96,6 @@ export default {
       required: false,
     },
   },
-  data() {
-    return {
-      postlink: "/post/"+this.id
-    };
-  },
   mounted() {
     /*
             window.EventHandler.listen('remove-dialog-' + this.id + '-called', (data) => {
@@ -112,8 +107,6 @@ export default {
     clicked() {
       console.log("clicked");
       console.log(this.id);
-      window.location.href = "/post/"+this.id;
-
 
       /*
                 window.EventHandler.fire('top-confirm', {
@@ -131,22 +124,49 @@ $darker: #222;
 $dark: #555;
 $bright: #ddd;
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+.login-menu {
+  float: left;
+  width: 400px;
+  height: 200px;
+}
+
+.wrapper {
+  overflow: hidden;
+  background-size: cover;
+  background-position: center center;
+}
+
+body {
+  background: #e2e1e0;
+  text-align: center;
+  font: 14px/1.4 sans-serif;
+}
 
 .card {
   background: #fff;
-  background-image: url("http://placekitten.com/300/300");
+  //background-image: url("http://placekitten.com/300/300");
   border-radius: 2px;
   /*
+            background-image: url("http://placekitten.com/300/300");
   display: inline-block;
   */
   display: inline-block;
-  height: 200px;
-  width: 200px;
+  height: 300px;
+  width: 300px;
   margin: 1rem;
   position: relative;
-  
-  
-  
+
+  overflow: hidden;
+  background-size: cover;
+  background-position: center center;
+
+  float: left;
+  //width: 50%;
+
   /*
   */
   flex-flow: column nowrap;
@@ -155,30 +175,30 @@ $bright: #ddd;
 }
 
 .card-1 {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .card-1:hover {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .card-2 {
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .card-3 {
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 .card-4 {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .card-5 {
-  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
-  
+
 .thumb-gradient,
 .thumb-img {
   position: absolute;
@@ -189,27 +209,9 @@ $bright: #ddd;
   object-fit: cover;
 }
 
-
-
-.thumb-title {
-  text-transform: uppercase;
-  padding: 10px;
-  word-wrap: break-word;
-}
-
-.thumb-description {
-  padding: 10px 20px;
-  opacity: 0;
-  flex: 1;
-}
-
-.thumb-author {
-  padding: 100px;
-  position: relative;
-}
-/*
 .thumb-anim {
-  margin-top: auto;  
+  margin-top: auto;
+  /* pushes all content to bottom */
   position: relative;
   transition: 0.5s;
   transform: translateY(100%);
@@ -218,6 +220,8 @@ $bright: #ddd;
 .thumb-title {
   text-transform: uppercase;
   padding: 10px;
+  /*
+  */
   transition: 0.5s;
   transform: translateY(-100%);
 }
@@ -234,6 +238,8 @@ $bright: #ddd;
   position: relative;
 }
 
+/* ANIMATE */
+
 .card:hover .thumb-anim {
   transform: translateY(0);
 }
@@ -244,7 +250,7 @@ $bright: #ddd;
 
 .card:hover .thumb-description {
   opacity: 1;
-}*/
+}
 /*
 img {
   max-width: 100%;
