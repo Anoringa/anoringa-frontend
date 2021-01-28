@@ -1,6 +1,7 @@
 import Index from "../components/Index";
 import HelloWorld from "../components/HelloWorld";
-import PostsPage from "../components/PostPage";
+//import PostsPage from "../components/PostPage";
+import Post from "../components/Post";
 ///#
 const Foo = { template: "<div>foo</div>" };
 const Bar = { template: "<div>bar</div>" };
@@ -12,7 +13,7 @@ const routesx = [
   { name: "HelloWorld",path: "/hello", component: HelloWorld },
   //{ name: "User",path: "/user/:id", component: User },
   //{ name: "Post",path: "/post/:id", component: About },
-  { name: "Post",path: "/post/:id", component: PostsPage },
+  { name: "Post",path: "/post/:id", component: Post },
   { name: "Index",path: "/",component: Index,},
 ];
 /*

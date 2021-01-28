@@ -15,7 +15,7 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h3 class="modal-title">Crear un nuevo usuario</h3>
+                    <h3 class="modal-title">Nuevo Post</h3>
                     <button
                       type="button"
                       class="close"
@@ -28,10 +28,77 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <p>rellena el captcha</p>
 
-                
-                  <vue-hcaptcha sitekey="e7f6e9a7-84b3-4b26-ae5a-c71eda77bacc" @verify="onVerify" theme="dark"></vue-hcaptcha>
+
+
+                      <div class="form-group">
+                        <label for="nuevo-post-titulo">Titulo</label>
+                        <input
+                          v-model="nuevoposttitulo"
+                          type="text"
+                          class="form-control"
+                          id="nuevo-post-titulo"
+                          placeholder="Ingresa un nombre atractivo"
+                          name="nuevo-post-titulo"
+                        />
+                      </div>
+                      <!--
+                      <div class="form-group">
+                        <label for="pwd">Password:</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="pwd"
+                          placeholder="Enter password"
+                          name="pswd"
+                        />
+                      </div>
+                      -->
+                      <div class="form-group">
+                        <label for="comment">Contenido</label>
+                        <textarea
+                          v-model="nuevopostcomment"
+                          class="form-control"
+                          rows="5"
+                          id="comment"
+                        ></textarea>
+                      </div>
+
+
+
+                      <input id="inp" type="file" />
+                      <p id="b64"></p>
+                      <img id="img" height="150" />
+
+                      <div class="form-group form-check">
+                        <label class="form-check-label">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="remember"
+                          />
+                          Acepto los terminos y condiciones
+                        </label>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        @click="showModal = false"
+                      >
+                        Cerrar
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="publicar"
+                      >
+                        Publicar
+                      </button>
+
+
+
                   </div>
                   <div class="modal-footer">
                     <button
@@ -55,8 +122,7 @@
           </div>
         </transition>
       </div>
-        <b-button v-b-modal.modal-1 @click="showModal = true">Loguearse</b-button>
-
+      <button @click="showModal = true">Crear Post</button>
     </div>
   </div>
 </template>
@@ -67,7 +133,7 @@ import axios from "axios";
 //import History from "./History";
 //import { mapGetters } from "vuex";
 
-import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
+//import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
 //import Vue from "vue";
 //import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 // This imports <b-modal> as well as the v-b-modal directive as a plugin:
@@ -91,7 +157,7 @@ export default {
     //Header,
     //Posts,
     //VueModal,
-    VueHcaptcha
+    //VueHcaptcha,
   },
   data() {
     return {

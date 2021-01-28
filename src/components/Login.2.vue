@@ -14,42 +14,7 @@
     </div>
 
     <div v-else-if="loggedstate === true">
-      
-      <b-nav-text class="pl-1 pr-1" > hola {{ username }} </b-nav-text>
-
-      <b-nav-text class="pl-1 pr-1" >
-        <ModalCreatePost v-on:event_child="eventChild"></ModalCreatePost>
-      </b-nav-text>
-
-
-      <b-nav-text class="pl-1 pr-1" >
-        <b-dropdown
-          id="dropdown-right"
-          right
-          size="lg"
-          variant="link"
-          toggle-class="text-decoration-none"
-          no-caret
-        >
-          <template #button-content>
-            <p
-              type="button"
-              src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png"
-              width="30"
-              height="30"
-              alt="logo"
-              class="dropdown-toggle"
-              data-toggle="dropdown"
-            >{{ username }} </p>
-          </template>
-          <b-dropdown-item href="#">Another action</b-dropdown-item>
-
-          <b-dropdown-item>gg</b-dropdown-item>
-          <b-dropdown-item @click="cerrarSecion()">Salir</b-dropdown-item>
-        </b-dropdown>
-      </b-nav-text>
-
-      <!--
+    
         <b-nav>
           <b-nav-item
             >Bienvenido <a v-text="username"> </a></b-nav-item>
@@ -60,7 +25,7 @@
             </button></b-nav-item
           >
         </b-nav>
-        -->
+
       <!--
       <b-dropdown text="Button text via Prop">
         <b-dropdown-item href="#">An item</b-dropdown-item>

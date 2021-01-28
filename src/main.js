@@ -5,16 +5,16 @@ import VueRouter from 'vue-router'
 import routes from './router/index'
 import Vodal from 'vodal';
 
-
-
-
+/*
+import PortalVue from 'portal-vue'
+Vue.use(PortalVue)
+*/
 
 Vue.component(Vodal.name, Vodal);
 Vue.config.productionTip = false
 
 
 
-import BootstrapVue from 'bootstrap-vue'
 //////
 
 // https://www.digitalocean.com/community/tutorials/vuejs-vue-socketio
@@ -47,17 +47,23 @@ Vue.use(new VueSocketIO({
 
 /////
 
-window.Evento = new Vue();
+
+//window.Evento = new Vue();
 
 
 ///#
 ///#
-
+/*
+import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
-
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+*/
+import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 //@import "vodal/common.css";
 //@import "vodal/rotate.css";
 Vue.use(VueRouter)

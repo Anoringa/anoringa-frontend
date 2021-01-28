@@ -56,6 +56,7 @@
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import Card from "./Card";
+import { EventBus } from "../event-bus";
 
 import axios from "axios";
 
@@ -109,8 +110,23 @@ export default {
       // your code goes here
       //this.c1method()
       console.log("from other component");
+    });
+    this.$window.Evento.$on("createImage", (item, response) => {
+      // your code goes here
+      //this.c1method()
+      console.log("from other component",item, response);
+      this.posts.push(response);
     });*/
+    
+      
+    EventBus.$on("createImage", (item, response)  => {
+      console.log("from other component",item, response);
+      this.posts.push(response);
+    });
+
+
     /*
+    
     window.Evento.$on("createImage", (item, response) => {
       // your code goes here
       console.log("from other component",item, response);
