@@ -10,40 +10,40 @@
       -->
 
     <div>
-      <div v-if="showModal">
-        <transition name="modal">
-          <div class="modal-mask">
-            <div class="modal-wrapper">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h3 class="modal-title">Nuevo Post</h3>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true" @click="showModal = false"
-                        >&times;</span
+        <div v-if="showModal">
+          <transition name="modal">
+            <div class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="modal-title">Nuevo Post</h3>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
                       >
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <p></p>
-
-                    <div class="form-group">
-                      <label for="nuevo-post-titulo">Titulo</label>
-                      <input
-                        v-model="nuevoposttitulo"
-                        type="text"
-                        class="form-control"
-                        id="nuevo-post-titulo"
-                        placeholder="Ingresa un nombre atractivo"
-                        name="nuevo-post-titulo"
-                      />
+                        <span aria-hidden="true" @click="showModal = false"
+                          >&times;</span
+                        >
+                      </button>
                     </div>
-                    <!--
+                    <div class="modal-body">
+                      <p></p>
+
+                      <div class="form-group">
+                        <label for="nuevo-post-titulo">Titulo</label>
+                        <input
+                          v-model="nuevoposttitulo"
+                          type="text"
+                          class="form-control"
+                          id="nuevo-post-titulo"
+                          placeholder="Ingresa un nombre atractivo"
+                          name="nuevo-post-titulo"
+                        />
+                      </div>
+                      <!--
                       <div class="form-group">
                         <label for="pwd">Password:</label>
                         <input
@@ -55,48 +55,55 @@
                         />
                       </div>
                       -->
-                    <div class="form-group">
-                      <label for="comment">Contenido</label>
-                      <textarea
-                        v-model="nuevopostcomment"
-                        class="form-control"
-                        rows="5"
-                        id="comment"
-                      ></textarea>
+                      <div class="form-group">
+                        <label for="comment">Contenido</label>
+                        <textarea
+                          v-model="nuevopostcomment"
+                          class="form-control"
+                          rows="5"
+                          id="comment"
+                        ></textarea>
+                      </div>
+
+
+
+                      <input id="inp" type="file" />
+                      <p id="b64"></p>
+                      <img id="img" height="150" />
+
+                      <div class="form-group form-check">
+                        <label class="form-check-label">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="remember"
+                          />
+                          Acepto los terminos y condiciones
+                        </label>
+                      </div>
                     </div>
-                    <div class="form-group form-check">
-                      <label class="form-check-label">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          name="remember"
-                        />
-                        Acepto los terminos y condiciones
-                      </label>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        @click="showModal = false"
+                      >
+                        Cerrar
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="publicar"
+                      >
+                        Publicar
+                      </button>
                     </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      @click="showModal = false"
-                    >
-                      Cerrar
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      @click="publicar"
-                    >
-                      Publicar
-                    </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </transition>
-      </div>
+          </transition>
+        </div>
       <button @click="showModal = true">Crear Post</button>
     </div>
   </div>
@@ -104,6 +111,7 @@
 
 
 <script>
+import { EventBus } from "../../event-bus";
 //import History from "./History";
 //import { mapGetters } from "vuex";
 
@@ -133,11 +141,10 @@ export default {
   },
   data() {
     return {
-      username: "",
-      password: "",
       nuevoposttitulo: "",
       nuevopostcomment: "",
       show: false,
+      value:true,
       modal: {
         title: "Nuevo Post",
         items: [
@@ -214,36 +221,12 @@ export default {
       console.log("This event was fired by eg. sio.emit('post')", data);
     });
     */
-    /*
-    if (localStorage.hcaptchatoken) {
-      this.hcaptchatoken = localStorage.hcaptchatoken;
-    }*/
-    if (localStorage.username) {
-      this.username = localStorage.username;
-    }
-    if (localStorage.password) {
-      this.password = localStorage.password;
-    }
-    if (localStorage.username && localStorage.password) {
-      console.log("user has been logged previusly");
-      this.loggedstate = true;
-    } else {
-      console.log("user needs to log in");
-      this.loggedstate = false;
-      //https://es.vuejs.org/v2/guide/conditional.html
-    }
   },
   watch: {
     /*
     hcaptchatoken(newName) {
       localStorage.hcaptchatoken = newName;
     },*/
-    username(newName) {
-      localStorage.username = newName;
-    },
-    password(newName) {
-      localStorage.password = newName;
-    },
   },
   methods: {
     publicar() {
@@ -252,7 +235,7 @@ export default {
         console.log(this.nuevoposttitulo);
         console.log("contenido");
         console.log(this.nuevopostcomment);
-        this.postCreate(this.nuevoposttitulo, this.nuevopostcomment);
+        this.postCreate(this.nuevoposttitulo, this.nuevopostcomment,this.imagebase64);
         console.log("funciono kpo 😎");
         this.showModal = false;
         this.nuevoposttitulo = "";
@@ -261,7 +244,7 @@ export default {
         console.log("no funciono kpo");
       }
     },
-    postCreate(titulox, contenidox) {
+    postCreate(titulox, contenidox, photox) {
       /*
       {
         "username":"Afoxipeb",
@@ -276,18 +259,21 @@ export default {
       var data = {
         title: titulox,
         description: contenidox,
-        username: "raul7925",
-        password: "req.body.password",
-        photo: "String",
+        username: localStorage.username,
+        //password: "req.body.password",
+        password: localStorage.password,
+        photo: photox,
       };
 
       this.$socket.emit("post", data, function (datos) {
         console.log("socket.io emit");
-        //console.log(datos);
-        //this.posts.push(datos);
+        console.log(datos);
         //this.$root.$emit("component1"); //like this
-        this.$root.$emit("component1", "datos", datos);
-        //window.Evento.$emit('createImage', "datos", datos)
+        //this.$root.$emit("component1", "datos", datos);
+        //this.$root.$emit("createImage", "datos", datos);
+        EventBus.$emit("createImage", "datos", datos);
+        //window.Evento.$emit("createImage", "datos", datos);
+        //this.posts.push(datos);
       });
       /*
 
@@ -443,11 +429,29 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
   display: table;
   transition: opacity 0.3s ease;
+  color: black;
 }
 
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
+}
+
+.file-select > .select-button {
+  padding: 1rem;
+
+  color: white;
+  background-color: #2ea169;
+
+  border-radius: 0.3rem;
+
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Don't forget to hide the original file input! */
+.file-select > input[type="file"] {
+  display: none;
 }
 
 //@import "vodal/common.css";

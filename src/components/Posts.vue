@@ -35,7 +35,7 @@
         :key="item._id"
         :id="item._id"
         :url="url"
-        :photo="photo"
+        :photo="item.photo"
         :title="item.title"
         :content="item.description"
         message="Are you sure you wish to remove this record?"
@@ -66,7 +66,8 @@ export default {
       posts: [],
       postexample: [],
       //endpoint: "http://localhost:3000/api/post",
-      endpoint: "https://agile-everglades-15507.herokuapp.com/api/post",
+      //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post",
+      endpoint: "http://localhost:3000/api/post",
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
 
       id: "asdasdasd",

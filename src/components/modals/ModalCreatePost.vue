@@ -236,7 +236,7 @@ export default {
         console.log(this.nuevoposttitulo);
         console.log("contenido");
         console.log(this.nuevopostcomment);
-        this.postCreate(this.nuevoposttitulo, this.nuevopostcomment);
+        this.postCreate(this.nuevoposttitulo, this.nuevopostcomment,this.imagebase64);
         console.log("funciono kpo 😎");
         this.showModal = false;
         this.nuevoposttitulo = "";
@@ -245,7 +245,7 @@ export default {
         console.log("no funciono kpo");
       }
     },
-    postCreate(titulox, contenidox) {
+    postCreate(titulox, contenidox, photox) {
       /*
       {
         "username":"Afoxipeb",
@@ -263,7 +263,7 @@ export default {
         username: localStorage.username,
         //password: "req.body.password",
         password: localStorage.password,
-        photo: "String",
+        photo: photox,
       };
 
       this.$socket.emit("post", data, function (datos) {

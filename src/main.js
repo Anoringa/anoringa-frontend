@@ -36,7 +36,8 @@ Vue.use(new VueSocketIO({
     debug: true,
     //connection: 'ws://localhost:3000',
     //connection: 'ws://agile-everglades-15507.herokuapp.com',
-    connection: 'https://agile-everglades-15507.herokuapp.com',
+    //connection: 'https://agile-everglades-15507.herokuapp.com',
+    connection: 'ws://localhost:3000',
     vuex: {
         store,
         actionPrefix: 'SOCKET_',

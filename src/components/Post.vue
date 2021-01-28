@@ -4,9 +4,9 @@
       <!--
       Post id : {{ $route.params.id }}
       -->
-      
-    <Header :appName="appName" ></Header>
-    <!-- 
+
+      <Header :appName="appName"></Header>
+      <!-- 
       
       <nav
         class="navbar navbar-expand navbar-dark bg-danger justify-content-between"
@@ -65,26 +65,40 @@
         </b-row>
 -->
         <b-row class="mb-12 pt-5 pb-5">
-          <b-col lg="6"  style="background-color: lavender">
-            <div class="">
+          <b-col lg="6" style="background-color: lavender">
+            <div>
               <img
-                src="https://www.w3schools.com/bootstrap4/cinqueterre.jpg"
+                :src=" photo ? photo :  photodefault "
                 class="img-fluid post-img"
                 alt="Responsive image"
               />
+
+              <!-- 
+              <img
+              
+                :src="[
+                photo
+                  ? {
+                      'background-image':
+                        'url(' + photo + '), url(' + photodefault + ')',
+                    }
+                  : { 'background-image': 'url(' + photodefault + ')' },
+              ]"
+                class="img-fluid post-img"
+                alt="Responsive image" />
+                -->
             </div>
 
-            <h2 class="p-3"
-                    style="text-align: left">
+            <h2 class="p-3" style="text-align: left">
               {{ title }}
             </h2>
 
-  
-            <pre class="pb-5"
-                    style="text-align: left;
-  overflow:inherit;">{{ content }}</pre>
+            <pre class="pb-5" style="text-align: left; overflow: inherit">{{
+              content
+            }}</pre>
             <!--
               pt-2 pb-5 pl-3
+                src="https://www.w3schools.com/bootstrap4/cinqueterre.jpg"
               word-break: normal|break-all|keep-all|break-word|initial|inherit;
 
             <p>
@@ -283,7 +297,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      appName:"Anoringa",
+      photodefault: "https://picsum.photos/200?random=1",
+      appName: "Anoringa",
       //posts: [],
       comentariosList: [
         {
@@ -312,9 +327,9 @@ export default {
       postexample: [],
       //endpoint: "http://localhost:3000/api/post",
       //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post",
-      endpoint:
-        "https://agile-everglades-15507.herokuapp.com/api/post/" +
-        this.$route.params.id,
+      endpoint: "http://localhost:3000/api/post/" + this.$route.params.id,
+      //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post/" + this.$route.params.id,
+
       //https://agile-everglades-15507.herokuapp.com/api/post/5fea65d576140b6b2093cdb7
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
 
@@ -330,7 +345,7 @@ export default {
   name: "Post",
   components: {
     //History,
-    Header
+    Header,
   },
 
   created() {
@@ -390,6 +405,7 @@ export default {
           this.loaded_correctly = true;
           this.title = this.post.title;
           this.content = this.post.description;
+          this.photo = this.post.photo;
         })
         .catch((error) => {
           console.log("-----error-------");
@@ -421,7 +437,7 @@ body {
   /*
   text-align: center;
   */
-  }
+}
 .maindiv {
   /*
   margin: 3em auto;

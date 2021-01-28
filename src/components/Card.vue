@@ -1,10 +1,12 @@
 <template>
 <div 
     class="card card-1 clickAble"
+    
+    v-bind:style= "[photo ? {'background-image': 'url(' + photo + '), url(' + photodefault + ')'} : {'background-image': 'url(' + photodefault + ')'}]"
+
     :id="id"
     @click="clicked()"
-    :href="postlink"
-    v-bind:style="{ 'background-image': 'url(' + photo + ')' }">
+    :href="postlink">
   <div class="thumb-anim">
     <h3 class="thumb-title">{{ title }}</h3>
       <p class="thumb-description">{{ content }}</p>
@@ -61,6 +63,7 @@
 
 <script>
 //https://es.vuejs.org/v2/guide/list.html
+    //v-bind:style="{ 'background-image': 'url(' + photo + ')' }"
 export default {
   props: {
     id: {
@@ -98,6 +101,7 @@ export default {
   },
   data() {
     return {
+      photodefault:"https://picsum.photos/200?random=1",
       postlink: "/post/"+this.id
     };
   },
@@ -134,9 +138,9 @@ $bright: #ddd;
 
 .card {
   background: #fff;
-  background-image: url("http://placekitten.com/300/300");
   border-radius: 2px;
   /*
+  background-image: url("http://placekitten.com/300/300");
   display: inline-block;
   */
   display: inline-block;

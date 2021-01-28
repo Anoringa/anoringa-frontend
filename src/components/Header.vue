@@ -4,7 +4,9 @@
       <!--
   <b-navbar toggleable="lg" type="dark" variant="info" class="justify-content-between">
     
-    --><b-navbar-brand tag="h1" class="p-1" @click="clicked()">{{appName}}</b-navbar-brand>
+    --><b-navbar-brand tag="h1" class="p-1" @click="clicked()">{{
+        appName
+      }}</b-navbar-brand>
       <!-- 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -193,7 +195,7 @@
 
         <div class="container mt-10">
           <div class="card bg-white">
-            <img style="" :src="image" alt="" width="50%" height="auto" />
+            <img style="" :src="imagebase64" alt="" width="50%" height="auto" />
             <input
               @change="handleImage"
               class="custom-input"
@@ -287,7 +289,9 @@ export default {
   },
   data() {
     return {
-      image: "",
+      isnotcargando: false,
+      imagebase64: "",
+      imageuploadedurl: "",
       remoteUrl: "",
       nuevoposttitulo: "",
       nuevopostcomment: "",
@@ -320,8 +324,8 @@ export default {
       loading: false,
       //loginurl:"http://mediawiki.test:8080/api/users"
       //loginurl: "http://localhost:3000/api/user/register",
-      loginurl:
-        "https://agile-everglades-15507.herokuapp.com/api/user/register",
+      //loginurl: "https://agile-everglades-15507.herokuapp.com/api/user/register",
+      loginurl: "http://localhost:3000/api/user/register",
     };
   },
   mounted() {
@@ -364,12 +368,85 @@ export default {
     createBase64Image(fileObject) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.image = e.target.result;
+        this.imagebase64 = e.target.result;
         console.log("this.image");
-        console.log(this.image);
+        console.log(this.imagebase64);
         //this.uploadImage();
+        //this.image = this.uploadImageImgur(this.imagebase64);
       };
       reader.readAsDataURL(fileObject);
+    },
+    setImageUploadedUrl(nameurl) {
+      this.imageuploadedurl = nameurl;
+    },
+    async uploadImageImgur(base64code) {
+      
+      this.isnotcargando = true;
+      console.log("base64code");
+      console.log(base64code);
+      var res = base64code.split(",");
+      console.log(res[1]);
+
+      var data = new FormData();
+      data.append("image", res[1]);
+      var config = {
+        method: "post",
+        url: "https://api.imgur.com/3/image",
+        headers: {
+          Authorization: "Client-ID 3874349859f507b",
+        },
+        data: data,
+      };
+
+      var self = this;
+      await axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          console.log(response.data.data.link);
+          console.log();
+          self.setImageUploadedUrl(response.data.data.link);
+          //return response.data.data.link;
+        })
+        .catch(function (error) {
+          self.setImageUploadedUrl(false);
+          console.log(error);
+        });
+      /*
+      this.isnotcargando = true;
+      console.log("base64code");
+      console.log(base64code);
+
+      var res = base64code.split(",");
+      console.log(res[1]);
+
+      var data = new FormData();
+
+      data.append("image", res[1]);
+
+      var config = {
+        method: "post",
+        url: "https://api.imgur.com/3/image",
+        headers: {
+          Authorization: "Client-ID 3874349859f507b",
+        },
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          console.log(response.data.data.link);
+          console.log();
+          this.imageuploadedurl = response.data.data.link;
+          this.isnotcargando = false;
+          //return response.data.data.link;
+        })
+        .catch(function (error) {
+          console.log(error);
+          //return "error";
+          this.imageuploadedurl = "error";
+          this.isnotcargando = false;
+        });*/
     },
     uploadImage() {
       const { image } = this;
@@ -382,25 +459,65 @@ export default {
           return new Error(err.message);
         });
     },
-    publicar() {
-        console.log("publicar");
-      if (this.nuevoposttitulo != "" && this.nuevopostcomment != "") {
-        console.log("titulo");
-        console.log(this.nuevoposttitulo);
-        console.log("contenido");
-        console.log(this.nuevopostcomment);
-        this.postCreate(this.nuevoposttitulo, this.nuevopostcomment);
-        console.log("funciono kpo 😎");
-        this.show = false;
+    async publicar() {
+      console.log("publicar");
 
-        
-        this.nuevoposttitulo = "";
-        this.nuevopostcomment = "";
+      if (this.nuevoposttitulo != "" && this.nuevopostcomment != "") {
+        this.isnotcargando = false;
+        console.log("base64code");
+        console.log(this.imagebase64);
+        var res = this.imagebase64.split(",");
+        console.log(res[1]);
+
+        var data = new FormData();
+        data.append("image", res[1]);
+        var config = {
+          method: "post",
+          url: "https://api.imgur.com/3/image",
+          headers: {
+            Authorization: "Client-ID 3874349859f507b",
+          },
+          data: data,
+        };
+
+      var self = this;
+      await axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          console.log(response.data.data.link);
+          console.log();
+          self.setImageUploadedUrl(response.data.data.link);
+          //return response.data.data.link;
+        })
+        .catch(function (error) {
+          self.setImageUploadedUrl(false);
+          console.log(error);
+        });
+
+        if (this.isnotcargando == false) {
+          console.log("titulo");
+          console.log(this.nuevoposttitulo);
+          console.log("contenido");
+          console.log(this.nuevopostcomment);
+          this.postCreate(
+            this.nuevoposttitulo,
+            this.nuevopostcomment,
+            this.imageuploadedurl
+          );
+          console.log("funciono kpo 😎");
+          this.show = false;
+
+          this.nuevoposttitulo = "";
+          this.nuevopostcomment = "";
+        } else {
+          console.log("no funciono kpo, sigue cargando algo");
+        }
       } else {
         console.log("no funciono kpo");
       }
     },
-    postCreate(titulox, contenidox) {
+
+    postCreate(titulox, contenidox, photox) {
       /*
       {
         "username":"Afoxipeb",
@@ -418,7 +535,7 @@ export default {
         username: localStorage.username,
         //password: "req.body.password",
         password: localStorage.password,
-        photo: "String",
+        photo: photox,
       };
 
       this.$socket.emit("post", data, function (datos) {
@@ -568,7 +685,6 @@ export default {
       this.hcaptchatoken = content_from_child;
       this.userCreate(this.hcaptchatoken);
     },
-
     clickConvert() {},
     convert() {},
     userStore(response) {

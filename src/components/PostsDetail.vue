@@ -152,9 +152,8 @@ export default {
       postexample: [],
       //endpoint: "http://localhost:3000/api/post",
       //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post",
-      endpoint:
-        "https://agile-everglades-15507.herokuapp.com/api/post/" +
-        this.$route.params.id,
+      //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post/" + this.$route.params.id,
+      endpoint: "http://localhost:3000/api/post/" + this.$route.params.id,
       //https://agile-everglades-15507.herokuapp.com/api/post/5fea65d576140b6b2093cdb7
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
 
