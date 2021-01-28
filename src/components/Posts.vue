@@ -67,7 +67,8 @@ export default {
       postexample: [],
       //endpoint: "http://localhost:3000/api/post",
       //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post",
-      endpoint: "http://localhost:3000/api/post",
+      endpoint: process.env.VUE_APP_API+"/api/post/",
+      //endpoint: "http://localhost:3000/api/post",
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
 
       id: "asdasdasd",

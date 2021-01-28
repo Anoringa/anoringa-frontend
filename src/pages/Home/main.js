@@ -37,7 +37,9 @@ Vue.use(new VueSocketIO({
     //connection: 'ws://localhost:3000',
     //connection: 'ws://agile-everglades-15507.herokuapp.com',
     //connection: 'https://agile-everglades-15507.herokuapp.com',
-    connection: 'ws://localhost:3000',
+    //connection: 'ws://localhost:3000',
+    connection: process.env.VUE_APP_SOCKETIO,
+    //loginurl: "https://agile-everglades-15507.herokuapp.com/api/user/register",
     vuex: {
         store,
         actionPrefix: 'SOCKET_',

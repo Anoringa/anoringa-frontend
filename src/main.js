@@ -13,6 +13,8 @@ Vue.use(PortalVue)
 Vue.component(Vodal.name, Vodal);
 Vue.config.productionTip = false
 
+//Vue.prototype.$apiurl = 'approved'
+Vue.prototype.$apiurl = 'approved'
 
 
 //////
@@ -37,7 +39,8 @@ Vue.use(new VueSocketIO({
     //connection: 'ws://localhost:3000',
     //connection: 'ws://agile-everglades-15507.herokuapp.com',
     //connection: 'https://agile-everglades-15507.herokuapp.com',
-    connection: 'ws://localhost:3000',
+    connection: process.env.VUE_APP_SOCKETIO,
+    //connection: 'ws://localhost:3000',
     vuex: {
         store,
         actionPrefix: 'SOCKET_',

@@ -5,7 +5,7 @@
   <b-navbar toggleable="lg" type="dark" variant="info" class="justify-content-between">
     
     --><b-navbar-brand tag="h1" class="p-1" @click="clicked()">{{
-        appName
+    appNamex
       }}</b-navbar-brand>
       <!-- 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -273,6 +273,9 @@ import store from "../store";
 //import ModalCreatePost from "./modals/ModalCreatePost";
 import ModalLogin from "./modals/ModalLogin";
 
+//import { myVar, Settings } from '../environment.js'
+
+
 export default {
   props: {
     appName: {
@@ -289,6 +292,7 @@ export default {
   },
   data() {
     return {
+      appNamex : process.env.VUE_APP_NAME,
       isnotcargando: false,
       imagebase64: "",
       imageuploadedurl: "",
@@ -324,11 +328,15 @@ export default {
       loading: false,
       //loginurl:"http://mediawiki.test:8080/api/users"
       //loginurl: "http://localhost:3000/api/user/register",
+      //console.log(process.env)
       //loginurl: "https://agile-everglades-15507.herokuapp.com/api/user/register",
-      loginurl: "http://localhost:3000/api/user/register",
+      loginurl: process.env.VUE_APP_API+"/api/user/register",
+      //loginurl: "http://localhost:3000/api/user/register",
     };
   },
   mounted() {
+    console.log(process.env)
+
     /*
     if (localStorage.hcaptchatoken) {
       this.hcaptchatoken = localStorage.hcaptchatoken;

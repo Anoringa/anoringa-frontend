@@ -188,8 +188,8 @@ export default {
       //loginurl:"http://mediawiki.test:8080/api/users"
       //loginurl: "http://localhost:3000/api/user/register",
       //loginurl: "https://agile-everglades-15507.herokuapp.com/api/user/register",
-      loginurl:
-        "http://localhost:3000/api/user/register",
+      loginurl: process.env.VUE_APP_API+"/api/user/register",
+      //loginurl: "http://localhost:3000/api/user/register",
     };
   },
 

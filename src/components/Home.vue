@@ -24,6 +24,8 @@ export default {
   },
   data() {
     return {
+      xurl: process.env.VUE_APP_URL, 
+      xtitle: process.env.VUE_APP_TITLE ,
       appName: "Anoringa",
       apiKey: "<YOUR_RAPIDAPI_KEY>",
       fromCurrency: "",
@@ -33,6 +35,11 @@ export default {
       convertClicked: false,
       loading: false,
     };
+  },
+  created() {
+    console.log('Hello!');
+    console.log(xtitle);
+    console.log(xurl);
   },
   methods: {
     clickConvert() {},
