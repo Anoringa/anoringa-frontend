@@ -245,7 +245,7 @@
         <b>Crazy cat</b>
         <p class="float-left">🐱‍🐉</p>
         <!-- Emulate built in modal footer ok and cancel button actions -->
-        <b-button size="sm" variant="success" @click="publicar, (show = false)">
+        <b-button size="sm" variant="success" @click="publicar">
           Publicar
         </b-button>
         <b-button size="sm" variant="danger" @click="show = false">
@@ -383,6 +383,7 @@ export default {
         });
     },
     publicar() {
+        console.log("publicar");
       if (this.nuevoposttitulo != "" && this.nuevopostcomment != "") {
         console.log("titulo");
         console.log(this.nuevoposttitulo);
@@ -390,7 +391,9 @@ export default {
         console.log(this.nuevopostcomment);
         this.postCreate(this.nuevoposttitulo, this.nuevopostcomment);
         console.log("funciono kpo 😎");
-        this.showModal = false;
+        this.show = false;
+
+        
         this.nuevoposttitulo = "";
         this.nuevopostcomment = "";
       } else {
