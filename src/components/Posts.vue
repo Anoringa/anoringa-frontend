@@ -34,7 +34,8 @@
     -->
 
       <call-dialog-link
-        v-for="item in posts"
+      
+        v-for="item in orderBy(posts, 'updatedAt', -1)"
         :key="item._id"
         :id="item._id"
         :url="url"
@@ -62,8 +63,20 @@ import Card from "./Card";
 import { EventBus } from "../event-bus";
 
 import axios from "axios";
+import Vue2Filters from 'vue2-filters'
+
 
 export default {
+  /*
+  computed: {
+    filteredOfficialScenarios() {
+      return posts
+        .filter(s => new Date(s.updatedAt) >= START_DATE)
+        .sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt)
+      );
+    },
+  },*/
+  mixins: [Vue2Filters.mixin],
   data() {
     return {
       posts: [],

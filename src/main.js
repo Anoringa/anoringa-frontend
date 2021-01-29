@@ -10,6 +10,11 @@ import PortalVue from 'portal-vue'
 Vue.use(PortalVue)
 */
 
+import Vue2Filters from 'vue2-filters'
+
+Vue.use(Vue2Filters)
+
+
 Vue.component(Vodal.name, Vodal);
 Vue.config.productionTip = false
 
