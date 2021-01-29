@@ -9,6 +9,7 @@
     
     :content="content"
     -->
+      <!--
       <call-dialog-link
         :id="id"
         :url="url"
@@ -29,6 +30,8 @@
         label="Remove"
         css-classes="alert"
       ></call-dialog-link>
+    
+    -->
 
       <call-dialog-link
         v-for="item in posts"

@@ -482,10 +482,17 @@ export default {
           
           postid: this.$route.params.id,
         };
+        this.nuevoComemtarioTexto = "";
 
+      var self = this;
         this.$socket.emit("comment", data, function (datos) {
           console.log("socket.io emit");
-          console.log(datos);
+          console.log(datos); 
+          
+          
+          datos.createdAt =  moment().toISOString();
+          datos.updatedAt =  moment().toISOString();
+          self.comments.push(datos);
           //this.$root.$emit("component1"); //like this
           //this.$root.$emit("component1", "datos", datos);
           //this.$root.$emit("createImage", "datos", datos);
