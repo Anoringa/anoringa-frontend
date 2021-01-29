@@ -164,18 +164,21 @@
               <form class="pt-3">
                 <div class="row">
                   <div class="form-group pl-3 pt-3">
+                    <!--
                     <label class="typo__label">Responder a...</label>
+                    -->
                     <multiselect
                       v-model="value"
-                      :options="options"
+                      :options="comments"
                       :multiple="true"
                       :close-on-select="false"
                       :clear-on-select="false"
                       :preserve-search="true"
-                      placeholder="Elije a quien responder"
-                      label="name"
-                      track-by="name"
-                      :preselect-first="true"
+                      placeholder="Responder a..."
+                      label="text"
+                      track-by="_id"
+                      :preselect-first="false"
+                      @input="onChange"
                     >
                       <template
                         slot="selection"
@@ -358,7 +361,7 @@ export default {
     return {
       nuevoComemtarioTexto: "",
       nuevoComemtarioEnRespuestaDe: [],
-
+      ListaDeIdsDeComentarios:[],
       value: [],
       options: [
         { name: "Vue.js", language: "JavaScript" },
@@ -463,6 +466,13 @@ export default {
     /**/
   },
   methods: {
+    onChange (value) {
+      this.value = value
+      console.log("comentarios a los que va a responder")
+      console.log(value)
+      this.ListaDeIdsDeComentarios = value.map(({ _id }) => _id)
+      console.log(this.ListaDeIdsDeComentarios)
+    },
     crearComentario() {
       if (
         this.nuevoComemtarioTexto != "" &&
@@ -472,6 +482,13 @@ export default {
         console.log(this.nuevoComemtarioTexto);
 
         console.log("Comemtario Create");
+
+
+   
+
+        
+
+
         var data = {
           username: localStorage.username,
           //password: "req.body.password",
@@ -480,10 +497,12 @@ export default {
           
           text: this.nuevoComemtarioTexto,
 
-
+          inResponseTo: this.ListaDeIdsDeComentarios,
           
           postid: this.$route.params.id,
         };
+        this.value = [];
+        this.ListaDeIdsDeComentarios = [];
         this.nuevoComemtarioTexto = "";
 
       var self = this;
