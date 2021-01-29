@@ -234,7 +234,7 @@
                   <div
                     class="repo"
                     style="text-align: left"
-                    v-for="currentComent in comments"
+                    v-for="currentComent in orderBy(comments, 'updatedAt', -1)"
                     :id="currentComent._id"
                     :key="currentComent._id"
                   >
@@ -341,11 +341,13 @@ console.log(txt2);
       */
 import moment from 'moment'
 import axios from "axios";
+import Vue2Filters from 'vue2-filters'
 
 
 moment.locale('es');
 
 export default {
+  mixins: [Vue2Filters.mixin],
   filters: {
   moment: function (date) {
     //return moment(date).format('MMMM Do YYYY, h:mm:ss a');
