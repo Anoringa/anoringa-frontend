@@ -174,6 +174,7 @@ export default {
     connect: function () {
       console.log("socket connected");
     },
+    /*
     post: function (data) {
       console.log(
         'this method was fired by the socket server. eg: io.emit("customEmit", data)',
@@ -185,6 +186,7 @@ export default {
       //this.item = ['<call-dialog-link :id="id" :url="url" :photo="photo" :title="new message socket" message="Are you sure you wish to remove this record?" content="Are you sure you wish to remove this record?" label="Remove" css-classes="alert" ></call-dialog-link>'];
       this.post.push(data);
     },
+    */
   },
   mounted() {
     /*

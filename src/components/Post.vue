@@ -68,7 +68,7 @@
           <b-col lg="6" style="background-color: lavender">
             <div>
               <img
-                :src=" photo ? photo :  photodefault "
+                :src="photo ? photo : photodefault"
                 class="img-fluid post-img"
                 alt="Responsive image"
               />
@@ -163,15 +163,46 @@
             <div style="width: 100%">
               <form class="pt-3">
                 <div class="row">
+                  <div class="form-group pl-3 pt-3">
+                    <label class="typo__label">Responder a...</label>
+                    <multiselect
+                      v-model="value"
+                      :options="options"
+                      :multiple="true"
+                      :close-on-select="false"
+                      :clear-on-select="false"
+                      :preserve-search="true"
+                      placeholder="Elije a quien responder"
+                      label="name"
+                      track-by="name"
+                      :preselect-first="true"
+                    >
+                      <template
+                        slot="selection"
+                        slot-scope="{ values, search, isOpen }"
+                        ><span
+                          class="multiselect__single"
+                          v-if="values.length &amp;&amp; !isOpen"
+                          >respondiendo a {{ values.length }} comentarios</span
+                        ></template
+                      >
+                    </multiselect>
+                    <!--
+                    <pre class="language-json"><code>{{ value  }}</code></pre>
+                    -->
+                  </div>
+                  <!--
                   <div class="col">
                     <input
                       type="text"
                       class="form-control"
-                      id="email"
-                      placeholder="Enter email"
+                      id="nuevoComentario"
+                      placeholder="En respuesta de..."
                       name="email"
                     />
                   </div>
+                  -->
+                  <!--
                   <div class="col">
                     <input
                       type="password"
@@ -179,24 +210,37 @@
                       placeholder="Enter password"
                       name="pswd"
                     />
-                  </div>
+                  </div>-->
                 </div>
               </form>
-              <div class="form-group">
-                <label for="comment">Comment:</label>
-                <textarea class="form-control" rows="5" id="comment"></textarea>
+              <div class="form-group pt-3">
+                <!--
+                <label for="comment">el comentario:</label>
+                -->
+                <textarea
+                  v-model="nuevoComemtarioTexto"
+                  class="form-control"
+                  placeholder="Comentario..."
+                  rows="2"
+                  id="comment"
+                ></textarea>
+
+                <b-button class="m-3" v-b-modal.modal-1 @click="crearComentario"
+                  >Enviar Comentario</b-button
+                >
+
                 <div id="comentarios" class="pt-3"></div>
-                <div v-if="comentariosList !== null">
+                <div v-if="comments !== null">
                   <div
                     class="repo"
                     style="text-align: left"
-                    v-for="currentComent in comentariosList"
-                    :id="currentComent.id"
-                    :key="currentComent.id"
+                    v-for="currentComent in comments"
+                    :id="currentComent._id"
+                    :key="currentComent._id"
                   >
                     <div class="stats">
-                      <a class="pr-1" :href="'#' + currentComent.id"
-                        >@{{ currentComent.id }}</a
+                      <a class="pr-1" :href="'#' + currentComent._id"
+                        >@{{ currentComent._id }}</a
                       >por {{ currentComent.username }}
                       <!-- 
                       <a v-text="currentComent.inResponseTo"></a>
@@ -214,9 +258,9 @@
                         >
                       </a>
                     </div>
-                    <p class="">{{ currentComent.content }}</p>
+                    <p class="">{{ currentComent.text }}</p>
                     <p class="last-updated">
-                      Last updated: {{ currentComent.created_at }}.
+                      Publicado {{ currentComent.createdAt | moment }}.
                     </p>
                   </div>
 
@@ -260,6 +304,10 @@
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import $ from "jquery";
+import Multiselect from "vue-multiselect";
+import { EventBus } from "../event-bus";
+
+//Vue.component('multiselect', Multiselect)
 
 import Header from "./Header";
 /*
@@ -291,15 +339,37 @@ console.log(txt2);
 
       $("body").append("<p>Text.</p>")
       */
-
+import moment from 'moment'
 import axios from "axios";
 
+
+moment.locale('es');
+
 export default {
+  filters: {
+  moment: function (date) {
+    //return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+    return moment(date).fromNow();
+  }
+},
   data() {
     return {
+      nuevoComemtarioTexto: "",
+      nuevoComemtarioEnRespuestaDe: [],
+
+      value: [],
+      options: [
+        { name: "Vue.js", language: "JavaScript" },
+        { name: "Adonis", language: "JavaScript" },
+        { name: "Rails", language: "Ruby" },
+        { name: "Sinatra", language: "Ruby" },
+        { name: "Laravel", language: "PHP" },
+        { name: "Phoenix", language: "Elixir" },
+      ],
+
       photodefault: "https://picsum.photos/200?random=1",
       appName: "Anoringa",
-      //posts: [],
+      comentarios: [],
       comentariosList: [
         {
           id: 20949438,
@@ -323,13 +393,12 @@ export default {
           created_at: 12312948123,
         },
       ],
-      comments: [],
       postexample: [],
       //endpoint: "http://localhost:3000/api/post",
       //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post",
       //endpoint: "http://localhost:3000/api/post/" + this.$route.params.id,
       //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post/" + this.$route.params.id,
-      endpoint: process.env.VUE_APP_API+"/api/post/" + this.$route.params.id,
+      endpoint: process.env.VUE_APP_API + "/api/post/" + this.$route.params.id,
 
       //https://agile-everglades-15507.herokuapp.com/api/post/5fea65d576140b6b2093cdb7
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
@@ -338,6 +407,7 @@ export default {
       url: "asdasdasd",
       photo: "https://picsum.photos/200?random=1",
       title: "some title",
+      comments:[],
       content: "some scrap contenido",
       loaded_correctly: false,
     };
@@ -346,6 +416,7 @@ export default {
   name: "Post",
   components: {
     //History,
+    Multiselect,
     Header,
   },
 
@@ -356,17 +427,24 @@ export default {
     connect: function () {
       console.log("socket connected");
     },
-    post: function (data) {
+    comment: function (data) {
       console.log(
         'this method was fired by the socket server. eg: io.emit("customEmit", data)',
         data
       );
+      console.log('New Comentario arrived');
+      
 
       //  :key="item._id""item._id" "url" "photo" title description
 
       //this.item = ['<call-dialog-link :id="id" :url="url" :photo="photo" :title="new message socket" message="Are you sure you wish to remove this record?" content="Are you sure you wish to remove this record?" label="Remove" css-classes="alert" ></call-dialog-link>'];
-      this.post.push(data);
+      
+      data.createdAt =  moment().toISOString();
+      data.updatedAt =  moment().toISOString();
+      this.comments.push(data);
     },
+    /*
+    */
   },
   mounted() {
     /*
@@ -383,6 +461,202 @@ export default {
     /**/
   },
   methods: {
+    crearComentario() {
+      if (
+        this.nuevoComemtarioTexto != "" &&
+        this.nuevoComemtarioTexto != null
+      ) {
+        console.log("this.nuevoComemtarioTexto if true");
+        console.log(this.nuevoComemtarioTexto);
+
+        console.log("Comemtario Create");
+        var data = {
+          username: localStorage.username,
+          //password: "req.body.password",
+          password: localStorage.password,
+
+          
+          text: this.nuevoComemtarioTexto,
+
+
+          
+          postid: this.$route.params.id,
+        };
+
+        this.$socket.emit("comment", data, function (datos) {
+          console.log("socket.io emit");
+          console.log(datos);
+          //this.$root.$emit("component1"); //like this
+          //this.$root.$emit("component1", "datos", datos);
+          //this.$root.$emit("createImage", "datos", datos);
+          //EventBus.$emit("createImage", "datos", datos);
+          //window.Evento.$emit("createImage", "datos", datos);
+          //this.posts.push(datos);
+        });
+
+
+
+      } else {
+        console.log("this.nuevoComemtarioTexto if false");
+        console.log(this.nuevoComemtarioTexto);
+      }
+    },
+    postCreate(titulox, contenidox, photox) {
+      /*
+      {
+        "username":"Afoxipeb",
+        "password":"JJAsjChPvmwvc2qOcRpMoJnogtv9jcQe",
+        "title":"Como ser como one punch man",
+        "photo":"somepick",
+        "content":"hola mundo este es mi nuevo blog"
+      }
+      */
+
+      console.log("postCreate");
+      var data = {
+        title: titulox,
+        description: contenidox,
+        username: localStorage.username,
+        //password: "req.body.password",
+        password: localStorage.password,
+        photo: photox,
+      };
+
+      this.$socket.emit("post", data, function (datos) {
+        console.log("socket.io emit");
+        console.log(datos);
+        //this.$root.$emit("component1"); //like this
+        //this.$root.$emit("component1", "datos", datos);
+        //this.$root.$emit("createImage", "datos", datos);
+        EventBus.$emit("createImage", "datos", datos);
+        //window.Evento.$emit("createImage", "datos", datos);
+        //this.posts.push(datos);
+      });
+      /*
+
+      WORKS
+      import axios from "axios";
+      var qs = require("qs");
+      var data = qs.stringify({
+        title: titulox,
+        description: contenidox,
+        photo: "3214htrff4",
+      });
+      var config = {
+        method: "post",
+        url: "http://localhost:3000/api/post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmU3ODgzNjM0NGMwMDRkM2NlNWExNDgiLCJ1c2VybmFtZSI6InJhdWw0NjIyIiwicGFzc3dvcmQiOiIkMmIkMTAkdXdYbFMvd2o3QXRVbmVVMnZVb3FoZWpZUW1rZWl3TnFRazBiMGR0UDF4VDJvMWFmTEFPR1ciLCJpYXQiOjE2MDkxMzU3NDksImV4cCI6MTYwOTE0Mjk0OX0.iAC3NVGRnu3xz6qpZxh6Hpx7AReSAkY33_s424Hw5VE",
+        },
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+        })
+        .then((response) => console.log(response))
+        .catch(function (error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+
+
+
+        */
+
+      /*
+      var config = {
+        method: "post",
+        url: "http://localhost:3000/api/post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmU3ODgzNjM0NGMwMDRkM2NlNWExNDgiLCJ1c2VybmFtZSI6InJhdWw0NjIyIiwicGFzc3dvcmQiOiIkMmIkMTAkdXdYbFMvd2o3QXRVbmVVMnZVb3FoZWpZUW1rZWl3TnFRazBiMGR0UDF4VDJvMWFmTEFPR1ciLCJpYXQiOjE2MDkxMzU3NDksImV4cCI6MTYwOTE0Mjk0OX0.iAC3NVGRnu3xz6qpZxh6Hpx7AReSAkY33_s424Hw5VE",
+        },
+        data: {
+          username: localStorage.username,
+          password: localStorage.password,
+          title: titulox,
+          photo: "somephoto",
+          description: contenidox,
+        },
+      };
+      */
+      /*
+      axios
+        .request({
+          method: config.method,
+          url: config.url,
+          data: config.data,
+          headers: config.headers,
+        })
+        .then((response) => console.log(response))
+        .catch(function (error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+        */
+      /*
+      axios
+        .post("http://127.0.0.1:8080/api/posts", {
+          username: localStorage.username,
+          password: localStorage.password,
+          title: titulox,
+          photo: "somephoto",
+          content: contenidox,
+        })
+        .then((response) => console.log(response))
+        .catch(function (error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+        */
+    },
     getPostsExample() {
       axios
         .get(this.examplesource)
@@ -406,6 +680,7 @@ export default {
           this.loaded_correctly = true;
           this.title = this.post.title;
           this.content = this.post.description;
+          this.comments = this.post.comments;
           this.photo = this.post.photo;
         })
         .catch((error) => {
@@ -418,6 +693,7 @@ export default {
 </script>
 
 
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="css" scoped>
 *,
