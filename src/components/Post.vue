@@ -452,7 +452,20 @@ export default {
       postcreatedAt: "",
     };
   },
-
+metaInfo() {
+        return {
+            title: `${this.title} - Anoringa`,
+            meta: [
+                { name: 'description', content: 'Mira ' + this.title + ' en Anoringa'},
+                { property: 'og:title', content: this.title + ' - Anoringa'},
+                { property: 'og:site_name', content: "Anoringa" },
+                { property: 'og:description', content: this.content.substring(0, 30)+"..."},
+                {property: 'og:type', content: 'article'},
+                {property: 'og:url', content: 'https://anoringa.netlify.app/post/' + this.id},
+                {property: 'og:image', content: 'https://anoringa.netlify.app/'+"/anoringa.png" }    
+            ]
+        }
+    },
   name: "Post",
   components: {
     //History,

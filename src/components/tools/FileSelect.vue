@@ -76,7 +76,7 @@
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import Login from "./Login";
-import swal from "sweetalert";
+//import swal from "sweetalert";
 
 export default {
   props: {
@@ -84,10 +84,6 @@ export default {
       type: String,
       required: true,
     },
-    appName: {
-      type: String,
-      required: true,
-    }
     },
   name: "Header",
   components: {

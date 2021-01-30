@@ -10,7 +10,7 @@ module.exports = {
     'index': {
       entry: './src/pages/Home/main.js',
       template: 'public/index.html',
-      title: 'Home',
+      title: 'Anoringa',
       chunks: [ 'chunk-vendors', 'chunk-common', 'index' ]
     },
     'l': {
@@ -27,14 +27,15 @@ module.exports = {
     msTileColor: '#f0354b',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
+    start_url: '/',
     iconPaths: {
-      favicon32: 'img/icons/favicon-32x32.png',
-      favicon16: 'img/icons/favicon-16x16.png',
-      appleTouchIcon: 'img/icons/apple-touch-icon-152x152.png',
-      maskIcon: 'img/icons/safari-pinned-tab.svg',
-      msTileImage: 'img/icons/msapplication-icon-144x144.png'
-    },
-    manifestPath:'/manifest.json'
+      favicon32: './public/icons/favicon-32x32.png',
+      favicon16: './public/icons/favicon-16x16.png',
+      appleTouchIcon: './public/icons/apple-touch-icon-152x152.png',
+      maskIcon: './public/icons/safari-pinned-tab.svg',
+      msTileImage: './public/icons/msapplication-icon-144x144.png'
+    },/*
+    manifestPath:'/manifest.json'*/
   }
 };
 

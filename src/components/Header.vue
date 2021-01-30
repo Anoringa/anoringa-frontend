@@ -61,7 +61,7 @@
               <template #button-content>
                 <img
                   type="button"
-                  src="user.png"
+                  src="/user.png"
                   width="30"
                   height="30"
                   alt="logo"

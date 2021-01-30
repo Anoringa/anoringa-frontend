@@ -10,8 +10,11 @@ import PortalVue from 'portal-vue'
 Vue.use(PortalVue)
 */
 
-import Vue2Filters from 'vue2-filters'
 
+import VueMeta from 'vue-meta'
+Vue.use(VueMeta)
+
+import Vue2Filters from 'vue2-filters'
 Vue.use(Vue2Filters)
 
 
@@ -38,7 +41,7 @@ Vue.use(VueSocketIO, SocketInstance)
 
 //https://www.npmjs.com/package/vue-socket.io
 import VueSocketIO from 'vue-socket.io'
- 
+
 Vue.use(new VueSocketIO({
     debug: true,
     //connection: 'ws://localhost:3000',
@@ -71,6 +74,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import './registerServiceWorker'
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 //@import "vodal/common.css";

@@ -50,6 +50,6 @@
     ],
     "theme_color": "#f0354b",
     "background_color": "#f0354b",
-    "start_url": "https://anoringa.netlify.app/",
+    "start_url": "/",
     "display": "standalone"
 }
