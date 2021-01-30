@@ -61,17 +61,19 @@
               <template #button-content>
                 <img
                   type="button"
-                  src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png"
+                  src="user.png"
                   width="30"
                   height="30"
                   alt="logo"
                   class="dropdown-toggle"
                   data-toggle="dropdown"
+                  style="border-radius: 50%;"
                 />
               </template>
               <!--
               <b-dropdown-item>
             <ModalCreatePost v-on:event_child="eventChild"></ModalCreatePost></b-dropdown-item>
+                  src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png"
                 -->
               <b-dropdown-item @click="show = true"
                 >Postear algo</b-dropdown-item

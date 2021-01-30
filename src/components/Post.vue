@@ -193,7 +193,10 @@
                       track-by="_id"
                       :preselect-first="false"
                       @input="onChange"
+                      no-result="Oops! No list items."
                     >
+                    
+
                       <template
                         slot="selection"
                         slot-scope="{ values, search, isOpen }"
