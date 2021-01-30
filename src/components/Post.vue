@@ -70,7 +70,7 @@
               <img
                 :src="photo ? photo : photodefault"
                 class="img-fluid post-img"
-                alt="Responsive image"
+                alt="aca iria una foto pero nose donde esta"
               />
 
               <!-- 
@@ -93,9 +93,21 @@
               {{ title }}
             </h2>
 
-            <pre class="pb-5" style="text-align: left; overflow: inherit">{{
-              content
-            }}</pre>
+            <pre
+              class="pb-5"
+              style="
+                text-align: left;
+                word-wrap: break-word;
+                white-space: pre-wrap;
+              "
+              >{{ content }}</pre
+            >
+
+            <div class="stats">
+              <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
+              >por {{ userowner.username }}
+            </div>
+            <p class="last-updated">Publicado {{ postcreatedAt | moment }}.</p>
             <!--
               pt-2 pb-5 pl-3
                 src="https://www.w3schools.com/bootstrap4/cinqueterre.jpg"
@@ -174,8 +186,10 @@
                       :close-on-select="false"
                       :clear-on-select="false"
                       :preserve-search="true"
+                      selectLabel="Presiona para seleccionar"
+                      deselectLabel="Presiona para deseleccionar"
                       placeholder="Responder a..."
-                      label="text"
+                      label="_id"
                       track-by="_id"
                       :preselect-first="false"
                       @input="onChange"
@@ -183,12 +197,16 @@
                       <template
                         slot="selection"
                         slot-scope="{ values, search, isOpen }"
-                        ><span
+                      >
+                        <span
                           class="multiselect__single"
                           v-if="values.length &amp;&amp; !isOpen"
-                          >respondiendo a {{ values.length }} comentarios</span
-                        ></template
-                      >
+                        >
+                          <div v-if="values.length > 1">respondiendo a {{ values.length }} comentarios</div>
+                          <div v-else>respondiendo a {{ values.length }} comentario</div>
+                          
+                        </span>
+                      </template>
                     </multiselect>
                     <!--
                     <pre class="language-json"><code>{{ value  }}</code></pre>
@@ -241,10 +259,24 @@
                     :id="currentComent._id"
                     :key="currentComent._id"
                   >
-                    <div class="stats">
+                    <div
+                      class="stats"
+                      style="word-wrap: break-word; white-space: pre-wrap"
+                    >
                       <a class="pr-1" :href="'#' + currentComent._id"
                         >@{{ currentComent._id }}</a
-                      >por {{ currentComent.username }}
+                      >
+                      <a
+                        v-bind:style="[
+                          isTheOwner(currentComent.username)
+                            ? 'color: red;'
+                            : 'color: white;',
+                        ]"
+                        >por {{ currentComent.username }}</a
+                      >
+                      <a v-if="currentComent.username == userowner.username"
+                        >👃</a
+                      >
                       <!-- 
                       <a v-text="currentComent.inResponseTo"></a>
                       
@@ -261,8 +293,13 @@
                         >
                       </a>
                     </div>
-                    <p class="">{{ currentComent.text }}</p>
-                    <p class="last-updated">
+                    <p
+                      class=""
+                      style="word-wrap: break-word; white-space: pre-wrap"
+                    >
+                      {{ currentComent.text }}
+                    </p>
+                    <p class="last-updated" style="color: red">
                       Publicado {{ currentComent.createdAt | moment }}.
                     </p>
                   </div>
@@ -284,14 +321,7 @@
             </div>
           </b-col>
         </b-row>
-
-        <footer>
-          <p>
-            <a href="#">Contact Us</a> | <a href="#">Sitemap</a> |
-            <a href="#">Privacy Policy</a>
-          </p>
-          <p>&copy;2021 Copyright info here...</p>
-        </footer>
+        <Footer></Footer>
       </div>
     </div>
     <div v-else>
@@ -313,6 +343,7 @@ import { EventBus } from "../event-bus";
 //Vue.component('multiselect', Multiselect)
 
 import Header from "./Header";
+import Footer from "./Footer";
 /*
       <div class="repo">
           <div class="stats">en respuesta de @sjdkdj @asdas</div>
@@ -342,26 +373,26 @@ console.log(txt2);
 
       $("body").append("<p>Text.</p>")
       */
-import moment from 'moment'
+import moment from "moment";
 import axios from "axios";
-import Vue2Filters from 'vue2-filters'
+import Vue2Filters from "vue2-filters";
 
-
-moment.locale('es');
+moment.locale("es");
 
 export default {
   mixins: [Vue2Filters.mixin],
   filters: {
-  moment: function (date) {
-    //return moment(date).format('MMMM Do YYYY, h:mm:ss a');
-    return moment(date).fromNow();
-  }
-},
+    moment: function (date) {
+      //return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+      return moment(date).fromNow();
+    },
+  },
   data() {
     return {
+      id: "",
       nuevoComemtarioTexto: "",
       nuevoComemtarioEnRespuestaDe: [],
-      ListaDeIdsDeComentarios:[],
+      ListaDeIdsDeComentarios: [],
       value: [],
       options: [
         { name: "Vue.js", language: "JavaScript" },
@@ -374,6 +405,7 @@ export default {
 
       photodefault: "https://picsum.photos/200?random=1",
       appName: "Anoringa",
+      userowner: null,
       comentarios: [],
       comentariosList: [
         {
@@ -408,13 +440,13 @@ export default {
       //https://agile-everglades-15507.herokuapp.com/api/post/5fea65d576140b6b2093cdb7
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
 
-      id: "asdasdasd",
       url: "asdasdasd",
       photo: "https://picsum.photos/200?random=1",
       title: "some title",
-      comments:[],
+      comments: [],
       content: "some scrap contenido",
       loaded_correctly: false,
+      postcreatedAt: "",
     };
   },
 
@@ -423,6 +455,7 @@ export default {
     //History,
     Multiselect,
     Header,
+    Footer,
   },
 
   created() {
@@ -437,19 +470,18 @@ export default {
         'this method was fired by the socket server. eg: io.emit("customEmit", data)',
         data
       );
-      console.log('New Comentario arrived');
-      
+      console.log("New Comentario arrived");
 
       //  :key="item._id""item._id" "url" "photo" title description
 
       //this.item = ['<call-dialog-link :id="id" :url="url" :photo="photo" :title="new message socket" message="Are you sure you wish to remove this record?" content="Are you sure you wish to remove this record?" label="Remove" css-classes="alert" ></call-dialog-link>'];
-      
-      data.createdAt =  moment().toISOString();
-      data.updatedAt =  moment().toISOString();
+
+      data.createdAt = moment().toISOString();
+      data.updatedAt = moment().toISOString();
       this.comments.push(data);
     },
     /*
-    */
+     */
   },
   mounted() {
     /*
@@ -466,12 +498,21 @@ export default {
     /**/
   },
   methods: {
-    onChange (value) {
-      this.value = value
-      console.log("comentarios a los que va a responder")
-      console.log(value)
-      this.ListaDeIdsDeComentarios = value.map(({ _id }) => _id)
-      console.log(this.ListaDeIdsDeComentarios)
+    isTheOwner(someone) {
+      if (someone == this.userowner.username) {
+        console.log("is the owner");
+        return true;
+      } else {
+        console.log("is a simple mortal");
+        return false;
+      }
+    },
+    onChange(value) {
+      this.value = value;
+      console.log("comentarios a los que va a responder");
+      console.log(value);
+      this.ListaDeIdsDeComentarios = value.map(({ _id }) => _id);
+      console.log(this.ListaDeIdsDeComentarios);
     },
     crearComentario() {
       if (
@@ -483,36 +524,28 @@ export default {
 
         console.log("Comemtario Create");
 
-
-   
-
-        
-
-
         var data = {
           username: localStorage.username,
           //password: "req.body.password",
           password: localStorage.password,
 
-          
           text: this.nuevoComemtarioTexto,
 
           inResponseTo: this.ListaDeIdsDeComentarios,
-          
+
           postid: this.$route.params.id,
         };
         this.value = [];
         this.ListaDeIdsDeComentarios = [];
         this.nuevoComemtarioTexto = "";
 
-      var self = this;
+        var self = this;
         this.$socket.emit("comment", data, function (datos) {
           console.log("socket.io emit");
-          console.log(datos); 
-          
-          
-          datos.createdAt =  moment().toISOString();
-          datos.updatedAt =  moment().toISOString();
+          console.log(datos);
+
+          datos.createdAt = moment().toISOString();
+          datos.updatedAt = moment().toISOString();
           self.comments.push(datos);
           //this.$root.$emit("component1"); //like this
           //this.$root.$emit("component1", "datos", datos);
@@ -521,9 +554,6 @@ export default {
           //window.Evento.$emit("createImage", "datos", datos);
           //this.posts.push(datos);
         });
-
-
-
       } else {
         console.log("this.nuevoComemtarioTexto if false");
         console.log(this.nuevoComemtarioTexto);
@@ -710,6 +740,9 @@ export default {
           this.content = this.post.description;
           this.comments = this.post.comments;
           this.photo = this.post.photo;
+          this.userowner = this.post.user[0];
+          this.id = this.post._id;
+          this.postcreatedAt = this.post.createdAt;
         })
         .catch((error) => {
           console.log("-----error-------");
@@ -881,8 +914,8 @@ footer {
   */
   top: 0;
   left: 0;
-  height: 300px;
-  width: 300px;
+  /*height: 300px;
+  width: 300px;*/
   object-fit: cover;
 }
 

@@ -3,13 +3,16 @@
     <nav class="navbar navbar-expand bg-danger justify-content-between">
       <!--
   <b-navbar toggleable="lg" type="dark" variant="info" class="justify-content-between">
-    
-    --><b-navbar-brand tag="h1" class="p-1" @click="clicked()">{{
+    <b-navbar-brand tag="h1" class="p-1" @click="clicked()">{{
     appNamex
       }}</b-navbar-brand>
+    -->
+      <b-navbar-brand tag="h1" class="p-1" @click="clicked()">
+    <b-link href="/" style="font-weight: medium;text-decoration: none;color: #212529;">{{appNamex}}</b-link>
+      </b-navbar-brand>
       <!-- 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
+ 
     <b-collapse id="nav-collapse" is-nav>
 
       <b-navbar-nav class="ml-auto">
@@ -44,13 +47,7 @@
         </div>
 
         <div v-else-if="loggedstate === true">
-          <b-nav-text class="pl-1 pr-1"> hola {{ username }} </b-nav-text>
-
-          <b-nav-text class="pl-1 pr-1">
-            <!-- 
-              <ModalCreatePost v-on:event_child="eventChild"></ModalCreatePost>
-              -->
-          </b-nav-text>
+          <b-nav-text class="pl-1 pr-1" style=""> hola {{ username }} </b-nav-text>
 
           <b-nav-text class="pl-1 pr-1">
             <b-dropdown

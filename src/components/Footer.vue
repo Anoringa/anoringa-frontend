@@ -1,24 +1,13 @@
+
+
 <template>
-  <div
-    class="card card-1 clickAble"
-    v-bind:style="[
-      photo
-        ? {
-            'background-image': 'url(' + photo + '), url(' + photodefault + ')',
-          }
-        : { 'background-image': 'url(' + photodefault + ')' },
-    ]"
-    :id="id"
-    :href="postlink"
-  >
-    <a v-bind:href="'/post/' + id" style="display: block; height: 100%;text-decoration: none;color: white;">
-      <div class="thumb-anim">
-        <h3 class="thumb-title">{{ title }}</h3>
-        <p class="thumb-description">{{ content }}</p>
-      </div>
-      <div class="thumb-author">{{ photo }}</div>
-    </a>
-  </div>
+    <footer>
+        <p>
+        <a href="https://www.youtube.com/watch?v=oszhW4gaI7k">Contactanos</a> | <a href="/">Pagina de inicio</a> |
+        <a href="/politicas.html">Politica de privacidad</a>
+        </p>
+        <p>&copy;2021 Copyright</p>
+    </footer>
 
   <!--
 
@@ -74,7 +63,7 @@ export default {
   props: {
     id: {
       //type: String,
-      required: true,
+      required: false,
     },
     url: {
       type: String,
@@ -82,11 +71,11 @@ export default {
     },
     message: {
       type: String,
-      required: true,
+      required: false,
     },
     label: {
       type: String,
-      required: true,
+      required: false,
     },
     cssClasses: {
       type: String,
@@ -111,6 +100,7 @@ export default {
       postlink: "/post/" + this.id,
     };
   },
+  name: "Footer",
   mounted() {
     /*
             window.EventHandler.listen('remove-dialog-' + this.id + '-called', (data) => {
@@ -150,7 +140,7 @@ $bright: #ddd;
   display: inline-block;
   height: 200px;
   width: 200px;
-  margin: 0.5rem;
+  margin: 1rem;
   position: relative;
 
   /*

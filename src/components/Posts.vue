@@ -49,6 +49,8 @@
         <!-- content -->
       </call-dialog-link>
     </div>
+    
+    <Footer></Footer>
   </main>
 </template>
 
@@ -60,6 +62,7 @@
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import Card from "./Card";
+import Footer from "./Footer";
 import { EventBus } from "../event-bus";
 
 import axios from "axios";
@@ -96,6 +99,7 @@ export default {
   },
   components: {
     "call-dialog-link": Card,
+    Footer,
   },
 
   created() {
