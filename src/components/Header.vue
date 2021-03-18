@@ -50,8 +50,8 @@
     </b-navbar>
     -->
 
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-      <a class="navbar-brand" href="https://www.cirsa.com/" target="_blank">
+    <nav class="navbar navbar-expand-md bg-danger navbar-dark">
+      <a class="navbar-brand" href="/" style="font-weight: m; text-decoration: none; color: #212529">
         <img
           src="/anoringa_logo.png"
           class="d-inline-block align-top"
@@ -90,6 +90,9 @@
           <li class="nav-item">
             <a class="nav-link linker"  href="/">die Regeln</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link linker"  @click="show = true" >Postear</a>
+          </li>
         </ul>
       </b-collapse>
 
@@ -120,7 +123,13 @@
               no-caret
 
           -->
-      <b-dropdown id="dropdown-1" right variant="" class="m-md-2">
+      
+        <div v-if="loggedstate === false">
+          <ModalLogin v-on:event_child="eventChild"></ModalLogin>
+        </div>
+
+
+      <b-dropdown v-else-if="loggedstate === true" id="dropdown-1" right variant="" class="m-md-2">
         <template #button-content class="d-flex align-items-center">
           <span class="pr-2" style="display: inline-block"
             ><p class="d-none d-sm-block" style="line-height: 0px;">{{ username }}</p></span
@@ -143,38 +152,25 @@
 
         <b-dropdown-item @click="show = true">Postear algo</b-dropdown-item>
         <b-dropdown-item>Configuracion</b-dropdown-item>
+        <b-dropdown-divider></b-dropdown-divider>
+        <b-dropdown-item>Soporte</b-dropdown-item>
+        <b-dropdown-item>Sugerir cambios</b-dropdown-item>
         <b-dropdown-item @click="cerrarSecion()">Salir</b-dropdown-item>
+        <!--
         <b-dropdown-item>First Action</b-dropdown-item>
         <b-dropdown-item>Second Action</b-dropdown-item>
         <b-dropdown-item>Third Action</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item active>Active action</b-dropdown-item>
         <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+        -->
       </b-dropdown>
+
+    </nav>
+      <!--
     </nav>
     <nav class="navbar navbar-expand bg-danger justify-content-between">
-      <!--
-  <b-navbar toggleable="lg" type="dark" variant="info" class="justify-content-between">
-    <b-navbar-brand tag="h1" class="p-1" @click="clicked()">{{
-    appNamex
-      }}</b-navbar-brand>
-    -->
-      <!--
-      <b-navbar-brand tag="h1" class="p-1" @click="clicked()">
-        <img
-          src="/anoringa_logo.png"
-          class="d-inline-block align-top"
-          height="30"
-          alt="Anoringa Logo"
-        />
-        <b-link
-          href="/"
-          style="font-weight: medium; text-decoration: none; color: #212529"
-          >{{ appNamex }}</b-link
-        >
-        xd
-      </b-navbar-brand>
-      -->
+      
       <b-navbar-brand tag="h1" class="p-1">
         <b-button variant="danger" @click="clicked()"
           ><img
@@ -185,8 +181,6 @@
           />
         </b-button>
 
-        <!-- <font><FONT FACE="arial" SIZE=5 COLOR="black">
- Apostear</FONT></font>-->
 
         <b-link
           href="/"
@@ -209,39 +203,10 @@
       </b-nav-form>
 
       <b-button variant="danger" @click="show = true">✣Nuevo Post</b-button>
-      <!-- 
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
- 
-    <b-collapse id="nav-collapse" is-nav>
-
-      <b-navbar-nav class="ml-auto">
-
-                <b-nav-item class="nav-item">
-                    <a class="nav-link" href="#">Top</a>
-                </b-nav-item>
-                <b-nav-item class="nav-item">
-                    <a class="nav-link" href="#">Categorias</a>
-                </b-nav-item>
-                <b-nav-item class="nav-item">
-                    <a class="nav-link" href="#">die Regeln</a>
-                </b-nav-item>
-
-
-      </b-navbar-nav>
-    </b-collapse>
-    -->
-
+     
       <div class="flex flex-wrap">
         <div v-if="loggedstate === false">
-          <!--
-
-      <button @click="showModal = true">Postear algo</button>
-
-
-      <button type="button" id="convert-btn" @click="openModal()">Login</button>
-      <div>My hcaptcha Token is <input v-model="hcaptchatoken" /></div>
-        -->
-
+        
           <ModalLogin v-on:event_child="eventChild"></ModalLogin>
         </div>
 
@@ -271,11 +236,6 @@
                   style="border-radius: 50%"
                 />
               </template>
-              <!--
-              <b-dropdown-item>
-            <ModalCreatePost v-on:event_child="eventChild"></ModalCreatePost></b-dropdown-item>
-                  src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png"
-                -->
               <b-dropdown-item @click="show = true"
                 >Postear algo</b-dropdown-item
               >
@@ -283,71 +243,13 @@
               <b-dropdown-item @click="cerrarSecion()">Salir</b-dropdown-item>
             </b-dropdown>
           </b-nav-text>
-
-          <!--
-        <b-nav>
-          <b-nav-item
-            >Bienvenido <a v-text="username"> </a></b-nav-item>
-          <b-nav-item><ModalCreatePost></ModalCreatePost></b-nav-item>
-          <b-nav-item
-            ><button type="button" id="convert-btn" @click="cerrarSecion()">
-              Salir
-            </button></b-nav-item
-          >
-        </b-nav>
-        -->
-          <!--
-      <b-dropdown text="Button text via Prop">
-        <b-dropdown-item href="#">An item</b-dropdown-item>
-        <b-dropdown-item href="#">Another item</b-dropdown-item>
-        <b-dropdown-item><ModalCreatePost></ModalCreatePost></b-dropdown-item>
-        <b-dropdown-item>
-          <button type="button" id="convert-btn" @click="cerrarSecion()">
-            Salir
-          </button>
-        </b-dropdown-item>
-      </b-dropdown>
-
-      <b-dropdown id="dropdown-1" v-text="username" class="m-md-2">
-        <b-dropdown-item><ModalCreatePost></ModalCreatePost></b-dropdown-item>
-        <b-dropdown-item>
-          <button type="button" id="convert-btn" @click="cerrarSecion()">
-            Salir
-          </button>
-        </b-dropdown-item>
-        <b-dropdown-item>Third Action</b-dropdown-item>
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item active>Active action</b-dropdown-item>
-        <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-      </b-dropdown>
-      -->
-          <!--
-      <div>
-        You already logged in
-        <p v-text="username" />
-      </div>
-      <ModalCreatePost></ModalCreatePost>
-      <button type="button" id="convert-btn" @click="cerrarSecion()">
-        Salir
-      </button>
-        --></div>
+</div>
 
         <div v-else>Si no es A, B o C</div>
-
-        <!-- 
-    <button type="button" id="convert-btn" @click="openForm()">Open</button>
-      -->
-
-        <!-- 
-    <vodal :show="show" animation="rotate" @hide="show = false">
-      <div>A vue modal with animations.</div>
-    </vodal>
-      -->
-
-        <!-- 
-    <Captcha v-on:event_child="eventChild"></Captcha>
-      --></div>
+</div>
     </nav>
+
+    -->
 
     <b-modal
       v-model="show"
@@ -1014,7 +916,7 @@ $bright: #ddd;
   *display: inline;
   zoom: 1;
 }
-.linker{
+.linker {
   padding: 0px;
   margin: 0px;
 }

@@ -49,12 +49,13 @@
       </call-dialog-link>
     </div>
   </main>
-  <div v-else-if="loaded == false">
+  <div v-else-if="loaded == false" style="height:100%">
     loading
-
     <b-spinner variant="danger" key="danger"></b-spinner>
   </div>
-  <div v-else-if="loaded == 'ERROR'">ERROR</div>
+  <div v-else-if="loaded == 'ERROR'" style="height:100%">
+    ERROR
+  </div>
 </template>
 
 
