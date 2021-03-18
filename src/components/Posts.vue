@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main class="container" v-if="loaded == 'OK'">
     <div id="cards" class="card-grid">
       <!--
     
@@ -49,6 +49,12 @@
       </call-dialog-link>
     </div>
   </main>
+  <div v-else-if="loaded == false">
+    loading
+
+    <b-spinner variant="danger" key="danger"></b-spinner>
+  </div>
+  <div v-else-if="loaded == 'ERROR'">ERROR</div>
 </template>
 
 
@@ -77,6 +83,7 @@ export default {
   mixins: [Vue2Filters.mixin],
   data() {
     return {
+      loaded: false,
       posts: [],
       postexample: [],
       //endpoint: "http://localhost:3000/api/post",
@@ -150,7 +157,6 @@ export default {
     /**/
   },
   methods: {
-
     getPostsExample() {
       axios
         .get(this.examplesource)
@@ -166,15 +172,25 @@ export default {
     },
     getAllPosts() {
       axios
-        .get(this.endpoint)
+        .get(this.endpoint, {
+          onDownloadProgress: (progressEvent) => {
+            let percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            console.log(progressEvent.lengthComputable);
+            console.log(percentCompleted);
+          },
+        })
         .then((response) => {
           this.posts = response.data.data;
           console.log("-----posts data-------");
           console.log(response.data);
+          this.loaded = "OK";
         })
         .catch((error) => {
           console.log("-----error-------");
           console.log(error);
+          this.loaded = "ERROR";
         });
     },
   },

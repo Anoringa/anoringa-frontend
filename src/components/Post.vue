@@ -114,8 +114,15 @@
               <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
               >por {{ userowner.username }}
             </div>
-            <p class="last-updated">Publicado {{ postcreatedAt | moment }}.</p>
+
+            <p class="last-updated">
+              Publicado
+              {{
+                moment(new Date(postcreatedAt)).format("DD.MM.YYYY [&nbsp;] HH:mm")
+              }}.
+            </p>
             <!--
+            <p class="last-updated">Publicado {{ postcreatedAt | moment }}.</p>
               pt-2 pb-5 pl-3
                 src="https://www.w3schools.com/bootstrap4/cinqueterre.jpg"
               word-break: normal|break-all|keep-all|break-word|initial|inherit;
@@ -279,13 +286,16 @@
                       >
                       <a
                         v-bind:style="[
-                         currentComent.user[0].username == userowner.username
+                          currentComent.user[0].username == userowner.username
                             ? 'color: red;'
                             : 'color: white;',
                         ]"
                         >por {{ currentComent.user[0].username }}</a
                       >
-                      <a v-if="currentComent.user[0].username == userowner.username"
+                      <a
+                        v-if="
+                          currentComent.user[0].username == userowner.username
+                        "
                         >👃</a
                       >
                       <!-- 
@@ -392,6 +402,10 @@ import Vue2Filters from "vue2-filters";
 moment.locale("es");
 
 export default {
+  created() {
+    this.moment = moment;
+    this.getPostDetail();
+  },
   metaInfo() {
     return {
       meta: [
@@ -502,12 +516,9 @@ metaInfo() {
     Multiselect,
     Header,
     Footer,
-    loadingspinner
+    loadingspinner,
   },
 
-  created() {
-    this.getPostDetail();
-  },
   sockets: {
     connect: function () {
       console.log("socket connected");
@@ -787,7 +798,12 @@ metaInfo() {
           this.loaded_correctly = true;
           this.pagetitle = this.post.title;
           this.content = this.post.description;
-          this.comments = this.post.comentarios;
+
+          if (this.post.comments) {
+            this.comments = this.post.comments;
+          } else {
+            this.comments = this.post.comentarios;
+          }
           this.photo = this.post.photo;
           this.userowner = this.post.user[0];
           this.id = this.post._id;
