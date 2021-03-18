@@ -800,7 +800,7 @@ metaInfo() {
           this.pagetitle = this.post.title;
           this.content = this.post.description;
 
-          if (this.post.comments) {
+          if (this.post.comments.le) {
             this.comments = this.post.comments;
           } else {
             this.comments = this.post.comentarios;
