@@ -373,7 +373,7 @@ export default {
   data() {
     return {
       windowHeight:null,
-      windowWidth:null,
+      windowWidth:window.innerWidth,
       appNamex: process.env.VUE_APP_NAME,
       isnotcargando: false,
       imagebase64: "",
