@@ -10,7 +10,7 @@
     :content="content"
     -->
       <!--
-      <call-dialog-link
+      <CardPostBox
         :id="id"
         :url="url"
         :photo="photo"
@@ -19,8 +19,8 @@
         content="Are you sure you wish to remove this record?"
         label="Remove"
         css-classes="alert"
-      ></call-dialog-link>
-      <call-dialog-link
+      ></CardPostBox>
+      <CardPostBox
         :id="id"
         :url="url"
         :photo="photo"
@@ -29,11 +29,11 @@
         message="Are you sure you wish to remove this record?"
         label="Remove"
         css-classes="alert"
-      ></call-dialog-link>
+      ></CardPostBox>
     
     -->
 
-      <call-dialog-link
+      <CardPostBox
         v-for="item in orderBy(posts, 'updatedAt', -1)"
         :key="item._id"
         :id="item._id"
@@ -46,7 +46,7 @@
         css-classes="alert"
       >
         <!-- content -->
-      </call-dialog-link>
+      </CardPostBox>
     </div>
   </main>
   <div v-else-if="loaded == false" style="height:100%">
@@ -101,7 +101,7 @@ export default {
     };
   },
   components: {
-    "call-dialog-link": Card,
+    "CardPostBox": Card,
   },
 
   created() {
@@ -119,7 +119,7 @@ export default {
 
       //  :key="item._id""item._id" "url" "photo" title description
 
-      //this.item = ['<call-dialog-link :id="id" :url="url" :photo="photo" :title="new message socket" message="Are you sure you wish to remove this record?" content="Are you sure you wish to remove this record?" label="Remove" css-classes="alert" ></call-dialog-link>'];
+      //this.item = ['<CardPostBox :id="id" :url="url" :photo="photo" :title="new message socket" message="Are you sure you wish to remove this record?" content="Are you sure you wish to remove this record?" label="Remove" css-classes="alert" ></CardPostBox>'];
       this.posts.push(data);
     },
   },

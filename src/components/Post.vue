@@ -1,13 +1,6 @@
 <template>
   <main class="maindiv">
-    <div v-if="loaded_correctly === true">
-      <p>Se Cargo</p>
-    </div>
-    <div v-else>
-      <loadingspinner></loadingspinner>
-    </div>
-
-    <div v-if="loaded_correctly === true">
+    <div v-if="loaded_correctly === 'OK'">
       <!--
       Post id : {{ $route.params.id }}
       -->
@@ -118,7 +111,9 @@
             <p class="last-updated">
               Publicado
               {{
-                moment(new Date(postcreatedAt)).format("DD.MM.YYYY [&nbsp;] HH:mm")
+                moment(new Date(postcreatedAt)).format(
+                  "DD/MM/YYYY [&nbsp;] HH:mm"
+                )
               }}.
             </p>
             <!--
@@ -345,8 +340,14 @@
         <Footer></Footer>
       </div>
     </div>
-    <div v-else>
+    <div v-else-if="loaded_correctly == false" style="height: 100%">
+      Cargando
+      <b-spinner variant="danger" key="danger"></b-spinner>
+    </div>
+    <div v-else-if="loaded_correctly == 'ERROR'" style="height: 100%">
+      ERROR
       <p>no se encontro el post que estas buscando</p>
+      <loadingspinner></loadingspinner>
     </div>
   </main>
 </template>
@@ -795,7 +796,7 @@ metaInfo() {
           console.log(response.data.data);
           console.log("-----other posts data-------");
           console.log(response.data);
-          this.loaded_correctly = true;
+          this.loaded_correctly = "OK";
           this.pagetitle = this.post.title;
           this.content = this.post.description;
 
@@ -812,6 +813,7 @@ metaInfo() {
         .catch((error) => {
           console.log("-----error-------");
           console.log(error);
+          this.loaded = "ERROR";
         });
     },
   },

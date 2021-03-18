@@ -232,12 +232,36 @@ $bright: #ddd;
 
 
 .post-image {
+  /*
+    position: absolute;
+    left: -1000%;
+    right: -1000%;
+    top: -1000%;
+    bottom: -1000%;
+    margin: auto;
+    min-height: 100%;
+    min-width: 100%;
+    */
+    /*
+  margin-left: 50rm;
+  margin-right: 50rm;
   height: 100%;
   width: auto;
   padding: auto;
+  */
   z-index: -1;
   background-color: rgba(0,0,0,.5);
   filter:brightness(0.9);
+  /*
+  height: 100%;
+  width: auto;
+  padding: auto;
+  */
+  padding: 0px;
+  height: 100%;
+  width: auto;
+  margin-left: -50%;
+  margin-right: -50%;
 }
 .card {
   background: #fff;

@@ -1,6 +1,10 @@
 <template>
   <div>
     <!--
+    <p>{{windowWidth}}</p>
+    <p>{{windowHeight}}</p>
+    -->
+    <!--
     <b-navbar toggleable="lg" type="dark" navbar-expand variant="info">
       <b-navbar-brand href="#">{{ appNamex }}</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -51,15 +55,27 @@
     -->
 
     <nav class="navbar navbar-expand-md bg-danger navbar-dark">
-      <a class="navbar-brand" href="/" style="font-weight: m; text-decoration: none; color: #212529">
+      <a 
+      v-if="windowWidth>325"
+      class="navbar-brand loguito" href="/" style="">
+        <!-- 
+        
         <img
           src="/anoringa_logo.png"
           class="d-inline-block align-top"
           height="35"
           alt="A"
         />
+      -->
         {{ appNamex }}
       </a>
+      <a v-else href="/">
+        <img
+          src="/anoringa_logo.png"
+          class="d-inline-block align-top"
+          height="35"
+          alt="A"
+        /></a>
       <!--
       <button
         class="navbar-toggler order-last order-md-0"
@@ -72,6 +88,7 @@
       -->
 
       <b-navbar-toggle
+      v-if="windowWidth>380"
         class="navbar-toggler order-last order-md-0"
         target="nav-collapse"
       ></b-navbar-toggle>
@@ -82,16 +99,16 @@
       >
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link linker"  href="/">Top</a>
+            <a class="nav-link linker" href="/">Top</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link linker"  href="/">Inicio</a>
+            <a class="nav-link linker" href="/">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link linker"  href="/">die Regeln</a>
+            <a class="nav-link linker" href="/">die Regeln</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link linker"  @click="show = true" >Postear</a>
+            <a class="nav-link linker" @click="show = true">Postear</a>
           </li>
         </ul>
       </b-collapse>
@@ -123,16 +140,23 @@
               no-caret
 
           -->
-      
-        <div v-if="loggedstate === false">
-          <ModalLogin v-on:event_child="eventChild"></ModalLogin>
-        </div>
 
+      <div v-if="loggedstate === false">
+        <ModalLogin v-on:event_child="eventChild"></ModalLogin>
+      </div>
 
-      <b-dropdown v-else-if="loggedstate === true" id="dropdown-1" right variant="" class="m-md-2">
+      <b-dropdown
+        v-else-if="loggedstate === true"
+        id="dropdown-1"
+        right
+        variant=""
+        class="m-md-2"
+      >
         <template #button-content class="d-flex align-items-center">
           <span class="pr-2" style="display: inline-block"
-            ><p class="d-none d-sm-block" style="line-height: 0px;">{{ username }}</p></span
+            ><p class="d-none d-sm-block" style="line-height: 0px">
+              {{ username }}
+            </p></span
           >
 
           <img
@@ -146,9 +170,10 @@
             data-toggle="dropdown"
           />
         </template>
-        
-        <b-dropdown-item class="d-block d-sm-none" disabled>{{ username }}</b-dropdown-item>
 
+        <b-dropdown-item class="d-block d-sm-none" disabled>{{
+          username
+        }}</b-dropdown-item>
 
         <b-dropdown-item @click="show = true">Postear algo</b-dropdown-item>
         <b-dropdown-item>Configuracion</b-dropdown-item>
@@ -165,9 +190,8 @@
         <b-dropdown-item disabled>Disabled action</b-dropdown-item>
         -->
       </b-dropdown>
-
     </nav>
-      <!--
+    <!--
     </nav>
     <nav class="navbar navbar-expand bg-danger justify-content-between">
       
@@ -348,6 +372,8 @@ export default {
   },
   data() {
     return {
+      windowHeight:null,
+      windowWidth:null,
       appNamex: process.env.VUE_APP_NAME,
       isnotcargando: false,
       imagebase64: "",
@@ -391,6 +417,10 @@ export default {
     };
   },
   mounted() {
+    window.addEventListener("resize", () => {
+      this.windowHeight = window.innerHeight;
+      this.windowWidth = window.innerWidth;
+    });
     console.log(process.env);
 
     /*
@@ -919,6 +949,31 @@ $bright: #ddd;
 .linker {
   padding: 0px;
   margin: 0px;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Overpass+Mono:300,400,600,700|Overpass:100,100i,200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext");
+
+html,
+body {
+  font-family: "Open Sans", sans-serif;
+  /*
+  font-family: 'Roboto', sans-serif;
+  */
+}
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Open+Sans&display=swap");
+.loguito {
+  /*
+  font-family: "Overpass Mono";
+  font-weight: 700;
+  */
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  font-weight: m;
+  text-decoration: none;
+  color: #212529;
+  /*
+  */
 }
 /*
 .navbar {
