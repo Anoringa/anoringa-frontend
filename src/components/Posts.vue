@@ -34,7 +34,6 @@
     -->
 
       <call-dialog-link
-      
         v-for="item in orderBy(posts, 'updatedAt', -1)"
         :key="item._id"
         :id="item._id"
@@ -49,8 +48,6 @@
         <!-- content -->
       </call-dialog-link>
     </div>
-    
-    <Footer></Footer>
   </main>
 </template>
 
@@ -62,12 +59,10 @@
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import Card from "./Card";
-import Footer from "./Footer";
 import { EventBus } from "../event-bus";
 
 import axios from "axios";
-import Vue2Filters from 'vue2-filters'
-
+import Vue2Filters from "vue2-filters";
 
 export default {
   /*
@@ -86,7 +81,7 @@ export default {
       postexample: [],
       //endpoint: "http://localhost:3000/api/post",
       //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post",
-      endpoint: process.env.VUE_APP_API+"/api/post/",
+      endpoint: process.env.VUE_APP_API + "/api/post/",
       //endpoint: "http://localhost:3000/api/post",
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
 
@@ -99,7 +94,6 @@ export default {
   },
   components: {
     "call-dialog-link": Card,
-    Footer,
   },
 
   created() {
@@ -127,7 +121,7 @@ export default {
                 window.location.reload(true);
                 console.log(data);
             });*/
-            /*
+    /*
     this.$root.$on("component1", () => {
       // your code goes here
       //this.c1method()
@@ -139,13 +133,11 @@ export default {
       console.log("from other component",item, response);
       this.posts.push(response);
     });*/
-    
-      
-    EventBus.$on("createImage", (item, response)  => {
-      console.log("from other component",item, response);
+
+    EventBus.$on("createImage", (item, response) => {
+      console.log("from other component", item, response);
       this.posts.push(response);
     });
-
 
     /*
     
@@ -158,6 +150,7 @@ export default {
     /**/
   },
   methods: {
+
     getPostsExample() {
       axios
         .get(this.examplesource)
@@ -288,11 +281,10 @@ main {
 }
 
 .card-grid {
-  
   text-align: center;
   font: 14px/1.4 sans-serif;
   //display: grid;
- // grid-template-columns: repeat(3, minmax(200px, 1fr));
+  // grid-template-columns: repeat(3, minmax(200px, 1fr));
   //grid-gap: 1rem;
 }
 

@@ -10,14 +10,12 @@
 <script>
 export default {
   name: "App",
-    watch: {
-        $route: {
-            immediate: true,
-            handler(to, from) {
-                document.title = to.meta.title || 'Some Default Title';
-            }
-        },
-    }
+  metaInfo: {
+    // if no subcomponents specify a metaInfo.title, this title will be used
+    title: "Default Title",
+    // all titles will be injected into this template
+    titleTemplate: "%s | My Awesome Webapp",
+  },
 };
 </script>
 

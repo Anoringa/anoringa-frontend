@@ -5,6 +5,7 @@
       <p>{{appName}}</p>
     -->
     <Posts></Posts>
+    <Footer></Footer>
 
   </div>
 </template>
@@ -15,12 +16,14 @@
 //import { mapGetters } from "vuex";
 import Header from "./Header";
 import Posts from "./Posts";
+import Footer from "./Footer";
 export default {
   name: "Index",
   components: {
     //History,
     Header,
-    Posts
+    Posts,
+    Footer,
   },
   data() {
     return {

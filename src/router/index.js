@@ -2,6 +2,8 @@ import Index from "../components/Index";
 import HelloWorld from "../components/HelloWorld";
 //import PostsPage from "../components/PostPage";
 import Post from "../components/Post";
+import DevLogin from "../components/DevLogin";
+import ChangeUsernamePage from "../components/ChangeUsernamePage";
 ///#
 const Foo = { template: "<div>foo</div>" };
 const Bar = { template: "<div>bar</div>" };
@@ -15,6 +17,8 @@ const routesx = [
   //{ name: "Post",path: "/post/:id", component: About },
   { name: "Post",path: "/post/:id", component: Post },
   { name: "Index",path: "/",component: Index,},
+  { name: "DevLogin",path: "/DevLogin", component: DevLogin },
+  { name: "perfil",path: "/perfil", component: ChangeUsernamePage },
 ];
 /*
 const router = new VueRouter({

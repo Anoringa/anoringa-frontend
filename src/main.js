@@ -10,9 +10,19 @@ import PortalVue from 'portal-vue'
 Vue.use(PortalVue)
 */
 
+/*
+import VuePageTitle from 'vue-page-title'
+ 
+Vue.use(VuePageTitle, {
+  // prefix: 'My App - ',
+  suffix: '- Anoringa'
+})
+*/
 
-import VueMeta from 'vue-meta'
-Vue.use(VueMeta)
+import Meta from 'vue-meta'
+Vue.use(Meta)
+
+
 
 import Vue2Filters from 'vue2-filters'
 Vue.use(Vue2Filters)
@@ -23,6 +33,12 @@ Vue.config.productionTip = false
 
 //Vue.prototype.$apiurl = 'approved'
 Vue.prototype.$apiurl = 'approved'
+
+
+
+import VueImageBrightness from 'vue-image-brightness' 
+Vue.use(VueImageBrightness)
+
 
 
 //////

@@ -15,12 +15,19 @@
 //import { mapGetters } from "vuex";
 import Header from "./Header";
 import Posts from "./Posts";
+
 export default {
-  name: "Index",
+    name: 'Home',
+    metaInfo: {
+      title: 'My Awesome Webapp',
+      // override the parent template and just use the above title only
+      titleTemplate: null
+    },
   components: {
     //History,
     Header,
-    Posts
+    Posts,
+    Footer,
   },
   data() {
     return {
@@ -55,13 +62,13 @@ $darker: #222;
 $dark: #555;
 $bright: #ddd;
 
-
+/*
 #index {
   //width: 80%;
   margin: 0px;
   padding: 0px;
   text-align: center;
-}
+}*/
 /*
 html{
   margin: 0px;

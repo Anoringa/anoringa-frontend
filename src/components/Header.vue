@@ -1,5 +1,157 @@
 <template>
   <div>
+    <!--
+    <b-navbar toggleable="lg" type="dark" navbar-expand variant="info">
+      <b-navbar-brand href="#">{{ appNamex }}</b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item href="#">Inicio</b-nav-item>
+          <b-nav-item href="#">Top</b-nav-item>
+          <b-nav-item href="#">die Regeln</b-nav-item>
+        </b-navbar-nav>
+
+        <b-navbar-nav class="ml-auto">
+          <b-nav-form>
+            <b-form-input
+              size="sm"
+              class="mr-sm-2"
+              placeholder="Search"
+            ></b-form-input>
+            <b-button size="sm" class="my-2 my-sm-0" type="submit"
+              >Search</b-button
+            >
+          </b-nav-form>
+
+          <b-nav-item-dropdown text="Lang" right>
+            <b-dropdown-item href="#">EN</b-dropdown-item>
+            <b-dropdown-item href="#">ES</b-dropdown-item>
+            <b-dropdown-item href="#">RU</b-dropdown-item>
+            <b-dropdown-item href="#">FA</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item-dropdown right>
+            <template #button-content>
+              <em>User</em>
+            </template>
+            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+
+      <select
+        class="selectpicker ml-auto mr-2"
+        data-width="auto"
+        data-style="btn-primary"
+      ></select>
+
+    </b-navbar>
+    -->
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+      <a class="navbar-brand" href="https://www.cirsa.com/" target="_blank">
+        <img
+          src="/anoringa_logo.png"
+          class="d-inline-block align-top"
+          height="35"
+          alt="A"
+        />
+        {{ appNamex }}
+      </a>
+      <!--
+      <button
+        class="navbar-toggler order-last order-md-0"
+        type="button"
+        data-toggle="collapse"
+        data-target="#collapsibleNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      -->
+
+      <b-navbar-toggle
+        class="navbar-toggler order-last order-md-0"
+        target="nav-collapse"
+      ></b-navbar-toggle>
+      <b-collapse
+        class="collapse navbar-collapse order-last order-md-0"
+        id="nav-collapse"
+        is-nav
+      >
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link linker"  href="/">Top</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link linker"  href="/">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link linker"  href="/">die Regeln</a>
+          </li>
+        </ul>
+      </b-collapse>
+
+      <!--
+      <select
+        class="selectpicker ml-auto mr-2"
+        data-width="auto"
+        data-style="btn-primary"
+      >
+        <option
+          *ngFor="let lang of cirsaApp.translate.getLangs(); let i = index"
+          [value]="lang"
+          [selected]="lang === cirsaApp.translate.currentLang"
+        >
+          {{ cirsaApp._countries[i] }}
+        </option>
+      </select>
+        -->
+      <!--
+          
+          <b-nav-text class="pl-1 pr-1">
+            <b-dropdown
+              id="dropdown-right"
+              right
+              size="lg"
+              variant="link"
+              toggle-class="text-decoration-none"
+              no-caret
+
+          -->
+      <b-dropdown id="dropdown-1" right variant="" class="m-md-2">
+        <template #button-content class="d-flex align-items-center">
+          <span class="pr-2" style="display: inline-block"
+            ><p class="d-none d-sm-block" style="line-height: 0px;">{{ username }}</p></span
+          >
+
+          <img
+            style="display: inline-block; border-radius: 50%"
+            type="button"
+            src="/user.png"
+            width="30"
+            height="30"
+            alt="logo"
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+          />
+        </template>
+        
+        <b-dropdown-item class="d-block d-sm-none" disabled>{{ username }}</b-dropdown-item>
+
+
+        <b-dropdown-item @click="show = true">Postear algo</b-dropdown-item>
+        <b-dropdown-item>Configuracion</b-dropdown-item>
+        <b-dropdown-item @click="cerrarSecion()">Salir</b-dropdown-item>
+        <b-dropdown-item>First Action</b-dropdown-item>
+        <b-dropdown-item>Second Action</b-dropdown-item>
+        <b-dropdown-item>Third Action</b-dropdown-item>
+        <b-dropdown-divider></b-dropdown-divider>
+        <b-dropdown-item active>Active action</b-dropdown-item>
+        <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+      </b-dropdown>
+    </nav>
     <nav class="navbar navbar-expand bg-danger justify-content-between">
       <!--
   <b-navbar toggleable="lg" type="dark" variant="info" class="justify-content-between">
@@ -7,9 +159,56 @@
     appNamex
       }}</b-navbar-brand>
     -->
+      <!--
       <b-navbar-brand tag="h1" class="p-1" @click="clicked()">
-    <b-link href="/" style="font-weight: medium;text-decoration: none;color: #212529;">{{appNamex}}</b-link>
+        <img
+          src="/anoringa_logo.png"
+          class="d-inline-block align-top"
+          height="30"
+          alt="Anoringa Logo"
+        />
+        <b-link
+          href="/"
+          style="font-weight: medium; text-decoration: none; color: #212529"
+          >{{ appNamex }}</b-link
+        >
+        xd
       </b-navbar-brand>
+      -->
+      <b-navbar-brand tag="h1" class="p-1">
+        <b-button variant="danger" @click="clicked()"
+          ><img
+            src="/anoringa_logo.png"
+            class="d-inline-block align-top"
+            height="35"
+            alt="Anoringa Logo"
+          />
+        </b-button>
+
+        <!-- <font><FONT FACE="arial" SIZE=5 COLOR="black">
+ Apostear</FONT></font>-->
+
+        <b-link
+          href="/"
+          style="font-weight: m; text-decoration: none; color: #212529"
+          >{{ appNamex }}
+        </b-link>
+      </b-navbar-brand>
+
+      <b-button variant="danger" @click="clicked()">
+        <big>≡</big>Inicio
+      </b-button>
+
+      <b-nav-form>
+        <b-form-input
+          size="sm"
+          class="mr-sm-2"
+          placeholder="Buscar"
+        ></b-form-input>
+        <b-button size="sm" class="my-2 my-sm-0" type="submit">⌕</b-button>
+      </b-nav-form>
+
+      <b-button variant="danger" @click="show = true">✣Nuevo Post</b-button>
       <!-- 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
  
@@ -47,7 +246,9 @@
         </div>
 
         <div v-else-if="loggedstate === true">
-          <b-nav-text class="pl-1 pr-1" style=""> hola {{ username }} </b-nav-text>
+          <b-nav-text class="pl-1 pr-1" style="">
+            hola {{ username }}
+          </b-nav-text>
 
           <b-nav-text class="pl-1 pr-1">
             <b-dropdown
@@ -67,7 +268,7 @@
                   alt="logo"
                   class="dropdown-toggle"
                   data-toggle="dropdown"
-                  style="border-radius: 50%;"
+                  style="border-radius: 50%"
                 />
               </template>
               <!--
@@ -170,18 +371,6 @@
             name="nuevo-post-titulo"
           />
         </div>
-        <!--
-                      <div class="form-group">
-                        <label for="pwd">Password:</label>
-                        <input
-                          type="password"
-                          class="form-control"
-                          id="pwd"
-                          placeholder="Enter password"
-                          name="pswd"
-                        />
-                      </div>
-                      -->
         <div class="form-group">
           <label for="comment">Contenido</label>
           <textarea
@@ -203,17 +392,6 @@
             />
           </div>
         </div>
-        <!--
-        <div class="mt-10" style="text-align: center">
-          <h3>SERVER IMAGE</h3>
-          <img :src="remoteUrl" alt="" />
-        </div>
-        -->
-        <!--
-        <input id="inp" type="file" />
-        <p id="b64"></p>
-        <img id="img" height="150" />
-        -->
 
         <div class="form-group form-check">
           <label class="form-check-label">
@@ -222,37 +400,15 @@
           </label>
         </div>
       </b-container>
-      <!-- 
-              <template #modal-footer>
-        <div class="w-100">
-          <p class="float-left">🐱‍🐉</p>
-          <b-button
-            variant="primary"
-            @click="publicar"
-          >
-            Publicar
-          </b-button>
-          <b-button
-            variant="danger"
-            @click="show = false"
-          >
-            Close
-          </b-button>
-
-        </div>
-      </template>
-      -->
       <template #modal-footer>
         <b>Crazy cat</b>
         <p class="float-left">🐱‍🐉</p>
-        <!-- Emulate built in modal footer ok and cancel button actions -->
         <b-button size="sm" variant="success" @click="publicar">
           Publicar
         </b-button>
         <b-button size="sm" variant="danger" @click="show = false">
           Cerrar
         </b-button>
-        <!-- Button with custom close trigger value -->
       </template>
     </b-modal>
   </div>
@@ -274,7 +430,6 @@ import ModalLogin from "./modals/ModalLogin";
 
 //import { myVar, Settings } from '../environment.js'
 
-
 export default {
   props: {
     appName: {
@@ -291,7 +446,7 @@ export default {
   },
   data() {
     return {
-      appNamex : process.env.VUE_APP_NAME,
+      appNamex: process.env.VUE_APP_NAME,
       isnotcargando: false,
       imagebase64: "",
       imageuploadedurl: "",
@@ -329,12 +484,12 @@ export default {
       //loginurl: "http://localhost:3000/api/user/register",
       //console.log(process.env)
       //loginurl: "https://agile-everglades-15507.herokuapp.com/api/user/register",
-      loginurl: process.env.VUE_APP_API+"/api/user/register",
+      loginurl: process.env.VUE_APP_API + "/api/user/register",
       //loginurl: "http://localhost:3000/api/user/register",
     };
   },
   mounted() {
-    console.log(process.env)
+    console.log(process.env);
 
     /*
     if (localStorage.hcaptchatoken) {
@@ -387,7 +542,6 @@ export default {
       this.imageuploadedurl = nameurl;
     },
     async uploadImageImgur(base64code) {
-      
       this.isnotcargando = true;
       console.log("base64code");
       console.log(base64code);
@@ -487,19 +641,19 @@ export default {
           data: data,
         };
 
-      var self = this;
-      await axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-          console.log(response.data.data.link);
-          console.log();
-          self.setImageUploadedUrl(response.data.data.link);
-          //return response.data.data.link;
-        })
-        .catch(function (error) {
-          self.setImageUploadedUrl(false);
-          console.log(error);
-        });
+        var self = this;
+        await axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            console.log(response.data.data.link);
+            console.log();
+            self.setImageUploadedUrl(response.data.data.link);
+            //return response.data.data.link;
+          })
+          .catch(function (error) {
+            self.setImageUploadedUrl(false);
+            console.log(error);
+          });
 
         if (this.isnotcargando == false) {
           console.log("titulo");
@@ -859,6 +1013,10 @@ $bright: #ddd;
   display: inline-block;
   *display: inline;
   zoom: 1;
+}
+.linker{
+  padding: 0px;
+  margin: 0px;
 }
 /*
 .navbar {

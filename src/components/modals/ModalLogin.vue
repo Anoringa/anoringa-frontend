@@ -46,7 +46,7 @@
                       class="btn btn-primary"
                       @click="publicar"
                     >
-                      Publicar
+                      Crear
                     </button>
                   </div>
                 </div>

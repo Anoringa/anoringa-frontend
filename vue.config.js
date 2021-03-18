@@ -16,7 +16,7 @@ module.exports = {
     'l': {
       entry: './src/pages/PostDetail/main.js',
       template: 'public/index.html',
-      title: 'Post',
+      //title: 'Post',
       chunks: [ 'chunk-vendors', 'chunk-common', 'post' ]
     }
   },

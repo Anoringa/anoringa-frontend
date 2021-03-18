@@ -1,20 +1,38 @@
 <template>
-  <div class="card card-1 clickAble" :id="id" :href="postlink">
-    <!--
+  <div
+    class="card card-1 clickAble"
     v-bind:style="'background-image: url(' + getPhoto() + ')'"
+    :id="id"
+    :href="postlink"
+  >
+
+    <!--
+    <img alt="" :src="photo" />
+  <div>
+  <div
+    class="card card-1 clickAble"
+    v-bind:style="[
+      photo
+        ? {
+            'background-image': 'url(' + photo + '), url(' + photodefault + ')',
+          }
+        : { 'background-image': 'url(' + photodefault + ')' },
+    ]"
+    :id="id"
+    :href="postlink">
+
+    <img alt="" :src="photo" />
+    <img :alt="photodefault" :src="getPhoto()" />
     -->
+    <img class="post-image" :alt="photodefault" :src="getPhoto()" />
 
     <a
       v-bind:href="'/post/' + id"
       style="display: block; height: 100%; text-decoration: none; color: white"
     >
-    <h3 style="" class="thumb-title">{{ title }}</h3>
-      <img data-filter="overlay-dark" class="post-image" :alt="photodefault" :src="getPhoto()" />
       <div class="thumb-anim">
-        <!--
         <h3 class="thumb-title">{{ title }}</h3>
         <p class="thumb-description">{{ content }}</p>
-        -->
       </div>
       <div class="thumb-author">{{ photo }}</div>
       <div class="thumb-author">{{ getImageBrightness(getPhoto()) }}</div>
@@ -80,7 +98,7 @@ export default {
     url: {
       type: String,
       required: false,
-    } /*
+    },/*
     message: {
       type: String,
       required: true,
@@ -92,7 +110,7 @@ export default {
     cssClasses: {
       type: String,
       required: false,
-    },*/,
+    },*/
     photo: {
       type: String,
       required: false,
@@ -192,8 +210,6 @@ export default {
   },
 };
 </script>
-
-
 <style lang="scss" scoped>
 
 
@@ -202,42 +218,9 @@ $darker: #222;
 $dark: #555;
 $bright: #ddd;
 
-
-.thumb-title {
-  text-transform: uppercase;
-  padding: 10px;
-  word-wrap: break-word;/*
-  -webkit-text-fill-color: white;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: black;
-  text-shadow: 2px 2px #000000;*/
-  text-shadow: 3px 3px 3px #000000;
-
-  font-size: 24px;
-  position: absolute;
-  z-index: 3;
-  float: bottom;
-}
-
-.thumb-description {
-  padding: 10px 20px;
-  opacity: 0;
-  flex: 1;
-}
-
-.thumb-author {
-  padding: 100px;
-  position: relative;
-}
-
-
-.post-image {
+.post-image{
   height: 100%;
   width: auto;
-  padding: auto;
-  z-index: -1;
-  background-color: rgba(0,0,0,.5);
-  filter:brightness(0.9);
 }
 .card {
   background: #fff;
@@ -294,7 +277,22 @@ $bright: #ddd;
   object-fit: cover;
 }
 
+.thumb-title {
+  text-transform: uppercase;
+  padding: 10px;
+  word-wrap: break-word;
+}
 
+.thumb-description {
+  padding: 10px 20px;
+  opacity: 0;
+  flex: 1;
+}
+
+.thumb-author {
+  padding: 100px;
+  position: relative;
+}
 /*
 .thumb-anim {
   margin-top: auto;  

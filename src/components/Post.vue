@@ -1,6 +1,13 @@
 <template>
   <main class="maindiv">
     <div v-if="loaded_correctly === true">
+      <p>Se Cargo</p>
+    </div>
+    <div v-else>
+      <loadingspinner></loadingspinner>
+    </div>
+
+    <div v-if="loaded_correctly === true">
       <!--
       Post id : {{ $route.params.id }}
       -->
@@ -90,7 +97,7 @@
             </div>
 
             <h2 class="p-3" style="text-align: left">
-              {{ title }}
+              {{ pagetitle }}
             </h2>
 
             <pre
@@ -195,8 +202,6 @@
                       @input="onChange"
                       no-result="Oops! No list items."
                     >
-                    
-
                       <template
                         slot="selection"
                         slot-scope="{ values, search, isOpen }"
@@ -205,9 +210,12 @@
                           class="multiselect__single"
                           v-if="values.length &amp;&amp; !isOpen"
                         >
-                          <div v-if="values.length > 1">respondiendo a {{ values.length }} comentarios</div>
-                          <div v-else>respondiendo a {{ values.length }} comentario</div>
-                          
+                          <div v-if="values.length > 1">
+                            respondiendo a {{ values.length }} comentarios
+                          </div>
+                          <div v-else>
+                            respondiendo a {{ values.length }} comentario
+                          </div>
                         </span>
                       </template>
                     </multiselect>
@@ -271,13 +279,13 @@
                       >
                       <a
                         v-bind:style="[
-                          isTheOwner(currentComent.username)
+                         currentComent.user[0].username == userowner.username
                             ? 'color: red;'
                             : 'color: white;',
                         ]"
-                        >por {{ currentComent.username }}</a
+                        >por {{ currentComent.user[0].username }}</a
                       >
-                      <a v-if="currentComent.username == userowner.username"
+                      <a v-if="currentComent.user[0].username == userowner.username"
                         >👃</a
                       >
                       <!-- 
@@ -347,6 +355,7 @@ import { EventBus } from "../event-bus";
 
 import Header from "./Header";
 import Footer from "./Footer";
+import loadingspinner from "./loadingspinner";
 /*
       <div class="repo">
           <div class="stats">en respuesta de @sjdkdj @asdas</div>
@@ -383,6 +392,27 @@ import Vue2Filters from "vue2-filters";
 moment.locale("es");
 
 export default {
+  metaInfo() {
+    return {
+      meta: [
+        {
+          vmid: "description",
+          name: "description",
+          content: this.description,
+        },
+      ],
+    };
+  } /*
+    metaInfo: {
+      title: 'My Example App',
+      titleTemplate: '%s - Yay!',
+      htmlAttrs: {
+        lang: 'en',
+        amp: true
+      }
+    },
+    title: ({ $t }) => $t(this.pagetitle),*/,
+
   mixins: [Vue2Filters.mixin],
   filters: {
     moment: function (date) {
@@ -445,19 +475,19 @@ export default {
 
       url: "asdasdasd",
       photo: "https://picsum.photos/200?random=1",
-      title: "some title",
+      pagetitle: "some title",
       comments: [],
       content: "some scrap contenido",
       loaded_correctly: false,
       postcreatedAt: "",
     };
-  },
+  } /*
 metaInfo() {
         return {
-            title: `${this.title} - Anoringa`,
+            title: `${this.pagetitle} - Anoringa`,
             meta: [
-                { name: 'description', content: 'Mira ' + this.title + ' en Anoringa'},
-                { property: 'og:title', content: this.title + ' - Anoringa'},
+                { name: 'description', content: 'Mira ' + this.pagetitle + ' en Anoringa'},
+                { property: 'og:title', content: this.pagetitle + ' - Anoringa'},
                 { property: 'og:site_name', content: "Anoringa" },
                 { property: 'og:description', content: this.content.substring(0, 30)+"..."},
                 {property: 'og:type', content: 'article'},
@@ -465,13 +495,14 @@ metaInfo() {
                 {property: 'og:image', content: 'https://anoringa.netlify.app/'+"/anoringa.png" }    
             ]
         }
-    },
+    },*/,
   name: "Post",
   components: {
     //History,
     Multiselect,
     Header,
     Footer,
+    loadingspinner
   },
 
   created() {
@@ -750,11 +781,13 @@ metaInfo() {
         .then((response) => {
           this.post = response.data.data;
           console.log("-----posts data-------");
+          console.log(response.data.data);
+          console.log("-----other posts data-------");
           console.log(response.data);
           this.loaded_correctly = true;
-          this.title = this.post.title;
+          this.pagetitle = this.post.title;
           this.content = this.post.description;
-          this.comments = this.post.comments;
+          this.comments = this.post.comentarios;
           this.photo = this.post.photo;
           this.userowner = this.post.user[0];
           this.id = this.post._id;
