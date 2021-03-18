@@ -55,9 +55,12 @@
     -->
 
     <nav class="navbar navbar-expand-md bg-danger navbar-dark">
-      <a 
-      v-if="windowWidth>325"
-      class="navbar-brand loguito" href="/" style="">
+      <a
+        v-if="windowWidth > 325"
+        class="navbar-brand loguito"
+        href="/"
+        style=""
+      >
         <!-- 
         
         <img
@@ -75,7 +78,7 @@
           class="d-inline-block align-top"
           height="35"
           alt="A"
-        /></a>
+      /></a>
       <!--
       <button
         class="navbar-toggler order-last order-md-0"
@@ -88,7 +91,7 @@
       -->
 
       <b-navbar-toggle
-      v-if="windowWidth>380"
+        v-if="windowWidth > 380"
         class="navbar-toggler order-last order-md-0"
         target="nav-collapse"
       ></b-navbar-toggle>
@@ -108,7 +111,7 @@
             <a class="nav-link linker" href="/">die Regeln</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link linker" @click="show = true">Postear</a>
+            <a class="nav-link linker" @click="showPostModal = true">Postear</a>
           </li>
         </ul>
       </b-collapse>
@@ -175,7 +178,7 @@
           username
         }}</b-dropdown-item>
 
-        <b-dropdown-item @click="show = true">Postear algo</b-dropdown-item>
+        <b-dropdown-item @click="showPostModal = true">Postear algo</b-dropdown-item>
         <b-dropdown-item>Configuracion</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item>Soporte</b-dropdown-item>
@@ -276,7 +279,7 @@
     -->
 
     <b-modal
-      v-model="show"
+      v-model="showPostModal"
       title="Nuevo Post"
       :header-bg-variant="headerBgVariant"
       :header-text-variant="headerTextVariant"
@@ -299,12 +302,21 @@
         </div>
         <div class="form-group">
           <label for="comment">Contenido</label>
+          <trumbowyg
+            v-model="nuevopostcomment"
+            :config="config"
+            class="form-control"
+            name="content"
+          ></trumbowyg>
+          <!--
+          <div id="trumbowyg-demo"></div>
           <textarea
             v-model="nuevopostcomment"
             class="form-control"
             rows="5"
             id="comment"
           ></textarea>
+          -->
         </div>
 
         <div class="container mt-10">
@@ -332,7 +344,7 @@
         <b-button size="sm" variant="success" @click="publicar">
           Publicar
         </b-button>
-        <b-button size="sm" variant="danger" @click="show = false">
+        <b-button size="sm" variant="danger" @click="showPostModal = false">
           Cerrar
         </b-button>
       </template>
@@ -355,6 +367,30 @@ import store from "../store";
 import ModalLogin from "./modals/ModalLogin";
 
 //import { myVar, Settings } from '../environment.js'
+//TextContent
+
+/*
+global.jQuery = require('jquery');
+var $ = global.jQuery;
+window.$ = $;
+*/
+global.jQuery = require("jquery");
+var $ = global.jQuery;
+window.$ = $;
+/*
+// We import JQuery
+const $ = require('jquery');
+// We declare it globally
+window.$ = $;
+*/
+import "trumbowyg";
+// Import this component
+import Trumbowyg from "vue-trumbowyg";
+
+// Import editor css
+import "trumbowyg/dist/ui/trumbowyg.css";
+
+// You can use it now
 
 export default {
   props: {
@@ -369,11 +405,36 @@ export default {
     //Login
     //ModalCreatePost,
     ModalLogin,
+    Trumbowyg,
   },
   data() {
     return {
-      windowHeight:null,
-      windowWidth:window.innerWidth,
+      content: null,
+
+      config: {
+        // Get options from
+        // https://alex-d.github.io/Trumbowyg/documentation
+        tagsToRemove: ["script", "link"],
+        imageWidthModalEdit: true,
+        urlProtocol: true,
+
+        btns: [
+          //["viewHTML"],
+          //["undo", "redo"], // Only supported in Blink browsers
+          ["formatting"],
+          ["strong", "em", "del"],
+          ["superscript", "subscript"],
+          ["link"],
+          ["insertImage"],
+          ["justifyLeft", "justifyCenter", "justifyRight", "justifyFull"],
+          ["unorderedList", "orderedList"],
+          ["horizontalRule"],
+          ["removeformat"],
+          //["fullscreen"],
+        ],
+      },
+      windowHeight: null,
+      windowWidth: window.innerWidth,
       appNamex: process.env.VUE_APP_NAME,
       isnotcargando: false,
       imagebase64: "",
@@ -381,7 +442,7 @@ export default {
       remoteUrl: "",
       nuevoposttitulo: "",
       nuevopostcomment: "",
-      show: false,
+      showPostModal: false,
       variants: [
         "primary",
         "secondary",
@@ -422,6 +483,7 @@ export default {
       this.windowWidth = window.innerWidth;
     });
     console.log(process.env);
+    $("#trumbowyg-demo").trumbowyg();
 
     /*
     if (localStorage.hcaptchatoken) {

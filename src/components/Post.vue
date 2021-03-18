@@ -100,8 +100,8 @@
                 word-wrap: break-word;
                 white-space: pre-wrap;
               "
-              >{{ content }}</pre
-            >
+              ><p v-html="content"></p></pre>
+              
 
             <div class="stats">
               <a class="pr-1" :href="'/post/' + id">@{{ id }}</a

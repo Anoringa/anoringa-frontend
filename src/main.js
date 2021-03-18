@@ -23,6 +23,14 @@ import Meta from 'vue-meta'
 Vue.use(Meta)
 
 
+import jQuery from 'jquery';
+global.jQuery = require('jquery');
+var $ = global.jQuery;
+window.$ = $;
+
+import Trumbowyg from 'vue-trumbowyg';  
+import 'trumbowyg/dist/ui/trumbowyg.css';
+
 
 import Vue2Filters from 'vue2-filters'
 Vue.use(Vue2Filters)
@@ -96,6 +104,8 @@ Vue.use(IconsPlugin);
 //@import "vodal/common.css";
 //@import "vodal/rotate.css";
 Vue.use(VueRouter)
+
+
 
 new Vue({
   store,
