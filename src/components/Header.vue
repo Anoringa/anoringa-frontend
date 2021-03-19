@@ -1,6 +1,10 @@
 <template>
   <div>
     <!--
+    <div>{{ postContentTextValue }}</div>
+    -->
+
+    <!--
     <p>{{windowWidth}}</p>
     <p>{{windowHeight}}</p>
     -->
@@ -178,7 +182,9 @@
           username
         }}</b-dropdown-item>
 
-        <b-dropdown-item @click="showPostModal = true">Postear algo</b-dropdown-item>
+        <b-dropdown-item @click="showPostModal = true"
+          >Postear algo</b-dropdown-item
+        >
         <b-dropdown-item>Configuracion</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item>Soporte</b-dropdown-item>
@@ -302,12 +308,16 @@
         </div>
         <div class="form-group">
           <label for="comment">Contenido</label>
+
+          <html-editor @child-checkbox="checkboxValue" />
+          <!--
+          <html-editor :htmlContent="nuevopostcomment" />
           <trumbowyg
             v-model="nuevopostcomment"
             :config="config"
             class="form-control"
             name="content"
-          ></trumbowyg>
+          ></trumbowyg>-->
           <!--
           <div id="trumbowyg-demo"></div>
           <textarea
@@ -319,7 +329,8 @@
           -->
         </div>
 
-        <div class="container mt-10">
+        <label for="postImage">Imagen del post</label>
+        <div class="container mt-10" id="postImage">
           <div class="card bg-white">
             <img style="" :src="imagebase64" alt="" width="50%" height="auto" />
             <input
@@ -362,7 +373,7 @@ import { EventBus } from "../event-bus";
 import swal from "sweetalert";
 //import Captcha from "./Captcha";
 import axios from "axios";
-import store from "../store";
+//import store from "../store";
 //import ModalCreatePost from "./modals/ModalCreatePost";
 import ModalLogin from "./modals/ModalLogin";
 
@@ -383,12 +394,17 @@ const $ = require('jquery');
 // We declare it globally
 window.$ = $;
 */
+/*
 import "trumbowyg";
 // Import this component
 import Trumbowyg from "vue-trumbowyg";
 
 // Import editor css
 import "trumbowyg/dist/ui/trumbowyg.css";
+*/
+
+import HtmlEditor from "./html-editor";
+import store from "../store";
 
 // You can use it now
 
@@ -405,16 +421,17 @@ export default {
     //Login
     //ModalCreatePost,
     ModalLogin,
-    Trumbowyg,
+    //Trumbowyg,
+    HtmlEditor,
   },
   data() {
     return {
-      content: null,
-
+      check: false,
       config: {
         // Get options from
         // https://alex-d.github.io/Trumbowyg/documentation
         tagsToRemove: ["script", "link"],
+        removeformatPasted: false,
         imageWidthModalEdit: true,
         urlProtocol: true,
 
@@ -441,7 +458,7 @@ export default {
       imageuploadedurl: "",
       remoteUrl: "",
       nuevoposttitulo: "",
-      nuevopostcomment: "",
+      nuevopostcomment: HtmlEditor.fetchData(),
       showPostModal: false,
       variants: [
         "primary",
@@ -478,25 +495,30 @@ export default {
     };
   },
   mounted() {
+    this.increment(); // -> 1
+    //this.personal = this.$refs.personal.model;
+    //this.education = this.$refs.education.htmlContent;
     window.addEventListener("resize", () => {
       this.windowHeight = window.innerHeight;
       this.windowWidth = window.innerWidth;
     });
     console.log(process.env);
-    $("#trumbowyg-demo").trumbowyg();
 
     /*
     if (localStorage.hcaptchatoken) {
       this.hcaptchatoken = localStorage.hcaptchatoken;
     }*/
+    /*
     if (localStorage.username) {
       this.username = localStorage.username;
     }
     if (localStorage.password) {
       this.password = localStorage.password;
-    }
+    }*/
     if (localStorage.username && localStorage.password) {
       console.log("user has been logged previusly");
+      this.username = localStorage.username;
+      this.password = localStorage.password;
       this.loggedstate = true;
     } else {
       console.log("user needs to log in");
@@ -516,7 +538,26 @@ export default {
       localStorage.password = newName;
     },
   },
+  computed: {
+    postContentTextValue() {
+      return this.$store.state.postContentText;
+    },
+  },
   methods: {
+    increment() {
+      console.log("incrementing");
+
+      store.commit("increment");
+      console.log(store.state.count);
+    },
+    // Gets the checkbox information from the child component
+    checkboxValue: function (params) {
+      console.log("html text params");
+      console.log(params);
+      this.check = params;
+      return params;
+    },
+
     handleImage(e) {
       const selectedImage = e.target.files[0]; // get first file
       this.createBase64Image(selectedImage);
@@ -617,7 +658,7 @@ export default {
     async publicar() {
       console.log("publicar");
 
-      if (this.nuevoposttitulo != "" && this.nuevopostcomment != "") {
+      if (this.nuevoposttitulo != "" && this.postContentTextValue != "") {
         this.isnotcargando = false;
         console.log("base64code");
         console.log(this.imagebase64);
@@ -626,6 +667,7 @@ export default {
 
         var data = new FormData();
         data.append("image", res[1]);
+
         var config = {
           method: "post",
           url: "https://api.imgur.com/3/image",
@@ -653,17 +695,19 @@ export default {
           console.log("titulo");
           console.log(this.nuevoposttitulo);
           console.log("contenido");
-          console.log(this.nuevopostcomment);
+          console.log(this.postContentTextValue);
           this.postCreate(
             this.nuevoposttitulo,
-            this.nuevopostcomment,
+            this.postContentTextValue,
             this.imageuploadedurl
           );
           console.log("funciono kpo 😎");
-          this.show = false;
+          this.showPostModal = false;
 
           this.nuevoposttitulo = "";
-          this.nuevopostcomment = "";
+          store.clearPostContentText;
+          alert("redirecting to the post")
+          
         } else {
           console.log("no funciono kpo, sigue cargando algo");
         }
@@ -833,7 +877,7 @@ export default {
     },
     openForm() {
       //this.$refs.modal.open();
-      this.show = true;
+      this.showPostModal = true;
     },
     eventChild: function (content_from_child) {
       console.log("Event from child component emitted", content_from_child);

@@ -100,8 +100,7 @@
                 word-wrap: break-word;
                 white-space: pre-wrap;
               "
-              ><p v-html="content"></p></pre>
-              
+            ><p v-html="content"></p></pre>
 
             <div class="stats">
               <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
@@ -575,47 +574,60 @@ metaInfo() {
     },
     crearComentario() {
       if (
-        this.nuevoComemtarioTexto != "" &&
-        this.nuevoComemtarioTexto != null
+        localStorage.username != "" &&
+        localStorage.username != undefined &&
+        localStorage.username != null &&
+        localStorage.password != "" &&
+        localStorage.password != undefined &&
+        localStorage.password != null
       ) {
-        console.log("this.nuevoComemtarioTexto if true");
-        console.log(this.nuevoComemtarioTexto);
+        if (
+          this.nuevoComemtarioTexto != "" &&
+          this.nuevoComemtarioTexto != null
+        ) {
+          console.log("this.nuevoComemtarioTexto if true");
+          console.log(this.nuevoComemtarioTexto);
 
-        console.log("Comemtario Create");
+          console.log("Comemtario Create");
 
-        var data = {
-          username: localStorage.username,
-          //password: "req.body.password",
-          password: localStorage.password,
+          var data = {
+            username: localStorage.username,
+            //password: "req.body.password",
+            password: localStorage.password,
 
-          text: this.nuevoComemtarioTexto,
+            text: this.nuevoComemtarioTexto,
 
-          inResponseTo: this.ListaDeIdsDeComentarios,
+            inResponseTo: this.ListaDeIdsDeComentarios,
 
-          postid: this.$route.params.id,
-        };
-        this.value = [];
-        this.ListaDeIdsDeComentarios = [];
-        this.nuevoComemtarioTexto = "";
+            postid: this.$route.params.id,
+          };
+          this.value = [];
+          this.ListaDeIdsDeComentarios = [];
+          this.nuevoComemtarioTexto = "";
 
-        var self = this;
-        this.$socket.emit("comment", data, function (datos) {
-          console.log("socket.io emit");
-          console.log(datos);
+          var self = this;
+          this.$socket.emit("comment", data, function (datos) {
+            console.log("socket.io emit");
+            console.log(datos);
 
-          datos.createdAt = moment().toISOString();
-          datos.updatedAt = moment().toISOString();
-          self.comments.push(datos);
-          //this.$root.$emit("component1"); //like this
-          //this.$root.$emit("component1", "datos", datos);
-          //this.$root.$emit("createImage", "datos", datos);
-          //EventBus.$emit("createImage", "datos", datos);
-          //window.Evento.$emit("createImage", "datos", datos);
-          //this.posts.push(datos);
-        });
+            datos.createdAt = moment().toISOString();
+            datos.updatedAt = moment().toISOString();
+            datos.user = [{username: localStorage.username, _id: "not loaded"}];
+            self.comments.push(datos);
+            //this.$root.$emit("component1"); //like this
+            //this.$root.$emit("component1", "datos", datos);
+            //this.$root.$emit("createImage", "datos", datos);
+            //EventBus.$emit("createImage", "datos", datos);
+            //window.Evento.$emit("createImage", "datos", datos);
+            //this.posts.push(datos);
+          });
+        } else {
+          console.log("this.nuevoComemtarioTexto if false");
+          console.log(this.nuevoComemtarioTexto);
+        }
       } else {
-        console.log("this.nuevoComemtarioTexto if false");
-        console.log(this.nuevoComemtarioTexto);
+        console.log("logueate hijo de puta")
+        alert("logueate hijo de puta")
       }
     },
     postCreate(titulox, contenidox, photox) {

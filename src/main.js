@@ -10,6 +10,7 @@ import PortalVue from 'portal-vue'
 Vue.use(PortalVue)
 */
 
+
 /*
 import VuePageTitle from 'vue-page-title'
  
@@ -27,10 +28,6 @@ import jQuery from 'jquery';
 global.jQuery = require('jquery');
 var $ = global.jQuery;
 window.$ = $;
-
-import Trumbowyg from 'vue-trumbowyg';  
-import 'trumbowyg/dist/ui/trumbowyg.css';
-
 
 import Vue2Filters from 'vue2-filters'
 Vue.use(Vue2Filters)
