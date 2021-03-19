@@ -221,6 +221,7 @@
                       </template>
                     </multiselect>
                     <!--
+                    <p>{{ value }}</p>
                     <pre class="language-json"><code>{{ value  }}</code></pre>
                     -->
                   </div>
@@ -265,7 +266,7 @@
                 <div id="comentarios" class="pt-3"></div>
                 <div v-if="comments !== null">
                   <div
-                    class="repo"
+                    class="repo container"
                     style="text-align: left"
                     v-for="currentComent in orderBy(comments, 'updatedAt', -1)"
                     :id="currentComent._id"
@@ -273,7 +274,7 @@
                   >
                     <div
                       class="stats"
-                      style="word-wrap: break-word; white-space: pre-wrap"
+                      style="word-wrap: break-word; white-space: pre-wrap "
                     >
                       <a class="pr-1" :href="'#' + currentComent._id"
                         >@{{ currentComent._id }}</a
@@ -314,6 +315,18 @@
                     >
                       {{ currentComent.text }}
                     </p>
+                    <b-button pill variant="link topright" :id="'popover-target-'+currentComent._id" @click="replyThisComment(currentComent)" >
+                      <i class="fa fa-reply" style="font-size:12px"></i>
+                      <!-- 
+                        <i style="font-size:24px" class="fa">&#xf112;</i>
+                        -->
+                      </b-button>
+
+                    <b-popover :target="'popover-target-'+currentComent._id" triggers="hover" placement="top">
+                      <template #title>Responder este comentario!</template>
+                      Haz click aqui para responder este comentario de <b>{{currentComent.user[0].username}}</b>!
+                    </b-popover>
+
                     <p class="last-updated" style="color: red">
                       Publicado {{ currentComent.createdAt | moment }}.
                     </p>
@@ -355,6 +368,31 @@
 
 
 <script>
+// https://stackoverflow.com/questions/1988349/array-push-if-does-not-exist
+// check if an element exists in array using a comparer function
+// comparer : function(currentElement)
+Array.prototype.inArray = function (comparer) {
+  for (var i = 0; i < this.length; i++) {
+    if (comparer(this[i])) return true;
+  }
+  return false;
+};
+
+// adds an element to the array if it does not already exist using a comparer
+// function
+Array.prototype.pushIfNotExist = function (element, comparer) {
+  if (!this.inArray(comparer)) {
+    this.push(element);
+  }
+};
+/*
+var array = [{ name: "tom", text: "tasty" }];
+var element = { name: "tom", text: "tasty" };
+array.pushIfNotExist(element, function(e) { 
+    return e.name === element.name && e.text === element.text; 
+});
+*/
+
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import $ from "jquery";
@@ -556,6 +594,14 @@ metaInfo() {
     /**/
   },
   methods: {
+    replyThisComment(comentario) {
+      console.log("comentario");
+      console.log(comentario);
+
+      this.value.pushIfNotExist(comentario, function (e) {
+        return e._id === comentario._id && e.text === comentario.text;
+      });
+    },
     isTheOwner(someone) {
       if (someone == this.userowner.username) {
         console.log("is the owner");
@@ -612,7 +658,9 @@ metaInfo() {
 
             datos.createdAt = moment().toISOString();
             datos.updatedAt = moment().toISOString();
-            datos.user = [{username: localStorage.username, _id: "not loaded"}];
+            datos.user = [
+              { username: localStorage.username, _id: "not loaded" },
+            ];
             self.comments.push(datos);
             //this.$root.$emit("component1"); //like this
             //this.$root.$emit("component1", "datos", datos);
@@ -626,8 +674,8 @@ metaInfo() {
           console.log(this.nuevoComemtarioTexto);
         }
       } else {
-        console.log("logueate hijo de puta")
-        alert("logueate hijo de puta")
+        console.log("logueate hijo de puta");
+        alert("logueate hijo de puta");
       }
     },
     postCreate(titulox, contenidox, photox) {
@@ -835,6 +883,20 @@ metaInfo() {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
+
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+.container {
+  position: relative;
+}
+
+.topright {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 14px;
+}
+</style>
 <style lang="css" scoped>
 *,
 *:before,
