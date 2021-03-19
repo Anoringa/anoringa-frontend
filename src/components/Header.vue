@@ -706,8 +706,14 @@ export default {
 
           this.nuevoposttitulo = "";
           store.clearPostContentText;
-          alert("redirecting to the post")
-          
+          //alert("redirecting to the post")
+          /*
+          console.log("redirecting to the post")
+          console.log("postdata");
+          console.log(postdata);
+
+          window.location.href="./post/"+postdata._id; 
+          */
         } else {
           console.log("no funciono kpo, sigue cargando algo");
         }
@@ -746,6 +752,10 @@ export default {
         EventBus.$emit("createImage", "datos", datos);
         //window.Evento.$emit("createImage", "datos", datos);
         //this.posts.push(datos);
+        console.log("redirecting to the post");
+
+        window.location.href = "./post/" + datos._id;
+        return datos;
       });
       /*
 
