@@ -57,4 +57,10 @@ body {
   text-align: center;
 }
 */
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+  content: "Buscar";
+}
+.custom-file-input:lang(es) ~ .custom-file-label::after {
+  content: "Buscar";
+}
 </style>
