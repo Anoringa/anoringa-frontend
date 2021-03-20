@@ -1,6 +1,7 @@
 {
     "name": "Anoringa",
-    "short_name": "A App",
+    "short_name": "Anoringa",
+    "lang": "es-AR",
     "icons": [
         {
             "src": "/icons/android-chrome-36x36.png",
@@ -51,5 +52,6 @@
     "theme_color": "#f0354b",
     "background_color": "#f0354b",
     "start_url": "/",
-    "display": "standalone"
+    "display": "standalone",
+    "orientation":"any"
 }
