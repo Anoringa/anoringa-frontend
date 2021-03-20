@@ -297,6 +297,7 @@
             name="nuevo-post-titulo"
           />
         </div>
+        <HtmlEditor/>
         <div class="form-group">
           <label for="comment">Contenido</label>
           <textarea
@@ -307,15 +308,11 @@
           ></textarea>
         </div>
 
-<<<<<<< Updated upstream
-        <div class="container mt-10">
-=======
 
 
         <label for="postImage">Imagen del post</label>
         <ImageUploader></ImageUploader>
         <div class="container mt-10" id="postImage">
->>>>>>> Stashed changes
           <div class="card bg-white">
             <img style="" :src="imagebase64" alt="" width="50%" height="auto" />
             <input
@@ -363,16 +360,7 @@ import store from "../store";
 import ModalLogin from "./modals/ModalLogin";
 
 //import { myVar, Settings } from '../environment.js'
-<<<<<<< Updated upstream
 
-=======
-//TextContent
-
-/*
-global.jQuery = require('jquery');
-var $ = global.jQuery;
-window.$ = $;
-*/
 global.jQuery = require("jquery");
 var $ = global.jQuery;
 window.$ = $;
@@ -392,15 +380,12 @@ import "trumbowyg/dist/ui/trumbowyg.css";
 */
 
 import HtmlEditor from "./html-editor";
-import store from "../store";
 
 // You can use it now
 import ImageUploader from "./ImageUploader"
->>>>>>> Stashed changes
 export default {
   props: {
     appName: {
-      type: String,
       required: true,
     },
   },
@@ -410,12 +395,9 @@ export default {
     //Login
     //ModalCreatePost,
     ModalLogin,
-<<<<<<< Updated upstream
-=======
     //Trumbowyg,
     HtmlEditor,
     ImageUploader,
->>>>>>> Stashed changes
   },
   data() {
     return {
@@ -501,8 +483,6 @@ export default {
       localStorage.password = newName;
     },
   },
-<<<<<<< Updated upstream
-=======
   computed: {
     postContentTextValue() {
       return this.$store.state.postContentText;
@@ -511,7 +491,6 @@ export default {
       return this.$store.state.postPhotoLink;
     },
   },
->>>>>>> Stashed changes
   methods: {
     handleImage(e) {
       const selectedImage = e.target.files[0]; // get first file

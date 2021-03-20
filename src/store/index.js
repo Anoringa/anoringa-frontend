@@ -7,13 +7,6 @@ export default new Vuex.Store({
   state: {
     history: [],
     credentials: [],
-<<<<<<< Updated upstream
-  },
-  getters: {
-=======
-    count: 0,
-    postContentText: "",
-    postPhotoLink: "",
   },
   getters: {
     getPostContentText: (state) => {
@@ -23,7 +16,6 @@ export default new Vuex.Store({
       return state.postPhotoLink;
     },
 
->>>>>>> Stashed changes
     getHistory(state) {
       return state.history
     },
@@ -32,8 +24,6 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-<<<<<<< Updated upstream
-=======
     setPostPhotoLink: (state, payload) => {
       state.postPhotoLink = payload.link;
     },
@@ -47,7 +37,6 @@ export default new Vuex.Store({
     increment(state) {
       state.count++;
     },
->>>>>>> Stashed changes
     addToHistory(state, payload) {
       if(state.history.length < 5) {
         state.history.push(payload)
