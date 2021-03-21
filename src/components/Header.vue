@@ -112,7 +112,7 @@
             <a class="nav-link linker" href="/">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link linker" href="/">die Regeln</a>
+            <a class="nav-link linker" href="/">las reglas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link linker" @click="showPostModal = true">Postear</a>
@@ -306,6 +306,7 @@
             name="nuevo-post-titulo"
           />
         </div>
+        <HtmlEditor/>
         <div class="form-group">
           <label for="comment">Contenido</label>
 
@@ -329,7 +330,14 @@
           -->
         </div>
 
+<<<<<<< HEAD
         <label for="postImage">Imagen del post</label>
+=======
+
+
+        <label for="postImage">Imagen del post</label>
+        <ImageUploader></ImageUploader>
+>>>>>>> dev
         <div class="container mt-10" id="postImage">
           <div class="card bg-white">
             <img style="" :src="imagebase64" alt="" width="50%" height="auto" />
@@ -408,10 +416,31 @@ import store from "../store";
 
 // You can use it now
 
+global.jQuery = require("jquery");
+var $ = global.jQuery;
+window.$ = $;
+/*
+// We import JQuery
+const $ = require('jquery');
+// We declare it globally
+window.$ = $;
+*/
+/*
+import "trumbowyg";
+// Import this component
+import Trumbowyg from "vue-trumbowyg";
+
+// Import editor css
+import "trumbowyg/dist/ui/trumbowyg.css";
+*/
+
+import HtmlEditor from "./html-editor";
+
+// You can use it now
+import ImageUploader from "./ImageUploader"
 export default {
   props: {
     appName: {
-      type: String,
       required: true,
     },
   },
@@ -423,6 +452,10 @@ export default {
     ModalLogin,
     //Trumbowyg,
     HtmlEditor,
+<<<<<<< HEAD
+=======
+    ImageUploader,
+>>>>>>> dev
   },
   data() {
     return {
@@ -542,6 +575,12 @@ export default {
     postContentTextValue() {
       return this.$store.state.postContentText;
     },
+<<<<<<< HEAD
+=======
+    postPhotoLinkValue() {
+      return this.$store.state.postPhotoLink;
+    },
+>>>>>>> dev
   },
   methods: {
     increment() {

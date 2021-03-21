@@ -33,12 +33,12 @@ module.exports = {
   },
   /**/
   pwa: {
-    name: 'Anoringa',
+    name: process.env.VUE_APP_NAME,
     themeColor: "#f0354b",
     msTileColor: '#f0354b',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
-    start_url: '/',
+    start_url: process.env.VUE_APP_URL,
     iconPaths: {
       favicon32: './img/icons/favicon-32x32.png',
       favicon16: './img/icons/favicon-16x16.png',
@@ -47,6 +47,14 @@ module.exports = {
       msTileImage: './img/icons/msapplication-icon-144x144.png'
     },/*
     manifestPath:'/manifest.json'*/
+    
+    // configure the workbox plugin
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      // swSrc is required in InjectManifest mode.
+      swSrc: "./src/registerServiceWorker.js",
+      // ...other Workbox options...
+    }
   }
 };
 

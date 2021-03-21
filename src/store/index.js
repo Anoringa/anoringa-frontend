@@ -14,6 +14,12 @@ export default new Vuex.Store({
     getPostContentText: (state) => {
       return state.postContentText;
     },
+<<<<<<< HEAD
+=======
+    getPostPhotoLink: (state) => {
+      return state.postPhotoLink;
+    },
+>>>>>>> dev
 
     getHistory(state) {
       return state.history;
@@ -23,6 +29,12 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+<<<<<<< HEAD
+=======
+    setPostPhotoLink: (state, payload) => {
+      state.postPhotoLink = payload.link;
+    },
+>>>>>>> dev
     setPostContentText(state, payload) {
       state.postContentText = payload.contentText;
     },
