@@ -22,12 +22,12 @@ module.exports = {
   },
   /**/
   pwa: {
-    name: 'Anoringa',
+    name: process.env.VUE_APP_NAME,
     themeColor: "#f0354b",
     msTileColor: '#f0354b',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
-    start_url: '/',
+    start_url: process.env.VUE_APP_URL,
     iconPaths: {
       favicon32: './img/icons/favicon-32x32.png',
       favicon16: './img/icons/favicon-16x16.png',
