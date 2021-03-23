@@ -306,12 +306,12 @@
             name="nuevo-post-titulo"
           />
         </div>
-        <HtmlEditor/>
         <div class="form-group">
           <label for="comment">Contenido</label>
+        <HtmlEditor/>
 
-          <html-editor @child-checkbox="checkboxValue" />
           <!--
+          <html-editor @child-checkbox="checkboxValue" />
           <html-editor :htmlContent="nuevopostcomment" />
           <trumbowyg
             v-model="nuevopostcomment"
@@ -330,14 +330,10 @@
           -->
         </div>
 
-<<<<<<< HEAD
-        <label for="postImage">Imagen del post</label>
-=======
 
 
         <label for="postImage">Imagen del post</label>
         <ImageUploader></ImageUploader>
->>>>>>> dev
         <div class="container mt-10" id="postImage">
           <div class="card bg-white">
             <img style="" :src="imagebase64" alt="" width="50%" height="auto" />
@@ -411,15 +407,15 @@ import Trumbowyg from "vue-trumbowyg";
 import "trumbowyg/dist/ui/trumbowyg.css";
 */
 
-import HtmlEditor from "./html-editor";
+//import HtmlEditor from "./html-editor";
 import store from "../store";
 
 // You can use it now
 
+/*
 global.jQuery = require("jquery");
 var $ = global.jQuery;
 window.$ = $;
-/*
 // We import JQuery
 const $ = require('jquery');
 // We declare it globally
@@ -452,10 +448,7 @@ export default {
     ModalLogin,
     //Trumbowyg,
     HtmlEditor,
-<<<<<<< HEAD
-=======
     ImageUploader,
->>>>>>> dev
   },
   data() {
     return {
@@ -575,12 +568,9 @@ export default {
     postContentTextValue() {
       return this.$store.state.postContentText;
     },
-<<<<<<< HEAD
-=======
     postPhotoLinkValue() {
       return this.$store.state.postPhotoLink;
     },
->>>>>>> dev
   },
   methods: {
     increment() {

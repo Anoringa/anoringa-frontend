@@ -69,11 +69,7 @@ export default {
     ];
     function imageHandler() {
       var range = this.quill.getSelection();
-<<<<<<< HEAD
-      var value = prompt("please copy paste the image url here.");
-=======
       var value = prompt("copie y pegue la URL de la imagen aquí.");
->>>>>>> dev
       if (value) {
         this.quill.insertEmbed(range.index, "image", value, Quill.sources.USER);
       }
@@ -87,11 +83,7 @@ export default {
           },
         },
       },
-<<<<<<< HEAD
-      placeholder: "Compose an epic...",
-=======
       placeholder: "Escribe aqui...",
->>>>>>> dev
       theme: "snow",
     });
 
