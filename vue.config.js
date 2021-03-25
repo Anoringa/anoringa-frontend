@@ -6,12 +6,16 @@ module.exports = {
     //public: "localhost:8080",
     public: "localhost:80",
   },
-  /*
-  pages: {
+  pages: {/*
     index: {
       entry: "./src/pages/Home/main.js",
       template: "public/index.html",
-      //title: "Anoringa",
+      title: "Anoringa",
+      chunks: ["chunk-vendors", "chunk-common", "index"],
+    },*/
+    index: {
+      entry: "./src/main.js",
+      title: "Anoringa",
       chunks: ["chunk-vendors", "chunk-common", "index"],
     },
     l: {
@@ -20,7 +24,8 @@ module.exports = {
       //title: 'Post',
       chunks: ["chunk-vendors", "chunk-common", "post"],
     },
-  },*/
+  },
+  /**/
   /**/
   pwa: {
     name: process.env.VUE_APP_NAME,

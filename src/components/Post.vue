@@ -97,7 +97,7 @@
             <h2 class="p-3" style="text-align: left">
               {{ pagetitle }}
             </h2>
-
+            <!--
             <pre
               class="pb-5"
               style="
@@ -106,7 +106,15 @@
                 white-space: pre-wrap;
               "
               >{{ content }}</pre
-            >
+            >-->
+            <pre
+              class="pb-5"
+              style="
+                text-align: left;
+                word-wrap: break-word;
+                white-space: pre-wrap;
+              "
+            ><p v-html="content"></p></pre>
 
             <div class="stats">
               <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
@@ -442,17 +450,73 @@ export default {
       // override the parent template and just use the above title only
       titleTemplate: false
     },*/
+  /*
+    metaInfo: {
+      content:  "Anoringa es un sitio en el que podras discutir anonimamente.",
+      // override the parent template and just use the above title only
+      titleTemplate: null,
+      meta: [
+        {
+          vmid: "title",
+          name: "title",
+          //content:  process.env.VUE_APP_NAME +" | "+ " Post",
+          content: pagetitle  +" | "+ process.env.VUE_APP_NAME,
+        },
+        {
+          vmid: "description",
+          name: "description",
+          content: "this.pagetitle",
+        },
+      ],
+    },
+    */
+  metaInfo() {
+    const title = this.pagetitle;
+    const content = this.content;
+
+    return {
+      //title: process.env.VUE_APP_NAME + " | " + title.substring(0,50),
+      title: title.substring(0,50) + " | " + process.env.VUE_APP_NAME,
+      //content: "Anoringa es un sitio en el que podras discutir anonimamente.",
+      //content: content.substring(0,100) + " | " + process.env.VUE_APP_NAME,
+      // override the parent template and just use the above title only
+      titleTemplate: null,
+      meta: [
+        {
+          name: "description",
+          //content: title,
+          content: content.replace(/<\/?[^>]+(>|$)/g, "").substring(0,100) + " | " + process.env.VUE_APP_NAME,
+        },/*
+        {  vmid: "title", 
+        name: "title", 
+        //content:  process.env.VUE_APP_NAME +" | "+ " Post", 
+        content: title.substring(0,50) + " | " + process.env.VUE_APP_NAME,
+        },*/
+        {
+          vmid: "description",
+          name: "description",
+          content: content.replace(/<\/?[^>]+(>|$)/g, "").substring(0,100) + " | " + process.env.VUE_APP_NAME,
+        },
+      ],
+    };
+  },
+  /*
   metaInfo() {
     return {
       meta: [
         {
           vmid: "title",
           name: "title",
+          content:  process.env.VUE_APP_NAME +" | "+ " Post",
+        },
+        {
+          vmid: "description",
+          name: "description",
           content: this.pagetitle,
         },
       ],
     };
-  },
+  },*/
   /*
   metaInfo() {
     return {
@@ -539,7 +603,7 @@ export default {
 
       url: "asdasdasd",
       photo: "https://picsum.photos/200?random=1",
-      pagetitle: "some title",
+      pagetitle: "Post",
       comments: [],
       content: "some scrap contenido",
       loaded_correctly: false,
