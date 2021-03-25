@@ -73,6 +73,7 @@ import PortalVue from 'portal-vue'
 Vue.use(PortalVue)
 */
 
+
 /*
 import VuePageTitle from 'vue-page-title'
  
@@ -84,6 +85,10 @@ Vue.use(VuePageTitle, {
 
 
 
+import jQuery from 'jquery';
+global.jQuery = require('jquery');
+var $ = global.jQuery;
+window.$ = $;
 
 
 //import jQuery from "jquery";
@@ -171,6 +176,8 @@ Vue.use(VueHead, {
 })
 
 Vue.use(VueRouter)
+
+
 
 new Vue({
   store,

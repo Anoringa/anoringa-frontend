@@ -1,4 +1,15 @@
+var webpack = require("webpack");
 module.exports = {
+  configureWebpack: {
+      plugins: [
+          new webpack.ProvidePlugin({
+              $: 'jquery',
+              jquery: 'jquery',
+              'window.jQuery': 'jquery',
+              jQuery: 'jquery'
+          })
+      ]
+  },
   devServer: {
     //host: '127.0.0.1',
     host: "test.mydomain.com",

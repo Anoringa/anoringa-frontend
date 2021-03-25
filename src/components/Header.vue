@@ -1,6 +1,10 @@
 <template>
   <div>
     <!--
+    <div>{{ postContentTextValue }}</div>
+    -->
+
+    <!--
     <p>{{windowWidth}}</p>
     <p>{{windowHeight}}</p>
     -->
@@ -55,9 +59,12 @@
     -->
 
     <nav class="navbar navbar-expand-md bg-danger navbar-dark">
-      <a 
-      v-if="windowWidth>325"
-      class="navbar-brand loguito" href="/" style="">
+      <a
+        v-if="windowWidth > 325"
+        class="navbar-brand loguito"
+        href="/"
+        style=""
+      >
         <!-- 
         
         <img
@@ -75,7 +82,7 @@
           class="d-inline-block align-top"
           height="35"
           alt="A"
-        /></a>
+      /></a>
       <!--
       <button
         class="navbar-toggler order-last order-md-0"
@@ -88,7 +95,7 @@
       -->
 
       <b-navbar-toggle
-      v-if="windowWidth>380"
+        v-if="windowWidth > 380"
         class="navbar-toggler order-last order-md-0"
         target="nav-collapse"
       ></b-navbar-toggle>
@@ -108,7 +115,7 @@
             <a class="nav-link linker" href="/">las reglas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link linker" @click="show = true">Postear</a>
+            <a class="nav-link linker" @click="showPostModal = true">Postear</a>
           </li>
         </ul>
       </b-collapse>
@@ -175,7 +182,9 @@
           username
         }}</b-dropdown-item>
 
-        <b-dropdown-item @click="show = true">Postear algo</b-dropdown-item>
+        <b-dropdown-item @click="showPostModal = true"
+          >Postear algo</b-dropdown-item
+        >
         <b-dropdown-item>Configuracion</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item>Soporte</b-dropdown-item>
@@ -276,7 +285,7 @@
     -->
 
     <b-modal
-      v-model="show"
+      v-model="showPostModal"
       title="Nuevo Post"
       :header-bg-variant="headerBgVariant"
       :header-text-variant="headerTextVariant"
@@ -297,15 +306,28 @@
             name="nuevo-post-titulo"
           />
         </div>
-        <HtmlEditor/>
         <div class="form-group">
           <label for="comment">Contenido</label>
+        <HtmlEditor/>
+
+          <!--
+          <html-editor @child-checkbox="checkboxValue" />
+          <html-editor :htmlContent="nuevopostcomment" />
+          <trumbowyg
+            v-model="nuevopostcomment"
+            :config="config"
+            class="form-control"
+            name="content"
+          ></trumbowyg>-->
+          <!--
+          <div id="trumbowyg-demo"></div>
           <textarea
             v-model="nuevopostcomment"
             class="form-control"
             rows="5"
             id="comment"
           ></textarea>
+          -->
         </div>
 
 
@@ -337,7 +359,7 @@
         <b-button size="sm" variant="success" @click="publicar">
           Publicar
         </b-button>
-        <b-button size="sm" variant="danger" @click="show = false">
+        <b-button size="sm" variant="danger" @click="showPostModal = false">
           Cerrar
         </b-button>
       </template>
@@ -355,16 +377,45 @@ import { EventBus } from "../event-bus";
 import swal from "sweetalert";
 //import Captcha from "./Captcha";
 import axios from "axios";
-import store from "../store";
+//import store from "../store";
 //import ModalCreatePost from "./modals/ModalCreatePost";
 import ModalLogin from "./modals/ModalLogin";
 
 //import { myVar, Settings } from '../environment.js'
+//TextContent
 
+/*
+global.jQuery = require('jquery');
+var $ = global.jQuery;
+window.$ = $;
+*/
 global.jQuery = require("jquery");
 var $ = global.jQuery;
 window.$ = $;
 /*
+// We import JQuery
+const $ = require('jquery');
+// We declare it globally
+window.$ = $;
+*/
+/*
+import "trumbowyg";
+// Import this component
+import Trumbowyg from "vue-trumbowyg";
+
+// Import editor css
+import "trumbowyg/dist/ui/trumbowyg.css";
+*/
+
+//import HtmlEditor from "./html-editor";
+import store from "../store";
+
+// You can use it now
+
+/*
+global.jQuery = require("jquery");
+var $ = global.jQuery;
+window.$ = $;
 // We import JQuery
 const $ = require('jquery');
 // We declare it globally
@@ -401,16 +452,40 @@ export default {
   },
   data() {
     return {
-      windowHeight:null,
-      windowWidth:window.innerWidth,
+      check: false,
+      config: {
+        // Get options from
+        // https://alex-d.github.io/Trumbowyg/documentation
+        tagsToRemove: ["script", "link"],
+        removeformatPasted: false,
+        imageWidthModalEdit: true,
+        urlProtocol: true,
+
+        btns: [
+          //["viewHTML"],
+          //["undo", "redo"], // Only supported in Blink browsers
+          ["formatting"],
+          ["strong", "em", "del"],
+          ["superscript", "subscript"],
+          ["link"],
+          ["insertImage"],
+          ["justifyLeft", "justifyCenter", "justifyRight", "justifyFull"],
+          ["unorderedList", "orderedList"],
+          ["horizontalRule"],
+          ["removeformat"],
+          //["fullscreen"],
+        ],
+      },
+      windowHeight: null,
+      windowWidth: window.innerWidth,
       appNamex: process.env.VUE_APP_NAME,
       isnotcargando: false,
       imagebase64: "",
       imageuploadedurl: "",
       remoteUrl: "",
       nuevoposttitulo: "",
-      nuevopostcomment: "",
-      show: false,
+      nuevopostcomment: HtmlEditor.fetchData(),
+      showPostModal: false,
       variants: [
         "primary",
         "secondary",
@@ -446,6 +521,9 @@ export default {
     };
   },
   mounted() {
+    this.increment(); // -> 1
+    //this.personal = this.$refs.personal.model;
+    //this.education = this.$refs.education.htmlContent;
     window.addEventListener("resize", () => {
       this.windowHeight = window.innerHeight;
       this.windowWidth = window.innerWidth;
@@ -456,14 +534,17 @@ export default {
     if (localStorage.hcaptchatoken) {
       this.hcaptchatoken = localStorage.hcaptchatoken;
     }*/
+    /*
     if (localStorage.username) {
       this.username = localStorage.username;
     }
     if (localStorage.password) {
       this.password = localStorage.password;
-    }
+    }*/
     if (localStorage.username && localStorage.password) {
       console.log("user has been logged previusly");
+      this.username = localStorage.username;
+      this.password = localStorage.password;
       this.loggedstate = true;
     } else {
       console.log("user needs to log in");
@@ -492,6 +573,20 @@ export default {
     },
   },
   methods: {
+    increment() {
+      console.log("incrementing");
+
+      store.commit("increment");
+      console.log(store.state.count);
+    },
+    // Gets the checkbox information from the child component
+    checkboxValue: function (params) {
+      console.log("html text params");
+      console.log(params);
+      this.check = params;
+      return params;
+    },
+
     handleImage(e) {
       const selectedImage = e.target.files[0]; // get first file
       this.createBase64Image(selectedImage);
@@ -592,7 +687,7 @@ export default {
     async publicar() {
       console.log("publicar");
 
-      if (this.nuevoposttitulo != "" && this.nuevopostcomment != "") {
+      if (this.nuevoposttitulo != "" && this.postContentTextValue != "") {
         this.isnotcargando = false;
         console.log("base64code");
         console.log(this.imagebase64);
@@ -601,6 +696,7 @@ export default {
 
         var data = new FormData();
         data.append("image", res[1]);
+
         var config = {
           method: "post",
           url: "https://api.imgur.com/3/image",
@@ -628,17 +724,25 @@ export default {
           console.log("titulo");
           console.log(this.nuevoposttitulo);
           console.log("contenido");
-          console.log(this.nuevopostcomment);
+          console.log(this.postContentTextValue);
           this.postCreate(
             this.nuevoposttitulo,
-            this.nuevopostcomment,
+            this.postContentTextValue,
             this.imageuploadedurl
           );
           console.log("funciono kpo 😎");
-          this.show = false;
+          this.showPostModal = false;
 
           this.nuevoposttitulo = "";
-          this.nuevopostcomment = "";
+          store.clearPostContentText;
+          //alert("redirecting to the post")
+          /*
+          console.log("redirecting to the post")
+          console.log("postdata");
+          console.log(postdata);
+
+          window.location.href="./post/"+postdata._id; 
+          */
         } else {
           console.log("no funciono kpo, sigue cargando algo");
         }
@@ -677,6 +781,10 @@ export default {
         EventBus.$emit("createImage", "datos", datos);
         //window.Evento.$emit("createImage", "datos", datos);
         //this.posts.push(datos);
+        console.log("redirecting to the post");
+
+        window.location.href = "./post/" + datos._id;
+        return datos;
       });
       /*
 
@@ -808,7 +916,7 @@ export default {
     },
     openForm() {
       //this.$refs.modal.open();
-      this.show = true;
+      this.showPostModal = true;
     },
     eventChild: function (content_from_child) {
       console.log("Event from child component emitted", content_from_child);

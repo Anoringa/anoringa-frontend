@@ -235,6 +235,7 @@
                       </template>
                     </multiselect>
                     <!--
+                    <p>{{ value }}</p>
                     <pre class="language-json"><code>{{ value  }}</code></pre>
                     -->
                   </div>
@@ -279,7 +280,7 @@
                 <div id="comentarios" class="pt-3"></div>
                 <div v-if="comments !== null">
                   <div
-                    class="repo"
+                    class="repo container"
                     style="text-align: left"
                     v-for="currentComent in orderBy(comments, 'updatedAt', -1)"
                     :id="currentComent._id"
@@ -287,7 +288,7 @@
                   >
                     <div
                       class="stats"
-                      style="word-wrap: break-word; white-space: pre-wrap"
+                      style="word-wrap: break-word; white-space: pre-wrap "
                     >
                       <a class="pr-1" :href="'#' + currentComent._id"
                         >@{{ currentComent._id }}</a
@@ -339,16 +340,27 @@
                         <i style="font-size:24px" class="fa">&#xf112;</i>
                         -->
                     </b-button>
-
                     <b-popover
                       :target="'popover-target-' + currentComent._id"
                       triggers="hover"
                       placement="top"
                     >
-                      <template #title>Responder este comentario!</template>
+                    
+                      <template #title>Responder este comentario!</template><!---->
                       Haz click aqui para responder este comentario de
                       <b>{{ currentComent.user[0].username }}</b
                       >!
+                    <b-button pill variant="link topright" :id="'popover-target-'+currentComent._id" @click="replyThisComment(currentComent)" >
+                      <i class="fa fa-reply" style="font-size:12px"></i>
+                      <!-- 
+                        <i style="font-size:24px" class="fa">&#xf112;</i>
+                        -->
+                      </b-button>
+
+                    <!--
+                    <b-popover :target="'popover-target-'+currentComent._id" triggers="hover" placement="top">
+                      <template #title>Responder este comentario!</template>-->
+                      Haz click aqui para responder este comentario de <b>{{currentComent.user[0].username}}</b>!
                     </b-popover>
 
                     <p class="last-updated" style="color: red">
@@ -392,6 +404,31 @@
 
 
 <script>
+// https://stackoverflow.com/questions/1988349/array-push-if-does-not-exist
+// check if an element exists in array using a comparer function
+// comparer : function(currentElement)
+Array.prototype.inArray = function (comparer) {
+  for (var i = 0; i < this.length; i++) {
+    if (comparer(this[i])) return true;
+  }
+  return false;
+};
+
+// adds an element to the array if it does not already exist using a comparer
+// function
+Array.prototype.pushIfNotExist = function (element, comparer) {
+  if (!this.inArray(comparer)) {
+    this.push(element);
+  }
+};
+/*
+var array = [{ name: "tom", text: "tasty" }];
+var element = { name: "tom", text: "tasty" };
+array.pushIfNotExist(element, function(e) { 
+    return e.name === element.name && e.text === element.text; 
+});
+*/
+
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import $ from "jquery";
@@ -476,7 +513,7 @@ export default {
 
     return {
       //title: process.env.VUE_APP_NAME + " | " + title.substring(0,50),
-      title: title.substring(0,50) + " | " + process.env.VUE_APP_NAME,
+      title: title.substring(0, 50) + " | " + process.env.VUE_APP_NAME,
       //content: "Anoringa es un sitio en el que podras discutir anonimamente.",
       //content: content.substring(0,100) + " | " + process.env.VUE_APP_NAME,
       // override the parent template and just use the above title only
@@ -485,17 +522,23 @@ export default {
         {
           name: "description",
           //content: title,
-          content: content.replace(/<\/?[^>]+(>|$)/g, "").substring(0,100) + " | " + process.env.VUE_APP_NAME,
-        },/*
+          content:
+            content.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 100) +
+            " | " +
+            process.env.VUE_APP_NAME,
+        } /*
         {  vmid: "title", 
         name: "title", 
         //content:  process.env.VUE_APP_NAME +" | "+ " Post", 
         content: title.substring(0,50) + " | " + process.env.VUE_APP_NAME,
-        },*/
+        },*/,
         {
           vmid: "description",
           name: "description",
-          content: content.replace(/<\/?[^>]+(>|$)/g, "").substring(0,100) + " | " + process.env.VUE_APP_NAME,
+          content:
+            content.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 100) +
+            " | " +
+            process.env.VUE_APP_NAME,
         },
       ],
     };
@@ -672,6 +715,14 @@ metaInfo() {
     return this.pagetitle;
   },
   methods: {
+    replyThisComment(comentario) {
+      console.log("comentario");
+      console.log(comentario);
+
+      this.value.pushIfNotExist(comentario, function (e) {
+        return e._id === comentario._id && e.text === comentario.text;
+      });
+    },
     isTheOwner(someone) {
       if (someone == this.userowner.username) {
         console.log("is the owner");
@@ -690,47 +741,62 @@ metaInfo() {
     },
     crearComentario() {
       if (
-        this.nuevoComemtarioTexto != "" &&
-        this.nuevoComemtarioTexto != null
+        localStorage.username != "" &&
+        localStorage.username != undefined &&
+        localStorage.username != null &&
+        localStorage.password != "" &&
+        localStorage.password != undefined &&
+        localStorage.password != null
       ) {
-        console.log("this.nuevoComemtarioTexto if true");
-        console.log(this.nuevoComemtarioTexto);
+        if (
+          this.nuevoComemtarioTexto != "" &&
+          this.nuevoComemtarioTexto != null
+        ) {
+          console.log("this.nuevoComemtarioTexto if true");
+          console.log(this.nuevoComemtarioTexto);
 
-        console.log("Comemtario Create");
+          console.log("Comemtario Create");
 
-        var data = {
-          username: localStorage.username,
-          //password: "req.body.password",
-          password: localStorage.password,
+          var data = {
+            username: localStorage.username,
+            //password: "req.body.password",
+            password: localStorage.password,
 
-          text: this.nuevoComemtarioTexto,
+            text: this.nuevoComemtarioTexto,
 
-          inResponseTo: this.ListaDeIdsDeComentarios,
+            inResponseTo: this.ListaDeIdsDeComentarios,
 
-          postid: this.$route.params.id,
-        };
-        this.value = [];
-        this.ListaDeIdsDeComentarios = [];
-        this.nuevoComemtarioTexto = "";
+            postid: this.$route.params.id,
+          };
+          this.value = [];
+          this.ListaDeIdsDeComentarios = [];
+          this.nuevoComemtarioTexto = "";
 
-        var self = this;
-        this.$socket.emit("comment", data, function (datos) {
-          console.log("socket.io emit");
-          console.log(datos);
+          var self = this;
+          this.$socket.emit("comment", data, function (datos) {
+            console.log("socket.io emit");
+            console.log(datos);
 
-          datos.createdAt = moment().toISOString();
-          datos.updatedAt = moment().toISOString();
-          self.comments.push(datos);
-          //this.$root.$emit("component1"); //like this
-          //this.$root.$emit("component1", "datos", datos);
-          //this.$root.$emit("createImage", "datos", datos);
-          //EventBus.$emit("createImage", "datos", datos);
-          //window.Evento.$emit("createImage", "datos", datos);
-          //this.posts.push(datos);
-        });
+            datos.createdAt = moment().toISOString();
+            datos.updatedAt = moment().toISOString();
+            datos.user = [
+              { username: localStorage.username, _id: "not loaded" },
+            ];
+            self.comments.push(datos);
+            //this.$root.$emit("component1"); //like this
+            //this.$root.$emit("component1", "datos", datos);
+            //this.$root.$emit("createImage", "datos", datos);
+            //EventBus.$emit("createImage", "datos", datos);
+            //window.Evento.$emit("createImage", "datos", datos);
+            //this.posts.push(datos);
+          });
+        } else {
+          console.log("this.nuevoComemtarioTexto if false");
+          console.log(this.nuevoComemtarioTexto);
+        }
       } else {
-        console.log("this.nuevoComemtarioTexto if false");
-        console.log(this.nuevoComemtarioTexto);
+        console.log("logueate hijo de puta");
+        alert("logueate hijo de puta");
       }
     },
     postCreate(titulox, contenidox, photox) {
@@ -915,7 +981,7 @@ metaInfo() {
           this.pagetitle = this.post.title;
           this.content = this.post.description;
 
-          if (this.post.comments) {
+          if (this.post.comments.le) {
             this.comments = this.post.comments;
           } else {
             this.comments = this.post.comentarios;
@@ -938,6 +1004,20 @@ metaInfo() {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
+
+<style>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+.container {
+  position: relative;
+}
+
+.topright {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 14px;
+}
+</style>
 <style lang="css" scoped>
 *,
 *:before,
