@@ -83,14 +83,6 @@ Vue.use(VuePageTitle, {
 })
 */
 
-
-
-import jQuery from 'jquery';
-global.jQuery = require('jquery');
-var $ = global.jQuery;
-window.$ = $;
-
-
 //import jQuery from "jquery";
 global.jQuery = require("jquery");
 var $ = global.jQuery;
