@@ -1,5 +1,10 @@
 <template>
   <main class="maindiv">
+    <!--
+    <head>
+        <title>{{"process.env.VUE_APP_NAME" + " | Post"}}</title>
+    </head>
+      -->
     <div v-if="loaded_correctly === 'OK'">
       <!--
       Post id : {{ $route.params.id }}
@@ -315,6 +320,29 @@
                     >
                       {{ currentComent.text }}
                     </p>
+                    <b-button
+                      pill
+                      variant="link topright"
+                      :id="'popover-target-' + currentComent._id"
+                      @click="replyThisComment(currentComent)"
+                    >
+                      <i class="fa fa-reply" style="font-size: 12px"></i>
+                      <!-- 
+                        <i style="font-size:24px" class="fa">&#xf112;</i>
+                        -->
+                    </b-button>
+
+                    <b-popover
+                      :target="'popover-target-' + currentComent._id"
+                      triggers="hover"
+                      placement="top"
+                    >
+                      <template #title>Responder este comentario!</template>
+                      Haz click aqui para responder este comentario de
+                      <b>{{ currentComent.user[0].username }}</b
+                      >!
+                    </b-popover>
+
                     <p class="last-updated" style="color: red">
                       Publicado {{ currentComent.createdAt | moment }}.
                     </p>
@@ -407,6 +435,25 @@ export default {
     this.moment = moment;
     this.getPostDetail();
   },
+  name: "Post",
+  /*
+    metaInfo: {
+      title: this.getTitle() + " Post"+" | " + process.env.VUE_APP_NAME,
+      // override the parent template and just use the above title only
+      titleTemplate: false
+    },*/
+  metaInfo() {
+    return {
+      meta: [
+        {
+          vmid: "title",
+          name: "title",
+          content: this.pagetitle,
+        },
+      ],
+    };
+  },
+  /*
   metaInfo() {
     return {
       meta: [
@@ -416,8 +463,8 @@ export default {
           content: this.description,
         },
       ],
-    };
-  } /*
+    };  },*/
+  /*
     metaInfo: {
       title: 'My Example App',
       titleTemplate: '%s - Yay!',
@@ -426,15 +473,17 @@ export default {
         amp: true
       }
     },
-    title: ({ $t }) => $t(this.pagetitle),*/,
+    title: ({ $t }) => $t(this.pagetitle),
+    
+  */
 
-  mixins: [Vue2Filters.mixin],
   filters: {
     moment: function (date) {
       //return moment(date).format('MMMM Do YYYY, h:mm:ss a');
       return moment(date).fromNow();
     },
   },
+  mixins: [Vue2Filters.mixin],
   data() {
     return {
       id: "",
@@ -511,7 +560,6 @@ metaInfo() {
             ]
         }
     },*/,
-  name: "Post",
   components: {
     //History,
     Multiselect,
@@ -555,6 +603,9 @@ metaInfo() {
       console.log("from other component");
     });*/
     /**/
+  },
+  getTitle() {
+    return this.pagetitle;
   },
   methods: {
     isTheOwner(someone) {

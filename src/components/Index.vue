@@ -1,12 +1,11 @@
 <template>
   <div id="index">
-    <Header :appName="appName" ></Header>
+    <Header :appName="appName"></Header>
     <!--
       <p>{{appName}}</p>
     -->
     <Posts></Posts>
     <Footer></Footer>
-
   </div>
 </template>
 
@@ -18,6 +17,41 @@ import Header from "./Header";
 import Posts from "./Posts";
 import Footer from "./Footer";
 export default {
+  head: {
+    title: {
+      inner: "My title",
+      separator: "-",
+      complement: "My Complement",
+    },
+    //omited
+  },
+  metaInfo: {
+    title: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",
+    meta: [
+      {
+        vmid: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",
+        name: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",
+        content: "Anoringa es un sitio en el que podras discutir anonimamente",
+      },
+      { charset: "utf-8" },
+      {
+        name: "description",
+        content: "An example Vue application with vue-meta.",
+      },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {
+        vmid: "description",
+        name: "description",
+        content: "Anoringa es un sitio en el que podras discutir anonimamente",
+      },
+    ],
+    // override the parent template and just use the above title only
+    titleTemplate: false,
+    htmlAttrs: {
+      lang: "es-AR",
+      amp: true,
+    },
+  },
   name: "Index",
   components: {
     //History,
@@ -39,10 +73,9 @@ export default {
   },
   methods: {
     clickConvert() {},
-    convert() {}
-  }
-}
-
+    convert() {},
+  },
+};
 </script>
 
 
@@ -54,7 +87,6 @@ export default {
 $darker: #222;
 $dark: #555;
 $bright: #ddd;
-
 
 #index {
   //width: 80%;

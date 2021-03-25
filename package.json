@@ -6,13 +6,17 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "vue-cli-service build && node server.js"
   },
   "dependencies": {
     "@hcaptcha/vue-hcaptcha": "^0.2.4",
+    "anymatch": "^3.1.1",
     "axios": "^0.21.0",
     "bootstrap-vue": "^2.20.1",
+    "chokidar": "^3.5.1",
     "core-js": "^3.6.5",
+    "http-parser-js": "^0.5.3",
     "js-beautify": "^1.13.5",
     "moment": "^2.29.1",
     "portal-vue": "^2.1.7",
@@ -25,6 +29,7 @@
     "vue": "^2.6.12",
     "vue-eagle-modal": "^1.0.6",
     "vue-fixed-header": "^3.2.15",
+    "vue-head": "^2.2.0",
     "vue-image-brightness": "^0.1.6",
     "vue-meta": "^2.4.0",
     "vue-multiselect": "^2.1.6",
@@ -50,6 +55,7 @@
     "popper.js": "^1.16.1",
     "sass": "^1.30.0",
     "sass-loader": "^10.1.0",
+    "serviceworker-webpack-plugin": "^1.0.1",
     "style-loader": "^2.0.0",
     "vue-template-compiler": "^2.6.11"
   },

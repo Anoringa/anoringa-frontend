@@ -1,5 +1,8 @@
 <template>
   <main class="container" v-if="loaded == 'OK'">
+    <head>
+        <title>{{"process.env.VUE_APP_NAME" + " | Posts"}}</title>
+    </head>
     <div id="cards" class="card-grid">
       <!--
     
@@ -49,13 +52,11 @@
       </CardPostBox>
     </div>
   </main>
-  <div v-else-if="loaded == false" style="height:100%">
+  <div v-else-if="loaded == false" style="height: 100%">
     loading
     <b-spinner variant="danger" key="danger"></b-spinner>
   </div>
-  <div v-else-if="loaded == 'ERROR'" style="height:100%">
-    ERROR
-  </div>
+  <div v-else-if="loaded == 'ERROR'" style="height: 100%">ERROR</div>
 </template>
 
 
@@ -72,6 +73,38 @@ import axios from "axios";
 import Vue2Filters from "vue2-filters";
 
 export default {
+  head: {
+    title: {
+      inner: 'It will be a pleasure'
+    },
+    // Meta tags
+    meta: [
+      { name: 'application-name', content: 'Name of my application' },
+      { name: 'description', content: 'A description of the page', id: 'desc' }, // id to replace intead of create element
+      // ...
+      // Twitter
+      { name: 'twitter:title', content: 'Content Title' },
+      // with shorthand
+      { n: 'twitter:description', c: 'Content description less than 200 characters'},
+      // ...
+      // Google+ / Schema.org
+      { itemprop: 'name', content: 'Content Title' },
+      { itemprop: 'description', content: 'Content Title' },
+      // ...
+      // Facebook / Open Graph
+      { property: 'fb:app_id', content: '123456789' },
+      { property: 'og:title', content: 'Content Title' },
+      // with shorthand
+      { p: 'og:image', c: 'https://example.com/image.jpg' },
+      // ...
+    ],},
+    
+    name: 'Posts',
+    metaInfo: {
+      title: process.env.VUE_APP_NAME + " | Posts",
+      // override the parent template and just use the above title only
+      titleTemplate: null
+    },
   /*
   computed: {
     filteredOfficialScenarios() {
