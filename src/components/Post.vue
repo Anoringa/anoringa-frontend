@@ -508,22 +508,51 @@ export default {
     },
     */
   metaInfo() {
-    const title = this.pagetitle;
-    const content = this.content;
+    const title = this.pagetitle.substring(0, 50) + " - " + process.env.VUE_APP_NAME;
+    const content = this.content.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 100);
+    const link = this.url;
+    const photolink = this.photo;
+    
 
     return {
       //title: process.env.VUE_APP_NAME + " | " + title.substring(0,50),
-      title: title.substring(0, 50) + " | " + process.env.VUE_APP_NAME,
+      title: title,
       //content: "Anoringa es un sitio en el que podras discutir anonimamente.",
       //content: content.substring(0,100) + " | " + process.env.VUE_APP_NAME,
       // override the parent template and just use the above title only
       titleTemplate: null,
       meta: [
         {
+           vmid: "og:title",
+           property: "og:title",
+          content:title
+        },
+        {
+          vmid: "og:description",
+          property: "og:description",
+          content: content
+        },
+        {
+          vmid: "og:image:alt",
+          property: "og:image:alt",
+          content: process.env.VUE_APP_URL + "anoringa.png"
+        },
+        {
+          vmid: "og:url",
+          property: "og:url",
+          content: link
+        },
+        {
+          vmid: "og:image",
+          property: "og:image",
+          content: photolink
+        },
+
+        {
           name: "description",
           //content: title,
           content:
-            content.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 100) +
+            content +
             " | " +
             process.env.VUE_APP_NAME,
         } /*
@@ -535,10 +564,7 @@ export default {
         {
           vmid: "description",
           name: "description",
-          content:
-            content.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 100) +
-            " | " +
-            process.env.VUE_APP_NAME,
+          content: content,
         },
       ],
     };
@@ -644,7 +670,7 @@ export default {
       //https://agile-everglades-15507.herokuapp.com/api/post/5fea65d576140b6b2093cdb7
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
 
-      url: "asdasdasd",
+      url: null,
       photo: "https://picsum.photos/200?random=1",
       pagetitle: "Post",
       comments: [],
@@ -980,8 +1006,9 @@ metaInfo() {
           this.loaded_correctly = "OK";
           this.pagetitle = this.post.title;
           this.content = this.post.description;
+          this.url = process.env.VUE_APP_URL + "/post/" + this.post._id;
 
-          if (this.post.comments.le) {
+          if (this.post.comments.length) {
             this.comments = this.post.comments;
           } else {
             this.comments = this.post.comentarios;

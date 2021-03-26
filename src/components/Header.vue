@@ -59,30 +59,30 @@
     -->
 
     <nav class="navbar navbar-expand-md bg-danger navbar-dark">
-      <a
-        v-if="windowWidth > 325"
-        class="navbar-brand loguito"
-        href="/"
-        style=""
-      >
-        <!-- 
-        
+      <a class="navbar-brand loguito" href="/" style=""
+        ><!--
         <img
+        v-if="windowWidth < 442"
+          src="/anoringa_logo.png"
+          class="d-inline-block align-top"
+          height="35"
+          alt="A"
+        />-->
+        <a v-if="windowWidth > 442" class="navbar-brand loguito" href="/">
+          {{ appNamex }}
+        </a>
+        <img
+          v-if="windowWidth < 442"
+          href="/"
           src="/anoringa_logo.png"
           class="d-inline-block align-top"
           height="35"
           alt="A"
         />
-      -->
-        {{ appNamex }}
+        <a class="badge badge--beta" href="/"
+          >alpha</a
+        >
       </a>
-      <a v-else href="/">
-        <img
-          src="/anoringa_logo.png"
-          class="d-inline-block align-top"
-          height="35"
-          alt="A"
-      /></a>
       <!--
       <button
         class="navbar-toggler order-last order-md-0"
@@ -308,7 +308,7 @@
         </div>
         <div class="form-group">
           <label for="comment">Contenido</label>
-        <HtmlEditor/>
+          <HtmlEditor />
 
           <!--
           <html-editor @child-checkbox="checkboxValue" />
@@ -329,8 +329,6 @@
           ></textarea>
           -->
         </div>
-
-
 
         <label for="postImage">Imagen del post</label>
         <ImageUploader></ImageUploader>
@@ -433,7 +431,7 @@ import "trumbowyg/dist/ui/trumbowyg.css";
 import HtmlEditor from "./html-editor";
 
 // You can use it now
-import ImageUploader from "./ImageUploader"
+import ImageUploader from "./ImageUploader";
 export default {
   props: {
     appName: {
@@ -1214,4 +1212,25 @@ main {
   padding-right: 2rem;
 }
 */
+
+.badge {
+  padding: 2px 4px;
+  line-height: 1rem;
+  font-size: 0.875rem;
+  position: relative;
+  border-radius: 20px;
+  color: #333333;
+}
+
+.badge--beta {
+  //color:  lighten(hsl(267,64,44), 10%) !important;
+  color: hsl(267, 64, 44) !important;
+  //border: 2px solid lighten(hsl(267,64,44), 25%);
+  border: 1px solid hsl(267, 64, 44);
+  font-weight: 600;
+  /*
+    &:after {
+        content: "BETA";
+    }*/
+}
 </style>

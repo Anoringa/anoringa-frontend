@@ -25,6 +25,66 @@ export default {
     },
     //omited
   },
+  metaInfo() {
+    const title = process.env.VUE_APP_NAME + " | Comenta y postea anonimamente";
+
+    const content = "Anoringa es un sitio en el que podras discutir anonimamente";
+    const link = process.env.VUE_APP_URL;
+    const photolink = process.env.VUE_APP_URL + "/" + "anoringa.png";
+
+    return {
+      //title: process.env.VUE_APP_NAME + " | " + title.substring(0,50),
+      title: title,
+      //content: "Anoringa es un sitio en el que podras discutir anonimamente.",
+      //content: content.substring(0,100) + " | " + process.env.VUE_APP_NAME,
+      // override the parent template and just use the above title only
+      titleTemplate: null,
+      meta: [
+        {
+          vmid: "og:title",
+          property: "og:title",
+          content: title,
+        },
+        {
+          vmid: "og:description",
+          property: "og:description",
+          content: content,
+        },
+        {
+          vmid: "og:image:alt",
+          property: "og:image:alt",
+          content: photolink,
+        },
+        {
+          vmid: "og:url",
+          property: "og:url",
+          content: link,
+        },
+        {
+          vmid: "og:image",
+          property: "og:image",
+          content: photolink,
+        },
+
+        {
+          name: "description",
+          //content: title,
+          content: content + " | " + process.env.VUE_APP_NAME,
+        } /*
+        {  vmid: "title", 
+        name: "title", 
+        //content:  process.env.VUE_APP_NAME +" | "+ " Post", 
+        content: title.substring(0,50) + " | " + process.env.VUE_APP_NAME,
+        },*/,
+        {
+          vmid: "description",
+          name: "description",
+          content: content,
+        },
+      ],
+    };
+  },
+  /*
   metaInfo: {
     title: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",
     meta: [
@@ -51,7 +111,7 @@ export default {
       lang: "es-AR",
       amp: true,
     },
-  },
+  },*/
   name: "Index",
   components: {
     //History,
