@@ -99,10 +99,14 @@
               :state="Boolean(file1)"
               placeholder="Busca un archivo o sueltalo aqui..."
               drop-placeholder="Sueltalo aqui..."
-              @change="handleImage"
+              @input="readURL"
             ></b-form-file>
+            <img :src="file1" alt="" />
             <!--
+            <div class="mt-3">Selected file: {{ file1 ? file1 : "" }}</div>
+              @change="readURL(this)"
             <div class="mt-3">
+              required="true"
               Imagen Seleccionada: {{ file1 ? file1.name : "" }}
             </div>-->
             <img
@@ -283,15 +287,35 @@ export default {
   },
   name: "ImageUploader",
   methods: {
+    readURL() {
+      console.log("file1");
+      console.log(this.file1);
+      this.createBase64Image(this.file1);
+      //console.log(this.file1);
+      
+    },
     saveImage(url) {
       store.commit({
         type: "setPostPhotoLink",
         link: url,
       });
     },
-    handleImage(e) {
-      const selectedImage = e.target.files[0]; // get first file
-      this.createBase64Image(selectedImage);
+    handleImage() {
+      console.log("file1");
+      console.log(this.file1);
+      //const selectedImage = e.target.files[0]; // get first file
+      //this.createBase64Image(this.file1);
+      //this.imagebase64 = this.file1
+      var fileObject = this.file1;
+      const reader = new FileReader();
+      reader.onload = (fileObject) => {
+        this.imagebase64 = fileObject;
+        console.log("this.image");
+        console.log(this.imagebase64);
+        //this.uploadImage();
+        //this.image = this.uploadImageImgur(this.imagebase64);
+      };
+      reader.readAsDataURL(fileObject);
     },
     createBase64Image(fileObject) {
       const reader = new FileReader();

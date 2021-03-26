@@ -31,6 +31,7 @@ export default {
     const content = "Anoringa es un sitio en el que podras discutir anonimamente";
     const link = process.env.VUE_APP_URL;
     const photolink = process.env.VUE_APP_URL + "/" + "anoringa.png";
+    const app_name = process.env.VUE_APP_NAME;
 
     return {
       //title: process.env.VUE_APP_NAME + " | " + title.substring(0,50),
@@ -64,6 +65,21 @@ export default {
           vmid: "og:image",
           property: "og:image",
           content: photolink,
+        },
+        {
+          vmid: "og:type",
+          property: "og:type",
+          content: "website",
+        },
+        {
+          vmid: "og:locale",
+          property: "og:locale",
+          content: "es-ar",
+        },
+        {
+          vmid: "og:site_name",
+          property: "og:site_name",
+          content: app_name,
         },
 
         {

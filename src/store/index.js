@@ -9,6 +9,12 @@ export default new Vuex.Store({
     credentials: [],
     count: 0,
     postContentText: "",
+    postImage:{
+        value: { 
+          type: null, 
+          source: null },
+        content: null,
+    }
   },
   getters: {
     getPostContentText: (state) => {

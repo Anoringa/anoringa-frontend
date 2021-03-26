@@ -68,7 +68,7 @@
           height="35"
           alt="A"
         />-->
-        <a v-if="windowWidth > 442" class="navbar-brand loguito" href="/">
+        <a v-if="windowWidth > 442" class="navbar-brand loguito mr-1" href="/">
           {{ appNamex }}
         </a>
         <img
@@ -332,6 +332,7 @@
 
         <label for="postImage">Imagen del post</label>
         <ImageUploader></ImageUploader>
+        <!--
         <div class="container mt-10" id="postImage">
           <div class="card bg-white">
             <img style="" :src="imagebase64" alt="" width="50%" height="auto" />
@@ -342,7 +343,7 @@
               accept="image/*"
             />
           </div>
-        </div>
+        </div>-->
 
         <div class="form-group form-check">
           <label class="form-check-label">
@@ -684,7 +685,7 @@ export default {
     },
     async publicar() {
       console.log("publicar");
-
+      
       if (this.nuevoposttitulo != "" && this.postContentTextValue != "") {
         this.isnotcargando = false;
         console.log("base64code");

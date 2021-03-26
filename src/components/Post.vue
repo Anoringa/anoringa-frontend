@@ -76,6 +76,7 @@
                 :src="photo ? photo : photodefault"
                 class="img-fluid post-img"
                 alt="aca iria una foto pero nose donde esta"
+                :title="phototitle ? phototitle : 'default photo title'"
               />
 
               <!-- 
@@ -672,6 +673,7 @@ export default {
 
       url: null,
       photo: "https://picsum.photos/200?random=1",
+      phototitle: "default photo",
       pagetitle: "Post",
       comments: [],
       content: "some scrap contenido",
@@ -1014,6 +1016,7 @@ metaInfo() {
             this.comments = this.post.comentarios;
           }
           this.photo = this.post.photo;
+          this.phototitle = "post number "+this.post._id + " photo";
           this.userowner = this.post.user[0];
           this.id = this.post._id;
           this.postcreatedAt = this.post.createdAt;
