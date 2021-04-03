@@ -8,8 +8,13 @@
       v-bind:href="'/post/' + id"
       style="display: block; height: 100%; text-decoration: none; color: white"
     >
-    <h3 style="" class="thumb-title">{{ title }}</h3>
-      <img data-filter="overlay-dark" class="post-image" :alt="photodefault" :src="getPhoto()" />
+      <h3 style="" class="thumb-title">{{ title }}</h3>
+      <img
+        data-filter="overlay-dark"
+        class="post-image"
+        :alt="photodefault"
+        :src="getPhoto()"
+      />
       <div class="thumb-anim">
         <!--
         <h3 class="thumb-title">{{ title }}</h3>
@@ -94,7 +99,7 @@ export default {
       required: false,
     },*/,
     photo: {
-      type: String,
+      type: [String, Object],
       required: false,
     },
     title: {
@@ -170,11 +175,51 @@ export default {
         ); // fragment locator
         return !!pattern.test(str);
       }
-      if (validURL(this.photo)) {
-        return this.photo;
-      } else {
-        return this.photodefault;
+
+      // Photo object vs media
+      if (typeof this.photo === "object") {
+        //console.log("the image coms from object");
+        if (validURL(this.photo.content)) {
+          return this.photo.content;
+        } else {
+          return this.photodefault;
+        }
+      } else if (
+        typeof this.photo === "string" ||
+        this.photo instanceof String
+      ) {
+        //console.log("the image coms from string");
+        if (validURL(this.photo)) {
+          return this.photo;
+        } else {
+          return this.photodefault;
+        }
+      }else {
+        console.log("anyone know the image coms from ");
+
+      } /*else {
+        console.log("anyone know the image coms from ");
+        if (validURL(this.photo.content)) {
+          return this.photo.content;
+        } else {
+          return this.photodefault;
+        }
       }
+      if (this.photo.content) {
+        if (validURL(this.photo.content)) {
+          return this.photo.content;
+        } else {
+          return this.photodefault;
+        }
+      }
+      else{
+        if (validURL(this.photo.content)) {
+          return this.photo;
+        } else {
+          return this.photodefault;
+        }
+
+      }*/
     },
     clicked() {
       console.log("clicked");
@@ -195,18 +240,14 @@ export default {
 
 
 <style lang="scss" scoped>
-
-
-
 $darker: #222;
 $dark: #555;
 $bright: #ddd;
 
-
 .thumb-title {
   text-transform: uppercase;
   padding: 10px;
-  word-wrap: break-word;/*
+  word-wrap: break-word; /*
   -webkit-text-fill-color: white;
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: black;
@@ -230,7 +271,6 @@ $bright: #ddd;
   position: relative;
 }
 
-
 .post-image {
   /*
     position: absolute;
@@ -242,7 +282,7 @@ $bright: #ddd;
     min-height: 100%;
     min-width: 100%;
     */
-    /*
+  /*
   margin-left: 50rm;
   margin-right: 50rm;
   height: 100%;
@@ -250,8 +290,8 @@ $bright: #ddd;
   padding: auto;
   */
   z-index: -1;
-  background-color: rgba(0,0,0,.5);
-  filter:brightness(0.9);
+  background-color: rgba(0, 0, 0, 0.5);
+  filter: brightness(0.9);
   /*
   height: 100%;
   width: auto;
@@ -317,7 +357,6 @@ $bright: #ddd;
   width: 300px;
   object-fit: cover;
 }
-
 
 /*
 .thumb-anim {

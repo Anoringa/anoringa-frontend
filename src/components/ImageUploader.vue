@@ -129,6 +129,7 @@
               aria-describedby="input-live-help input-live-feedback"
               placeholder="Enter your name"
               debounce="5"
+              @input="setImageSource({value:{ type: 'photo', source: 'url' },content:url_de_imagen})"
               trim
             ></b-form-input>
 
@@ -419,10 +420,12 @@ export default {
         {
           value: { type: "photo", source: "URL" },
           text: "Ingresar direccion URL de una imagen",
+          disabled: true,
         },
         {
           value: { type: "video", source: "youtube" },
           text: "Video de Youtube",
+          disabled: true,
         },
         {
           value: { type: "gif", source: "tenor" },

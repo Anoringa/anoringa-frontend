@@ -921,11 +921,11 @@ metaInfo() {
           }
 
           // Photo object vs media
-          if (typeof this.post.photo === Object) {
+          if (typeof this.post.photo === 'object') {
             console.log("the image coms from object")
             this.photo = this.post.photo.content;
           }
-          if (typeof this.post.photo === 'string' || this.post.photo instanceof String) {
+          else if (typeof this.post.photo === 'string' || this.post.photo instanceof String) {
             console.log("the image coms from string")
             this.photo = this.post.photo;
           }
