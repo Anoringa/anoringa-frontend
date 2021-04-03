@@ -4966,6 +4966,18 @@
   "resolved" "https://registry.npmjs.org/ignore/-/ignore-4.0.6.tgz"
   "version" "4.0.6"
 
+"imagekit-javascript@^1.3.5":
+  "integrity" "sha512-zKr8vOvLdF/K0w6QGHuAVibneTqDxE6LRotQNTd1eUUDYdro7rrywuKqQb0XFbG43RQXdHNE+mB1RCj+/wQgIw=="
+  "resolved" "https://registry.npmjs.org/imagekit-javascript/-/imagekit-javascript-1.3.6.tgz"
+  "version" "1.3.6"
+
+"imagekitio-vue@^1.0.9":
+  "integrity" "sha512-j6s6ScPlKMNpwZa+GM5skkWtV0mlL0CG89lJ0QqzlO5Wv8/6uglXejJR+Wt/dp9kq2b3/XMC26YgWdM9TsC+wA=="
+  "resolved" "https://registry.npmjs.org/imagekitio-vue/-/imagekitio-vue-1.0.9.tgz"
+  "version" "1.0.9"
+  dependencies:
+    "imagekit-javascript" "^1.3.5"
+
 "import-cwd@^2.0.0":
   "integrity" "sha1-qmzzbnInYShcs3HsZRn1PiQ1sKk="
   "resolved" "https://registry.npmjs.org/import-cwd/-/import-cwd-2.1.0.tgz"

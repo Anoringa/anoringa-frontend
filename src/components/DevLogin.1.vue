@@ -7,17 +7,6 @@
       @verify="onVerify"
       theme="dark"
     ></vue-hcaptcha>
-
-    // File upload
-    <ik-upload
-      :tags="['tag1', 'tag2']"
-      :responseFields="['tags']"
-      :onError="onErrorImagekit"
-      :onSuccess="onSuccessImagekit"
-      :useUniqueFileName="true"
-      :isPrivateFile="false"
-      customCoordinates="10,10,100,100"
-    />
     <!--
       <p>{{appName}}</p>
     -->
@@ -40,12 +29,9 @@ export default {
         name: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",
         content: "Anoringa es un sitio en el que podras discutir anonimamente",
       },
-      { charset: "utf-8" },
-      {
-        name: "description",
-        content: "An example Vue application with vue-meta.",
-      },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { charset: 'utf-8' },
+      { name: 'description', content: 'An example Vue application with vue-meta.' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
     // override the parent template and just use the above title only
     titleTemplate: false,
@@ -75,14 +61,6 @@ export default {
     };
   },
   methods: {
-    onErrorImagekit(err) {
-      console.log("Error");
-      console.log(err);
-    },
-    onSuccessImagekit(res) {
-      console.log("Success");
-      console.log(res);
-    },
     clickConvert() {},
     convert() {},
     userStore(respuesta) {

@@ -1,5 +1,10 @@
 <template>
   <main class="maindiv">
+    <!--
+    <head>
+        <title>{{"process.env.VUE_APP_NAME" + " | Post"}}</title>
+    </head>
+      -->
     <div v-if="loaded_correctly === 'OK'">
       <!--
       Post id : {{ $route.params.id }}
@@ -23,6 +28,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div>
           hola jorge
           <b-dropdown
@@ -51,7 +57,6 @@
         </div>
       </nav>
 -->
-
       <div class="container-fluid">
         <!--
     <h1>Some Anoringa Post</h1>
@@ -71,6 +76,7 @@
                 :src="photo ? photo : photodefault"
                 class="img-fluid post-img"
                 alt="aca iria una foto pero nose donde esta"
+                :title="phototitle ? phototitle : 'default photo title'"
               />
 
               <!-- 
@@ -92,7 +98,16 @@
             <h2 class="p-3" style="text-align: left">
               {{ pagetitle }}
             </h2>
-
+            <!--
+            <pre
+              class="pb-5"
+              style="
+                text-align: left;
+                word-wrap: break-word;
+                white-space: pre-wrap;
+              "
+              >{{ content }}</pre
+            >-->
             <pre
               class="pb-5"
               style="
@@ -120,6 +135,7 @@
               pt-2 pb-5 pl-3
                 src="https://www.w3schools.com/bootstrap4/cinqueterre.jpg"
               word-break: normal|break-all|keep-all|break-word|initial|inherit;
+
             <p>
               Bacon ipsum dolor sit amet capicola ball tip beef ribs leberkas,
               turkey biltong salami shoulder ribeye. Leberkas chuck cow
@@ -130,6 +146,7 @@
               turkey hamburger kevin. Drumstick chicken ground round t-bone
               flank fatback jerky ball tip. Jerky ribeye sirloin t-bone.
             </p>
+
             <p>
               Tongue prosciutto pork ball tip ham hock, meatball sirloin brisket
               kielbasa biltong doner shoulder bresaola. Chuck beef ribs biltong,
@@ -138,6 +155,7 @@
               pancetta, biltong brisket pastrami tenderloin boudin filet mignon
               sirloin cow meatloaf. Ham ball tip bacon pork belly sirloin.
             </p>
+
             <p>
               Shoulder pig short ribs, salami chicken venison bresaola.
               Frankfurter meatball pork chop pork loin, turkey strip steak
@@ -148,6 +166,7 @@
               doner spare ribs biltong jowl boudin, tri-tip pork leberkas ham
               hock filet mignon.
             </p>
+
             <p>
               Leberkas strip steak shoulder meatball, flank biltong shank
               fatback ball tip swine prosciutto hamburger. Jerky frankfurter
@@ -160,6 +179,7 @@
               jerky andouille ham meatloaf prosciutto kevin pork belly short
               loin pancetta.
             </p>
+
             <p>
               Corned beef spare ribs hamburger pork tenderloin flank pork loin
               beef ribs sausage brisket chicken venison bacon short loin
@@ -269,34 +289,19 @@
                   >
                     <div
                       class="stats"
-                      style="word-wrap: break-word; white-space: pre-wrap"
+                      style="word-wrap: break-word; white-space: pre-wrap "
                     >
                       <a class="pr-1" :href="'#' + currentComent._id"
-                        >@{{ abreviate(currentComent._id) }}</a
-                      ><!--
-                      <a
-                        v-bind:style="[compare(currentComent.user[0].username,userowner.username) ? 'color: red;': 'color: white;',]"
-                        >por {{ currentComent.user[0].username }}</a
-                      >-->
-                      por
-                      <div
-                        style="display: inline"
-                        :class="
-                          compare(
-                            currentComent.user[0].username,
-                            userowner.username
-                          )
-                            ? 'comment_in_response'
-                            : 'comment'
-                        "
+                        >@{{ currentComent._id }}</a
                       >
-                        {{ currentComent.user[0].username }}
-                      </div>
-                      <!--
-                      <div
-                        v-bind:style="[currentComent.user[0].username == userowner.username ? 'color: red;': 'color: white;','color: white;']"
-                        >por {{ currentComent.user[0].username }}</div
-                      >-->
+                      <a
+                        v-bind:style="[
+                          currentComent.user[0].username == userowner.username
+                            ? 'color: red;'
+                            : 'color: white;',
+                        ]"
+                        >por {{ currentComent.user[0].username }}</a
+                      >
                       <a
                         v-if="
                           currentComent.user[0].username == userowner.username
@@ -311,39 +316,12 @@
                         en respuesta de
                         <a
                           class="pl-1 pr-1"
-                          style="text-align: left; color: orange"
+                          style="text-align: left"
                           v-for="currentComentchild in currentComent.inResponseTo"
-                          :id="
-                            'popover-target-' +
-                            currentComent._id +
-                            '-' +
-                            currentComentchild
-                          "
                           :key="currentComentchild"
                           :href="'#' + currentComentchild"
-                          >@{{ abreviate(currentComentchild) }}
-
-                          <b-popover
-                            :target="
-                              'popover-target-' +
-                              currentComent._id +
-                              '-' +
-                              currentComentchild
-                            "
-                            triggers="hover"
-                            placement="top"
-                            :set="(item = getValueOfArray(comments,currentComentchild))"
-                            >
-                            <template #title>🏷️ {{currentComentchild}}</template>
-                            <div v-if="item.text">
-                            {{ item.text}}
-                            </div>
-                            <div v-else>
-                              El Comentario no existe
-                            </div>
-                            
-                          </b-popover>
-                        </a>
+                          >@{{ currentComentchild }}</a
+                        >
                       </a>
                     </div>
                     <p
@@ -363,16 +341,27 @@
                         <i style="font-size:24px" class="fa">&#xf112;</i>
                         -->
                     </b-button>
-
                     <b-popover
                       :target="'popover-target-' + currentComent._id"
                       triggers="hover"
                       placement="top"
                     >
-                      <template #title>Responder este comentario!</template>
+                    
+                      <template #title>Responder este comentario!</template><!---->
                       Haz click aqui para responder este comentario de
                       <b>{{ currentComent.user[0].username }}</b
                       >!
+                    <b-button pill variant="link topright" :id="'popover-target-'+currentComent._id" @click="replyThisComment(currentComent)" >
+                      <i class="fa fa-reply" style="font-size:12px"></i>
+                      <!-- 
+                        <i style="font-size:24px" class="fa">&#xf112;</i>
+                        -->
+                      </b-button>
+
+                    <!--
+                    <b-popover :target="'popover-target-'+currentComent._id" triggers="hover" placement="top">
+                      <template #title>Responder este comentario!</template>-->
+                      Haz click aqui para responder este comentario de <b>{{currentComent.user[0].username}}</b>!
                     </b-popover>
 
                     <p class="last-updated" style="color: red">
@@ -390,6 +379,7 @@
 <div class="repo" id="20949439">
   <div class="stats">
     <a class="pr-1" href="#20949439">@20949439</a>POR raul12312 en respuesta de <a class="pl-1 pr-1" href="#20949438">@20949438</a></div><p class="">nada por suerte</p><p class="last-updated">Last updated: 3 weeks ago.</p></div>
+
                     -->
                 </div>
               </div>
@@ -424,6 +414,7 @@ Array.prototype.inArray = function (comparer) {
   }
   return false;
 };
+
 // adds an element to the array if it does not already exist using a comparer
 // function
 Array.prototype.pushIfNotExist = function (element, comparer) {
@@ -438,12 +429,15 @@ array.pushIfNotExist(element, function(e) {
     return e.name === element.name && e.text === element.text; 
 });
 */
+
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import $ from "jquery";
 import Multiselect from "vue-multiselect";
 import { EventBus } from "../event-bus";
+
 //Vue.component('multiselect', Multiselect)
+
 import Header from "./Header";
 import Footer from "./Footer";
 import loadingspinner from "./loadingspinner";
@@ -460,7 +454,9 @@ import loadingspinner from "./loadingspinner";
       
       </div>
       */
+
 //console.log(comentariosList);
+
 var txt2 = $("<p></p>").text("Text."); // Create text with jQuery
 console.log(txt2);
 /*
@@ -470,17 +466,128 @@ console.log(txt2);
       txt3.innerHTML = "Text.";         // Create text with DOM
       console.log(txt1, txt2, txt3);
       $(".container-fluid").append(txt1, txt2, txt3);   // Append new elements
+
+
       $("body").append("<p>Text.</p>")
       */
 import moment from "moment";
 import axios from "axios";
 import Vue2Filters from "vue2-filters";
+
 moment.locale("es");
+
 export default {
   created() {
     this.moment = moment;
     this.getPostDetail();
   },
+  name: "Post",
+  /*
+    metaInfo: {
+      title: this.getTitle() + " Post"+" | " + process.env.VUE_APP_NAME,
+      // override the parent template and just use the above title only
+      titleTemplate: false
+    },*/
+  /*
+    metaInfo: {
+      content:  "Anoringa es un sitio en el que podras discutir anonimamente.",
+      // override the parent template and just use the above title only
+      titleTemplate: null,
+      meta: [
+        {
+          vmid: "title",
+          name: "title",
+          //content:  process.env.VUE_APP_NAME +" | "+ " Post",
+          content: pagetitle  +" | "+ process.env.VUE_APP_NAME,
+        },
+        {
+          vmid: "description",
+          name: "description",
+          content: "this.pagetitle",
+        },
+      ],
+    },
+    */
+  metaInfo() {
+    const title = this.pagetitle.substring(0, 50) + " - " + process.env.VUE_APP_NAME;
+    const content = this.content.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 100);
+    const link = this.url;
+    const photolink = this.photo;
+    
+
+    return {
+      //title: process.env.VUE_APP_NAME + " | " + title.substring(0,50),
+      title: title,
+      //content: "Anoringa es un sitio en el que podras discutir anonimamente.",
+      //content: content.substring(0,100) + " | " + process.env.VUE_APP_NAME,
+      // override the parent template and just use the above title only
+      titleTemplate: null,
+      meta: [
+        {
+           vmid: "og:title",
+           property: "og:title",
+          content:title
+        },
+        {
+          vmid: "og:description",
+          property: "og:description",
+          content: content
+        },
+        {
+          vmid: "og:image:alt",
+          property: "og:image:alt",
+          content: process.env.VUE_APP_URL + "anoringa.png"
+        },
+        {
+          vmid: "og:url",
+          property: "og:url",
+          content: link
+        },
+        {
+          vmid: "og:image",
+          property: "og:image",
+          content: photolink
+        },
+
+        {
+          name: "description",
+          //content: title,
+          content:
+            content +
+            " | " +
+            process.env.VUE_APP_NAME,
+        } /*
+        {  vmid: "title", 
+        name: "title", 
+        //content:  process.env.VUE_APP_NAME +" | "+ " Post", 
+        content: title.substring(0,50) + " | " + process.env.VUE_APP_NAME,
+        },*/,
+        {
+          vmid: "description",
+          name: "description",
+          content: content,
+        },
+      ],
+    };
+  },
+  /*
+  metaInfo() {
+    return {
+      meta: [
+        {
+          vmid: "title",
+          name: "title",
+          content:  process.env.VUE_APP_NAME +" | "+ " Post",
+        },
+        {
+          vmid: "description",
+          name: "description",
+          content: this.pagetitle,
+        },
+      ],
+    };
+  },*/
+  /*
   metaInfo() {
     return {
       meta: [
@@ -490,8 +597,8 @@ export default {
           content: this.description,
         },
       ],
-    };
-  } /*
+    };  },*/
+  /*
     metaInfo: {
       title: 'My Example App',
       titleTemplate: '%s - Yay!',
@@ -500,14 +607,17 @@ export default {
         amp: true
       }
     },
-    title: ({ $t }) => $t(this.pagetitle),*/,
-  mixins: [Vue2Filters.mixin],
+    title: ({ $t }) => $t(this.pagetitle),
+    
+  */
+
   filters: {
     moment: function (date) {
       //return moment(date).format('MMMM Do YYYY, h:mm:ss a');
       return moment(date).fromNow();
     },
   },
+  mixins: [Vue2Filters.mixin],
   data() {
     return {
       id: "",
@@ -523,6 +633,7 @@ export default {
         { name: "Laravel", language: "PHP" },
         { name: "Phoenix", language: "Elixir" },
       ],
+
       photodefault: "https://picsum.photos/200?random=1",
       appName: "Anoringa",
       userowner: null,
@@ -556,11 +667,14 @@ export default {
       //endpoint: "http://localhost:3000/api/post/" + this.$route.params.id,
       //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post/" + this.$route.params.id,
       endpoint: process.env.VUE_APP_API + "/api/post/" + this.$route.params.id,
+
       //https://agile-everglades-15507.herokuapp.com/api/post/5fea65d576140b6b2093cdb7
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
-      url: "asdasdasd",
+
+      url: null,
       photo: "https://picsum.photos/200?random=1",
-      pagetitle: "some title",
+      phototitle: "default photo",
+      pagetitle: "Post",
       comments: [],
       content: "some scrap contenido",
       loaded_correctly: false,
@@ -581,7 +695,6 @@ metaInfo() {
             ]
         }
     },*/,
-  name: "Post",
   components: {
     //History,
     Multiselect,
@@ -589,6 +702,7 @@ metaInfo() {
     Footer,
     loadingspinner,
   },
+
   sockets: {
     connect: function () {
       console.log("socket connected");
@@ -599,8 +713,11 @@ metaInfo() {
         data
       );
       console.log("New Comentario arrived");
+
       //  :key="item._id""item._id" "url" "photo" title description
+
       //this.item = ['<call-dialog-link :id="id" :url="url" :photo="photo" :title="new message socket" message="Are you sure you wish to remove this record?" content="Are you sure you wish to remove this record?" label="Remove" css-classes="alert" ></call-dialog-link>'];
+
       data.createdAt = moment().toISOString();
       data.updatedAt = moment().toISOString();
       this.comments.push(data);
@@ -622,52 +739,14 @@ metaInfo() {
     });*/
     /**/
   },
+  getTitle() {
+    return this.pagetitle;
+  },
   methods: {
-    getValueOfArray(thearray, thevalue) {
-      //console.log("thearray");
-      //console.log(thearray);
-      //console.log("thevalue");
-      //console.log(thevalue);
-
-      //var result = null;
-
-      var valObj = thearray.filter(function (elem) {
-        if (elem._id == String(thevalue)) {
-          //console.log("elem");
-          //console.log(elem);
-          return elem;
-        }
-      });
-
-      //if (valObj.length > 0) console.log(valObj[0]);
-
-      if (valObj.length) {
-        //console.log("valObj[0]");
-        //console.log(valObj[0]);
-        return valObj[0];
-      } else {
-        //console.log("nope 💔");
-        return {'_id':null,'text':null,'createdAt':null};
-        // no prop
-      }
-    },
-    abreviate(content) {
-      //https://stackoverflow.com/questions/5873810/how-can-i-get-last-characters-of-a-string
-      //var newString = content.replace(/[a-z]{3}\/[a-z]{3}/gi, " ");
-      //var stringArray = content.split('')
-      var newString = content.substring(0, 3) + "..." + content.slice(-5);
-      //console.log(newString);
-      return newString;
-    },
-    compare(a, b) {
-      var result = a == b;
-      //console.log("compare");
-      //console.log(result);
-      return result;
-    },
     replyThisComment(comentario) {
-      //console.log("comentario");
-      //console.log(comentario);
+      console.log("comentario");
+      console.log(comentario);
+
       this.value.pushIfNotExist(comentario, function (e) {
         return e._id === comentario._id && e.text === comentario.text;
       });
@@ -703,22 +782,29 @@ metaInfo() {
         ) {
           console.log("this.nuevoComemtarioTexto if true");
           console.log(this.nuevoComemtarioTexto);
+
           console.log("Comemtario Create");
+
           var data = {
             username: localStorage.username,
             //password: "req.body.password",
             password: localStorage.password,
+
             text: this.nuevoComemtarioTexto,
+
             inResponseTo: this.ListaDeIdsDeComentarios,
+
             postid: this.$route.params.id,
           };
           this.value = [];
           this.ListaDeIdsDeComentarios = [];
           this.nuevoComemtarioTexto = "";
+
           var self = this;
           this.$socket.emit("comment", data, function (datos) {
             console.log("socket.io emit");
             console.log(datos);
+
             datos.createdAt = moment().toISOString();
             datos.updatedAt = moment().toISOString();
             datos.user = [
@@ -751,6 +837,7 @@ metaInfo() {
         "content":"hola mundo este es mi nuevo blog"
       }
       */
+
       console.log("postCreate");
       var data = {
         title: titulox,
@@ -760,6 +847,7 @@ metaInfo() {
         password: localStorage.password,
         photo: photox,
       };
+
       this.$socket.emit("post", data, function (datos) {
         console.log("socket.io emit");
         console.log(datos);
@@ -771,6 +859,7 @@ metaInfo() {
         //this.posts.push(datos);
       });
       /*
+
       WORKS
       import axios from "axios";
       var qs = require("qs");
@@ -789,6 +878,7 @@ metaInfo() {
         },
         data: data,
       };
+
       axios(config)
         .then(function (response) {
           console.log(JSON.stringify(response.data));
@@ -812,7 +902,11 @@ metaInfo() {
           }
           console.log(error.config);
         });
+
+
+
         */
+
       /*
       var config = {
         method: "post",
@@ -908,34 +1002,21 @@ metaInfo() {
         .then((response) => {
           this.post = response.data.data;
           console.log("-----posts data-------");
-          //console.log(response.data.data);
-          //console.log("-----other posts data-------");
+          console.log(response.data.data);
+          console.log("-----other posts data-------");
           console.log(response.data);
           this.loaded_correctly = "OK";
           this.pagetitle = this.post.title;
           this.content = this.post.description;
-          if (this.post.comments.le) {
+          this.url = process.env.VUE_APP_URL + "/post/" + this.post._id;
+
+          if (this.post.comments.length) {
             this.comments = this.post.comments;
           } else {
             this.comments = this.post.comentarios;
           }
-
-          // Photo object vs media
-          if (typeof this.post.photo === Object) {
-            console.log("the image coms from object")
-            this.photo = this.post.photo.content;
-          }
-          if (typeof this.post.photo === 'string' || this.post.photo instanceof String) {
-            console.log("the image coms from string")
-            this.photo = this.post.photo;
-          }
-          else{
-            console.log("anyone know the image coms from ")
-            console.log(typeof this.post.photo);
-            console.log(this.post.photo);
-            this.photo = this.post.photo;
-
-          }
+          this.photo = this.post.photo;
+          this.phototitle = "post number "+this.post._id + " photo";
           this.userowner = this.post.user[0];
           this.id = this.post._id;
           this.postcreatedAt = this.post.createdAt;
@@ -953,13 +1034,13 @@ metaInfo() {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
-<style src="./Post.css"></style>
 
 <style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 .container {
   position: relative;
 }
+
 .topright {
   position: absolute;
   top: 6px;
@@ -975,6 +1056,7 @@ metaInfo() {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 * {
   /*
   margin: 0;
@@ -996,9 +1078,11 @@ body {
   */
   max-width: 60em;
   margin: auto;
+
   line-height: 1.5em;
   color: black;
   background-color: gainsboro;
+
   /*
   background-image: url("https://www.w3schools.com/cssref/paper.gif");
   background-repeat: repeat-y;
@@ -1016,6 +1100,7 @@ body {
   */
   background-color: lavenderblush;
 }
+
 header {
   background-color: #aaa;
   height: 50px;
@@ -1033,36 +1118,43 @@ footer {
   background-color: rgb(250, 241, 241);
   height: 100px;
 }
+
 .nav {
   list-style: none;
   margin-left: 0;
   margin-bottom: 0;
   padding-left: 0;
 }
+
 .nav > li,
 .nav > li > a {
   display: inline-block;
   *display: inline;
   zoom: 1;
 }
+
 .inline-items {
   margin-top: 0;
 }
+
 .inline-items li {
   margin-left: 0;
   border-left: 1px solid black;
   padding-left: 10px;
   padding-right: 10px;
 }
+
 .inline-items li:first-child {
   margin-left: 0;
   border: none;
   padding-left: 0;
   padding-right: 10px;
 }
+
 .inline-items li:last-child {
   padding-right: 0;
 }
+
 /* MEDIA QUERIES */
 @media screen and (min-width: 47.5em) {
   /*
@@ -1085,6 +1177,7 @@ footer {
     margin-right: 50%;
     display: block;
   }
+
   .Content {
     top: 0;
     right: 0;
@@ -1093,11 +1186,13 @@ footer {
   }
   */
 }
+
 /*
 @media screen and (min-width: 47.5em) {
   .leftColumn {
     margin-right: 19.5em;
   }
+
   .rightColumn {
     position: absolute;
     top: 0;
@@ -1115,62 +1210,80 @@ footer {
   width: 300px;*/
   object-fit: cover;
 }
+
 /*
+
 comments
+
+
 */
+
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap");
+
 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
+
 header,
 .repo {
   border: 1px solid #eee;
   padding: 1em;
   border-radius: 3px;
 }
+
 header :first-child,
 .repo :first-child {
   margin-top: 0;
 }
+
 header :last-child,
 .repo :last-child {
   margin-bottom: 0;
 }
+
 .repo {
   margin-bottom: 1em;
 }
+
 .repo h3 {
   margin-bottom: 0;
 }
+
 .stats,
 .last-updated {
   font-size: 0.7em;
   color: #666;
 }
+
 .stats {
   text-transform: uppercase;
   font-weight: bold;
 }
+
 .last-updated {
   font-style: italic;
 }
+
 header {
   width: 25%;
   float: left;
   text-align: center;
 }
+
 header img {
   display: block;
   margin: auto;
   width: 50px;
   height: 50px;
 }
+
 section {
   padding-left: 1em;
   float: left;

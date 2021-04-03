@@ -32,6 +32,15 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    setPostImage: (state, payload) => {
+      state.postImage.content = payload.content;
+      state.postImage.value.type = payload.value.type;
+      state.postImage.value.source = payload.value.source;
+    },
+
+
+
+
     setPostPhotoLink: (state, payload) => {
       state.postPhotoLink = payload.link;
     },

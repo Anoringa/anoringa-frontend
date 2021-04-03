@@ -99,7 +99,7 @@
               :state="Boolean(file1)"
               placeholder="Busca un archivo o sueltalo aqui..."
               drop-placeholder="Sueltalo aqui..."
-              @input="readURL"
+              @input="selectImageFile()"
             ></b-form-file>
             <img :src="file1" alt="" />
             <!--
@@ -287,7 +287,19 @@ export default {
   },
   name: "ImageUploader",
   methods: {
-    readURL() {
+    setImageSource(data){
+      console.log("the media of the post has been setted")
+      console.log(data)
+      console.log("💥")
+
+      store.commit({
+        type: "setPostImage",
+        content: data.content,
+        value: {type:data.value.type,source:data.value.source}
+      });
+
+    },
+    selectImageFile() {
       console.log("file1");
       console.log(this.file1);
       this.createBase64Image(this.file1);
@@ -317,6 +329,8 @@ export default {
       };
       reader.readAsDataURL(fileObject);
     },
+    
+    
     createBase64Image(fileObject) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -325,6 +339,7 @@ export default {
         console.log(this.imagebase64);
         //this.uploadImage();
         //this.image = this.uploadImageImgur(this.imagebase64);
+      this.setImageSource({value:{ type: 'photo', source: 'upload' },content:this.imagebase64})
       };
       reader.readAsDataURL(fileObject);
     },
@@ -396,6 +411,15 @@ export default {
       file1: null,
       selected: null,
       options: [
+        
+        {
+          value: { type: "photo", source: "upload" },
+          text: "Subir una imagen",
+        },
+        {
+          value: { type: "photo", source: "URL" },
+          text: "Ingresar direccion URL de una imagen",
+        },
         {
           value: { type: "video", source: "youtube" },
           text: "Video de Youtube",
@@ -405,14 +429,6 @@ export default {
           text: "Buscar un gif",
           disabled: true,
           //https://tenor.com/gifapi/documentation#quickstart-setup
-        },
-        {
-          value: { type: "photo", source: "URL" },
-          text: "Ingresar direccion URL de una imagen",
-        },
-        {
-          value: { type: "photo", source: "upload" },
-          text: "Subir una imagen",
         },
       ],
     };

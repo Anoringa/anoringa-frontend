@@ -142,6 +142,15 @@ Vue.use(
 
 //window.Evento = new Vue();
 
+import ImageKit from "imagekitio-vue"
+
+Vue.use(ImageKit, {
+  urlEndpoint: "https://ik.imagekit.io/ym5grvwvw2m/anoringa", // Required. Default URL-endpoint is https://ik.imagekit.io/your_imagekit_id
+  publicKey: "public_rdtw5bxA4XfFY2hMalAwYnVgN9U=", // optional
+  //authenticationEndpoint: "https://www.your-server.com/auth" // optional
+})
+
+
 ///#
 ///#
 /*
