@@ -22,4 +22,4 @@ pnpm-debug.log*
 *.sw?
 
 # env files
-.env
+.env.*
