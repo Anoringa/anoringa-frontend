@@ -27,7 +27,6 @@ export default {
     //History,
     Header,
     Posts,
-    Footer,
   },
   data() {
     return {
