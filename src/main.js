@@ -145,8 +145,8 @@ Vue.use(
 import ImageKit from "imagekitio-vue"
 
 Vue.use(ImageKit, {
-  urlEndpoint: "https://ik.imagekit.io/ym5grvwvw2m/anoringa", // Required. Default URL-endpoint is https://ik.imagekit.io/your_imagekit_id
-  publicKey: "public_rdtw5bxA4XfFY2hMalAwYnVgN9U=", // optional
+  urlEndpoint: process.env.VUE_APP_IMAGEKIT_ENDPOINT, // Required. Default URL-endpoint is https://ik.imagekit.io/your_imagekit_id
+  publicKey: process.env.VUE_APP_IMAGEKIT_PUBLICKEY, // optional
   //authenticationEndpoint: "https://www.your-server.com/auth" // optional
 })
 
