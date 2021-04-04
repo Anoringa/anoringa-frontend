@@ -31,9 +31,7 @@
                   >
                     Cerrar
                   </button>
-                  <button type="button" class="btn btn-primary">
-                    Crear
-                  </button>
+                  <button type="button" class="btn btn-primary">Crear</button>
                 </div>
               </div>
             </div>
@@ -42,8 +40,11 @@
       </transition>
     </div>
     <button @click="showModal = true">Poster</button>
+    <!--
+        sitekey="e7f6e9a7-84b3-4b26-ae5a-c71eda77bacc"
+        -->
     <vue-hcaptcha
-      sitekey="e7f6e9a7-84b3-4b26-ae5a-c71eda77bacc"
+      :sitekey="mySitekey"
       @verify="onVerify"
       theme="dark"
     ></vue-hcaptcha>
@@ -99,6 +100,7 @@ export default {
   },
   data() {
     return {
+      mySitekey: process.env.VUE_APP_HCAPTCHA,
       showModal: false,
       hcaptchaResponse: "",
       jwt: "",

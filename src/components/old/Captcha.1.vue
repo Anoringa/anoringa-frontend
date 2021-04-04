@@ -1,6 +1,8 @@
 
 <template>
-    <vue-hcaptcha sitekey="e7f6e9a7-84b3-4b26-ae5a-c71eda77bacc" @verify="onVerify" theme="dark"></vue-hcaptcha>
+    <vue-hcaptcha 
+      :sitekey="process.env.VUE_APP_HCAPTCHA"
+       @verify="onVerify" theme="dark"></vue-hcaptcha>
 </template>
 
 <script >

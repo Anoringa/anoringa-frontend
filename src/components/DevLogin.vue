@@ -3,7 +3,7 @@
     <Header :appName="appName"></Header>
 
     <vue-hcaptcha
-      sitekey="e7f6e9a7-84b3-4b26-ae5a-c71eda77bacc"
+      :sitekey="process.env.VUE_APP_HCAPTCHA"
       @verify="onVerify"
       theme="dark"
     ></vue-hcaptcha>

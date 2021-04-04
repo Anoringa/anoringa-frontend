@@ -30,8 +30,11 @@
                   <div class="modal-body">
                     <p>rellena el captcha</p>
 
-                
-                  <vue-hcaptcha sitekey="e7f6e9a7-84b3-4b26-ae5a-c71eda77bacc" @verify="onVerify" theme="dark"></vue-hcaptcha>
+                    <vue-hcaptcha
+                      :sitekey="mySitekey"
+                      @verify="onVerify"
+                      theme="dark"
+                    ></vue-hcaptcha>
                   </div>
                   <div class="modal-footer">
                     <button
@@ -55,8 +58,7 @@
           </div>
         </transition>
       </div>
-        <b-button v-b-modal.modal-1 @click="showModal = true">Loguearse</b-button>
-
+      <b-button v-b-modal.modal-1 @click="showModal = true">Loguearse</b-button>
     </div>
   </div>
 </template>
@@ -84,6 +86,7 @@ import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
 
 export default {
   //directives: { "b-modal": VBModal },
+
   name: "Index",
   components: {
     //BModal,
@@ -91,10 +94,11 @@ export default {
     //Header,
     //Posts,
     //VueModal,
-    VueHcaptcha
+    VueHcaptcha,
   },
   data() {
     return {
+      mySitekey: process.env.VUE_APP_HCAPTCHA,
       showModal: false,
       hcaptchaResponse: "",
       jwt: "",
@@ -208,7 +212,11 @@ export default {
         console.log(this.nuevoposttitulo);
         console.log("contenido");
         console.log(this.nuevopostcomment);
-        this.postCreate(this.nuevoposttitulo, this.nuevopostcomment,this.imagebase64);
+        this.postCreate(
+          this.nuevoposttitulo,
+          this.nuevopostcomment,
+          this.imagebase64
+        );
         console.log("funciono kpo 😎");
         this.showModal = false;
         this.nuevoposttitulo = "";
@@ -217,7 +225,7 @@ export default {
         console.log("no funciono kpo");
       }
     },
-    postCreate(titulox, contenidox,photox) {
+    postCreate(titulox, contenidox, photox) {
       /*
       {
         "username":"Afoxipeb",
