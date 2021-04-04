@@ -1,5 +1,10 @@
 # Anoringa Front End made in vue
 
+
+Configure this enviroments files with the pattern in example.env:
+    .env.development
+    .env.production
+
 ## Project setup
 ```
 npm install
