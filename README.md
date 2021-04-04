@@ -1,7 +1,7 @@
 # Anoringa Front End made in vue
 
 
-Configure this enviroments files with the pattern in example.env:
+Configure this enviroments files with the pattern in .env.example:
     .env.development
     .env.production
 
