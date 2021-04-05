@@ -10,9 +10,11 @@
     <img src="https://api.netlify.com/api/v1/badges/8f6d440f-6f42-46f3-b462-82aa502f9bc4/deploy-status" alt="Netlify Status">
   </a>
 
-  <img src="https://badgen.net/dependabot/Anoringa/anoringa-frontend?icon=dependabot" alt="Dependabot Badge">
   <img src="https://img.shields.io/github/languages/code-size/Anoringa/anoringa-frontend" alt="GitHub code size in bytes">
+<!---
+  <img src="https://badgen.net/dependabot/Anoringa/anoringa-frontend?icon=dependabot" alt="Dependabot Badge">
   <img src="https://img.shields.io/github/commit-activity/w/Anoringa/anoringa-frontend" alt="GitHub commit activity">
+-->
 
   <a href="https://github.com/Anoringa/anoringa-frontend/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Anoringa/anoringa-frontend"></a>
 
