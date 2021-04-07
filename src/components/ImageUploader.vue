@@ -91,7 +91,8 @@
       -->
 
       <div v-if="selected">
-        <div v-if="selected.type == 'photo' && selected.source == 'upload'">
+        <div v-if="selected.type == 'photo' && selected.source == 'upload'"
+              class="pt-3 pb-3">
           <div>
             <b-form-file
               accept="image/jpeg, image/png, image/gif"
@@ -120,7 +121,7 @@
           </div>
         </div>
 
-        <div v-if="selected.type == 'photo' && selected.source == 'URL'">
+        <div v-if="selected.type == 'photo' && selected.source == 'url'" class="pt-3 pb-3">
           <div role="group">
             <b-form-input
               id="input-live"
@@ -129,7 +130,7 @@
               aria-describedby="input-live-help input-live-feedback"
               placeholder="Enter your name"
               debounce="5"
-              @input="setImageSource({value:{ type: 'photo', source: 'url' },content:url_de_imagen})"
+              @change="setimgurl()"
               trim
             ></b-form-input>
 
@@ -288,6 +289,12 @@ export default {
   },
   name: "ImageUploader",
   methods: {
+    setimgurl(){
+      var imagelinkasd = this.url_de_imagen
+      console.log("this.url_de_imagen");
+      console.log(this.url_de_imagen);
+      this.setImageSource({value:{ type: 'photo', source: 'url' },content:imagelinkasd})
+    },
     setImageSource(data){
       console.log("the media of the post has been setted")
       console.log(data)
@@ -418,9 +425,9 @@ export default {
           text: "Subir una imagen",
         },
         {
-          value: { type: "photo", source: "URL" },
+          value: { type: "photo", source: "url" },
           text: "Ingresar direccion URL de una imagen",
-          disabled: true,
+          //disabled: true,
         },
         {
           value: { type: "video", source: "youtube" },

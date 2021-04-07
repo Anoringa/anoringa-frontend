@@ -7,7 +7,9 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "start": "node server.js",
-    "dev": "vue-cli-service build && node server.js"
+    "dev": "vue-cli-service build && node server.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@hcaptcha/vue-hcaptcha": "^0.2.4",
@@ -43,11 +45,17 @@
     "vuex": "^3.6.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.13.14",
+    "@storybook/addon-actions": "^6.2.3",
+    "@storybook/addon-essentials": "^6.2.3",
+    "@storybook/addon-links": "^6.2.3",
+    "@storybook/vue": "^6.2.3",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-pwa": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
     "bootstrap": "^4.5.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
@@ -58,6 +66,7 @@
     "sass-loader": "^10.1.0",
     "serviceworker-webpack-plugin": "^1.0.1",
     "style-loader": "^2.0.0",
+    "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {

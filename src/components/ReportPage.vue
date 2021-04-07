@@ -2,28 +2,70 @@
   <div id="index">
     <Header :appName="appName"></Header>
 
-    <vue-hcaptcha
-      :sitekey="hcaptchatoken"
-      @verify="onVerify"
-      theme="dark"
-    ></vue-hcaptcha>
+    <b-container class="bv-example-row pt-5">
+      <b-row class="justify-content-md-center">
+        <b-col col xl="6" lg="8" md="8" sm="12">
+          <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+            <b-form-group
+              id="input-group-1"
+              label="Descripcion breve:"
+              label-for="input-1"
+              description="Acotada y senecilla"
+            >
+              <b-form-input
+                id="input-1"
+                v-model="form.form_title"
+                type="text"
+                placeholder="Describi brevemente"
+                required
+              ></b-form-input>
+            </b-form-group>
 
-    <!--
-    // File upload
-    <ik-upload
-      :tags="['tag1', 'tag2']"
-      :responseFields="['tags']"
-      :onError="onErrorImagekit"
-      :onSuccess="onSuccessImagekit"
-      :useUniqueFileName="true"
-      :isPrivateFile="false"
-      customCoordinates="10,10,100,100"
-    />
-      <p>{{appName}}</p>
-    -->
-    <div>
-      <div id="issue-embed"></div>
-    </div>
+            <b-form-group
+              id="input-group-2"
+              label="Descripcion:"
+              label-for="input-2"
+            >
+              <b-form-textarea
+                id="input-2"
+                v-model="form.form_description"
+                placeholder="Descripcion mas detallada"
+                required
+                rows="4"
+              ></b-form-textarea>
+            </b-form-group>
+
+            <b-form-group id="input-group-3" label="Tipo:" label-for="input-3">
+              <b-form-select
+                id="input-3"
+                v-model="form.type"
+                :options="foods"
+                required
+              ></b-form-select>
+            </b-form-group>
+
+            <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
+              <b-form-checkbox-group
+                v-model="form.checked"
+                id="checkboxes-4"
+                :aria-describedby="ariaDescribedby"
+              ><!--
+                <b-form-checkbox value="me">Check me out</b-form-checkbox>
+                <b-form-checkbox value="that">Check that out</b-form-checkbox>-->
+              </b-form-checkbox-group>
+            </b-form-group>
+
+            <b-button type="submit" variant="primary">Enviar</b-button>
+            <b-button type="reset" variant="danger">Cancelar</b-button>
+          </b-form>
+          <!--
+          <b-card class="mt-3" header="Form Data Result">
+            <pre class="m-0">{{ form }}</pre>
+          </b-card>
+          -->
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -32,25 +74,10 @@
 //import { mapGetters } from "vuex";
 import Header from "./Header";
 import axios from "axios";
-import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
+//import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
 export default {
-  
   mounted() {
-
-
     /**/
-  },
-  created() {
-    const issueEmbed = document.createElement("script");
-    issueEmbed.setAttribute(
-      "src",
-      "https://cdn.issueembed.dev/v1/issue-embed.min.js"
-    );
-    issueEmbed.async = true;
-    document.head.appendChild(issueEmbed);
-    issueEmbed.init("#issue-embed", {
-      key: "dbb62ae9-ed4a-42a3-9dc0-ad7d5b23d7b8",
-    });
   },
   metaInfo: {
     //title: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",
@@ -78,10 +105,24 @@ export default {
   components: {
     //History,
     Header,
-    VueHcaptcha,
+    //VueHcaptcha,
   },
   data() {
     return {
+      form: {
+        form_title: "",
+        form_description: "",
+        type: null,
+        checked: [],
+      },
+      foods: [
+        { text: "Elegi una", value: null },
+        "Reporte",
+        "Denuncia",
+        "Falla",
+        "Sugerencia",
+      ],
+      show: true,
       appName: "Anoringa",
       apiKey: "<YOUR_RAPIDAPI_KEY>",
       fromCurrency: "",
@@ -93,10 +134,44 @@ export default {
       hcaptchaResponse: "",
       loginurl: process.env.VUE_APP_API + "/api/user/register",
       hcaptchatoken: process.env.VUE_APP_HCAPTCHA,
-      
     };
   },
   methods: {
+    onSubmit(event) {
+      event.preventDefault();
+      //alert(JSON.stringify(this.form));
+
+
+
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          console.log(this.responseText);
+        }
+      });
+
+      xhr.open(
+        "POST",
+        "https://anoringa-issues.herokuapp.com/issue?ISSUE_TITLE="+this.form.form_title+"&ISSUE_BODY="+this.form.form_description+"&ISSUE_LABELS=%5B%22"+this.form.type+"%22%5D"
+      );
+
+      xhr.send();
+    },
+    onReset(event) {
+      event.preventDefault();
+      // Reset our form values
+      this.form.email = "";
+      this.form.name = "";
+      this.form.food = null;
+      this.form.checked = [];
+      // Trick to reset/clear native browser form validation state
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
+    },
     onErrorImagekit(err) {
       console.log("Error");
       console.log(err);
