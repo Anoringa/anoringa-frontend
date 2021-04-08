@@ -29,7 +29,7 @@
               <b-form-textarea
                 id="input-2"
                 v-model="form.form_description"
-                placeholder="Descripcion mas detallada"
+                placeholder="Describi detalladamente"
                 required
                 rows="4"
               ></b-form-textarea>
@@ -49,7 +49,7 @@
                 v-model="form.checked"
                 id="checkboxes-4"
                 :aria-describedby="ariaDescribedby"
-              ><!--
+                ><!--
                 <b-form-checkbox value="me">Check me out</b-form-checkbox>
                 <b-form-checkbox value="that">Check that out</b-form-checkbox>-->
               </b-form-checkbox-group>
@@ -58,6 +58,16 @@
             <b-button type="submit" variant="primary">Enviar</b-button>
             <b-button type="reset" variant="danger">Cancelar</b-button>
           </b-form>
+
+          <div class="" v-if="report_loaded == ''"></div>
+          <div v-if="report_loaded == 'OK'">Reporte enviado</div>
+          <div v-else-if="report_loaded == 'LOADING'" style="height: 100%">
+            Cargando <b-spinner variant="danger" key="danger"></b-spinner>
+          </div>
+          <div v-else-if="report_loaded == 'ERROR'" style="height: 100%">
+            ERROR
+          </div>
+
           <!--
           <b-card class="mt-3" header="Form Data Result">
             <pre class="m-0">{{ form }}</pre>
@@ -66,6 +76,9 @@
         </b-col>
       </b-row>
     </b-container>
+    <footer class="pt-5">
+      <a href="https://github.com/orgs/Anoringa/projects/1">Ver los tickets abiertos</a>
+    </footer>
   </div>
 </template>
 
@@ -109,6 +122,7 @@ export default {
   },
   data() {
     return {
+      report_loaded: "",
       form: {
         form_title: "",
         form_description: "",
@@ -141,8 +155,7 @@ export default {
       event.preventDefault();
       //alert(JSON.stringify(this.form));
 
-
-
+      /*
       var xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
@@ -154,10 +167,37 @@ export default {
 
       xhr.open(
         "POST",
-        "https://anoringa-issues.herokuapp.com/issue?ISSUE_TITLE="+this.form.form_title+"&ISSUE_BODY="+this.form.form_description+"&ISSUE_LABELS=%5B%22"+this.form.type+"%22%5D"
+        "https://anoringa-issues.herokuapp.com/issue?ISSUE_TITLE=" +
+          this.form.form_title +
+          "&ISSUE_BODY=" +
+          this.form.form_description +
+          "&ISSUE_LABELS=%5B%22" +
+          this.form.type +
+          "%22%5D"
       );
 
       xhr.send();
+      */
+
+      this.report_loaded = "LOADING";
+      axios
+        .post(
+          "https://anoringa-issues.herokuapp.com/issue?ISSUE_TITLE=" +
+            this.form.form_title +
+            "&ISSUE_BODY=" +
+            this.form.form_description +
+            "&ISSUE_LABELS=%5B%22" +
+            this.form.type +
+            "%22%5D"
+        )
+        .then((response) => {
+          this.report_loaded = "OK";
+          console.log(response);
+        })
+        .catch(function (error) {
+          this.report_loaded = "ERROR";
+          console.log(error.response);
+        });
     },
     onReset(event) {
       event.preventDefault();

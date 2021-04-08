@@ -462,7 +462,8 @@ import loadingspinner from "./loadingspinner";
       */
 //console.log(comentariosList);
 var txt2 = $("<p></p>").text("Text."); // Create text with jQuery
-console.log(txt2);
+//console.log(txt2);
+typeof txt2
 /*
       var txt1 = "<p>Text.</p>";        // Create text with HTML
       var txt2 = $("<p></p>").text("Text.");  // Create text with jQuery

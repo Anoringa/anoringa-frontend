@@ -83,7 +83,31 @@
 
             -->
     <div>
+      <b-form-select v-model="selected" :options="options" class="mb-3">
+        <!-- This slot appears above the options from 'options' prop -->
+        <template #first>
+          <b-form-select-option :value="null" disabled
+            >-- selecciona una opcion --</b-form-select-option
+          >
+        </template>
+
+        <!-- These options will appear after the ones from 'options' prop -->
+        <!-- 
+        <b-form-select-option
+          v-for="(selectOption, indexOpt) in item.select.options"
+          :key="indexOpt"
+          :value="selectOption"
+        >
+        </b-form-select-option>
+        <b-form-select-option value="C">Option C</b-form-select-option>
+        <b-form-select-option value="D">Option D</b-form-select-option>
+        -->
+      </b-form-select>
+
+      <!--
       <b-form-select v-model="selected" :options="options"></b-form-select>
+      -->
+
       <!--
       <div class="mt-3">
         Selected: <strong>{{ selected }}</strong>
@@ -91,8 +115,10 @@
       -->
 
       <div v-if="selected">
-        <div v-if="selected.type == 'photo' && selected.source == 'upload'"
-              class="pt-3 pb-3">
+        <div
+          v-if="selected.type == 'photo' && selected.source == 'upload'"
+          class="pt-3 pb-3"
+        >
           <div>
             <b-form-file
               accept="image/jpeg, image/png, image/gif"
@@ -121,7 +147,10 @@
           </div>
         </div>
 
-        <div v-if="selected.type == 'photo' && selected.source == 'url'" class="pt-3 pb-3">
+        <div
+          v-if="selected.type == 'photo' && selected.source == 'url'"
+          class="pt-3 pb-3"
+        >
           <div role="group">
             <b-form-input
               id="input-live"
@@ -289,30 +318,31 @@ export default {
   },
   name: "ImageUploader",
   methods: {
-    setimgurl(){
-      var imagelinkasd = this.url_de_imagen
+    setimgurl() {
+      var imagelinkasd = this.url_de_imagen;
       console.log("this.url_de_imagen");
       console.log(this.url_de_imagen);
-      this.setImageSource({value:{ type: 'photo', source: 'url' },content:imagelinkasd})
+      this.setImageSource({
+        value: { type: "photo", source: "url" },
+        content: imagelinkasd,
+      });
     },
-    setImageSource(data){
-      console.log("the media of the post has been setted")
-      console.log(data)
-      console.log("💥")
+    setImageSource(data) {
+      console.log("the media of the post has been setted");
+      console.log(data);
+      console.log("💥");
 
       store.commit({
         type: "setPostImage",
         content: data.content,
-        value: {type:data.value.type,source:data.value.source}
+        value: { type: data.value.type, source: data.value.source },
       });
-
     },
     selectImageFile() {
       console.log("file1");
       console.log(this.file1);
       this.createBase64Image(this.file1);
       //console.log(this.file1);
-      
     },
     saveImage(url) {
       store.commit({
@@ -337,8 +367,7 @@ export default {
       };
       reader.readAsDataURL(fileObject);
     },
-    
-    
+
     createBase64Image(fileObject) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -347,7 +376,10 @@ export default {
         console.log(this.imagebase64);
         //this.uploadImage();
         //this.image = this.uploadImageImgur(this.imagebase64);
-      this.setImageSource({value:{ type: 'photo', source: 'upload' },content:this.imagebase64})
+        this.setImageSource({
+          value: { type: "photo", source: "upload" },
+          content: this.imagebase64,
+        });
       };
       reader.readAsDataURL(fileObject);
     },
@@ -419,7 +451,13 @@ export default {
       file1: null,
       selected: null,
       options: [
-        
+        /*
+        { 
+          text: "Elegi una", 
+          value: null ,
+          disabled: true,
+        },
+        */
         {
           value: { type: "photo", source: "upload" },
           text: "Subir una imagen",

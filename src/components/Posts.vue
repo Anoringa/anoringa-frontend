@@ -53,7 +53,7 @@
     </div>
   </main>
   <div v-else-if="loaded == false" style="height: 100%">
-    loading
+    Cargando
     <b-spinner variant="danger" key="danger"></b-spinner>
   </div>
   <div v-else-if="loaded == 'ERROR'" style="height: 100%">ERROR</div>
