@@ -29,7 +29,6 @@
     "register-service-worker": "^1.7.1",
     "socket.io": "^3.0.4",
     "socket.io-client": "^3.0.4",
-    "storybook": "^6.2.5",
     "sweetalert": "^2.1.2",
     "vodal": "^2.4.0",
     "vue": "^2.6.12",
