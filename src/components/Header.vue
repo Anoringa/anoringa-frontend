@@ -187,8 +187,8 @@
         >
         <b-dropdown-item>Configuracion</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item>Soporte</b-dropdown-item>
-        <b-dropdown-item>Sugerir cambios</b-dropdown-item>
+        <b-dropdown-item href="/reportar" >Soporte</b-dropdown-item>
+        <b-dropdown-item href="/reportar">Sugerir cambios</b-dropdown-item>
         <b-dropdown-item @click="cerrarSecion()">Salir</b-dropdown-item>
         <!--
         <b-dropdown-item>First Action</b-dropdown-item>

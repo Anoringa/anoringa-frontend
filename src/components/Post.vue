@@ -332,16 +332,20 @@
                             "
                             triggers="hover"
                             placement="top"
-                            :set="(item = getValueOfArray(comments,currentComentchild))"
+                            :set="
+                              (item = getValueOfArray(
+                                comments,
+                                currentComentchild
+                              ))
+                            "
+                          >
+                            <template #title
+                              >🏷️ {{ currentComentchild }}</template
                             >
-                            <template #title>🏷️ {{currentComentchild}}</template>
                             <div v-if="item.text">
-                            {{ item.text}}
+                              {{ item.text }}
                             </div>
-                            <div v-else>
-                              El Comentario no existe
-                            </div>
-                            
+                            <div v-else>El Comentario no existe</div>
                           </b-popover>
                         </a>
                       </a>
@@ -463,7 +467,7 @@ import loadingspinner from "./loadingspinner";
 //console.log(comentariosList);
 var txt2 = $("<p></p>").text("Text."); // Create text with jQuery
 //console.log(txt2);
-typeof txt2
+typeof txt2;
 /*
       var txt1 = "<p>Text.</p>";        // Create text with HTML
       var txt2 = $("<p></p>").text("Text.");  // Create text with jQuery
@@ -648,7 +652,7 @@ metaInfo() {
         return valObj[0];
       } else {
         //console.log("nope 💔");
-        return {'_id':null,'text':null,'createdAt':null};
+        return { _id: null, text: null, createdAt: null };
         // no prop
       }
     },
@@ -922,20 +926,20 @@ metaInfo() {
           }
 
           // Photo object vs media
-          if (typeof this.post.photo === 'object') {
-            console.log("the image coms from object")
+          if (typeof this.post.photo === "object") {
+            console.log("the image coms from object");
             this.photo = this.post.photo.content;
-          }
-          else if (typeof this.post.photo === 'string' || this.post.photo instanceof String) {
-            console.log("the image coms from string")
+          } else if (
+            typeof this.post.photo === "string" ||
+            this.post.photo instanceof String
+          ) {
+            console.log("the image coms from string");
             this.photo = this.post.photo;
-          }
-          else{
-            console.log("anyone know the image coms from ")
+          } else {
+            console.log("anyone know the image coms from ");
             console.log(typeof this.post.photo);
             console.log(this.post.photo);
             this.photo = this.post.photo;
-
           }
           this.userowner = this.post.user[0];
           this.id = this.post._id;
@@ -1183,4 +1187,18 @@ section {
   text-align: left !important;
 }
 /*# sourceMappingURL=style.css.map */
+</style>
+<style lang="css" scoped>
+.text-stroke {
+  /*
+  font-size: 70px;
+  */
+  color: white;
+  margin: 0px;
+  padding: 0px;
+  font-weight: 200;
+  font-style: italic;
+  text-shadow: 2px 0px 2px #ec008c, -2px 0px 2px #ec008c, 0px 2px 2px #ec008c,
+    0px -2px 2px #ec008c, 0 6px 10px rgba(0, 0, 0, 0.3);
+}
 </style>

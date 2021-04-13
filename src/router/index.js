@@ -17,7 +17,11 @@ const routesx = [
   //{ name: "User",path: "/user/:id", component: User },
   //{ name: "Post",path: "/post/:id", component: About },
   { name: "Post",path: "/post/:id", component: Post },
-  { name: "Report",path: "/reportar", component: ReportPage },
+  { name: "Report",path: "/reportar", component: ReportPage, 
+  props: route => ({ query: route.query.q })
+},
+
+
   { name: "Index",path: "/",component: Index,},
   { name: "DevLogin",path: "/DevLogin", component: DevLogin },
   { name: "perfil",path: "/perfil", component: ChangeUsernamePage },

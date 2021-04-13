@@ -38,7 +38,7 @@
             <b-form-group id="input-group-3" label="Tipo:" label-for="input-3">
               <b-form-select
                 id="input-3"
-                v-model="form.type"
+                v-model="tickettype"
                 :options="foods"
                 required
               ></b-form-select>
@@ -77,7 +77,9 @@
       </b-row>
     </b-container>
     <footer class="pt-5">
-      <a href="https://github.com/orgs/Anoringa/projects/1">Ver los tickets abiertos</a>
+      <a href="https://github.com/orgs/Anoringa/projects/1"
+        >Ver los tickets abiertos</a
+      >
     </footer>
   </div>
 </template>
@@ -89,6 +91,13 @@ import Header from "./Header";
 import axios from "axios";
 //import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
 export default {
+  props: {
+    query: {
+      type: String,
+      required: false,
+      default: "0",
+    },
+  },
   mounted() {
     /**/
   },
@@ -123,10 +132,11 @@ export default {
   data() {
     return {
       report_loaded: "",
+      tickettype: this.foods[parseInt(this.query)],
       form: {
         form_title: "",
         form_description: "",
-        type: null,
+        type: this.tickettype,
         checked: [],
       },
       foods: [
@@ -284,6 +294,12 @@ export default {
         console.log(error.config);
       });
       */
+    },
+  },
+  computed: {
+    defaultValue: function () {
+      // `this` points to the vm instance
+      return this.foods[0];
     },
   },
 };
