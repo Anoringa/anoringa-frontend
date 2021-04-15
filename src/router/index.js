@@ -1,4 +1,5 @@
 import Index from "../components/Index";
+import IndexNew from "../components/IndexNew";
 import HelloWorld from "../components/HelloWorld";
 //import PostsPage from "../components/PostPage";
 import Post from "../components/Post";
@@ -17,10 +18,16 @@ const routesx = [
   //{ name: "User",path: "/user/:id", component: User },
   //{ name: "Post",path: "/post/:id", component: About },
   { name: "Post",path: "/post/:id", component: Post },
-  { name: "Report",path: "/reportar", component: ReportPage, 
-  props: route => ({ query: route.query.q })
-},
+  { name: "Report",
+    path: "/reportar", 
+    component: ReportPage, 
+    props: 
+      route => ({ 
+        query: route.query.q 
+      })
+  },
 
+  { name: "IndexNew",path: "/new",component: IndexNew,},
 
   { name: "Index",path: "/",component: Index,},
   { name: "DevLogin",path: "/DevLogin", component: DevLogin },

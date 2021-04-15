@@ -79,7 +79,7 @@
           height="35"
           alt="A"
         />
-        <a class="badge badge--beta" href="/">alpha</a>
+        <a class="badge badge--beta" href="/new">alpha</a>
       </a>
       <!--
       <button

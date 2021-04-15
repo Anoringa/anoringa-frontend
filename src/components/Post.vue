@@ -478,9 +478,9 @@ typeof txt2;
       $("body").append("<p>Text.</p>")
       */
 import moment from "moment";
+moment.locale("es");
 import axios from "axios";
 import Vue2Filters from "vue2-filters";
-moment.locale("es");
 export default {
   created() {
     this.moment = moment;

@@ -32,6 +32,8 @@ import App from "./App.vue";
 import store from "./store";
 import VueRouter from "vue-router";
 
+//import '@/assets/css/tailwind.css';
+
 
 import routes from "./router/index";
 import Vodal from "vodal";
