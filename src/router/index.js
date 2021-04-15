@@ -27,9 +27,9 @@ const routesx = [
       })
   },
 
-  { name: "IndexNew",path: "/new",component: IndexNew,},
+  { name: "IndexNew",path: "/",component: IndexNew,},
 
-  { name: "Index",path: "/",component: Index,},
+  { name: "Index",path: "/new",component: Index,},
   { name: "DevLogin",path: "/DevLogin", component: DevLogin },
   { name: "perfil",path: "/perfil", component: ChangeUsernamePage },
 ];

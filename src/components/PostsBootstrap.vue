@@ -388,7 +388,9 @@ https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
         /*
         margin: 3% 0%;
         */
-        margin: 0.5% 0%;
+        margin: 0.3% 0%;
+        padding-left: 8px!important;
+        padding-right: 8px!important;
       }
       .project-card::before {
         background-image: linear-gradient(
