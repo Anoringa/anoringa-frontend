@@ -18,14 +18,42 @@ export default {
   created() {
     document.title = process.env.VUE_APP_NAME;
     //this.showToast();
+    this.analytics();
   },
 
-    data() {
-      return {
-        count: 0
-      }
-    },
+  data() {
+    return {
+      count: 0,
+    };
+  },
   methods: {
+    analytics() {
+      /*
+      if (
+        !sessionStorage.getItem("_swa") &&
+        document.referrer.indexOf(location.protocol + "//" + location.host) !==
+          0
+      ) {
+        fetch(
+          "https://counter.dev/track?" +
+            new URLSearchParams({
+              referrer: document.referrer,
+              screen: screen.width + "x" + screen.height,
+              user: "chocomilk",
+              utcoffset: "-3",
+            })
+        );
+      }
+      console.log("analytics");
+      sessionStorage.setItem("_swa", "1");
+      */
+      console.log("analytics");
+      let script = document.createElement("script");
+      script.text = 'if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"chocomilk",utcoffset:"-3"}))};sessionStorage.setItem("_swa","1");'
+      //script.src = "";
+      document.head.appendChild(script);
+    },
+
     toast() {
       this.$bvToast.toast(`Toast with action link`, {
         href: "#foo",
@@ -42,9 +70,9 @@ export default {
         h("b-spinner", { props: { type: "grow", small: true } }),
         " haz click ",
         //h("a",{href: "/reportar"}, "aqui"),
-        h('a', {attrs: { name: "reportar", href: '/' + "reportar"}}, "aqui"),
+        h("a", { attrs: { name: "reportar", href: "/" + "reportar" } }, "aqui"),
         ` message #${this.count} `,
-        
+
         h("b-spinner", { props: { type: "grow", small: true } }),
       ]);
       // Create the title
@@ -53,7 +81,11 @@ export default {
         { class: ["d-flex", "flex-grow-1", "align-items-baseline", "mr-2"] },
         [
           h("strong", { class: "mr-2" }, "Dejanos tus sugerencias"),
-          h("small", { class: "ml-auto text-italics" }, "atte: los desarrolladores"),
+          h(
+            "small",
+            { class: "ml-auto text-italics" },
+            "atte: los desarrolladores"
+          ),
         ]
       );
       // Pass the VNodes as an array for message and title
