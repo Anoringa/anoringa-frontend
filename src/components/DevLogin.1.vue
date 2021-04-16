@@ -19,6 +19,9 @@
 //import { mapGetters } from "vuex";
 import Header from "./Header";
 import axios from "axios";
+
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+
 import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
 export default {
   metaInfo: {

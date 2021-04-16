@@ -374,6 +374,7 @@ import { EventBus } from "../event-bus";
 import swal from "sweetalert";
 //import Captcha from "./Captcha";
 import axios from "axios";
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 //import store from "../store";
 //import ModalCreatePost from "./modals/ModalCreatePost";
 import ModalLogin from "./modals/ModalLogin";

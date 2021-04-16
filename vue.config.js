@@ -11,8 +11,17 @@ module.exports = {
       ]
   },
   devServer: {
+    
+    allowedHosts: [
+      'localhost',
+      '0.0.0.0',
+      'test.mydomain.com',
+      '127.0.0.1',
+    ],
     //host: '127.0.0.1',
-    host: "test.mydomain.com",
+    //host: "test.mydomain.com",
+    //host: '127.0.0.1',
+    host: '0.0.0.0',
     port: 80,
     //public: "localhost:8080",
     public: "localhost:80",
