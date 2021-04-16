@@ -54,8 +54,7 @@
 <script >
 import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
 import axios from "axios";
-//axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-////axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 /*
 axios
