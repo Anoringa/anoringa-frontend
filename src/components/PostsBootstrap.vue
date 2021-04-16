@@ -201,6 +201,7 @@ export default {
   created() {
     this.moment = moment;
     this.getAllPosts();
+    this.showToast();
   },
   filters: {
     moment: function (date) {
@@ -259,9 +260,43 @@ export default {
     /**/
   },
   methods: {
+    
+    showToast() {
+      // Use a shorter name for this.$createElement
+      const h = this.$createElement;
+      // Increment the toast count
+      this.count++;
+      // Create the message
+      const vNodesMsg = h("p", { class: ["text-center", "mb-0"] }, [
+        h("b-spinner", { props: { type: "grow", small: true } }),
+        " haz click",
+        //h("a",{href: "/reportar"}, "aqui"),
+        h('a', {attrs: { name: "reportar", href: '/' + "reportar"}}, " aqui "),
+        //` message #${this.count} `,
+        
+        h("b-spinner", { props: { type: "grow", small: true } }),
+      ]);
+      // Create the title
+      const vNodesTitle = h(
+        "div",
+        { class: ["d-flex", "flex-grow-1", "align-items-baseline", "mr-2"] },
+        [
+          h("strong", { class: "mr-2" }, "Dejanos tus sugerencias"),
+          h("small", { class: "ml-auto text-italics" }, "atte: los desarrolladores"),
+        ]
+      );
+      // Pass the VNodes as an array for message and title
+      this.$bvToast.toast([vNodesMsg], {
+        title: [vNodesTitle],
+        solid: true,
+        toaster: "b-toaster-bottom-center",
+        autoHideDelay: 15000,
+        variant: "info",
+      });
+    },
     getPhoto(photosonic) {
-      console.log("typeof photosonic");
-      console.log(typeof photosonic);
+      //console.log("typeof photosonic");
+      //console.log(typeof photosonic);
       function validURL(str) {
         var pattern = new RegExp(
           "^(https?:\\/\\/)?" + // protocol
@@ -277,7 +312,7 @@ export default {
 
       // Photo object vs media
       if (typeof photosonic === "object" || photosonic instanceof Object) {
-        console.log("the image coms from object");
+        //console.log("the image coms from object");
         if (validURL(photosonic.content)) {
           return photosonic.content;
         } else {
@@ -341,6 +376,7 @@ export default {
             );
             console.log(progressEvent.lengthComputable);
             console.log(percentCompleted);
+            
           },
         })
         .then((response) => {

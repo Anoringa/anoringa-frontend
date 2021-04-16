@@ -95,6 +95,8 @@ Vue.use(Vue2Filters);
 
 Vue.component(Vodal.name, Vodal);
 Vue.config.productionTip = false;
+Vue.config.devtools = true;
+
 
 //Vue.prototype.$apiurl = 'approved'
 Vue.prototype.$apiurl = "approved";

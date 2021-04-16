@@ -96,7 +96,7 @@ export default {
     query: {
       type: String,
       required: false,
-      default: "0",
+      default: "Sugerencia",
     },
   },
   mounted() {
@@ -133,7 +133,7 @@ export default {
   data() {
     return {
       report_loaded: "",
-      tickettype: this.foods[parseInt(this.query)],
+      tickettype: this.query,
       form: {
         form_title: "",
         form_description: "",
@@ -148,7 +148,7 @@ export default {
         "Sugerencia",
       ],
       show: true,
-      appName: "Anoringa",
+      appName: process.env.VUE_APP_NAME,
       apiKey: "<YOUR_RAPIDAPI_KEY>",
       fromCurrency: "",
       toCurrency: "",
