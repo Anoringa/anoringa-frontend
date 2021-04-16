@@ -480,7 +480,7 @@ typeof txt2;
 import moment from "moment";
 moment.locale("es");
 import axios from "axios";
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+//axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 import Vue2Filters from "vue2-filters";
 export default {
   created() {

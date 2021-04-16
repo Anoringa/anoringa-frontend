@@ -78,7 +78,7 @@
 import { EventBus } from "../event-bus";
 
 import axios from "axios";
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+//axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 import Vue2Filters from "vue2-filters";
 
 import moment from "moment";
