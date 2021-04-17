@@ -12,7 +12,6 @@
           :id="item._id"
 
           :href="urlendpoint+item._id"
-          target="_blank"
           class=" col-sm-6	col-md-4 col-lg-3 col-xl-2 col-xxl-1 col-12 project-card-wrapper"
           
 
@@ -41,8 +40,15 @@
                 {{item.description}}
               </p>
               -->
+              <!--
               <p>
                 ❤ 0 💬 {{item.numberOfColors}} 🕔 {{item.updatedAt | moment }}
+              </p>
+              -->
+              <p>
+                <b-icon icon="chat-left-text
+" aria-hidden="true"></b-icon> {{item.numberOfColors}} <b-icon icon="clock
+" aria-hidden="true"></b-icon> {{item.updatedAt | moment }}
               </p>
               <!--
               <p>

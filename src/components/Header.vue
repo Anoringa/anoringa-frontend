@@ -160,7 +160,7 @@
         <template #button-content class="d-flex align-items-center">
           <span class="pr-2" style="display: inline-block"
             ><p class="d-none d-sm-block" style="line-height: 0px">
-              {{ username }}
+              {{ usernameValue }}
             </p></span
           >
 
@@ -177,13 +177,13 @@
         </template>
 
         <b-dropdown-item class="d-block d-sm-none" disabled>{{
-          username
+          usernameValue
         }}</b-dropdown-item>
 
         <b-dropdown-item @click="showPostModal = true"
           >Postear algo</b-dropdown-item
         >
-        <b-dropdown-item>Configuracion</b-dropdown-item>
+        <b-dropdown-item href="/perfil">Configuracion</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item href="/reportar">Soporte</b-dropdown-item>
         <b-dropdown-item href="/reportar">Sugerir cambios</b-dropdown-item>
@@ -580,6 +580,11 @@ export default {
     },
   },
   computed: {
+    usernameValue() {
+      return localStorage.username;
+    },
+
+
     postPhotoValue() {
       return this.$store.state.postImage;
     },
@@ -861,6 +866,7 @@ export default {
     },
     clickConvert() {},
     convert() {},
+
     userStore(response) {
       console.log("User Created", response);
       console.log("User Created", response.data);
