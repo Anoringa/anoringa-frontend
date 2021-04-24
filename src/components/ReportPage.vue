@@ -6,12 +6,25 @@
       <b-row class="justify-content-md-center">
         <b-col col xl="6" lg="8" md="8" sm="12">
           <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+            <b-form-group id="input-group-3" label="Tipo:" label-for="input-3">
+              <b-form-select
+                id="input-3"
+                v-model="tickettype"
+                :options="foods"
+                required
+              ></b-form-select>
+            </b-form-group>
+
+
             <b-form-group
               id="input-group-1"
               label="Descripcion breve:"
               label-for="input-1"
-              description="Acotada y senecilla"
+              description=""
             >
+   <figcaption>  
+      <small>Acotada y sencilla </small>  
+   </figcaption>  
               <b-form-input
                 id="input-1"
                 v-model="form.form_title"
@@ -35,14 +48,6 @@
               ></b-form-textarea>
             </b-form-group>
 
-            <b-form-group id="input-group-3" label="Tipo:" label-for="input-3">
-              <b-form-select
-                id="input-3"
-                v-model="tickettype"
-                :options="foods"
-                required
-              ></b-form-select>
-            </b-form-group>
 
             <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
               <b-form-checkbox-group

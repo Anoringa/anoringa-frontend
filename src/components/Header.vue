@@ -110,7 +110,7 @@
             <a class="nav-link linker" href="/">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link linker" href="/">las reglas</a>
+            <a class="nav-link linker" href="/tutorial">Como usar</a>
           </li>
           <li class="nav-item">
             <a class="nav-link linker" @click="showPostModal = true">Postear</a>

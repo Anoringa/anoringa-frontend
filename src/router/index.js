@@ -6,6 +6,7 @@ import Post from "../components/Post";
 import DevLogin from "../components/DevLogin";
 import ChangeUsernamePage from "../components/ChangeUsernamePage";
 import ReportPage from "../components/ReportPage";
+import DocsPage from "../components/DocsPage";
 ///#
 const Foo = { template: "<div>foo</div>" };
 const Bar = { template: "<div>bar</div>" };
@@ -26,6 +27,7 @@ const routesx = [
         query: route.query.q 
       })
   },
+  { name: "Docs",path: "/tutorial", component: DocsPage },
 
   { name: "IndexNew",path: "/",component: IndexNew,},
 
