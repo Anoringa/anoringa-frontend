@@ -6,6 +6,12 @@
       -->
 
       <Header :appName="appName"></Header>
+      
+
+      <div v-if="ambientmusic">
+        <floatPlayer :idyoutube="'gTFeDTVwUHM'"></floatPlayer>
+
+      </div>
       <!-- 
       
       <nav
@@ -446,6 +452,7 @@ import { EventBus } from "../event-bus";
 //Vue.component('multiselect', Multiselect)
 import Header from "./Header";
 import Footer from "./Footer";
+import floatPlayer from "./floatPlayer";
 import loadingspinner from "./loadingspinner";
 /*
       <div class="repo">
@@ -473,6 +480,7 @@ console.log(txt2);
       $("body").append("<p>Text.</p>")
       */
 import moment from "moment";
+moment.locale("es");
 import axios from "axios";
 import Vue2Filters from "vue2-filters";
 moment.locale("es");
@@ -565,6 +573,7 @@ export default {
       content: "some scrap contenido",
       loaded_correctly: false,
       postcreatedAt: "",
+      ambientmusic:true,
     };
   } /*
 metaInfo() {
@@ -588,6 +597,7 @@ metaInfo() {
     Header,
     Footer,
     loadingspinner,
+    floatPlayer
   },
   sockets: {
     connect: function () {
