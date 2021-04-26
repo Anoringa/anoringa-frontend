@@ -54,8 +54,7 @@
 <script >
 import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
 import axios from "axios";
-
-//axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 /*
 axios
@@ -64,6 +63,7 @@ axios
   .catch(response => console.log(response))
       .finally(() => console.log("OK"))
 */
+/*
 axios
   .get("http://mediawiki.test:8080/api/posts")
   .then((response) => {
@@ -87,7 +87,7 @@ axios
     }
     console.log(error.config);
   });
-
+*/
 export default {
   //https://codepen.io/ben_jacobson/pen/MWwbvZe
   //https://jsfiddle.net/tiagomatosweb/vqtnpyzw/

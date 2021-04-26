@@ -17,6 +17,86 @@ export default {
   name: "App",
   created() {
     document.title = process.env.VUE_APP_NAME;
+    //this.showToast();
+    this.analytics();
+  },
+
+  data() {
+    return {
+      count: 0,
+    };
+  },
+  methods: {
+    analytics() {
+      /*
+      if (
+        !sessionStorage.getItem("_swa") &&
+        document.referrer.indexOf(location.protocol + "//" + location.host) !==
+          0
+      ) {
+        fetch(
+          "https://counter.dev/track?" +
+            new URLSearchParams({
+              referrer: document.referrer,
+              screen: screen.width + "x" + screen.height,
+              user: "chocomilk",
+              utcoffset: "-3",
+            })
+        );
+      }
+      console.log("analytics");
+      sessionStorage.setItem("_swa", "1");
+      */
+      console.log("analytics");
+      let script = document.createElement("script");
+      script.text = 'if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"chocomilk",utcoffset:"-3"}))};sessionStorage.setItem("_swa","1");'
+      //script.src = "";
+      document.head.appendChild(script);
+    },
+
+    toast() {
+      this.$bvToast.toast(`Toast with action link`, {
+        href: "#foo",
+        title: "Example",
+      });
+    },
+    showToast() {
+      // Use a shorter name for this.$createElement
+      const h = this.$createElement;
+      // Increment the toast count
+      this.count++;
+      // Create the message
+      const vNodesMsg = h("p", { class: ["text-center", "mb-0"] }, [
+        h("b-spinner", { props: { type: "grow", small: true } }),
+        " haz click ",
+        //h("a",{href: "/reportar"}, "aqui"),
+        h("a", { attrs: { name: "reportar", href: "/" + "reportar" } }, "aqui"),
+        ` message #${this.count} `,
+
+        h("b-spinner", { props: { type: "grow", small: true } }),
+      ]);
+      // Create the title
+      const vNodesTitle = h(
+        "div",
+        { class: ["d-flex", "flex-grow-1", "align-items-baseline", "mr-2"] },
+        [
+          h("strong", { class: "mr-2" }, "Dejanos tus sugerencias"),
+          h(
+            "small",
+            { class: "ml-auto text-italics" },
+            "atte: los desarrolladores"
+          ),
+        ]
+      );
+      // Pass the VNodes as an array for message and title
+      this.$bvToast.toast([vNodesMsg], {
+        title: [vNodesTitle],
+        solid: true,
+        toaster: "b-toaster-bottom-center",
+        autoHideDelay: 50000,
+        variant: "info",
+      });
+    },
   },
   metaInfo: {
     //description:"Anoringa es un sitio en el que podras discutir anonimamente",

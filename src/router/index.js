@@ -1,9 +1,12 @@
 import Index from "../components/Index";
+import IndexNew from "../components/IndexNew";
 import HelloWorld from "../components/HelloWorld";
 //import PostsPage from "../components/PostPage";
 import Post from "../components/Post";
 import DevLogin from "../components/DevLogin";
 import ChangeUsernamePage from "../components/ChangeUsernamePage";
+import ReportPage from "../components/ReportPage";
+import DocsPage from "../components/DocsPage";
 ///#
 const Foo = { template: "<div>foo</div>" };
 const Bar = { template: "<div>bar</div>" };
@@ -16,7 +19,19 @@ const routesx = [
   //{ name: "User",path: "/user/:id", component: User },
   //{ name: "Post",path: "/post/:id", component: About },
   { name: "Post",path: "/post/:id", component: Post },
-  { name: "Index",path: "/",component: Index,},
+  { name: "Report",
+    path: "/reportar", 
+    component: ReportPage, 
+    props: 
+      route => ({ 
+        query: route.query.q 
+      })
+  },
+  { name: "Docs",path: "/tutorial", component: DocsPage },
+
+  { name: "IndexNew",path: "/",component: IndexNew,},
+
+  { name: "Index",path: "/new",component: Index,},
   { name: "DevLogin",path: "/DevLogin", component: DevLogin },
   { name: "perfil",path: "/perfil", component: ChangeUsernamePage },
 ];

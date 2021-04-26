@@ -3,7 +3,7 @@
 <template>
     <footer>
         <p>
-        <a href="https://www.youtube.com/watch?v=oszhW4gaI7k">Contactanos</a> | <a href="/">Pagina de inicio</a> |
+        <a href="https://www.youtube.com/watch?v=oszhW4gaI7k">Contactanos</a> | <a href="https://github.com/Anoringa">Pagina del proyecto</a> | <a href="/reportar">Reportar</a> |
         <a href="/politicas.html">Politica de privacidad</a>
         </p>
         <p>&copy;2021 Copyright</p>

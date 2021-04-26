@@ -2,11 +2,6 @@
 node_modules
 /dist
 
-# local env files
-.env.local
-.env.*.local
-# env files
-.env.*
 
 # Log files
 npm-debug.log*
@@ -26,3 +21,10 @@ pnpm-debug.log*
 *.development
 .env
 *.env
+
+# local env files
+.env.local
+.env.*.local
+# env files
+# .env.*
+.env.1.example

@@ -53,7 +53,7 @@
     </div>
   </main>
   <div v-else-if="loaded == false" style="height: 100%">
-    loading
+    Cargando
     <b-spinner variant="danger" key="danger"></b-spinner>
   </div>
   <div v-else-if="loaded == 'ERROR'" style="height: 100%">ERROR</div>
@@ -70,6 +70,7 @@ import Card from "./Card";
 import { EventBus } from "../event-bus";
 
 import axios from "axios";
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 import Vue2Filters from "vue2-filters";
 
 export default {

@@ -66,6 +66,7 @@
 
 <script>
 import axios from "axios";
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 //import History from "./History";
 //import { mapGetters } from "vuex";
 

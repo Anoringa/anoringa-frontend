@@ -3,11 +3,12 @@
     <Header :appName="appName"></Header>
 
     <vue-hcaptcha
-      :sitekey="process.env.VUE_APP_HCAPTCHA"
+      :sitekey="hcaptchatoken"
       @verify="onVerify"
       theme="dark"
     ></vue-hcaptcha>
 
+    <!--
     // File upload
     <ik-upload
       :tags="['tag1', 'tag2']"
@@ -18,22 +19,42 @@
       :isPrivateFile="false"
       customCoordinates="10,10,100,100"
     />
-    <!--
       <p>{{appName}}</p>
     -->
+    <div>
+      <div id="issue-embed"></div>
+    </div>
   </div>
 </template>
-
 
 <script>
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import Header from "./Header";
 import axios from "axios";
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
 export default {
+  
+  mounted() {
+
+
+    /**/
+  },
+  created() {
+    const issueEmbed = document.createElement("script");
+    issueEmbed.setAttribute(
+      "src",
+      "https://cdn.issueembed.dev/v1/issue-embed.min.js"
+    );
+    issueEmbed.async = true;
+    document.head.appendChild(issueEmbed);
+    issueEmbed.init("#issue-embed", {
+      key: "dbb62ae9-ed4a-42a3-9dc0-ad7d5b23d7b8",
+    });
+  },
   metaInfo: {
-    title: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",
+    //title: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",
     meta: [
       {
         vmid: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",
@@ -72,6 +93,8 @@ export default {
       loading: false,
       hcaptchaResponse: "",
       loginurl: process.env.VUE_APP_API + "/api/user/register",
+      hcaptchatoken: process.env.VUE_APP_HCAPTCHA,
+      
     };
   },
   methods: {
@@ -100,6 +123,7 @@ export default {
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
+            console.log("error.response");
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
@@ -107,6 +131,7 @@ export default {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
             // http.ClientRequest in node.js
+            console.log("error.request");
             console.log(error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
