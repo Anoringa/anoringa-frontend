@@ -1,15 +1,13 @@
 {
   "name": "anoringa",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "start": "node server.js",
-    "dev": "vue-cli-service build && node server.js",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "dev": "vue-cli-service build && node server.js"
   },
   "dependencies": {
     "@hcaptcha/vue-hcaptcha": "^0.2.4",

@@ -48,6 +48,8 @@ Vue.use(VueMeta, {
   refreshOnceOnNavigation: false
 })
 
+Vue.config.devtools = true;
+
 /*
 
 import VueMeta from 'vue-meta'
