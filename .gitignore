@@ -19,6 +19,7 @@ pnpm-debug.log*
 *.sw?
 
 *.development
+*.production
 .env
 *.env
 
@@ -28,3 +29,13 @@ pnpm-debug.log*
 # env files
 # .env.*
 .env.1.example
+*.production
+.env.production
+.env.production
+*.production
+.env.production
+*.production
+*.production
+ignore
+*.production
+.env.production
