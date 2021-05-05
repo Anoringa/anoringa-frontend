@@ -27,6 +27,8 @@ if ("serviceWorker" in navigator) {
 }
 */
 
+
+
 import Vue from "vue";
 import App from "./App.vue";
 import store from "./store";
@@ -48,7 +50,6 @@ Vue.use(VueMeta, {
   refreshOnceOnNavigation: false
 })
 
-Vue.config.devtools = true;
 
 /*
 
@@ -97,6 +98,17 @@ Vue.use(Vue2Filters);
 
 Vue.component(Vodal.name, Vodal);
 Vue.config.productionTip = false;
+
+/*
+Vue.config.devtools = true;
+
+// Before you create app
+Vue.config.devtools = process.env.NODE_ENV === 'development'
+// After you create app
+window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor
+// then had to add in ./store.js as well.
+Vue.config.devtools = process.env.NODE_ENV === 'development'
+*/
 Vue.config.devtools = true;
 
 
@@ -184,6 +196,7 @@ Vue.use(VueHead, {
 
 Vue.use(VueRouter)
 
+Vue.config.devtools = true
 
 
 new Vue({

@@ -28,3 +28,4 @@ pnpm-debug.log*
 # env files
 # .env.*
 .env.1.example
+.env.production
