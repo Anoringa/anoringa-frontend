@@ -115,6 +115,9 @@
           <li class="nav-item">
             <a class="nav-link linker" @click="showPostModal = true">Postear</a>
           </li>
+          <li class="nav-item">
+            <ModalCreatePost></ModalCreatePost>
+          </li>
         </ul>
       </b-collapse>
 
@@ -179,10 +182,17 @@
         <b-dropdown-item class="d-block d-sm-none" disabled>{{
           usernameValue
         }}</b-dropdown-item>
-
+        <!--
         <b-dropdown-item @click="showPostModal = true"
           >Postear algo</b-dropdown-item
-        >
+        >-->
+        <b-dropdown-item>
+            <ModalCreatePost>Postear algo</ModalCreatePost>
+            
+            </b-dropdown-item>
+
+
+
         <b-dropdown-item href="/perfil">Configuracion</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item href="/reportar">Soporte</b-dropdown-item>
@@ -281,7 +291,7 @@
     </nav>
 
     -->
-
+<!--
     <b-modal
       v-model="showPostModal"
       title="Nuevo Post"
@@ -308,7 +318,7 @@
           <label for="comment">Contenido</label>
           <HtmlEditor />
 
-          <!--
+          
           <html-editor @child-checkbox="checkboxValue" />
           <html-editor :htmlContent="nuevopostcomment" />
           <trumbowyg
@@ -316,8 +326,8 @@
             :config="config"
             class="form-control"
             name="content"
-          ></trumbowyg>-->
-          <!--
+          ></trumbowyg>
+          
           <div id="trumbowyg-demo"></div>
           <textarea
             v-model="nuevopostcomment"
@@ -325,12 +335,12 @@
             rows="5"
             id="comment"
           ></textarea>
-          -->
+          
         </div>
 
         <label for="postImage">Imagen del post</label>
         <ImageUploader></ImageUploader>
-        <!--
+        
         <div class="container mt-10" id="postImage">
           <div class="card bg-white">
             <img style="" :src="imagebase64" alt="" width="50%" height="auto" />
@@ -341,7 +351,9 @@
               accept="image/*"
             />
           </div>
-        </div>-->
+        </div>
+        <label for="postMusic">Musica del post</label>
+        <ImageUploader></ImageUploader>
 
         <div class="form-group form-check">
           <label class="form-check-label">
@@ -361,6 +373,7 @@
         </b-button>
       </template>
     </b-modal>
+    -->
   </div>
 </template>
 
@@ -374,10 +387,11 @@ import { EventBus } from "../event-bus";
 import swal from "sweetalert";
 //import Captcha from "./Captcha";
 import axios from "axios";
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 //import store from "../store";
 //import ModalCreatePost from "./modals/ModalCreatePost";
 import ModalLogin from "./modals/ModalLogin";
+import ModalCreatePost from "./modals/ModalCreatePost";
 
 //import { myVar, Settings } from '../environment.js'
 //TextContent
@@ -428,10 +442,11 @@ import Trumbowyg from "vue-trumbowyg";
 import "trumbowyg/dist/ui/trumbowyg.css";
 */
 
-import HtmlEditor from "./html-editor";
+//import HtmlEditor from "./html-editor";
 
 // You can use it now
-import ImageUploader from "./ImageUploader";
+//import ImageUploader from "./ImageUploader";
+
 export default {
   props: {
     appName: {
@@ -445,8 +460,9 @@ export default {
     //ModalCreatePost,
     ModalLogin,
     //Trumbowyg,
-    HtmlEditor,
-    ImageUploader,
+    //HtmlEditor,
+    //ImageUploader,
+    ModalCreatePost,
   },
   data() {
     return {
@@ -482,7 +498,7 @@ export default {
       imageuploadedurl: "",
       remoteUrl: "",
       nuevoposttitulo: "",
-      nuevopostcomment: HtmlEditor.fetchData(),
+      //nuevopostcomment: HtmlEditor.fetchData(),
       showPostModal: false,
       variants: [
         "primary",
@@ -584,7 +600,6 @@ export default {
       return localStorage.username;
     },
 
-
     postPhotoValue() {
       return this.$store.state.postImage;
     },
@@ -637,14 +652,13 @@ export default {
           return new Error(err.message);
         });
     },
-
+/*
     async publicar() {
       console.log("publicar");
       if (
         localStorage.username != "" &&
         localStorage.username != undefined &&
         localStorage.username != null &&
-        
         localStorage.password != "" &&
         localStorage.password != undefined &&
         localStorage.password != null
@@ -673,13 +687,13 @@ export default {
             this.nuevoposttitulo = "";
             store.clearPostContentText;
             //alert("redirecting to the post")
-            /*
+            
           console.log("redirecting to the post")
           console.log("postdata");
           console.log(postdata);
 
           window.location.href="./post/"+postdata._id; 
-          */
+          
           } else {
             console.log("no funciono kpo, sigue cargando algo");
           }
@@ -691,7 +705,7 @@ export default {
         alert("logueate hijo de puta");
       }
     },
-
+*//**/
     postCreate(titulox, contenidox, photox) {
       /*
       {

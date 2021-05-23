@@ -8,9 +8,8 @@
       <Header :appName="appName"></Header>
       
 
-      <div v-if="ambientmusic">
-        <floatPlayer :idyoutube="'gTFeDTVwUHM'"></floatPlayer>
-
+      <div v-if="music">
+        <floatPlayer :idyoutube="music || 'gTFeDTVwUHM'"></floatPlayer>
       </div>
       <!-- 
       
@@ -579,6 +578,7 @@ export default {
       loaded_correctly: false,
       postcreatedAt: "",
       ambientmusic:true,
+      music:false,
     };
   } /*
 metaInfo() {
@@ -929,6 +929,15 @@ metaInfo() {
           this.loaded_correctly = "OK";
           this.pagetitle = this.post.title;
           this.content = this.post.description;
+
+
+
+          if (this.post.music &&  this.post.music != "false") {
+            this.music = this.post.music;
+          }
+        
+
+
           if (this.post.comments.le) {
             this.comments = this.post.comments;
           } else {
