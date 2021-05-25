@@ -133,7 +133,9 @@
       </template>
     </b-modal>
     <div>
-      <button @click="showModal = true">Crear Post</button>
+      <div class="clickable" @click="showModal = true">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -715,4 +717,7 @@ $bright: #ddd;
     cursor: default;
 }
 */
+.clickable{
+  cursor: pointer;
+}
 </style>

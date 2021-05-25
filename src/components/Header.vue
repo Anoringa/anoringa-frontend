@@ -116,7 +116,7 @@
             <a class="nav-link linker" @click="showPostModal = true">Postear</a>
           </li>
           <li class="nav-item">
-            <ModalCreatePost></ModalCreatePost>
+            <ModalCreatePost>Crear Post</ModalCreatePost>
           </li>
         </ul>
       </b-collapse>
