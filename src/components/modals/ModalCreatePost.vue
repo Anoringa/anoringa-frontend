@@ -70,12 +70,13 @@
             />
           </div>
         </div>-->
-        <label for="postMusic">Musica del post asd</label>
+        <label for="postMusic">Musica del post</label>
         <b-form-checkbox v-model="postMusicChecked" name="check-button" switch>
-          Switch Checkbox <b>(Checked: {{ postMusicChecked }})</b>
+          <a v-if="postMusicChecked == true">⏯🎹🎧🎶</a>
+          <a v-else>estas a un paso de poner la mejor musica para tu post</a>
         </b-form-checkbox>
 
-        <div role="group" v-if="postMusicChecked">
+        <div role="group" v-if="postMusicChecked" class="pt-3">
           <!--
             <label for="input-live">Link:</label>
             -->
@@ -114,7 +115,7 @@
           </b-form-valid-feedback>
         </div>
 
-        <div class="form-group form-check">
+        <div class="form-group form-check pt-3">
           <label class="form-check-label">
             <input class="form-check-input" type="checkbox" name="remember" />
             Acepto los terminos y condiciones

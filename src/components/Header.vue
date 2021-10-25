@@ -112,11 +112,13 @@
           <li class="nav-item">
             <a class="nav-link linker" href="/tutorial">Como usar</a>
           </li>
+          <!--
           <li class="nav-item">
             <a class="nav-link linker" @click="showPostModal = true">Postear</a>
           </li>
+            -->
           <li class="nav-item">
-            <ModalCreatePost>Crear Post</ModalCreatePost>
+            <a class="nav-link linker"><ModalCreatePost>Crear Post</ModalCreatePost></a>
           </li>
         </ul>
       </b-collapse>
@@ -187,11 +189,8 @@
           >Postear algo</b-dropdown-item
         >-->
         <b-dropdown-item>
-            <ModalCreatePost>Postear algo</ModalCreatePost>
-            
-            </b-dropdown-item>
-
-
+          <ModalCreatePost>Postear algo</ModalCreatePost>
+        </b-dropdown-item>
 
         <b-dropdown-item href="/perfil">Configuracion</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
@@ -291,7 +290,7 @@
     </nav>
 
     -->
-<!--
+    <!--
     <b-modal
       v-model="showPostModal"
       title="Nuevo Post"
@@ -651,8 +650,8 @@ export default {
         .catch((err) => {
           return new Error(err.message);
         });
-    },
-/*
+    } /**/,
+    /*
     async publicar() {
       console.log("publicar");
       if (
@@ -705,8 +704,11 @@ export default {
         alert("logueate hijo de puta");
       }
     },
-*//**/
-    postCreate(titulox, contenidox, photox) {
+*/ postCreate(
+      titulox,
+      contenidox,
+      photox
+    ) {
       /*
       {
         "username":"Afoxipeb",
