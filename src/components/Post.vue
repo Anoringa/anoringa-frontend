@@ -102,7 +102,7 @@
             -->
 
             <pre
-              class="pb-5"
+              class="pb-5 contenidodelpost"
               style="
                 text-align: left;
                 word-wrap: break-word;
@@ -111,7 +111,7 @@
             ><p v-html="content"></p></pre>
 
 
-            
+
             <div class="stats">
               <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
               >por {{ userowner.username }}
@@ -306,9 +306,7 @@
                     <p
                       class=""
                       style="word-wrap: break-word; white-space: pre-wrap"
-                    >
-                      {{ currentComent.text }}
-                    </p>
+                    >{{ currentComent.text }}</p>
                     <b-button
                       pill
                       variant="link topright"
@@ -335,7 +333,7 @@
                     <p class="last-updated" style="color: red">
                       Publicado {{ currentComent.createdAt | moment }}.
                     </p>
-
+                    <!--
                     <b-button
                       v-if="
                         currentComent.user[0].username == userowner.username
@@ -343,6 +341,7 @@
                       variant="primary"
                       >Modify</b-button
                     >
+                    -->
                   </div>
 
                   <!--
@@ -852,6 +851,28 @@ metaInfo() {
 
 <style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+
+
+  /*
+.contenidodelpost{
+
+  display: inline-block;
+
+}  */
+.contenidodelpost img {
+    zoom: 2;
+    display: block;
+    margin: auto;
+
+    height: auto;
+    max-height: 100%;
+
+    width: auto;
+    max-width: 100%;
+}
+
+
 .container {
   position: relative;
 }
@@ -1097,4 +1118,8 @@ section {
   text-shadow: 2px 0px 2px #ec008c, -2px 0px 2px #ec008c, 0px 2px 2px #ec008c,
     0px -2px 2px #ec008c, 0 6px 10px rgba(0, 0, 0, 0.3);
 }
+
+
+
+
 </style>
