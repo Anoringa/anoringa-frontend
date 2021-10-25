@@ -97,10 +97,10 @@
               {{ pagetitle }}
             </h2>
 
-            <!--
-            <div id="quill-container"></div>
-            -->
 
+
+
+            <!--
             <pre
               class="pb-5 contenidodelpost"
               style="
@@ -109,8 +109,8 @@
                 white-space: pre-wrap;
               "
             ><p v-html="content"></p></pre>
-
-
+            -->
+            <div id="quill-container"></div>
 
             <div class="stats">
               <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
@@ -379,8 +379,8 @@
 
 
 <script>
-//import "quill/dist/quill.snow.css";
-//import Quill from "quill";
+import "quill/dist/quill.snow.css";
+import Quill from "quill";
 
 // https://stackoverflow.com/questions/1988349/array-push-if-does-not-exist
 // check if an element exists in array using a comparer function
@@ -460,7 +460,7 @@ export default {
       theme: "snow",
     });
     */
-    /*
+    
     var editorId = "quill-container";
     setTimeout(() => {
       var container = document.getElementById(editorId);
@@ -479,7 +479,7 @@ export default {
 
     // 3000 millisec is maybe too long but too make sure that the problem is from creating
     // Quill before DOM
-    */
+    
   },
   metaInfo() {
     return {
@@ -872,6 +872,15 @@ metaInfo() {
     max-width: 100%;
 }
 
+/*
+.quill-container , 
+*/
+.ql-editor {
+  display: inline-block;
+}
+
+
+
 
 .container {
   position: relative;
@@ -1100,11 +1109,7 @@ section {
 /*# sourceMappingURL=style.css.map */
 </style>
 <style lang="css" scoped>
-/*
-.quill-container , .ql-editor {
-  height: auto;
-}
-  */
+
 
 .text-stroke {
   /*
