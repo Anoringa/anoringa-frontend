@@ -56,9 +56,12 @@
       ></select>
 
     </b-navbar>
+
+    v-bind:class="['dev' ? 'bg-violet navbar-dark' : '']"
     -->
 
-    <nav class="navbar navbar-expand-md bg-danger navbar-dark">
+    <nav class="navbar navbar-expand-md" 
+    :class="dev ? 'bg-violet navbar-dark' : 'bg-danger navbar-dark'">
       <a class="navbar-brand loguito" href="/" style=""
         ><!--
         <img
@@ -79,7 +82,14 @@
           height="35"
           alt="A"
         />
-        <a class="badge badge--beta" href="/new">alpha</a>
+        <a v-if="dev==false" class="badge badge--beta" href="/new">alpha</a>
+        <a v-if="dev==true" class="badge badge--dev" href="/new">dev</a>
+
+
+
+
+
+
       </a>
       <!--
       <button
@@ -465,6 +475,7 @@ export default {
   },
   data() {
     return {
+      dev:false,
       check: false,
       config: {
         // Get options from
@@ -578,6 +589,11 @@ export default {
       this.loggedstate = false;
       //https://es.vuejs.org/v2/guide/conditional.html
     }
+    console.log("is dev: ",(process.env.VUE_APP_NAME).toLowerCase().includes("dev"));
+
+    this.dev = (process.env.VUE_APP_NAME).toLowerCase().includes("dev");
+
+    
   },
   watch: {
     /*
@@ -1194,5 +1210,20 @@ main {
     &:after {
         content: "BETA";
     }*/
+}
+.badge--dev {
+  //color:  lighten(hsl(267,64,44), 10%) !important;
+  color: rgb(255, 255, 255) !important;
+  //border: 2px solid lighten(hsl(267,64,44), 25%);
+  border: 1px solid rgb(255, 255, 255);
+  font-weight: 600;
+  /*
+    &:after {
+        content: "BETA";
+    }*/
+}
+
+.bg-violet{
+   background-color: #3F47CB;
 }
 </style>
