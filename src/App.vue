@@ -47,7 +47,7 @@ export default {
       console.log("analytics");
       sessionStorage.setItem("_swa", "1");
       */
-      console.log("analytics");
+      //console.log("analytics");
       let script = document.createElement("script");
       script.text = 'if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"chocomilk",utcoffset:"-3"}))};sessionStorage.setItem("_swa","1");'
       //script.src = "";

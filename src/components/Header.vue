@@ -56,9 +56,12 @@
       ></select>
 
     </b-navbar>
+
+    v-bind:class="['dev' ? 'bg-violet navbar-dark' : '']"
     -->
 
-    <nav class="navbar navbar-expand-md bg-danger navbar-dark">
+    <nav class="navbar navbar-expand-md" 
+    :class="dev ? 'bg-violet navbar-dark' : 'bg-danger navbar-dark'">
       <a class="navbar-brand loguito" href="/" style=""
         ><!--
         <img
@@ -79,7 +82,14 @@
           height="35"
           alt="A"
         />
-        <a class="badge badge--beta" href="/new">alpha</a>
+        <a v-if="dev==false" class="badge badge--beta" href="/new">alpha</a>
+        <a v-if="dev==true" class="badge badge--dev" href="/new">dev</a>
+
+
+
+
+
+
       </a>
       <!--
       <button
@@ -104,16 +114,26 @@
       >
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link linker" href="/">Top</a>
+            <a class="nav-link linker" href="/?sort=newerpost">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link linker" href="/">Inicio</a>
+            <a class="nav-link linker" href="/?sort=morecomments">Top</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link linker" href="/?sort=newercomments">Más Reciente</a>
+          </li>
+
+          
           <li class="nav-item">
             <a class="nav-link linker" href="/tutorial">Como usar</a>
           </li>
+          <!--
           <li class="nav-item">
             <a class="nav-link linker" @click="showPostModal = true">Postear</a>
+          </li>
+            -->
+          <li class="nav-item">
+            <a class="nav-link linker"><ModalCreatePost>Crear Post</ModalCreatePost></a>
           </li>
         </ul>
       </b-collapse>
@@ -179,10 +199,14 @@
         <b-dropdown-item class="d-block d-sm-none" disabled>{{
           usernameValue
         }}</b-dropdown-item>
-
+        <!--
         <b-dropdown-item @click="showPostModal = true"
           >Postear algo</b-dropdown-item
-        >
+        >-->
+        <b-dropdown-item>
+          <ModalCreatePost>Postear algo</ModalCreatePost>
+        </b-dropdown-item>
+
         <b-dropdown-item href="/perfil">Configuracion</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item href="/reportar">Soporte</b-dropdown-item>
@@ -281,7 +305,7 @@
     </nav>
 
     -->
-
+    <!--
     <b-modal
       v-model="showPostModal"
       title="Nuevo Post"
@@ -308,7 +332,7 @@
           <label for="comment">Contenido</label>
           <HtmlEditor />
 
-          <!--
+          
           <html-editor @child-checkbox="checkboxValue" />
           <html-editor :htmlContent="nuevopostcomment" />
           <trumbowyg
@@ -316,8 +340,8 @@
             :config="config"
             class="form-control"
             name="content"
-          ></trumbowyg>-->
-          <!--
+          ></trumbowyg>
+          
           <div id="trumbowyg-demo"></div>
           <textarea
             v-model="nuevopostcomment"
@@ -325,12 +349,12 @@
             rows="5"
             id="comment"
           ></textarea>
-          -->
+          
         </div>
 
         <label for="postImage">Imagen del post</label>
         <ImageUploader></ImageUploader>
-        <!--
+        
         <div class="container mt-10" id="postImage">
           <div class="card bg-white">
             <img style="" :src="imagebase64" alt="" width="50%" height="auto" />
@@ -341,7 +365,9 @@
               accept="image/*"
             />
           </div>
-        </div>-->
+        </div>
+        <label for="postMusic">Musica del post</label>
+        <ImageUploader></ImageUploader>
 
         <div class="form-group form-check">
           <label class="form-check-label">
@@ -361,6 +387,7 @@
         </b-button>
       </template>
     </b-modal>
+    -->
   </div>
 </template>
 
@@ -374,10 +401,11 @@ import { EventBus } from "../event-bus";
 import swal from "sweetalert";
 //import Captcha from "./Captcha";
 import axios from "axios";
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 //import store from "../store";
 //import ModalCreatePost from "./modals/ModalCreatePost";
 import ModalLogin from "./modals/ModalLogin";
+import ModalCreatePost from "./modals/ModalCreatePost";
 
 //import { myVar, Settings } from '../environment.js'
 //TextContent
@@ -428,10 +456,11 @@ import Trumbowyg from "vue-trumbowyg";
 import "trumbowyg/dist/ui/trumbowyg.css";
 */
 
-import HtmlEditor from "./html-editor";
+//import HtmlEditor from "./html-editor";
 
 // You can use it now
-import ImageUploader from "./ImageUploader";
+//import ImageUploader from "./ImageUploader";
+
 export default {
   props: {
     appName: {
@@ -445,11 +474,13 @@ export default {
     //ModalCreatePost,
     ModalLogin,
     //Trumbowyg,
-    HtmlEditor,
-    ImageUploader,
+    //HtmlEditor,
+    //ImageUploader,
+    ModalCreatePost,
   },
   data() {
     return {
+      dev:false,
       check: false,
       config: {
         // Get options from
@@ -482,7 +513,7 @@ export default {
       imageuploadedurl: "",
       remoteUrl: "",
       nuevoposttitulo: "",
-      nuevopostcomment: HtmlEditor.fetchData(),
+      //nuevopostcomment: HtmlEditor.fetchData(),
       showPostModal: false,
       variants: [
         "primary",
@@ -563,6 +594,11 @@ export default {
       this.loggedstate = false;
       //https://es.vuejs.org/v2/guide/conditional.html
     }
+    console.log("is dev: ",(process.env.VUE_APP_NAME).toLowerCase().includes("dev"));
+
+    this.dev = (process.env.VUE_APP_NAME).toLowerCase().includes("dev");
+
+    
   },
   watch: {
     /*
@@ -583,7 +619,6 @@ export default {
     usernameValue() {
       return localStorage.username;
     },
-
 
     postPhotoValue() {
       return this.$store.state.postImage;
@@ -636,15 +671,14 @@ export default {
         .catch((err) => {
           return new Error(err.message);
         });
-    },
-
+    } /**/,
+    /*
     async publicar() {
       console.log("publicar");
       if (
         localStorage.username != "" &&
         localStorage.username != undefined &&
         localStorage.username != null &&
-        
         localStorage.password != "" &&
         localStorage.password != undefined &&
         localStorage.password != null
@@ -673,13 +707,13 @@ export default {
             this.nuevoposttitulo = "";
             store.clearPostContentText;
             //alert("redirecting to the post")
-            /*
+            
           console.log("redirecting to the post")
           console.log("postdata");
           console.log(postdata);
 
           window.location.href="./post/"+postdata._id; 
-          */
+          
           } else {
             console.log("no funciono kpo, sigue cargando algo");
           }
@@ -691,8 +725,11 @@ export default {
         alert("logueate hijo de puta");
       }
     },
-
-    postCreate(titulox, contenidox, photox) {
+*/ postCreate(
+      titulox,
+      contenidox,
+      photox
+    ) {
       /*
       {
         "username":"Afoxipeb",
@@ -1178,5 +1215,20 @@ main {
     &:after {
         content: "BETA";
     }*/
+}
+.badge--dev {
+  //color:  lighten(hsl(267,64,44), 10%) !important;
+  color: rgb(255, 255, 255) !important;
+  //border: 2px solid lighten(hsl(267,64,44), 25%);
+  border: 1px solid rgb(255, 255, 255);
+  font-weight: 600;
+  /*
+    &:after {
+        content: "BETA";
+    }*/
+}
+
+.bg-violet{
+   background-color: #3F47CB;
 }
 </style>

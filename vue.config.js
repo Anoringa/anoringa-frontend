@@ -25,6 +25,7 @@ module.exports = {
     port: 80,
     //public: "localhost:8080",
     public: "localhost:80",
+    //public: "test.mydomain.com",
   },
   pages: {/*
     index: {

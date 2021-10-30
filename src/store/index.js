@@ -44,6 +44,9 @@ export default new Vuex.Store({
     setPostPhotoLink: (state, payload) => {
       state.postPhotoLink = payload.link;
     },
+    clearPostPhotoLink(state) {
+      state.postPhotoLink = "";
+    },
     setPostContentText(state, payload) {
       state.postContentText = payload.contentText;
     },

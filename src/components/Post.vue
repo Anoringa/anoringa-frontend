@@ -6,6 +6,10 @@
       -->
 
       <Header :appName="appName"></Header>
+
+      <div v-if="music">
+        <floatPlayer :idyoutube="music || 'gTFeDTVwUHM'"></floatPlayer>
+      </div>
       <!-- 
       
       <nav
@@ -93,14 +97,20 @@
               {{ pagetitle }}
             </h2>
 
+
+
+
+            <!--
             <pre
-              class="pb-5"
+              class="pb-5 contenidodelpost"
               style="
                 text-align: left;
                 word-wrap: break-word;
                 white-space: pre-wrap;
               "
             ><p v-html="content"></p></pre>
+            -->
+            <div id="quill-container"></div>
 
             <div class="stats">
               <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
@@ -115,63 +125,6 @@
                 )
               }}.
             </p>
-            <!--
-            <p class="last-updated">Publicado {{ postcreatedAt | moment }}.</p>
-              pt-2 pb-5 pl-3
-                src="https://www.w3schools.com/bootstrap4/cinqueterre.jpg"
-              word-break: normal|break-all|keep-all|break-word|initial|inherit;
-            <p>
-              Bacon ipsum dolor sit amet capicola ball tip beef ribs leberkas,
-              turkey biltong salami shoulder ribeye. Leberkas chuck cow
-              andouille kevin ribeye pork strip steak pork chop beef ribs beef
-              ball tip corned beef. Leberkas prosciutto brisket, short ribs
-              salami cow sirloin chicken. Bacon pork belly bresaola tenderloin
-              biltong leberkas. Strip steak beef leberkas sirloin, venison
-              turkey hamburger kevin. Drumstick chicken ground round t-bone
-              flank fatback jerky ball tip. Jerky ribeye sirloin t-bone.
-            </p>
-            <p>
-              Tongue prosciutto pork ball tip ham hock, meatball sirloin brisket
-              kielbasa biltong doner shoulder bresaola. Chuck beef ribs biltong,
-              kielbasa ground round swine andouille corned beef. Venison
-              hamburger tongue shank. Leberkas doner pork chop sausage kielbasa
-              pancetta, biltong brisket pastrami tenderloin boudin filet mignon
-              sirloin cow meatloaf. Ham ball tip bacon pork belly sirloin.
-            </p>
-            <p>
-              Shoulder pig short ribs, salami chicken venison bresaola.
-              Frankfurter meatball pork chop pork loin, turkey strip steak
-              kielbasa pork belly drumstick shank prosciutto. Pork chicken
-              ground round, sirloin tri-tip ham hock pork chop cow meatloaf pork
-              loin bresaola turkey. Prosciutto hamburger pork short ribs flank
-              tri-tip chicken pig bacon meatloaf t-bone shankle doner. Bresaola
-              doner spare ribs biltong jowl boudin, tri-tip pork leberkas ham
-              hock filet mignon.
-            </p>
-            <p>
-              Leberkas strip steak shoulder meatball, flank biltong shank
-              fatback ball tip swine prosciutto hamburger. Jerky frankfurter
-              drumstick, ham ham hock hamburger kevin kielbasa salami chuck.
-              Flank rump beef cow, beef ribs meatball ball tip jowl bacon pork
-              chop. Biltong tongue pork chop hamburger. Frankfurter tri-tip
-              pancetta pork chop venison t-bone andouille beef ribs salami
-              boudin meatball doner spare ribs. Brisket pork chop pig kielbasa
-              jerky chuck pork belly beef meatball boudin short loin. Doner
-              jerky andouille ham meatloaf prosciutto kevin pork belly short
-              loin pancetta.
-            </p>
-            <p>
-              Corned beef spare ribs hamburger pork tenderloin flank pork loin
-              beef ribs sausage brisket chicken venison bacon short loin
-              sirloin. Ribeye tail short ribs andouille kevin chicken shankle
-              meatloaf, corned beef rump sirloin t-bone chuck tongue. Swine
-              venison tongue, sirloin turducken drumstick bresaola strip steak
-              rump. Kevin ham hock meatball tri-tip. Ground round leberkas pig
-              beef salami strip steak meatball beef ribs. Chicken ball tip rump,
-              short loin bresaola pork t-bone jerky jowl pork chop tail chuck
-              sausage prosciutto.
-            </p>
-            -->
           </b-col>
           <b-col lg="6" style="background-color: lavenderblush">
             <h2 class="p-2">Comentarios</h2>
@@ -353,9 +306,7 @@
                     <p
                       class=""
                       style="word-wrap: break-word; white-space: pre-wrap"
-                    >
-                      {{ currentComent.text }}
-                    </p>
+                    >{{ currentComent.text }}</p>
                     <b-button
                       pill
                       variant="link topright"
@@ -382,6 +333,15 @@
                     <p class="last-updated" style="color: red">
                       Publicado {{ currentComent.createdAt | moment }}.
                     </p>
+                    <!--
+                    <b-button
+                      v-if="
+                        currentComent.user[0].username == userowner.username
+                      "
+                      variant="primary"
+                      >Modify</b-button
+                    >
+                    -->
                   </div>
 
                   <!--
@@ -419,6 +379,9 @@
 
 
 <script>
+import "quill/dist/quill.snow.css";
+import Quill from "quill";
+
 // https://stackoverflow.com/questions/1988349/array-push-if-does-not-exist
 // check if an element exists in array using a comparer function
 // comparer : function(currentElement)
@@ -450,6 +413,7 @@ import { EventBus } from "../event-bus";
 //Vue.component('multiselect', Multiselect)
 import Header from "./Header";
 import Footer from "./Footer";
+import floatPlayer from "./floatPlayer";
 import loadingspinner from "./loadingspinner";
 /*
       <div class="repo">
@@ -480,12 +444,42 @@ typeof txt2;
 import moment from "moment";
 moment.locale("es");
 import axios from "axios";
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 import Vue2Filters from "vue2-filters";
 export default {
   created() {
     this.moment = moment;
     this.getPostDetail();
+
+    /*
+
+    // QuillJS rich text viewer
+
+    this.editor = new Quill(this.$el.querySelector("#quill-container"), {
+      readOnly: true,
+      theme: "snow",
+    });
+    */
+    
+    var editorId = "quill-container";
+    setTimeout(() => {
+      var container = document.getElementById(editorId);
+      this.editor = new Quill(container, {
+        readOnly: true,
+        theme: "snow",
+        modules: {
+          toolbar: false,
+        },
+      });
+      //this.editor.innerHTML = "lalala";
+      this.editor.root.innerHTML = this.content;
+    }, 2000);
+    
+
+
+    // 3000 millisec is maybe too long but too make sure that the problem is from creating
+    // Quill before DOM
+    
   },
   metaInfo() {
     return {
@@ -516,6 +510,7 @@ export default {
   },
   data() {
     return {
+      editor: null,
       id: "",
       nuevoComemtarioTexto: "",
       nuevoComemtarioEnRespuestaDe: [],
@@ -571,6 +566,8 @@ export default {
       content: "some scrap contenido",
       loaded_correctly: false,
       postcreatedAt: "",
+      ambientmusic: true,
+      music: false,
     };
   } /*
 metaInfo() {
@@ -594,6 +591,7 @@ metaInfo() {
     Header,
     Footer,
     loadingspinner,
+    floatPlayer,
   },
   sockets: {
     connect: function () {
@@ -776,124 +774,6 @@ metaInfo() {
         //window.Evento.$emit("createImage", "datos", datos);
         //this.posts.push(datos);
       });
-      /*
-      WORKS
-      import axios from "axios";
-      var qs = require("qs");
-      var data = qs.stringify({
-        title: titulox,
-        description: contenidox,
-        photo: "3214htrff4",
-      });
-      var config = {
-        method: "post",
-        url: "http://localhost:3000/api/post",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmU3ODgzNjM0NGMwMDRkM2NlNWExNDgiLCJ1c2VybmFtZSI6InJhdWw0NjIyIiwicGFzc3dvcmQiOiIkMmIkMTAkdXdYbFMvd2o3QXRVbmVVMnZVb3FoZWpZUW1rZWl3TnFRazBiMGR0UDF4VDJvMWFmTEFPR1ciLCJpYXQiOjE2MDkxMzU3NDksImV4cCI6MTYwOTE0Mjk0OX0.iAC3NVGRnu3xz6qpZxh6Hpx7AReSAkY33_s424Hw5VE",
-        },
-        data: data,
-      };
-      axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-        })
-        .then((response) => console.log(response))
-        .catch(function (error) {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-          }
-          console.log(error.config);
-        });
-        */
-      /*
-      var config = {
-        method: "post",
-        url: "http://localhost:3000/api/post",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmU3ODgzNjM0NGMwMDRkM2NlNWExNDgiLCJ1c2VybmFtZSI6InJhdWw0NjIyIiwicGFzc3dvcmQiOiIkMmIkMTAkdXdYbFMvd2o3QXRVbmVVMnZVb3FoZWpZUW1rZWl3TnFRazBiMGR0UDF4VDJvMWFmTEFPR1ciLCJpYXQiOjE2MDkxMzU3NDksImV4cCI6MTYwOTE0Mjk0OX0.iAC3NVGRnu3xz6qpZxh6Hpx7AReSAkY33_s424Hw5VE",
-        },
-        data: {
-          username: localStorage.username,
-          password: localStorage.password,
-          title: titulox,
-          photo: "somephoto",
-          description: contenidox,
-        },
-      };
-      */
-      /*
-      axios
-        .request({
-          method: config.method,
-          url: config.url,
-          data: config.data,
-          headers: config.headers,
-        })
-        .then((response) => console.log(response))
-        .catch(function (error) {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-          }
-          console.log(error.config);
-        });
-        */
-      /*
-      axios
-        .post("http://127.0.0.1:8080/api/posts", {
-          username: localStorage.username,
-          password: localStorage.password,
-          title: titulox,
-          photo: "somephoto",
-          content: contenidox,
-        })
-        .then((response) => console.log(response))
-        .catch(function (error) {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-          }
-          console.log(error.config);
-        });
-        */
     },
     getPostsExample() {
       axios
@@ -920,6 +800,14 @@ metaInfo() {
           this.loaded_correctly = "OK";
           this.pagetitle = this.post.title;
           this.content = this.post.description;
+          //this.editor = this.post.title;
+
+          //this.editor.root.innerHTML = this.post.description;
+
+          if (this.post.music && this.post.music != "false") {
+            this.music = this.post.music;
+          }
+
           if (this.post.comments.le) {
             this.comments = this.post.comments;
           } else {
@@ -963,6 +851,37 @@ metaInfo() {
 
 <style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+
+
+  /*
+.contenidodelpost{
+
+  display: inline-block;
+
+}  */
+.contenidodelpost img {
+    zoom: 2;
+    display: block;
+    margin: auto;
+
+    height: auto;
+    max-height: 100%;
+
+    width: auto;
+    max-width: 100%;
+}
+
+/*
+.quill-container , 
+*/
+.ql-editor {
+  display: inline-block;
+}
+
+
+
+
 .container {
   position: relative;
 }
@@ -1190,6 +1109,8 @@ section {
 /*# sourceMappingURL=style.css.map */
 </style>
 <style lang="css" scoped>
+
+
 .text-stroke {
   /*
   font-size: 70px;
@@ -1202,4 +1123,8 @@ section {
   text-shadow: 2px 0px 2px #ec008c, -2px 0px 2px #ec008c, 0px 2px 2px #ec008c,
     0px -2px 2px #ec008c, 0 6px 10px rgba(0, 0, 0, 0.3);
 }
+
+
+
+
 </style>

@@ -9,103 +9,134 @@
 
       -->
 
-    <div>
-        <div v-if="showModal">
-          <transition name="modal">
-            <div class="modal-mask">
-              <div class="modal-wrapper">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h3 class="modal-title">Nuevo Post</h3>
-                      <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true" @click="showModal = false"
-                          >&times;</span
-                        >
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <p></p>
-
-                      <div class="form-group">
-                        <label for="nuevo-post-titulo">Titulo</label>
-                        <input
-                          v-model="nuevoposttitulo"
-                          type="text"
-                          class="form-control"
-                          id="nuevo-post-titulo"
-                          placeholder="Ingresa un nombre atractivo"
-                          name="nuevo-post-titulo"
-                        />
-                      </div>
-                      <!--
-                      <div class="form-group">
-                        <label for="pwd">Password:</label>
-                        <input
-                          type="password"
-                          class="form-control"
-                          id="pwd"
-                          placeholder="Enter password"
-                          name="pswd"
-                        />
-                      </div>
-                      -->
-                      <div class="form-group">
-                        <label for="comment">Contenido</label>
-                        <textarea
-                          v-model="nuevopostcomment"
-                          class="form-control"
-                          rows="5"
-                          id="comment"
-                        ></textarea>
-                      </div>
-
-
-
-                      <input id="inp" type="file" />
-                      <p id="b64"></p>
-                      <img id="img" height="150" />
-
-                      <div class="form-group form-check">
-                        <label class="form-check-label">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="remember"
-                          />
-                          Acepto los terminos y condiciones
-                        </label>
-                      </div>
-                    </div>
-                    
-                    <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        @click="showModal = false"
-                      >
-                        Cerrar
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        @click="publicar"
-                      >
-                        Publicar
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </transition>
+    <b-modal
+      size="lg"
+      v-model="showModal"
+      title="Nuevo Post"
+      :header-bg-variant="headerBgVariant"
+      :header-text-variant="headerTextVariant"
+      :body-bg-variant="bodyBgVariant"
+      :body-text-variant="bodyTextVariant"
+      :footer-bg-variant="footerBgVariant"
+      :footer-text-variant="footerTextVariant"
+    >
+      <b-container fluid>
+        <div class="form-group">
+          <label for="nuevo-post-titulo">Titulo</label>
+          <input
+            v-model="nuevoposttitulo"
+            type="text"
+            class="form-control"
+            id="nuevo-post-titulo"
+            placeholder="Ingresa un nombre atractivo"
+            name="nuevo-post-titulo"
+          />
         </div>
-      <button @click="showModal = true">Crear Post</button>
+        <div class="form-group">
+          <label for="comment">Contenido</label>
+          <HtmlEditor />
+
+          <!--
+          <html-editor @child-checkbox="checkboxValue" />
+          <html-editor :htmlContent="nuevopostcomment" />
+          <trumbowyg
+            v-model="nuevopostcomment"
+            :config="config"
+            class="form-control"
+            name="content"
+          ></trumbowyg>-->
+          <!--
+          <div id="trumbowyg-demo"></div>
+          <textarea
+            v-model="nuevopostcomment"
+            class="form-control"
+            rows="5"
+            id="comment"
+          ></textarea>
+          -->
+        </div>
+
+        <label for="postImage">Imagen del post</label>
+        <ImageUploader></ImageUploader>
+        <!--
+        <div class="container mt-10" id="postImage">
+          <div class="card bg-white">
+            <img style="" :src="imagebase64" alt="" width="50%" height="auto" />
+            <input
+              @change="handleImage"
+              class="custom-input"
+              type="file"
+              accept="image/*"
+            />
+          </div>
+        </div>-->
+        <label for="postMusic">Musica del post</label>
+        <b-form-checkbox v-model="postMusicChecked" name="check-button" switch>
+          <a v-if="postMusicChecked == true">⏯🎹🎧🎶</a>
+          <a v-else>estas a un paso de poner la mejor musica para tu post</a>
+        </b-form-checkbox>
+
+        <div role="group" v-if="postMusicChecked" class="pt-3">
+          <!--
+            <label for="input-live">Link:</label>
+            -->
+          <b-form-input
+            id="input-live"
+            v-model="youtube_link"
+            :state="youtubeState"
+            aria-describedby="input-live-help input-live-feedback"
+            placeholder="Ingresa un link de youtube"
+            trim
+          ></b-form-input>
+
+          <b-form-invalid-feedback id="input-live-feedback">
+            ingresa un link de youtube valido Ejemplo :
+            https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO
+          </b-form-invalid-feedback>
+          <!--
+            <b-form-text id="input-live-help"
+              >ingresa un link de youtube valido</b-form-text
+            >-->
+          <b-form-valid-feedback id="input-live-feedback">
+            <!--
+              //https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
+-->
+            <b-img
+              v-if="youtube_video_id != false"
+              thumbnail
+              fluid
+              :src="
+                'https://img.youtube.com/vi/' +
+                youtube_video_id +
+                '/sddefault.jpg'
+              "
+              alt="Youtube Image thumbnail"
+            ></b-img>
+          </b-form-valid-feedback>
+        </div>
+
+        <div class="form-group form-check pt-3">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="remember" />
+            Acepto los terminos y condiciones
+          </label>
+        </div>
+      </b-container>
+      <template #modal-footer>
+        <b>Crazy cat</b>
+        <p class="float-left">🐱‍🐉</p>
+        <b-button size="sm" variant="success" @click="publicar">
+          Publicar
+        </b-button>
+        <b-button size="sm" variant="danger" @click="showPostModal = false">
+          Cerrar
+        </b-button>
+      </template>
+    </b-modal>
+    <div>
+      <div class="clickable" @click="showModal = true">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -113,6 +144,7 @@
 
 <script>
 import { EventBus } from "../../event-bus";
+import HtmlEditor from "../html-editor";
 //import History from "./History";
 //import { mapGetters } from "vuex";
 
@@ -130,10 +162,65 @@ import { EventBus } from "../../event-bus";
 //import { BModal, VBModal } from "bootstrap-vue";
 //import VEasyDialog from "v-easy-dialog";
 
+import ImageUploader from "../ImageUploader";
+
+
+
+import store from "../../store";
+
+
 export default {
+  computed: {
+    youtubeState() {
+      var url = this.youtube_link;
+      console.log(url);
+      var videoId = "";
+      var urlParts = null;
+
+      if (url.indexOf("youtube") !== -1) {
+        urlParts = url.split("?v=");
+        videoId = urlParts[1].substring(0, 11);
+      } else if (url.indexOf("youtu.be") !== -1) {
+        urlParts = url.replace("//", "").split("/");
+        videoId = urlParts[1].substring(0, 11);
+      }
+      if (videoId === "") {
+        console.log("Could not extract video id. Seems invalid url");
+        //this.youtube_video_id = false;
+        //this.youtube_thumbnail = false;
+        this.setYoutubeVideoID(false, true);
+        return false;
+      } else {
+        console.log("Video Id is: " + videoId);
+
+        this.setYoutubeVideoID(videoId, true);
+
+        //this.youtube_video_id = videoId;
+        //this.youtube_thumbnail = true;
+        return true;
+      }
+
+      //return this.name.length > 2 ? true : false;
+    },
+    usernameValue() {
+      return localStorage.username;
+    },
+
+    postPhotoValue() {
+      return this.$store.state.postImage;
+    },
+    postContentTextValue() {
+      return this.$store.state.postContentText;
+    },
+    postPhotoLinkValue() {
+      return this.$store.state.postPhotoLink;
+    },
+  },
   //directives: { "b-modal": VBModal },
   name: "ModalLogin",
   components: {
+    HtmlEditor,
+    ImageUploader,
     //BModal,
     //History,
     //Header,
@@ -142,10 +229,22 @@ export default {
   },
   data() {
     return {
+      youtube_video_id: false,
+      youtube_thumbnail: false,
+      youtube_link: "",
+
+
+      
+      imagebase64: "",
+
+
+
       nuevoposttitulo: "",
-      nuevopostcomment: "",
+      //nuevopostcomment: "",
+      nuevopostcomment: HtmlEditor.fetchData(),
       show: false,
-      value:true,
+      value: true,
+      postMusicChecked: false,
       modal: {
         title: "Nuevo Post",
         items: [
@@ -200,6 +299,13 @@ export default {
       result: 0,
       convertClicked: false,
       loading: false,
+
+      headerBgVariant: "dark",
+      headerTextVariant: "light",
+      bodyBgVariant: "light",
+      bodyTextVariant: "dark",
+      footerBgVariant: "warning",
+      footerTextVariant: "dark",
     };
   },
   sockets: {
@@ -230,22 +336,73 @@ export default {
     },*/
   },
   methods: {
-    publicar() {
-      if (this.nuevoposttitulo != "" && this.nuevopostcomment != "") {
-        console.log("titulo");
-        console.log(this.nuevoposttitulo);
-        console.log("contenido");
-        console.log(this.nuevopostcomment);
-        this.postCreate(this.nuevoposttitulo, this.nuevopostcomment,this.imagebase64);
-        console.log("funciono kpo 😎");
-        this.showModal = false;
-        this.nuevoposttitulo = "";
-        this.nuevopostcomment = "";
+    setYoutubeVideoID(uno, dos) {
+      this.youtube_video_id = uno;
+      this.youtube_thumbnail = dos;
+    },
+    async publicar() {
+      console.log("publicar");
+      if (
+        localStorage.username != "" &&
+        localStorage.username != undefined &&
+        localStorage.username != null &&
+        localStorage.password != "" &&
+        localStorage.password != undefined &&
+        localStorage.password != null
+      ) {
+        if (this.nuevoposttitulo != "" && this.postContentTextValue != "") {
+          console.log("postPhotoValue");
+          console.log(this.postPhotoValue);
+          this.isnotcargando = false;
+
+          if (this.isnotcargando == false) {
+            console.log("titulo");
+            console.log(this.nuevoposttitulo);
+            console.log("contenido");
+            console.log(this.postContentTextValue);
+            console.log("photo");
+            console.log(this.postPhotoValue);
+            console.log("music");
+            console.log(this.youtube_video_id);
+
+
+
+
+            this.postCreate(
+              this.nuevoposttitulo,
+              this.postContentTextValue,
+              //this.imageuploadedurl,
+              this.postPhotoValue,
+              this.youtube_video_id
+            );
+            console.log("funciono kpo 😎");
+            this.showPostModal = false;
+
+            this.nuevoposttitulo = "";
+            store.clearPostContentText;
+            //alert("redirecting to the post")
+            
+          //console.log("redirecting to the post")
+          //console.log("postdata");
+          //console.log(postdata);
+
+          //window.location.href="./post/"+postdata._id; 
+          
+          } else {
+            console.log("no funciono kpo, sigue cargando algo");
+          }
+        } else {
+          console.log("no funciono kpo");
+        }
       } else {
-        console.log("no funciono kpo");
+        console.log("logueate hijo de puta");
+        alert("logueate hijo de puta");
       }
     },
-    postCreate(titulox, contenidox, photox) {
+    postCreate(titulox, contenidox, photox,musix) {
+      console.log("----------💥💥----------");
+      console.log(titulox, contenidox, photox);
+      console.log("----------💥💥----------");
       /*
       {
         "username":"Afoxipeb",
@@ -260,10 +417,12 @@ export default {
       var data = {
         title: titulox,
         description: contenidox,
-        username: localStorage.username,
-        //password: "req.body.password",
-        password: localStorage.password,
         photo: photox,
+        music:musix,
+        
+        _id: localStorage.userid,
+        username: localStorage.username,
+        password: localStorage.password,
       };
 
       this.$socket.emit("post", data, function (datos) {
@@ -275,6 +434,12 @@ export default {
         EventBus.$emit("createImage", "datos", datos);
         //window.Evento.$emit("createImage", "datos", datos);
         //this.posts.push(datos);
+        console.log("redirecting to the post");
+
+        //for the moment i will coment in order to user selenium
+        //☮
+        //window.location.href = "./post/" + datos._id;
+        return datos;
       });
       /*
 
@@ -420,6 +585,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
+/*
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -437,6 +603,7 @@ export default {
   display: table-cell;
   vertical-align: middle;
 }
+*/
 
 .file-select > .select-button {
   padding: 1rem;
@@ -551,4 +718,7 @@ $bright: #ddd;
     cursor: default;
 }
 */
+.clickable{
+  cursor: pointer;
+}
 </style>

@@ -4,7 +4,7 @@
     <!--
       <p>{{appName}}</p>
     -->
-    <Posts></Posts>
+    <Posts :postSort="sortPost"></Posts>
     <Footer></Footer>
   </div>
 </template>
@@ -135,8 +135,24 @@ export default {
     Posts,
     Footer,
   },
+  created() {
+    var sortFromQuery = this.$route.query.sort
+    //console.log(sortFromQuery);
+    if (sortFromQuery == "newercomments") {
+      this.sortPost = "lastComment"
+    } else if (sortFromQuery == "newerpost") {
+      this.sortPost = "updatedAt"
+    } else if (sortFromQuery == "morecomments" || sortFromQuery == "mascomentarios") {
+      this.sortPost = "countOfComments"
+    } else{
+      this.sortPost = "updatedAt"
+    }
+
+
+  },
   data() {
     return {
+      sortPost: null,
       appName: "Anoringa",
       apiKey: "<YOUR_RAPIDAPI_KEY>",
       fromCurrency: "",

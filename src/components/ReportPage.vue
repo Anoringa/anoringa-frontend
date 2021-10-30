@@ -8,13 +8,13 @@
           <b-form @submit="onSubmit" @reset="onReset" v-if="show">
             <b-form-group id="input-group-3" label="Tipo:" label-for="input-3">
               <b-form-select
+              @change="onChangeFormSelect"
                 id="input-3"
                 v-model="tickettype"
-                :options="foods"
+                :options="tiposDeReporte"
                 required
               ></b-form-select>
             </b-form-group>
-
 
             <b-form-group
               id="input-group-1"
@@ -22,12 +22,12 @@
               label-for="input-1"
               description=""
             >
-   <figcaption>  
-      <small>Acotada y sencilla </small>  
-   </figcaption>  
+              <figcaption>
+                <small>Acotada y sencilla </small>
+              </figcaption>
               <b-form-input
                 id="input-1"
-                v-model="form.form_title"
+                v-model="issueForm.form_title"
                 type="text"
                 placeholder="Describi brevemente"
                 required
@@ -41,24 +41,28 @@
             >
               <b-form-textarea
                 id="input-2"
-                v-model="form.form_description"
+                v-model="issueForm.form_description"
                 placeholder="Describi detalladamente"
                 required
                 rows="4"
               ></b-form-textarea>
             </b-form-group>
-
-
+            
+                <!--
             <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
               <b-form-checkbox-group
-                v-model="form.checked"
+                v-model="issueForm.checked"
                 id="checkboxes-4"
                 :aria-describedby="ariaDescribedby"
-                ><!--
+                >
+
                 <b-form-checkbox value="me">Check me out</b-form-checkbox>
-                <b-form-checkbox value="that">Check that out</b-form-checkbox>-->
+                <b-form-checkbox value="that">Check that out</b-form-checkbox>
+
+
               </b-form-checkbox-group>
             </b-form-group>
+                -->
 
             <b-button type="submit" variant="primary">Enviar</b-button>
             <b-button type="reset" variant="danger">Cancelar</b-button>
@@ -94,7 +98,7 @@
 //import { mapGetters } from "vuex";
 import Header from "./Header";
 import axios from "axios";
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 //import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
 export default {
   props: {
@@ -129,7 +133,7 @@ export default {
       amp: true,
     },
   },
-  name: "Login",
+  name: "ReportPage",
   components: {
     //History,
     Header,
@@ -137,15 +141,16 @@ export default {
   },
   data() {
     return {
+      urlISSUESAPI: process.env.VUE_APP_ISSUESAPI,
       report_loaded: "",
       tickettype: this.query,
-      form: {
+      issueForm: {
         form_title: "",
         form_description: "",
         type: this.tickettype,
-        checked: [],
+        //checked: [],
       },
-      foods: [
+      tiposDeReporte: [
         { text: "Elegi una", value: null },
         "Reporte",
         "Denuncia",
@@ -184,11 +189,11 @@ export default {
       xhr.open(
         "POST",
         "https://anoringa-issues.herokuapp.com/issue?ISSUE_TITLE=" +
-          this.form.form_title +
+          this.issueForm.form_title +
           "&ISSUE_BODY=" +
-          this.form.form_description +
+          this.issueForm.form_description +
           "&ISSUE_LABELS=%5B%22" +
-          this.form.type +
+          this.issueForm.type +
           "%22%5D"
       );
 
@@ -196,14 +201,70 @@ export default {
       */
 
       this.report_loaded = "LOADING";
+
+      /*
+      axios.post(
+          "https://anoringa-issues.herokuapp.com/issue?ISSUE_TITLE=" +
+            this.issueForm.form_title +
+            "&ISSUE_BODY=" +
+            this.issueForm.form_description +
+            "&ISSUE_LABELS=%5B%22" +
+            this.issueForm.type +
+            "%22%5D"
+        )
+        .then((response) => {
+          this.report_loaded = "OK";
+          console.log(response);
+        })
+        .catch(function (error) {
+          this.report_loaded = "ERROR";
+          console.log(error.response);
+        });
+      */
+      /*
+      var config = {
+        method: "post",
+        //url: 'https://anoringa-issues.herokuapp.com/issue?ISSUE_TITLE=no funciona el bot&ISSUE_BODY=este es un test from cloud&ISSUE_LABELS=["ticket"]',
+        // https://anoringa-issues.herokuapp.com
+        url:
+          this.urlISSUESAPI+"/issue?ISSUE_TITLE=" +
+          this.issueForm.form_title +
+          "&ISSUE_BODY=" +
+          this.issueForm.form_description +
+          "&ISSUE_LABELS=%5B%22" +
+          this.issueForm.type +
+          "%22%5D",
+
+        headers: {
+          //"Access-Control-Allow-Headers": "Content-Type, Authorization",
+          //"Access-Control-Allow-Origin": "*",
+          //"Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        },
+      };
+
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+
+          this.report_loaded = "OK";
+          console.log(response);
+        })
+        .catch(function (error) {
+          this.report_loaded = "ERROR";
+          console.log(error.response);
+          console.log(error);
+        });
+        */
+
       axios
         .post(
-          "https://anoringa-issues.herokuapp.com/issue?ISSUE_TITLE=" +
-            this.form.form_title +
+            this.urlISSUESAPI +
+            "/issue?ISSUE_TITLE=" +
+            this.issueForm.form_title +
             "&ISSUE_BODY=" +
-            this.form.form_description +
+            this.issueForm.form_description +
             "&ISSUE_LABELS=%5B%22" +
-            this.form.type +
+            this.issueForm.type +
             "%22%5D"
         )
         .then((response) => {
@@ -215,13 +276,20 @@ export default {
           console.log(error.response);
         });
     },
+
+    onChangeFormSelect(event) {
+      //event.preventDefault();
+      console.log("😎🔄onChangeFormSelect: ",event)
+      this.issueForm.type = event;
+      console.log("form after onChangeFormSelect: ",this.issueForm)
+    },
     onReset(event) {
       event.preventDefault();
       // Reset our form values
-      this.form.email = "";
-      this.form.name = "";
-      this.form.food = null;
-      this.form.checked = [];
+      this.issueForm.email = "";
+      this.issueForm.name = "";
+      this.issueForm.food = null;
+      //this.issueForm.checked = [];
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
@@ -305,7 +373,7 @@ export default {
   computed: {
     defaultValue: function () {
       // `this` points to the vm instance
-      return this.foods[0];
+      return this.tiposDeReporte[0];
     },
   },
 };
