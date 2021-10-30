@@ -61,8 +61,8 @@
                 -->
 
                 <div v-if="postSort == 'lastComment'">
-                  <b-icon icon="plus-circle" aria-hidden="true"></b-icon>
-                  comentado {{ item[postSort][0] | moment }}
+                  <p v-if="item[postSort][0] == ['2020-11-30T00:00:00.000Z']"></p>
+                  <p v-else><b-icon icon="plus-circle" aria-hidden="true"></b-icon> comentado {{ item[postSort][0] | moment }}</p>
                 </div>
                 <div v-else-if="postSort == 'countOfComments'">
                   <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
@@ -84,6 +84,9 @@
                   {{ item[postSort] | moment }}
                 </div>
               </div>
+                  <!--
+              <p>{{ item[postSort]}}</p>
+                  -->
 
               <!--
               <p>
@@ -254,6 +257,7 @@ export default {
   filters: {
     moment: function (date) {
       //return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+      console.log("postdate: ",date)
       return moment(date).fromNow();
     },
     momentHaceCuanto: function (date) {
