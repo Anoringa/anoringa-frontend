@@ -145,15 +145,16 @@
                       selectLabel="Presiona para seleccionar"
                       deselectLabel="Presiona para deseleccionar"
                       placeholder="Responder a..."
-                      label="_id"
+                      label="text"
                       track-by="_id"
                       :preselect-first="false"
                       @input="onChange"
+                      @change="onChange"
                       no-result="Oops! No list items."
                     >
                       <template
                         slot="selection"
-                        slot-scope="{ values, search, isOpen }"
+                        slot-scope="{ values, isOpen }"
                       >
                         <span
                           class="multiselect__single"
@@ -675,6 +676,10 @@ metaInfo() {
       this.value.pushIfNotExist(comentario, function (e) {
         return e._id === comentario._id && e.text === comentario.text;
       });
+
+      this.ListaDeIdsDeComentarios = this.value.map(({ _id }) => _id);
+      console.log(this.ListaDeIdsDeComentarios);
+
     },
     isTheOwner(someone) {
       if (someone == this.userowner.username) {
@@ -687,8 +692,8 @@ metaInfo() {
     },
     onChange(value) {
       this.value = value;
-      console.log("comentarios a los que va a responder");
-      console.log(value);
+      //console.log("comentarios a los que va a responder");
+      //console.log(value);
       this.ListaDeIdsDeComentarios = value.map(({ _id }) => _id);
       console.log(this.ListaDeIdsDeComentarios);
     },
@@ -720,6 +725,10 @@ metaInfo() {
           this.ListaDeIdsDeComentarios = [];
           this.nuevoComemtarioTexto = "";
           var self = this;
+
+
+          //for troubleshooting console.log(data,self);
+
           this.$socket.emit("comment", data, function (datos) {
             console.log("socket.io emit");
             console.log(datos);
