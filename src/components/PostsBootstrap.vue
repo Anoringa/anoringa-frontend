@@ -7,7 +7,7 @@
     <section class="container-flex" id="projects">
       <div class="row">
         <a
-          v-for="item in orderBy(posts, 'updatedAt', -1)"
+          v-for="item in orderBy(posts, postSort, -1)"
           :key="item._id"
           :id="item._id"
 
@@ -91,6 +91,12 @@ import moment from "moment";
 moment.locale("es");
 
 export default {
+  props: {
+    postSort: {
+      required: false,
+      default: 'updatedAt'
+    },
+  },
   name: "Posts",
 
   metaInfo() {
@@ -208,6 +214,8 @@ export default {
     this.moment = moment;
     this.getAllPosts();
     this.showToast();
+
+    console.log("tipo de orden para los post: ",this.postSort)
   },
   filters: {
     moment: function (date) {

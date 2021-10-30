@@ -114,11 +114,16 @@
       >
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link linker" href="/">Top</a>
+            <a class="nav-link linker" href="/?sort=morecomments">Top</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link linker" href="/">Inicio</a>
+            <a class="nav-link linker" href="/?sort=newerpost">Inicio</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link linker" href="/?sort=newercomments">Reciente</a>
+          </li>
+
+          
           <li class="nav-item">
             <a class="nav-link linker" href="/tutorial">Como usar</a>
           </li>
