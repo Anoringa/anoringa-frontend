@@ -10,15 +10,17 @@
           v-for="item in orderBy(posts, postSort, -1)"
           :key="item._id"
           :id="item._id"
-
-          :href="urlendpoint+item._id"
-          class=" col-sm-6	col-md-4 col-lg-3 col-xl-2 col-xxl-1 col-12 project-card-wrapper"
-          
-
+          :href="urlendpoint + item._id"
+          class="
+            col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 col-12
+            project-card-wrapper
+            
+          "
         >
-          <div class="col-12 project-card"
-                    v-bind:style="{
-            /*
+          <div
+            class="col-12 project-card "
+            v-bind:style="{
+              /*
             'background-position': 'center',
             'background-repeat': 'no-repeat',
             'background-size': 'cover / cover',
@@ -26,13 +28,16 @@
             'background-image': 'url(' + getPhoto(item.photo) + ') ',
             //'background-image': 'url(' + getPhoto(item.photo) + ') no-repeat scroll left center / cover',
             */
-            'background': 'rgb(255, 255, 255) url(' + getPhoto(item.photo) + ') no-repeat scroll center / cover',
-
-          }">
+              background:
+                'rgb(255, 255, 255) url(' +
+                getPhoto(item.photo) +
+                ') no-repeat scroll center / cover',
+            }"
+          >
             <div class="project-card-content">
               <h4>
                 <b>
-                  {{item.title}}
+                  {{ item.title }}
                 </b>
               </h4>
               <!--
@@ -45,11 +50,41 @@
                 ❤ 0 💬 {{item.numberOfColors}} 🕔 {{item.updatedAt | moment }}
               </p>
               -->
-              <p>
-                <b-icon icon="chat-left-text
-" aria-hidden="true"></b-icon> {{item.numberOfColors}} <b-icon icon="clock
-" aria-hidden="true"></b-icon> {{item.updatedAt | moment }}
-              </p>
+              <!--
+              <div style="display: inline-block;border: 1px solid red;margin:10px;">
+              -->
+              <div
+                class="h-100 d-inline-block pb-3"
+              >
+                <!--
+                <b-icon icon="chat-left-text" aria-hidden="true"></b-icon> {{ item.numberOfColors }}
+                -->
+
+                <div v-if="postSort == 'lastComment'">
+                  <b-icon icon="plus-circle" aria-hidden="true"></b-icon>
+                  comentado {{ item[postSort][0] | moment }}
+                </div>
+                <div v-else-if="postSort == 'countOfComments'">
+                  <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
+                   {{ item.countOfComments }} comentarios
+                </div>
+                <div v-else-if="postSort == 'updatedAt'">
+                  <p>
+                    
+                <b-icon icon="chat-left-text" aria-hidden="true"></b-icon> {{ item.numberOfColors }}
+                <b-icon icon="clock" aria-hidden="true"></b-icon> {{ item.updatedAt | moment }}
+                  </p>
+                  <!--
+                  <b-icon icon="clock" aria-hidden="true"></b-icon>
+                  creado {{ item.updatedAt | moment }}
+                  -->
+                </div>
+                <div v-else>
+                  <b-icon icon="clock" aria-hidden="true"></b-icon>
+                  {{ item[postSort] | moment }}
+                </div>
+              </div>
+
               <!--
               <p>
                 <i class="fa fa-heart" aria-hidden="true"></i> 1
@@ -61,7 +96,6 @@
         </a>
       </div>
     </section>
-
   </main>
   <div v-else-if="loaded == false" style="height: 100%">
     Cargando
@@ -84,7 +118,7 @@
 import { EventBus } from "../event-bus";
 
 import axios from "axios";
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 import Vue2Filters from "vue2-filters";
 
 import moment from "moment";
@@ -94,7 +128,7 @@ export default {
   props: {
     postSort: {
       required: false,
-      default: 'updatedAt'
+      default: "updatedAt",
     },
   },
   name: "Posts",
@@ -215,12 +249,17 @@ export default {
     this.getAllPosts();
     this.showToast();
 
-    console.log("tipo de orden para los post: ",this.postSort)
+    console.log("tipo de orden para los post: ", this.postSort);
   },
   filters: {
     moment: function (date) {
       //return moment(date).format('MMMM Do YYYY, h:mm:ss a');
       return moment(date).fromNow();
+    },
+    momentHaceCuanto: function (date) {
+      //return moment(date).format("MMMM Do YYYY, h:mm:ss a");
+      return moment(date).fromNow();
+      //return moment(date).fromNow();
     },
   },
   sockets: {
@@ -274,7 +313,6 @@ export default {
     /**/
   },
   methods: {
-    
     showToast() {
       // Use a shorter name for this.$createElement
       const h = this.$createElement;
@@ -285,9 +323,13 @@ export default {
         h("b-spinner", { props: { type: "grow", small: true } }),
         " haz click",
         //h("a",{href: "/reportar"}, "aqui"),
-        h('a', {attrs: { name: "reportar", href: '/' + "reportar"}}, " aqui "),
+        h(
+          "a",
+          { attrs: { name: "reportar", href: "/" + "reportar" } },
+          " aqui "
+        ),
         //` message #${this.count} `,
-        
+
         h("b-spinner", { props: { type: "grow", small: true } }),
       ]);
       // Create the title
@@ -296,7 +338,11 @@ export default {
         { class: ["d-flex", "flex-grow-1", "align-items-baseline", "mr-2"] },
         [
           h("strong", { class: "mr-2" }, "Dejanos tus sugerencias"),
-          h("small", { class: "ml-auto text-italics" }, "atte: los desarrolladores"),
+          h(
+            "small",
+            { class: "ml-auto text-italics" },
+            "atte: los desarrolladores"
+          ),
         ]
       );
       // Pass the VNodes as an array for message and title
@@ -390,7 +436,6 @@ export default {
             );
             console.log(progressEvent.lengthComputable);
             console.log(percentCompleted);
-            
           },
         })
         .then((response) => {
@@ -428,59 +473,57 @@ https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
 </style>
 
     <style>
-      #projects {
-        /*
+#projects {
+  /*
         padding: 5%;
         */
-        padding: 1%;
-        background-color: #dae0e6;
-      }
-      .project-card-wrapper {
-        /*
+  padding: 1%;
+  background-color: #dae0e6;
+}
+.project-card-wrapper {
+  /*
         margin: 3% 0%;
         */
-        margin: 0.3% 0%;
-        padding-left: 8px!important;
-        padding-right: 8px!important;
-      }
-      .project-card::before {
-        background-image: linear-gradient(
-          0deg,
-          #000,
-          rgba(0, 0, 0, 0.8) 25%,
-          rgba(0, 0, 0, 0.6) 50%,
-          rgba(0, 0, 0, 0.4) 75%,
-          rgba(0, 0, 0, 0.2)
-        );
-        background-position: center;
-        content: "";
-        border-radius: 8px;
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-      }
-      .project-card {
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
-          0 2px 10px 0 rgba(0, 0, 0, 0.12);
-        margin-top: 2%;
-        /*
+  margin: 0.3% 0%;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+.project-card::before {
+  background-image: linear-gradient(
+    0deg,
+    #000,
+    rgba(0, 0, 0, 0.8) 25%,
+    rgba(0, 0, 0, 0.6) 50%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0.2)
+  );
+  background-position: center;
+  content: "";
+  border-radius: 8px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.project-card {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  margin-top: 2%;
+  /*
         background: rgb(255, 255, 255) url(https://picsum.photos/537/350)
           no-repeat scroll left center / cover;
           */
-        min-width: 12em;
-        min-height: 15em;
-        border-radius: 8px;
-      }
-      .project-card:hover {
-        box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.5),
-          0 4px 20px 0 rgba(0, 0, 0, 0.49);
-      }
-      .project-card-content {
-        color: white;
-        opacity: 1;
-        position: absolute;
-        bottom: 0px;
-      }
-    </style>
+  min-width: 12em;
+  min-height: 15em;
+  border-radius: 8px;
+}
+.project-card:hover {
+  box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.5), 0 4px 20px 0 rgba(0, 0, 0, 0.49);
+}
+.project-card-content {
+  color: white;
+  opacity: 1;
+  position: absolute;
+  bottom: 0px;
+}
+</style>

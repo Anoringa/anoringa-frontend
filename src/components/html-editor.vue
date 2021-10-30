@@ -291,6 +291,7 @@ export default {
 
 .ql-container.ql-snow {
   height: auto;
+  border: 0px;
 }
 .ql-editor {
   height: 400px;
