@@ -298,6 +298,7 @@
                             >
                             <div v-if="item.text">
                               {{ item.text }}
+                              <br><small><i>por {{ item.user[0].username }}</i></small>
                             </div>
                             <div v-else>El Comentario no existe</div>
                           </b-popover>
