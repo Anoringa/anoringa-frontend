@@ -257,7 +257,7 @@ export default {
   filters: {
     moment: function (date) {
       //return moment(date).format('MMMM Do YYYY, h:mm:ss a');
-      console.log("postdate: ",date)
+      //console.log("postdate: ",date)
       return moment(date).fromNow();
     },
     momentHaceCuanto: function (date) {
@@ -438,8 +438,8 @@ export default {
             let percentCompleted = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
-            console.log(progressEvent.lengthComputable);
-            console.log(percentCompleted);
+            console.log("load all post completed: ",progressEvent.lengthComputable);
+            console.log("load all post percentage: ",percentCompleted);
           },
         })
         .then((response) => {
