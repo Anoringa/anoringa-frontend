@@ -97,9 +97,6 @@
               {{ pagetitle }}
             </h2>
 
-
-
-
             <!--
             <pre
               class="pb-5 contenidodelpost"
@@ -136,21 +133,23 @@
                     <label class="typo__label">Responder a...</label>
                     -->
                     <multiselect
+                      v-if="value.length>=1"
                       v-model="value"
                       :options="comments"
                       :multiple="true"
                       :close-on-select="false"
                       :clear-on-select="false"
                       :preserve-search="true"
-                      selectLabel="Presiona para seleccionar"
-                      deselectLabel="Presiona para deseleccionar"
-                      placeholder="Responder a..."
+                      selectLabel="Seleccionar"
+                      deselectLabel="Deseleccionar"
+                      placeholder=""
                       label="text"
                       track-by="_id"
                       :preselect-first="false"
                       @input="onChange"
                       @change="onChange"
                       no-result="Oops! No list items."
+                      :custom-label="customLabel"
                     >
                       <template
                         slot="selection"
@@ -167,6 +166,38 @@
                             respondiendo a {{ values.length }} comentario
                           </div>
                         </span>
+                      </template>
+                      <!--
+                      <template slot="singleLabel" slot-scope="props"
+                        ><span class="option__desc"
+                          ><span class="option__title">{{
+                            props.option.text
+                          }}</span></span
+                        ></template
+                      >-->
+                      <template slot="element" slot-scope="selected">
+                        <div class="option__desc">
+                          <span class="option__title">{{
+                            recortarTextoAdiez(props.option.text)
+                          }}</span>
+                          <br />
+                          <small>{{ selected.option._id }}</small>
+                        </div>
+                      </template>
+
+
+                      <template slot="noResult">
+                        no hay comentarios papu
+                      </template>
+
+                      <template slot="option" slot-scope="props">
+                        <div class="option__desc">
+                          <span class="option__title">{{
+                            recortarTextoAdiez(props.option.text)
+                          }}</span>
+                          <br />
+                          <small>{{ props.option._id }}</small>
+                        </div>
                       </template>
                     </multiselect>
                     <!--
@@ -298,7 +329,9 @@
                             >
                             <div v-if="item.text">
                               {{ item.text }}
-                              <br><small><i>por {{ item.user[0].username }}</i></small>
+                              <br /><small
+                                ><i>por {{ item.user[0].username }}</i></small
+                              >
                             </div>
                             <div v-else>El Comentario no existe</div>
                           </b-popover>
@@ -308,7 +341,9 @@
                     <p
                       class=""
                       style="word-wrap: break-word; white-space: pre-wrap"
-                    >{{ currentComent.text }}</p>
+                    >
+                      {{ currentComent.text }}
+                    </p>
                     <b-button
                       pill
                       variant="link topright"
@@ -462,7 +497,7 @@ export default {
       theme: "snow",
     });
     */
-    
+
     var editorId = "quill-container";
     setTimeout(() => {
       var container = document.getElementById(editorId);
@@ -476,12 +511,9 @@ export default {
       //this.editor.innerHTML = "lalala";
       this.editor.root.innerHTML = this.content;
     }, 2000);
-    
-
 
     // 3000 millisec is maybe too long but too make sure that the problem is from creating
     // Quill before DOM
-    
   },
   metaInfo() {
     return {
@@ -629,6 +661,14 @@ metaInfo() {
     /**/
   },
   methods: {
+    customLabel({ text, _id }) {
+      return `${this.recortarTextoAdiez(text)} - ${_id}`;
+    },
+    recortarTextoAdiez: function (eltexto) {
+      //return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+      //return moment(date).fromNow();
+      return eltexto.substring(0, 20);
+    },
     getValueOfArray(thearray, thevalue) {
       //console.log("thearray");
       //console.log(thearray);
@@ -680,7 +720,6 @@ metaInfo() {
 
       this.ListaDeIdsDeComentarios = this.value.map(({ _id }) => _id);
       console.log(this.ListaDeIdsDeComentarios);
-
     },
     isTheOwner(someone) {
       if (someone == this.userowner.username) {
@@ -726,7 +765,6 @@ metaInfo() {
           this.ListaDeIdsDeComentarios = [];
           this.nuevoComemtarioTexto = "";
           var self = this;
-
 
           //for troubleshooting console.log(data,self);
 
@@ -862,24 +900,22 @@ metaInfo() {
 <style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
-
-
-  /*
+/*
 .contenidodelpost{
 
   display: inline-block;
 
 }  */
 .contenidodelpost img {
-    zoom: 2;
-    display: block;
-    margin: auto;
+  zoom: 2;
+  display: block;
+  margin: auto;
 
-    height: auto;
-    max-height: 100%;
+  height: auto;
+  max-height: 100%;
 
-    width: auto;
-    max-width: 100%;
+  width: auto;
+  max-width: 100%;
 }
 
 /*
@@ -888,9 +924,6 @@ metaInfo() {
 .ql-editor {
   display: inline-block;
 }
-
-
-
 
 .container {
   position: relative;
@@ -1119,8 +1152,6 @@ section {
 /*# sourceMappingURL=style.css.map */
 </style>
 <style lang="css" scoped>
-
-
 .text-stroke {
   /*
   font-size: 70px;
@@ -1133,8 +1164,4 @@ section {
   text-shadow: 2px 0px 2px #ec008c, -2px 0px 2px #ec008c, 0px 2px 2px #ec008c,
     0px -2px 2px #ec008c, 0 6px 10px rgba(0, 0, 0, 0.3);
 }
-
-
-
-
 </style>

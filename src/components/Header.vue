@@ -103,7 +103,7 @@
       -->
 
       <b-navbar-toggle
-        v-if="windowWidth > 380"
+        v-if="windowWidth > 267"
         class="navbar-toggler order-last order-md-0"
         target="nav-collapse"
       ></b-navbar-toggle>
