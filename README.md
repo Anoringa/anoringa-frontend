@@ -43,6 +43,7 @@ Open Sauced provides structured onboarding for new contributors to open source. 
 ### 📖 Prerequisites
 
 - [Node.js](https://nodejs.org/en/): please refer to their [installation guide](https://nodejs.dev/learn/how-to-install-nodejs).
+	- Node v14 is required
 - [NPM](https://npmjs.com/): please refer to their [installation guide](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 - [Anoringa backend](https://github.com/Anoringa/anoringa-backend): please refer to their [documentation](https://github.com/Anoringa/anoringa-backend), and require this technologies to work:
 	- [MongoDB](https://www.mongodb.com/).
