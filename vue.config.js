@@ -1,16 +1,30 @@
 var webpack = require("webpack");
+const path = require('path');
+
 module.exports = {
   configureWebpack: {
-      plugins: [
-          new webpack.ProvidePlugin({
-              $: 'jquery',
-              jquery: 'jquery',
-              'window.jQuery': 'jquery',
-              jQuery: 'jquery'
-          })
-      ]
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jquery: 'jquery',
+        'window.jQuery': 'jquery',
+        jQuery: 'jquery'
+      })
+    ]
   },
   devServer: {
+    //allowedHosts: ['test.mydomain.com','localhost',],
+    allowedHosts: ['all','test.mydomain.com'],
+    //compress: true,
+    port: 80,
+
+    //http2: true,
+    //client: {
+      //logging: 'info',
+      //progress: true,
+
+      //reconnect: true,
+    //},
     /*
     allowedHosts: [
       'localhost',
@@ -19,12 +33,13 @@ module.exports = {
       '127.0.0.1',
     ],*/
     //host: '127.0.0.1',
-    host: "test.mydomain.com",
+    //host: "localhost",
+    host: "0.0.0.0",
     //host: '127.0.0.1',
     //host: '0.0.0.0',
-    port: 80,
+    //port: 80,
     //public: "localhost:8080",
-    public: "localhost:80",
+    //public: "0.0.0.0:80",
     //public: "test.mydomain.com",
   },
   pages: {/*
@@ -134,7 +149,7 @@ module.exports = {
     },
     */
 
-    
+
     /*
     manifestPath:'/manifest.json'
     */

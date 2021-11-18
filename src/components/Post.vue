@@ -107,7 +107,9 @@
               "
             ><p v-html="content"></p></pre>
             -->
-            <div id="quill-container"></div>
+            <div class="pb-3">
+              <div id="quill-container" class="quill-pre"></div>
+            </div>
 
             <div class="stats">
               <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
@@ -133,7 +135,7 @@
                     <label class="typo__label">Responder a...</label>
                     -->
                     <multiselect
-                      v-if="value.length>=1"
+                      v-if="value.length >= 1"
                       v-model="value"
                       :options="comments"
                       :multiple="true"
@@ -184,7 +186,6 @@
                           <small>{{ selected.option._id }}</small>
                         </div>
                       </template>
-
 
                       <template slot="noResult">
                         no hay comentarios papu
@@ -341,8 +342,7 @@
                     <p
                       class=""
                       style="word-wrap: break-word; white-space: pre-wrap"
-                    >
-                      {{ currentComent.text }}
+                    >{{currentComent.text}}
                     </p>
                     <b-button
                       pill
@@ -504,6 +504,8 @@ export default {
       this.editor = new Quill(container, {
         readOnly: true,
         theme: "snow",
+        //tab: 'disabled',
+        showIndent : false,
         modules: {
           toolbar: false,
         },
@@ -899,6 +901,54 @@ metaInfo() {
 
 <style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+.quill-wrap {
+  max-width: 900px;
+  width: 100%;
+  /*margin-left:auto;
+  margin-right:auto;
+  */
+  margin-top: 20px;
+}
+
+.quill-wrap .ql-active {
+  border: 1px solid #ccc !important;
+  border-radius: 4px;
+}
+.quill-wrap button,
+.quill-wrap .ql-picker {
+  margin-right: 2px;
+}
+  /*
+  .ql-indent-8{
+  padding-left: initial !important;
+}
+  
+  */
+
+  .ql-indent-8{
+  padding-left: initial !important;
+}
+[class^="ql-indent"]{
+  /*WE USE ^ HERE */
+  /*padding-left: initial !important;
+  padding-left: 0 !important;*/
+  
+  padding-left: initial !important;
+  /*background-color: green;*/
+}
+/*
+  .ql-indent-* {
+  padding-left:initial!important;
+}
+.ql-indent-1 {
+  padding-left:initial!important;
+}
+.ql-indent-8{
+  padding-left:initial!important;
+
+}
+  */
 
 /*
 .contenidodelpost{

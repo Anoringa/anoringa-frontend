@@ -62,7 +62,7 @@ export default {
       [{ header: 1 }, { header: 2 }], // custom button values
       [{ list: "ordered" }, { list: "bullet" }],
       [{ script: "sub" }, { script: "super" }], // superscript/subscript
-      [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+      //[{ indent: "-1" }, { indent: "+1" }], // outdent/indent
       [{ direction: "rtl" }], // text direction
 
       [{ size: ["small", false, "large", "huge"] }], // custom dropdown
@@ -87,9 +87,9 @@ export default {
 
       ["bold", "italic", "underline", "strike", "link"], // toggled buttons
       ["video", "formula", "image",{ color: ["#F00", "#0F0", "#00F", "#000", "#FFF", "color-picker"] }],
+      //{ indent: "-1" }, { indent: "+1" },
 
-
-      [{ list: "ordered" }, { list: "bullet" },{ script: "sub" }, { script: "super" },{ indent: "-1" }, { indent: "+1" },{ direction: "rtl" },"clean","fullscreen"],
+      [{ list: "ordered" }, { list: "bullet" },{ script: "sub" }, { script: "super" },{ direction: "rtl" },"clean","fullscreen"],
     ];
     function imageHandler() {
       var range = this.quill.getSelection();
