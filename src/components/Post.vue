@@ -641,9 +641,16 @@ metaInfo() {
       console.log("New Comentario arrived");
       //  :key="item._id""item._id" "url" "photo" title description
       //this.item = ['<call-dialog-link :id="id" :url="url" :photo="photo" :title="new message socket" message="Are you sure you wish to remove this record?" content="Are you sure you wish to remove this record?" label="Remove" css-classes="alert" ></call-dialog-link>'];
-      data.createdAt = moment().toISOString();
-      data.updatedAt = moment().toISOString();
-      this.comments.push(data);
+      if (data.post == this.id) {
+        console.log("este comentario es para este post");
+        data.createdAt = moment().toISOString();
+        data.updatedAt = moment().toISOString();
+        this.comments.push(data);
+      }
+      else{
+        console.log("llego un comentario para otro post");
+      }
+      
     },
     /*
      */
