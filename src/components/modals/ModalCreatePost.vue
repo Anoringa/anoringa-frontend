@@ -22,6 +22,38 @@
     >
       <b-container fluid>
         <div class="form-group">
+          <label for="nuevo-post-titulo">Titulo:</label>
+          <b-form-input
+            id="nuevo-post-titulo"
+            v-model="nuevoposttitulo"
+            :state="postTitleStatus"
+            aria-describedby="nuevo-post-titulo-live-help nuevo-post-titulo-live-feedback"
+            placeholder="Ingresa un nombre atractivo"
+            debounce="5"
+            required
+            trim
+          ></b-form-input>
+
+          <b-form-invalid-feedback id="nuevo-post-titulo-live-feedback">
+            <div v-if="!this.titleIsAlreadyInUse">
+              No te lo olvides en blanco 😘<br />Ingresa un nuevo titulo para
+              poder postear
+            </div>
+            <div v-if="this.titleIsAlreadyInUse">
+              El titulo que elejiste ya lo esta usando otro post<br />no te
+              preocupes, deseguro se te ocurre uno mejor<br />Ingresa un nuevo
+              titulo para poder postear
+            </div>
+          </b-form-invalid-feedback>
+
+          <b-form-valid-feedback id="nuevo-post-titulo-live-feedback" @>
+            <p v-if="false">
+              frase del dia: como diria mi abuelo, con los militares estabamos
+              mejor
+            </p>
+          </b-form-valid-feedback>
+
+          <!--
           <label for="nuevo-post-titulo">Titulo</label>
           <input
             v-model="nuevoposttitulo"
@@ -31,10 +63,32 @@
             placeholder="Ingresa un nombre atractivo"
             name="nuevo-post-titulo"
           />
+          -->
         </div>
         <div class="form-group">
           <label for="comment">Contenido</label>
           <HtmlEditor />
+
+          <b-form-valid-feedback :state="postContentState"
+            >a rodar</b-form-valid-feedback
+          >
+          <b-form-invalid-feedback :state="postContentState">
+            Animate a escribir algo 🥸<br />podes postear lo que <strong id="pepegrillo">quieras*</strong> recorda
+            que nadie sabe quien sos jijio
+
+            <b-popover
+              :target="'pepegrillo'"
+              triggers="hover"
+              placement="top"
+            >
+              <template #title>Tene en cuenta</template>
+
+              <small
+                >lo que Quieras* siguiendo las normas comunitarias, terminos y
+                condiciones</small
+              >
+            </b-popover>
+          </b-form-invalid-feedback>
 
           <!--
           <html-editor @child-checkbox="checkboxValue" />
@@ -58,6 +112,7 @@
 
         <label for="postImage">Imagen del post</label>
         <ImageUploader></ImageUploader>
+
         <!--
         <div class="container mt-10" id="postImage">
           <div class="card bg-white">
@@ -70,60 +125,92 @@
             />
           </div>
         </div>-->
-        <label for="postMusic">Musica del post</label>
-        <b-form-checkbox v-model="postMusicChecked" name="check-button" switch>
-          <a v-if="postMusicChecked == true">⏯🎹🎧🎶</a>
-          <a v-else>estas a un paso de poner la mejor musica para tu post</a>
-        </b-form-checkbox>
 
-        <div role="group" v-if="postMusicChecked" class="pt-3">
-          <!--
+        <div role="group" class="pt-4">
+          <label for="postMusic">Musica del post</label>
+          <b-form-checkbox
+            v-model="postMusicChecked"
+            name="check-button"
+            switch
+          >
+            <a v-if="postMusicChecked == true">⏯🎹🎧🎶</a>
+            <a v-else>estas a un paso de poner la mejor musica para tu post</a>
+          </b-form-checkbox>
+
+          <div role="group" v-if="postMusicChecked" class="pt-3">
+            <!--
             <label for="input-live">Link:</label>
             -->
-          <b-form-input
-            id="input-live"
-            v-model="youtube_link"
-            :state="youtubeState"
-            aria-describedby="input-live-help input-live-feedback"
-            placeholder="Ingresa un link de youtube"
-            trim
-          ></b-form-input>
+            <b-form-input
+              id="input-live"
+              v-model="youtube_link"
+              :state="youtubeState"
+              aria-describedby="input-live-help input-live-feedback"
+              placeholder="Ingresa un link de youtube"
+              trim
+            ></b-form-input>
 
-          <b-form-invalid-feedback id="input-live-feedback">
-            ingresa un link de youtube valido Ejemplo :
-            https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO
-          </b-form-invalid-feedback>
-          <!--
+            <b-form-invalid-feedback id="input-live-feedback">
+              ingresa un link de youtube valido Ejemplo :
+              https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO
+            </b-form-invalid-feedback>
+            <!--
             <b-form-text id="input-live-help"
               >ingresa un link de youtube valido</b-form-text
             >-->
-          <b-form-valid-feedback id="input-live-feedback">
-            <!--
+            <b-form-valid-feedback id="input-live-feedback">
+              <!--
               //https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
 -->
-            <b-img
-              v-if="youtube_video_id != false"
-              thumbnail
-              fluid
-              :src="
-                'https://img.youtube.com/vi/' +
-                youtube_video_id +
-                '/sddefault.jpg'
-              "
-              alt="Youtube Image thumbnail"
-            ></b-img>
-          </b-form-valid-feedback>
+              <b-img
+                v-if="youtube_video_id != false"
+                thumbnail
+                fluid
+                :src="
+                  'https://img.youtube.com/vi/' +
+                  youtube_video_id +
+                  '/sddefault.jpg'
+                "
+                alt="Youtube Image thumbnail"
+              ></b-img>
+            </b-form-valid-feedback>
+          </div>
         </div>
 
+        <div role="group" class="pt-4">
+          <b-form-checkbox
+            :state="postTermsAndConditionsState"
+            name="termsAndConditions"
+            v-model="postTermsAndConditions"
+            >Acepto los terminos y condiciones</b-form-checkbox
+          >
+
+          <b-form-invalid-feedback :state="postTermsAndConditionsState"
+            >No te lo olvides de aceptar los terminos y condiciones para poder
+            postear en anoringa,<br />aceptalos para
+            continuar</b-form-invalid-feedback
+          >
+          <b-form-valid-feedback :state="postTermsAndConditionsState"
+            >Listo el pollo</b-form-valid-feedback
+          >
+        </div>
+        <!--
         <div class="form-group form-check pt-3">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="remember" />
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="termsAndConditions"
+              v-model="postTermsAndConditions"
+            />
             Acepto los terminos y condiciones
           </label>
         </div>
+        -->
       </b-container>
+
       <template #modal-footer>
-        <b>Crazy cat</b>
+        <b>lleve su pato pequines<!--Crazy cat--></b>
         <p class="float-left">🐱‍🐉</p>
         <b-button size="sm" variant="success" @click="publicar">
           Publicar
@@ -164,13 +251,42 @@ import HtmlEditor from "../html-editor";
 
 import ImageUploader from "../ImageUploader";
 
-
-
 import store from "../../store";
-
 
 export default {
   computed: {
+    postContentState() {
+      var postContent = this.postContentTextValue;
+      console.log(postContent);
+      if (
+        postContent != null &&
+        postContent != "<p><br></p>" &&
+        postContent != "" &&
+        postContent.length >= 1
+      ) {
+        return true;
+      } else if (postContent == "" && !this.usertriedtopublicate) {
+        return null;
+      } else {
+        return false;
+      }
+    },
+
+    postTermsAndConditionsState() {
+      if (this.postTermsAndConditions == true) {
+        return true;
+      } else if (
+        this.postTermsAndConditions == null &&
+        !this.usertriedtopublicate
+      ) {
+        return null;
+      } else {
+        return false;
+      }
+    },
+    usertriedtopublicate() {
+      return this.$store.state.postUsertriedtopublicate;
+    },
     youtubeState() {
       var url = this.youtube_link;
       console.log(url);
@@ -206,9 +322,47 @@ export default {
       return localStorage.username;
     },
 
+    postTitleStatus() {
+      if (
+        this.nuevoposttitulo != null &&
+        this.nuevoposttitulo.length >= 1 &&
+        !this.titleIsAlreadyInUse
+      ) {
+        return true;
+      } else if (this.nuevoposttitulo == null && !this.usertriedtopublicate) {
+        return null;
+      } else {
+        return false;
+      }
+    },
+    globalPhotoStatus() {
+      if (
+        this.postPhotoStatus == null &&
+        this.postPhotoStatusFrom == null &&
+        !this.usertriedtopublicate
+      ) {
+        return null;
+      } else if (
+        this.postPhotoStatus == null &&
+        this.postPhotoStatusFrom == null &&
+        this.usertriedtopublicate == true
+      ) {
+        return false;
+      } else {
+        return null;
+      }
+    },
+
     postPhotoValue() {
       return this.$store.state.postImage;
     },
+    postPhotoStatus() {
+      return this.$store.state.PostImageStatus.photoStatus;
+    },
+    postPhotoStatusFrom() {
+      return this.$store.state.PostImageStatus.from;
+    },
+
     postContentTextValue() {
       return this.$store.state.postContentText;
     },
@@ -229,17 +383,17 @@ export default {
   },
   data() {
     return {
+      postTermsAndConditions: null,
       youtube_video_id: false,
       youtube_thumbnail: false,
       youtube_link: "",
 
-
-      
       imagebase64: "",
 
+      nuevoposttitulo: null,
 
-
-      nuevoposttitulo: "",
+      titleIsAlreadyInUse: false,
+      //usertriedtopublicate: false,
       //nuevopostcomment: "",
       nuevopostcomment: HtmlEditor.fetchData(),
       show: false,
@@ -350,24 +504,31 @@ export default {
         localStorage.password != undefined &&
         localStorage.password != null
       ) {
-        if (this.nuevoposttitulo != "" && this.postContentTextValue != "") {
+        if (
+          this.nuevoposttitulo != "" &&
+          this.postContentTextValue != "" &&
+          this.postContentTextValue != "" &&
+          this.postPhotoStatus
+        ) {
           console.log("postPhotoValue");
           console.log(this.postPhotoValue);
+
+          console.log("postPhotoStatus");
+          console.log(this.postPhotoStatus);
+
           this.isnotcargando = false;
 
           if (this.isnotcargando == false) {
-            console.log("titulo");
+            console.log("<-----titulo----->");
             console.log(this.nuevoposttitulo);
-            console.log("contenido");
+            console.log("<-----contenido----->");
             console.log(this.postContentTextValue);
-            console.log("photo");
+            console.log("<-----photo----->");
             console.log(this.postPhotoValue);
-            console.log("music");
+            console.log("<-----music----->");
             console.log(this.youtube_video_id);
 
-
-
-
+            /*
             this.postCreate(
               this.nuevoposttitulo,
               this.postContentTextValue,
@@ -375,31 +536,41 @@ export default {
               this.postPhotoValue,
               this.youtube_video_id
             );
+            */
             console.log("funciono kpo 😎");
             this.showPostModal = false;
 
-            this.nuevoposttitulo = "";
+            this.nuevoposttitulo = null;
             store.clearPostContentText;
             //alert("redirecting to the post")
-            
-          //console.log("redirecting to the post")
-          //console.log("postdata");
-          //console.log(postdata);
 
-          //window.location.href="./post/"+postdata._id; 
-          
+            //console.log("redirecting to the post")
+            //console.log("postdata");
+            //console.log(postdata);
+
+            //window.location.href="./post/"+postdata._id;
           } else {
             console.log("no funciono kpo, sigue cargando algo");
           }
         } else {
           console.log("no funciono kpo");
+          alert("revisa todos los campos gil");
+          console.log("postPhotoStatus");
+          console.log(this.postPhotoStatus);
+          console.log(this.postPhotoStatusFrom);
+          //this.usertriedtopublicate = true;
+          store.commit({
+            type: "setPostUsertriedtopublicate",
+            data: true,
+          });
+          console.log(this.usertriedtopublicate);
         }
       } else {
         console.log("logueate hijo de puta");
         alert("logueate hijo de puta");
       }
     },
-    postCreate(titulox, contenidox, photox,musix) {
+    postCreate(titulox, contenidox, photox, musix) {
       console.log("----------💥💥----------");
       console.log(titulox, contenidox, photox);
       console.log("----------💥💥----------");
@@ -418,8 +589,8 @@ export default {
         title: titulox,
         description: contenidox,
         photo: photox,
-        music:musix,
-        
+        music: musix,
+
         _id: localStorage.userid,
         username: localStorage.username,
         password: localStorage.password,
@@ -718,7 +889,7 @@ $bright: #ddd;
     cursor: default;
 }
 */
-.clickable{
+.clickable {
   cursor: pointer;
 }
 </style>

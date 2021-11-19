@@ -14,7 +14,12 @@ export default new Vuex.Store({
           type: null, 
           source: null },
         content: null,
-    }
+    },
+    PostImageStatus:{
+      photoStatus: null,
+      from: null,
+    },
+    postUsertriedtopublicate: false,
   },
   getters: {
     getPostContentText: (state) => {
@@ -32,12 +37,20 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    setPostUsertriedtopublicate: (state, payload) => {
+      state.postUsertriedtopublicate = payload.data;
+    },
+
     setPostImage: (state, payload) => {
       state.postImage.content = payload.content;
       state.postImage.value.type = payload.value.type;
       state.postImage.value.source = payload.value.source;
     },
 
+    setPostImageStatus: (state, payload) => {
+      state.PostImageStatus.photoStatus = payload.photoStatus;
+      state.PostImageStatus.from = payload.from;
+    },
 
 
 

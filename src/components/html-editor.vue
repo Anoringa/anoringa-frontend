@@ -47,6 +47,11 @@ export default {
   eraseData() {
     this.htmlContent = "";
   },
+  computed: {
+    postContentTextVar() {
+      return this.$store.state.postContentText;
+    },
+  },
   mounted() {
     var BackgroundClass = Quill.import("attributors/class/background");
     //var ColorClass = Quill.import("attributors/class/color");
@@ -81,15 +86,32 @@ export default {
       //[{ "header": [1, 2, false] }],
 
       //[{ size: ["small", false, "large", "huge"] }], // custom dropdown
-      [{ font: [] },{ header: [1, 2, 3, 4, 5, 6, false] },{ align: []},"blockquote", "code-block"],
-
-
+      [
+        { font: [] },
+        { header: [1, 2, 3, 4, 5, 6, false] },
+        { align: [] },
+        "blockquote",
+        "code-block",
+      ],
 
       ["bold", "italic", "underline", "strike", "link"], // toggled buttons
-      ["video", "formula", "image",{ color: ["#F00", "#0F0", "#00F", "#000", "#FFF", "color-picker"] }],
+      [
+        "video",
+        "formula",
+        "image",
+        { color: ["#F00", "#0F0", "#00F", "#000", "#FFF", "color-picker"] },
+      ],
       //{ indent: "-1" }, { indent: "+1" },
 
-      [{ list: "ordered" }, { list: "bullet" },{ script: "sub" }, { script: "super" },{ direction: "rtl" },"clean","fullscreen"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { script: "sub" },
+        { script: "super" },
+        { direction: "rtl" },
+        "clean",
+        "fullscreen",
+      ],
     ];
     function imageHandler() {
       var range = this.quill.getSelection();
@@ -123,7 +145,8 @@ export default {
             function () {
               that.quill.format("color", picker.value);
               console.log(picker.value);
-            },false
+            },
+            false
           );
         }
         picker.click();
@@ -171,6 +194,7 @@ export default {
       placeholder: "Escribe aqui...",
       theme: "snow",
     });
+    this.editor.root.innerHTML = this.postContentTextVar;
 
     var toolbar = this.editor.getModule("toolbar");
     toolbar.addHandler("color", showColorPicker);

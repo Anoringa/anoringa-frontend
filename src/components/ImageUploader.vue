@@ -1,87 +1,5 @@
 <template>
   <div class="hello">
-    <!--
-    <h1>Image uploader component</h1>
-    <b-tabs content-class="mt-3">
-      <b-tab title="URL de Imagen" active>
-        <div role="group">
-          <b-form-input
-            id="input-live"
-            v-model="url_de_imagen"
-            :state="imagelinkState"
-            aria-describedby="input-live-help input-live-feedback"
-            placeholder="Enter your name"
-            debounce="5"
-            trim
-          ></b-form-input>
-
-          <b-form-invalid-feedback id="input-live-feedback">
-            Ingresaq una URL de imagen valida
-          </b-form-invalid-feedback>
-
-          <b-form-valid-feedback id="input-live-feedback">
-            <b-img
-              thumbnail
-              fluid
-              :src="url_de_imagen"
-              alt="Link Image thumbnail"
-            ></b-img>
-          </b-form-valid-feedback>
-        </div>
-      </b-tab>
-      <b-tab title="Subir Imagen">
-        <div>
-          <b-form-file
-            accept="image/jpeg, image/png, image/gif"
-            v-model="file1"
-            :state="Boolean(file1)"
-            placeholder="Busca un archivo o sueltalo aqui..."
-            drop-placeholder="Sueltalo aqui..."
-          ></b-form-file>
-          <div class="mt-3">
-            Imagen Seleccionada: {{ file1 ? file1.name : "" }}
-          </div>
-        </div>
-      </b-tab>
-      <b-tab title="Youtube"
-        ><div role="group">
-          <b-form-input
-            id="input-live"
-            v-model="youtube_link"
-            :state="youtubeState"
-            aria-describedby="input-live-help input-live-feedback"
-            placeholder="Ingresa un link de youtube"
-            trim
-          ></b-form-input>
-
-          <b-form-invalid-feedback id="input-live-feedback">
-            Ejemplo :
-            https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO
-          </b-form-invalid-feedback>
-
-          <b-form-text id="input-live-help"
-            >ingresa un link de youtube valido</b-form-text
-          >
-          <b-form-valid-feedback id="input-live-feedback">
-            //https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
-
-            <b-img
-              thumbnail
-              fluid
-              :src="
-                'https://img.youtube.com/vi/' +
-                youtube_video_id +
-                '/sddefault.jpg'
-              "
-              alt="Youtube Image thumbnail"
-            ></b-img>
-          </b-form-valid-feedback>
-        </div>
-      </b-tab>
-      <b-tab title="Gif (tenor)" disabled><p>I'm a disabled tab!</p></b-tab>
-    </b-tabs>
-
-            -->
     <div>
       <b-form-select v-model="selected" :options="options" class="mb-3">
         <!-- This slot appears above the options from 'options' prop -->
@@ -122,13 +40,18 @@
           <div>
             <b-form-file
               accept="image/jpeg, image/png, image/gif"
+              id="inputfilelive"
+              applied
               v-model="file1"
-              :state="Boolean(file1)"
+              :state="fileState"
               placeholder="Busca un archivo o sueltalo aqui..."
               drop-placeholder="Sueltalo aqui..."
               @input="selectImageFile()"
+              aria-describedby="inputfilelive-help inputfilelive-feedback"
             ></b-form-file>
+            <!--
             <img :src="file1" alt="" />
+      -->
             <!--
             <div class="mt-3">Selected file: {{ file1 ? file1 : "" }}</div>
               @change="readURL(this)"
@@ -136,14 +59,21 @@
               required="true"
               Imagen Seleccionada: {{ file1 ? file1.name : "" }}
             </div>-->
-            <img
-              v-if="imagebase64 != false && imagebase64 != ''"
-              style=""
-              :src="imagebase64"
-              alt=""
-              width="50%"
-              height="auto"
-            />
+
+            <b-form-valid-feedback id="inputfilelive-feedback" class="pt-1 pb-1">
+              <img
+                v-if="imagebase64 != false && imagebase64 != ''"
+                style=""
+                :src="imagebase64"
+                alt=""
+                width="50%"
+                height="auto"
+              />
+              <p>fachera facherita</p>
+            </b-form-valid-feedback>
+            <b-form-invalid-feedback id="inputfilelive-feedback">
+              Fijate de ingresar un archivo de imagen valido para que lo podamos subir al servidor o nube ☁️<br>te recomiendo que utilizes fotos en formato .jpg o .png
+            </b-form-invalid-feedback>
           </div>
         </div>
 
@@ -157,22 +87,18 @@
               v-model="url_de_imagen"
               :state="imagelinkState"
               aria-describedby="input-live-help input-live-feedback"
-              placeholder="Enter your name"
+              placeholder="Ingresa una URL de una photo"
               debounce="5"
               @change="setimgurl()"
               trim
             ></b-form-input>
 
             <b-form-invalid-feedback id="input-live-feedback">
-              Ingresa una URL de imagen valida
+              Ingresa una URL de imagen valida, estas URLs suelen terminar con
+              .jpg o .png
             </b-form-invalid-feedback>
 
-            <!--
-            <b-form-text id="input-live-help">link de imagen.</b-form-text>
-            <div class="mt-2">link: {{ url_de_imagen }}</div>
-            -->
-
-            <b-form-valid-feedback id="input-live-feedback">
+            <b-form-valid-feedback id="input-live-feedback" @>
               <b-img
                 thumbnail
                 fluid
@@ -221,9 +147,17 @@
                 alt="Youtube Image thumbnail"
               ></b-img>
             </b-form-valid-feedback>
+
+            <b-form-invalid-feedback id="input-live-feedback">
+            </b-form-invalid-feedback>
           </div>
         </div>
       </div>
+
+
+      
+        <b-form-invalid-feedback :state="globalPhotoStatus">Parece que te olvidaste de cargar una buena foto para el post
+        </b-form-invalid-feedback>
     </div>
   </div>
 </template>
@@ -264,14 +198,95 @@ function runImage(url) {
 import store from "../store";
 
 export default {
+  watch: {
+    /*
+    file1(newFile) {
+      if (newFile && !newFile.type.startsWith("image/")) {
+        this.$nextTick(() => {
+          this.file1 = null;
+        });
+      }
+    },
+      */
+  },
   computed: {
+    postPhotoStatus() {
+      return this.$store.state.PostImageStatus.photoStatus;
+    },
+    postPhotoStatusFrom() {
+      return this.$store.state.PostImageStatus.from;
+    },
+    globalPhotoStatus() {
+      if (
+        this.postPhotoStatus == null &&
+        this.postPhotoStatusFrom == null &&
+        !this.usertriedtopublicate  && this.selected != null
+      ) {
+        return null;
+      } else if (
+        this.postPhotoStatus == null &&
+        this.postPhotoStatusFrom == null &&
+        this.usertriedtopublicate == true  && this.selected == null
+      ) {
+        return false;
+      } else {
+        return null;
+      }
+    },
+    usertriedtopublicate() {
+      return this.$store.state.postUsertriedtopublicate;
+    },
+    fileState() {
+      //console.log(this.file1);
+      if (this.file1) {
+        var fileIsImageValidationVar = this.file1.type.startsWith("image/");
+        console.log(fileIsImageValidationVar);
+        if (this.file1 && fileIsImageValidationVar) {
+          return true;
+        } else {
+          console.log(
+            "attached file is not an image, something went worng with the format",
+            this.file1
+          );
+          return false;
+        }
+      } else if (this.file1 == null && !this.usertriedtopublicate) {
+        return null;
+      } else if (!this.usertriedtopublicate && this.selected == null) {
+        return null;
+      } else {
+        console.log(
+          "attached file is empty or null, something went worng",
+          this.file1
+        );
+        return false;
+      }
+    },
+    /*
+    commented since 18/11/2021
     nameState() {
       return this.url_de_imagen.length > 2 ? true : false;
     },
+    */
     imagelinkState() {
       var str = this.url_de_imagen;
+
+      if (
+        this.url_de_imagen != null &&
+        typeof str == "string" &&
+        !!str.match(/\w+\.(jpg|jpeg|gif|png|tiff|bmp)$/gi)
+      ) {
+        return true;
+      } else if (this.url_de_imagen == null && !this.usertriedtopublicate) {
+        return null;
+      } else {
+        return false;
+      }
+
+      /*
       if (typeof str !== "string") return false;
       return !!str.match(/\w+\.(jpg|jpeg|gif|png|tiff|bmp)$/gi);
+      */
     },
     /*
     imagelinkState2() {
@@ -318,19 +333,37 @@ export default {
   },
   name: "ImageUploader",
   methods: {
-    setimgurl() {
-      var imagelinkasd = this.url_de_imagen;
-      console.log("this.url_de_imagen");
-      console.log(this.url_de_imagen);
-      this.setImageSource({
-        value: { type: "photo", source: "url" },
-        content: imagelinkasd,
+    photoSelectedStatus(methodo, statusok) {
+      console.log("photo status: ", statusok, " from: ", methodo);
+
+      store.commit({
+        type: "setPostImageStatus",
+        photoStatus: statusok,
+        from: methodo,
       });
     },
+    setimgurl() {
+      this.photoSelectedStatus("url", this.imagelinkState);
+      if (this.imagelinkState) {
+        var imagelinkasd = this.url_de_imagen;
+        console.log("this.url_de_imagen");
+        console.log(this.url_de_imagen);
+        this.setImageSource({
+          value: { type: "photo", source: "url" },
+          content: imagelinkasd,
+        });
+      } else {
+        console.log("the url inserted is bad");
+        this.setImageSource({
+          value: { type: null, source: null },
+          content: null,
+        });
+      }
+    },
     setImageSource(data) {
-      console.log("the media of the post has been setted");
-      console.log(data);
-      console.log("💥");
+      //console.log("the media of the post has been setted");
+      //console.log(data);
+      //console.log("💥");
 
       store.commit({
         type: "setPostImage",
@@ -339,20 +372,22 @@ export default {
       });
     },
     selectImageFile() {
-      console.log("file1");
-      console.log(this.file1);
+      //console.log("file1");
+      //console.log(this.file1);
       this.createBase64Image(this.file1);
       //console.log(this.file1);
     },
+    /*
     saveImage(url) {
       store.commit({
         type: "setPostPhotoLink",
         link: url,
       });
     },
+    */
     handleImage() {
-      console.log("file1");
-      console.log(this.file1);
+      //console.log("file1");
+      //console.log(this.file1);
       //const selectedImage = e.target.files[0]; // get first file
       //this.createBase64Image(this.file1);
       //this.imagebase64 = this.file1
@@ -360,8 +395,8 @@ export default {
       const reader = new FileReader();
       reader.onload = (fileObject) => {
         this.imagebase64 = fileObject;
-        console.log("this.image");
-        console.log(this.imagebase64);
+        //console.log("this.image");
+        //console.log(this.imagebase64);
         //this.uploadImage();
         //this.image = this.uploadImageImgur(this.imagebase64);
       };
@@ -369,19 +404,28 @@ export default {
     },
 
     createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.imagebase64 = e.target.result;
-        console.log("this.image");
-        console.log(this.imagebase64);
-        //this.uploadImage();
-        //this.image = this.uploadImageImgur(this.imagebase64);
+      this.photoSelectedStatus("file", this.fileState);
+      if (this.fileState) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imagebase64 = e.target.result;
+          //console.log("this.image");
+          //console.log(this.imagebase64);
+          //this.uploadImage();
+          //this.image = this.uploadImageImgur(this.imagebase64);
+          this.setImageSource({
+            value: { type: "photo", source: "upload" },
+            content: this.imagebase64,
+          });
+        };
+        reader.readAsDataURL(fileObject);
+      } else {
+        console.log("the image file loaded is bad");
         this.setImageSource({
-          value: { type: "photo", source: "upload" },
-          content: this.imagebase64,
+          value: { type: null, source: null },
+          content: null,
         });
-      };
-      reader.readAsDataURL(fileObject);
+      }
     },
     setYoutubeVideoID(uno, dos) {
       this.youtube_video_id = uno;
@@ -442,7 +486,8 @@ export default {
   data() {
     return {
       imagebase64: "",
-      url_de_imagen: "",
+      //usertriedtopublicate: false,
+      url_de_imagen: null,
       url_de_imagen_ok: false,
       youtube_video_id: null,
       youtube_thumbnail: false,
