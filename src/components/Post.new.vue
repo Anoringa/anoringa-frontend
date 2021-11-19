@@ -813,9 +813,9 @@ metaInfo() {
             self.comments.push(datos);
             //this.$root.$emit("component1"); //like this
             //this.$root.$emit("component1", "datos", datos);
-            //this.$root.$emit("createImage", "datos", datos);
-            //EventBus.$emit("createImage", "datos", datos);
-            //window.Evento.$emit("createImage", "datos", datos);
+            //this.$root.$emit("sendPostP2P", "datos", datos);
+            //EventBus.$emit("sendPostP2P", "datos", datos);
+            //window.Evento.$emit("sendPostP2P", "datos", datos);
             //this.posts.push(datos);
           });
         } else {
@@ -853,9 +853,9 @@ metaInfo() {
         console.log(datos);
         //this.$root.$emit("component1"); //like this
         //this.$root.$emit("component1", "datos", datos);
-        //this.$root.$emit("createImage", "datos", datos);
-        EventBus.$emit("createImage", "datos", datos);
-        //window.Evento.$emit("createImage", "datos", datos);
+        //this.$root.$emit("sendPostP2P", "datos", datos);
+        EventBus.$emit("sendPostP2P", "datos", datos);
+        //window.Evento.$emit("sendPostP2P", "datos", datos);
         //this.posts.push(datos);
       });
       /*

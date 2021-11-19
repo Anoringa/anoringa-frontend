@@ -887,21 +887,21 @@ export default {
       //this.c1method()
       console.log("from other component");
     });
-    this.$window.Evento.$on("createImage", (item, response) => {
+    this.$window.Evento.$on("sendPostP2P", (item, response) => {
       // your code goes here
       //this.c1method()
       console.log("from other component",item, response);
       this.posts.push(response);
     });*/
 
-    EventBus.$on("createImage", (item, response) => {
+    EventBus.$on("sendPostP2P", (item, response) => {
       console.log("from other component", item, response);
       this.posts.push(response);
     });
 
     /*
     
-    window.Evento.$on("createImage", (item, response) => {
+    window.Evento.$on("sendPostP2P", (item, response) => {
       // your code goes here
       console.log("from other component",item, response);
       this.posts.push(response);

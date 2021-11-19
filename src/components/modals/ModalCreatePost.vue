@@ -73,14 +73,11 @@
             >a rodar</b-form-valid-feedback
           >
           <b-form-invalid-feedback :state="postContentState">
-            Animate a escribir algo 🥸<br />podes postear lo que <strong id="pepegrillo">quieras*</strong> recorda
-            que nadie sabe quien sos jijio
+            Animate a escribir algo 🥸<br />podes postear lo que
+            <strong id="pepegrillo">quieras*</strong> recorda que nadie sabe
+            quien sos jijio
 
-            <b-popover
-              :target="'pepegrillo'"
-              triggers="hover"
-              placement="top"
-            >
+            <b-popover :target="'pepegrillo'" triggers="hover" placement="top">
               <template #title>Tene en cuenta</template>
 
               <small
@@ -212,10 +209,50 @@
       <template #modal-footer>
         <b>lleve su pato pequines<!--Crazy cat--></b>
         <p class="float-left">🐱‍🐉</p>
-        <b-button size="sm" variant="success" @click="publicar">
-          Publicar
-        </b-button>
+        <b-button
+          v-if="publishingStatus == 'publicado'"
+          size="sm"
+          variant="outline-warning"
+          :href="goToPostCreatedLink"
+          >Ir al post</b-button
+        >
+
+        <b-overlay
+          v-if="
+            publishingStatus == 'publicandose' ||
+            publishingStatus == 'nopublicado'
+          "
+          :show="publishButtonBusy"
+          rounded
+          opacity="0.6"
+          spinner-small
+          spinner-variant="primary"
+          class="d-inline-block"
+          @hidden="onHidden"
+        >
+          <b-button
+            ref="pbutton"
+            size="sm"
+            :disabled="publishButtonBusy"
+            variant="success"
+            @click="publicar"
+          >
+            Publicar
+          </b-button>
+        </b-overlay>
+
+        <!--
+          <b-button v-if="publishingStatus == ''" size="sm" variant="success" @click="publicar">
+            Publicar
+          </b-button>
+        -->
+
+        <!--
         <b-button size="sm" variant="danger" @click="showPostModal = false">
+          Cerrar
+        </b-button>
+        -->
+        <b-button size="sm" variant="danger" @click="showModal = false">
           Cerrar
         </b-button>
       </template>
@@ -383,6 +420,9 @@ export default {
   },
   data() {
     return {
+      goToPostCreatedLink: null,
+      publishButtonBusy: false,
+      publishingStatus: "nopublicado",
       postTermsAndConditions: null,
       youtube_video_id: false,
       youtube_thumbnail: false,
@@ -490,6 +530,10 @@ export default {
     },*/
   },
   methods: {
+    onHidden() {
+      // Return focus to the button once hidden
+      this.$refs.pbutton.focus();
+    },
     setYoutubeVideoID(uno, dos) {
       this.youtube_video_id = uno;
       this.youtube_thumbnail = dos;
@@ -505,10 +549,10 @@ export default {
         localStorage.password != null
       ) {
         if (
-          this.nuevoposttitulo != "" &&
-          this.postContentTextValue != "" &&
-          this.postContentTextValue != "" &&
-          this.postPhotoStatus
+          this.postTitleStatus == true &&
+          this.postContentState == true &&
+          this.postPhotoStatus == true &&
+          this.postTermsAndConditionsState == true
         ) {
           console.log("postPhotoValue");
           console.log(this.postPhotoValue);
@@ -528,7 +572,6 @@ export default {
             console.log("<-----music----->");
             console.log(this.youtube_video_id);
 
-            /*
             this.postCreate(
               this.nuevoposttitulo,
               this.postContentTextValue,
@@ -536,7 +579,8 @@ export default {
               this.postPhotoValue,
               this.youtube_video_id
             );
-            */
+            /*
+             */
             console.log("funciono kpo 😎");
             this.showPostModal = false;
 
@@ -595,17 +639,46 @@ export default {
         username: localStorage.username,
         password: localStorage.password,
       };
+      this.publishButtonBusy = true;
+      //en la siguiente linea se encuentra una posible falla de seguridad si se hace una injeccion de codigo javascript del lado del cliente
+      //EventBus.$emit("sendPostP2P", (data));
+
+      /*
+      EventBus.$emit("sendPostP2P", (data), function (datos) {
+        console.log("from the publish form : ",datos);
+        this.footerBgVariant = "dark";
+        this.footerTextVariant = "warning";
+        this.publishingStatus = "publicado";
+        this.publishButtonBusy = false;
+      });
+      */
+
+      var self = this;
 
       this.$socket.emit("post", data, function (datos) {
         console.log("socket.io emit");
-        console.log(datos);
+        //console.log(datos);
+        //console.log("link", datos._id);
+
+
+        self.goToPostCreatedLink = "/post/" + datos._id;
         //this.$root.$emit("component1"); //like this
         //this.$root.$emit("component1", "datos", datos);
-        //this.$root.$emit("createImage", "datos", datos);
-        EventBus.$emit("createImage", "datos", datos);
-        //window.Evento.$emit("createImage", "datos", datos);
+        //this.$root.$emit("sendPostP2P", "datos", datos);
+
+        //en la siguiente linea se encuentra una posible falla de seguridad si se hace una injeccion de codigo javascript del lado del cliente
+        EventBus.$emit("sendPostP2P", "datos", datos);
+
+        //window.Evento.$emit("sendPostP2P", "datos", datos);
         //this.posts.push(datos);
-        console.log("redirecting to the post");
+        //console.log("redirecting to the post");
+
+        //console.log("from the publish form : ");
+        self.footerBgVariant = "dark";
+        self.footerTextVariant = "warning";
+        self.publishingStatus = "publicado";
+
+        self.publishButtonBusy = false;
 
         //for the moment i will coment in order to user selenium
         //☮
@@ -613,129 +686,7 @@ export default {
         return datos;
       });
       /*
-
-      WORKS
-      import axios from "axios";
-      var qs = require("qs");
-      var data = qs.stringify({
-        title: titulox,
-        description: contenidox,
-        photo: "3214htrff4",
-      });
-      var config = {
-        method: "post",
-        url: "http://localhost:3000/api/post",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmU3ODgzNjM0NGMwMDRkM2NlNWExNDgiLCJ1c2VybmFtZSI6InJhdWw0NjIyIiwicGFzc3dvcmQiOiIkMmIkMTAkdXdYbFMvd2o3QXRVbmVVMnZVb3FoZWpZUW1rZWl3TnFRazBiMGR0UDF4VDJvMWFmTEFPR1ciLCJpYXQiOjE2MDkxMzU3NDksImV4cCI6MTYwOTE0Mjk0OX0.iAC3NVGRnu3xz6qpZxh6Hpx7AReSAkY33_s424Hw5VE",
-        },
-        data: data,
-      };
-
-      axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-        })
-        .then((response) => console.log(response))
-        .catch(function (error) {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-          }
-          console.log(error.config);
-        });
-
-
-
-        */
-
-      /*
-      var config = {
-        method: "post",
-        url: "http://localhost:3000/api/post",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmU3ODgzNjM0NGMwMDRkM2NlNWExNDgiLCJ1c2VybmFtZSI6InJhdWw0NjIyIiwicGFzc3dvcmQiOiIkMmIkMTAkdXdYbFMvd2o3QXRVbmVVMnZVb3FoZWpZUW1rZWl3TnFRazBiMGR0UDF4VDJvMWFmTEFPR1ciLCJpYXQiOjE2MDkxMzU3NDksImV4cCI6MTYwOTE0Mjk0OX0.iAC3NVGRnu3xz6qpZxh6Hpx7AReSAkY33_s424Hw5VE",
-        },
-        data: {
-          username: localStorage.username,
-          password: localStorage.password,
-          title: titulox,
-          photo: "somephoto",
-          description: contenidox,
-        },
-      };
-      */
-      /*
-      axios
-        .request({
-          method: config.method,
-          url: config.url,
-          data: config.data,
-          headers: config.headers,
-        })
-        .then((response) => console.log(response))
-        .catch(function (error) {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-          }
-          console.log(error.config);
-        });
-        */
-      /*
-      axios
-        .post("http://127.0.0.1:8080/api/posts", {
-          username: localStorage.username,
-          password: localStorage.password,
-          title: titulox,
-          photo: "somephoto",
-          content: contenidox,
-        })
-        .then((response) => console.log(response))
-        .catch(function (error) {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-          }
-          console.log(error.config);
-        });
-        */
+       */
     },
     toggleBind(attr) {
       this[attr] = !this[attr];
@@ -891,5 +842,55 @@ $bright: #ddd;
 */
 .clickable {
   cursor: pointer;
+}
+</style>
+
+<style scoped>
+/*
+
+RAINBOW BUTTON
+SRC: https://codepen.io/lemmin/pen/WObwRX
+
+
+*/
+a {
+  text-decoration: none;
+  color: #fff;
+}
+.rainbow-button {
+  width: calc(20vw + 6px);
+  height: calc(8vw + 6px);
+  background-image: linear-gradient(
+    90deg,
+    #00c0ff 0%,
+    #ffcf00 49%,
+    #fc4f4f 80%,
+    #00c0ff 100%
+  );
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-size: 3vw;
+  font-weight: bold;
+}
+.rainbow-button:after {
+  content: attr(alt);
+  width: 20vw;
+  height: 8vw;
+  background-color: #191919;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rainbow-button:hover {
+  animation: slidebg 2s linear infinite;
+}
+
+@keyframes slidebg {
+  to {
+    background-position: 20vw;
+  }
 }
 </style>

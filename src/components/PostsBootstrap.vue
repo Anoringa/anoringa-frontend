@@ -294,21 +294,32 @@ export default {
       //this.c1method()
       console.log("from other component");
     });
-    this.$window.Evento.$on("createImage", (item, response) => {
+    this.$window.Evento.$on("sendPostP2P", (item, response) => {
       // your code goes here
       //this.c1method()
       console.log("from other component",item, response);
       this.posts.push(response);
     });*/
 
-    EventBus.$on("createImage", (item, response) => {
-      console.log("from other component", item, response);
+    EventBus.$on("sendPostP2P", (response) => {
+      console.log("from other component", "item");
+      console.log("also from other component", response);
+      
       this.posts.push(response);
+      console.log("your saved posts",this.posts);
     });
-
+  /*
+    EventBus.$on("sendPostP2P", (item, response) => {
+      console.log("from other component", item);
+      console.log("also from other component", response);
+      
+      this.posts.push(response);
+      console.log("your saved posts",this.posts);
+    });
+    */
     /*
     
-    window.Evento.$on("createImage", (item, response) => {
+    window.Evento.$on("sendPostP2P", (item, response) => {
       // your code goes here
       console.log("from other component",item, response);
       this.posts.push(response);

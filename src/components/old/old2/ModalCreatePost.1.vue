@@ -288,7 +288,7 @@ export default {
         //this.posts.push(datos);
         //this.$root.$emit("component1"); //like this
         this.$root.$emit("component1", "datos", datos);
-        //window.Evento.$emit('createImage', "datos", datos)
+        //window.Evento.$emit('sendPostP2P', "datos", datos)
       });
       /*
 
