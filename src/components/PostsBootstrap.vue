@@ -6,19 +6,23 @@
 
     <section class="container-flex" id="projects">
       <div class="row">
+        <!--
+            v-for="item in orderBy(posts, postSort, -1)"
+            orderBy(posts,'updateAT',-1)
+          v-if="item.enabled == true"
+            -->
         <a
-          v-for="item in orderBy(posts, postSort, -1)"
+          v-for="item in filterPostsByEnabledAndSortByVar"
           :key="item._id"
           :id="item._id"
           :href="urlendpoint + item._id"
           class="
             col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 col-12
             project-card-wrapper
-            
           "
         >
           <div
-            class="col-12 project-card "
+            class="col-12 project-card"
             v-bind:style="{
               /*
             'background-position': 'center',
@@ -53,26 +57,30 @@
               <!--
               <div style="display: inline-block;border: 1px solid red;margin:10px;">
               -->
-              <div
-                class="h-100 d-inline-block pb-3"
-              >
+              <div class="h-100 d-inline-block pb-3">
                 <!--
                 <b-icon icon="chat-left-text" aria-hidden="true"></b-icon> {{ item.numberOfColors }}
                 -->
 
                 <div v-if="postSort == 'lastComment'">
-                  <p v-if="item[postSort][0] == ['2020-11-30T00:00:00.000Z']"></p>
-                  <p v-else><b-icon icon="plus-circle" aria-hidden="true"></b-icon> comentado {{ item[postSort][0] | moment }}</p>
+                  <p
+                    v-if="item[postSort] == ['2020-11-30T00:00:00.000Z']"
+                  ></p>
+                  <p v-else>
+                    <b-icon icon="plus-circle" aria-hidden="true"></b-icon>
+                    comentado {{ item[postSort] | moment }}
+                  </p>
                 </div>
                 <div v-else-if="postSort == 'countOfComments'">
                   <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
-                   {{ item.countOfComments }} comentarios
+                  {{ item.countOfComments }} comentarios
                 </div>
                 <div v-else-if="postSort == 'updatedAt'">
                   <p>
-                    
-                <b-icon icon="chat-left-text" aria-hidden="true"></b-icon> {{ item.numberOfColors }}
-                <b-icon icon="clock" aria-hidden="true"></b-icon> {{ item.updatedAt | moment }}
+                    <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
+                    {{ item.countOfComments }}
+                    <b-icon icon="pen" aria-hidden="true"></b-icon>
+                    por: {{ item.owner.username }}
                   </p>
                   <!--
                   <b-icon icon="clock" aria-hidden="true"></b-icon>
@@ -84,7 +92,7 @@
                   {{ item[postSort] | moment }}
                 </div>
               </div>
-                  <!--
+              <!--
               <p>{{ item[postSort]}}</p>
                   -->
 
@@ -132,6 +140,46 @@ export default {
     postSort: {
       required: false,
       default: "updatedAt",
+    },
+  },
+  computed: {
+    filterPostsByEnabled: function () {
+      return this.posts.filter((postu) => postu.enabled);
+    },
+    filterProductsByCategory: function () {
+      return this.products.filter(
+        (product) => !product.category.indexOf(this.category)
+      );
+    },
+    filterPostsByEnabledAndSortByUpdatedAt() {
+      return this.posts
+        .filter((s) => s.enabled)
+        .sort((a) => new Date(a.updatedAt));
+    },
+    filterPostsByEnabledAndSortByVar() {
+      if (this.postSort == "updatedAt") {
+        return this.posts
+          .filter((s) => s.enabled)
+          .sort((a) => a[this.postSort] - 1);
+      } else if (this.postSort == "countOfComments") {
+        return this.orderBy(this.posts, "countOfComments", -1).filter(
+          (s) => s.enabled
+        );
+      } else if (this.postSort == "lastComment") {
+        return this.orderBy(this.posts, "lastComment", -1).filter(
+          (s) => s.enabled
+        );
+      } else {
+        return this.orderBy(this.posts, this.postSort, -1).filter(
+          (s) => s.enabled
+        );
+      }
+    },
+    filterPostsByEnabledAndSortByVarOld() {
+      return this.posts
+        .filter((s) => s.enabled)
+        .sort((a) => new Date(a.updatedAt))
+        .reverse();
     },
   },
   name: "Posts",
@@ -229,7 +277,7 @@ export default {
       postexample: [],
       //endpoint: "http://localhost:3000/api/post",
       //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post",
-      endpoint: process.env.VUE_APP_API + "/api/post/",
+      endpoint: process.env.VUE_APP_API + "/api/post/new",
       //endpoint: "http://localhost:3000/api/post",
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
 
@@ -304,11 +352,11 @@ export default {
     EventBus.$on("sendPostP2P", (response) => {
       console.log("from other component", "item");
       console.log("also from other component", response);
-      
+
       this.posts.push(response);
-      console.log("your saved posts",this.posts);
+      console.log("your saved posts", this.posts);
     });
-  /*
+    /*
     EventBus.$on("sendPostP2P", (item, response) => {
       console.log("from other component", item);
       console.log("also from other component", response);
@@ -449,8 +497,11 @@ export default {
             let percentCompleted = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
-            console.log("load all post completed: ",progressEvent.lengthComputable);
-            console.log("load all post percentage: ",percentCompleted);
+            console.log(
+              "load all post completed: ",
+              progressEvent.lengthComputable
+            );
+            console.log("load all post percentage: ", percentCompleted);
           },
         })
         .then((response) => {

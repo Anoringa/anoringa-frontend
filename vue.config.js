@@ -33,8 +33,14 @@ module.exports = {
       '127.0.0.1',
     ],*/
     //host: '127.0.0.1',
-    //host: "localhost",
+
     host: "0.0.0.0",
+    //host: 'test.mydomain.com',
+    //public: "0.0.0.0:80",
+
+
+
+    //host: "0.0.0.0",
     //host: '127.0.0.1',
     //host: '0.0.0.0',
     //port: 80,
