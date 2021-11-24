@@ -5,6 +5,7 @@ import HelloWorld from "../components/HelloWorld";
 import Post from "../components/Post";
 import DevLogin from "../components/DevLogin";
 import ChangeUsernamePage from "../components/ChangeUsernamePage";
+import PassportPage from "../components/PassPortPage";
 import ReportPage from "../components/ReportPage";
 import DocsPage from "../components/DocsPage";
 ///#
@@ -34,6 +35,7 @@ const routesx = [
   { name: "Index",path: "/new",component: Index,},
   { name: "DevLogin",path: "/DevLogin", component: DevLogin },
   { name: "perfil",path: "/perfil", component: ChangeUsernamePage },
+  { name: "Pasaporte",path: "/pasaporte", component: PassportPage },
 ];
 /*
 const router = new VueRouter({

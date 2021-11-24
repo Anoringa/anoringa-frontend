@@ -1,11 +1,16 @@
 <template>
-  <main class="" v-if="loaded == 'OK'">
+  <main class="container-flex" id="projects" v-if="loaded == 'OK'">
+        <!--
     <head>
       <title>{{ "process.env.VUE_APP_NAME" + " | Posts" }}</title>
     </head>
+            -->
 
-    <section class="container-flex" id="projects">
-      <div class="row">
+    <div class="row pl-0 pr-0 mr-0 ml-0">
+        <!--
+      <div class="">
+              </div>
+            -->
         <!--
             v-for="item in orderBy(posts, postSort, -1)"
             orderBy(posts,'updateAT',-1)
@@ -105,8 +110,8 @@
             --></div>
           </div>
         </a>
-      </div>
-    </section>
+
+    </div>
   </main>
   <div v-else-if="loaded == false" style="height: 100%">
     Cargando
@@ -546,14 +551,22 @@ https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
   padding: 1%;
   background-color: #dae0e6;
 }
+
+
+@media only screen and (min-width: 600px) {
 .project-card-wrapper {
   /*
         margin: 3% 0%;
         */
   margin: 0.3% 0%;
+  
   padding-left: 8px !important;
   padding-right: 8px !important;
 }
+}
+
+
+
 .project-card::before {
   background-image: linear-gradient(
     0deg,

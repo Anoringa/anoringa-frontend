@@ -72,7 +72,7 @@
           alt="A"
         />-->
         <a v-if="windowWidth > 442" class="navbar-brand loguito mr-1" href="/">
-          {{ appNamex }}
+          {{ appName }}
         </a>
         <img
           v-if="windowWidth < 442"
