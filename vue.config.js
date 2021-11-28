@@ -34,9 +34,9 @@ module.exports = {
     ],*/
     //host: '127.0.0.1',
 
-    host: "0.0.0.0",
-    //host: 'test.mydomain.com',
-    //public: "0.0.0.0:80",
+    //host: "0.0.0.0",
+    host: 'test.mydomain.com',
+    public: "0.0.0.0:80",
 
 
 

@@ -1,35 +1,35 @@
 <template>
   <main class="container-flex" id="projects" v-if="loaded == 'OK'">
-        <!--
+    <!--
     <head>
       <title>{{ "process.env.VUE_APP_NAME" + " | Posts" }}</title>
     </head>
             -->
 
     <div class="row pl-0 pr-0 mr-0 ml-0">
-        <!--
+      <!--
       <div class="">
               </div>
             -->
-        <!--
+      <!--
             v-for="item in orderBy(posts, postSort, -1)"
             orderBy(posts,'updateAT',-1)
           v-if="item.enabled == true"
             -->
-        <a
-          v-for="item in filterPostsByEnabledAndSortByVar"
-          :key="item._id"
-          :id="item._id"
-          :href="urlendpoint + item._id"
-          class="
-            col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 col-12
-            project-card-wrapper
-          "
-        >
-          <div
-            class="col-12 project-card"
-            v-bind:style="{
-              /*
+      <a
+        v-for="item in filterPostsByEnabledAndSortByVar"
+        :key="item._id"
+        :id="item._id"
+        :href="urlendpoint + item._id"
+        class="
+          col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 col-12
+          project-card-wrapper
+        "
+      >
+        <div
+          class="col-12 project-card"
+          v-bind:style="{
+            /*
             'background-position': 'center',
             'background-repeat': 'no-repeat',
             'background-size': 'cover / cover',
@@ -37,80 +37,50 @@
             'background-image': 'url(' + getPhoto(item.photo) + ') ',
             //'background-image': 'url(' + getPhoto(item.photo) + ') no-repeat scroll left center / cover',
             */
-              background:
-                'rgb(255, 255, 255) url(' +
-                getPhoto(item.photo) +
-                ') no-repeat scroll center / cover',
-            }"
-          >
-            <div class="project-card-content">
-              <h4>
-                <b>
-                  {{ item.title }}
-                </b>
-              </h4>
-              <!--
-              <p>
-                {{item.description}}
-              </p>
-              -->
-              <!--
-              <p>
-                ❤ 0 💬 {{item.numberOfColors}} 🕔 {{item.updatedAt | moment }}
-              </p>
-              -->
-              <!--
-              <div style="display: inline-block;border: 1px solid red;margin:10px;">
-              -->
-              <div class="h-100 d-inline-block pb-3">
-                <!--
-                <b-icon icon="chat-left-text" aria-hidden="true"></b-icon> {{ item.numberOfColors }}
-                -->
+            background:
+              'rgb(255, 255, 255) url(' +
+              getPhoto(item.photo) +
+              ') no-repeat scroll center / cover',
+          }"
+        >
+          <div class="project-card-content">
 
-                <div v-if="postSort == 'lastComment'">
-                  <p
-                    v-if="item[postSort] == ['2020-11-30T00:00:00.000Z']"
-                  ></p>
-                  <p v-else>
-                    <b-icon icon="plus-circle" aria-hidden="true"></b-icon>
-                    comentado {{ item[postSort] | moment }}
-                  </p>
-                </div>
-                <div v-else-if="postSort == 'countOfComments'">
-                  <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
-                  {{ item.countOfComments }} comentarios
-                </div>
-                <div v-else-if="postSort == 'updatedAt'">
-                  <p>
-                    <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
-                    {{ item.countOfComments }}
-                    <b-icon icon="pen" aria-hidden="true"></b-icon>
-                    por: {{ item.owner.username }}
-                  </p>
-                  <!--
-                  <b-icon icon="clock" aria-hidden="true"></b-icon>
-                  creado {{ item.updatedAt | moment }}
-                  -->
-                </div>
-                <div v-else>
-                  <b-icon icon="clock" aria-hidden="true"></b-icon>
-                  {{ item[postSort] | moment }}
-                </div>
+            <h4 class="cardtitle">{{ item.title }}</h4>
+            <!--
+            <h4>
+              <b>
+                {{ item.title }}
+              </b>
+            </h4>
+            -->
+            <div class="h-100 d-inline-block pb-3">
+              <div v-if="postSort == 'lastComment'">
+                <p v-if="item[postSort] == ['2020-11-30T00:00:00.000Z']"></p>
+                <p v-else>
+                  <b-icon icon="plus-circle" aria-hidden="true"></b-icon>
+                  comentado {{ item[postSort] | moment }}
+                </p>
               </div>
-              <!--
-              <p>{{ item[postSort]}}</p>
-                  -->
-
-              <!--
-              <p>
-                <i class="fa fa-heart" aria-hidden="true"></i> 1
-                <i class="fa fa-comment" aria-hidden="true"></i> 2
-                <i class="fa fa-clock-o" aria-hidden="true"></i> 15 min ago
-              </p>
-            --></div>
+              <div v-else-if="postSort == 'countOfComments'">
+                <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
+                {{ item.countOfComments }} comentarios
+              </div>
+              <div v-else-if="postSort == 'updatedAt'">
+                <p>
+                  <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
+                  {{ item.countOfComments }}
+                  <b-icon icon="pen" aria-hidden="true"></b-icon>
+                  por: {{ item.owner.username }}
+                </p>
+              </div>
+              <div v-else>
+                <b-icon icon="clock" aria-hidden="true"></b-icon>
+                {{ item[postSort] | moment }}
+              </div>
+            </div>
           </div>
-        </a>
-
+        </div>
+      </a>
     </div>
   </main>
   <div v-else-if="loaded == false" style="height: 100%">
@@ -552,20 +522,17 @@ https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
   background-color: #dae0e6;
 }
 
-
 @media only screen and (min-width: 600px) {
-.project-card-wrapper {
-  /*
+  .project-card-wrapper {
+    /*
         margin: 3% 0%;
         */
-  margin: 0.3% 0%;
-  
-  padding-left: 8px !important;
-  padding-right: 8px !important;
-}
-}
+    margin: 0.3% 0%;
 
-
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}
 
 .project-card::before {
   background-image: linear-gradient(
@@ -604,5 +571,33 @@ https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
   opacity: 1;
   position: absolute;
   bottom: 0px;
+  text-overflow: ellipsis;
 }
+
+
+.cardtitle{
+  /*
+  */
+  font-weight: bold;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 1440px) and (min-width: 1200px) {
+  .cardtitle {
+    /*
+    background: red;
+    */
+    font-weight: initial;
+    font-size: 1.3rem;
+    
+    /*
+    width: 90%;
+    margin-left: 5% !important;
+    margin-right: 5% !important;
+    */
+  }
+}
+
+
+
 </style>

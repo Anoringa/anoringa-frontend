@@ -1,7 +1,7 @@
 <template>
   <div id="index">
     <Header appName="Ano-PassPort"></Header>
-  <div id="canvas"></div>
+    <div id="canvas"></div>
     <b-container class="bv-example-row pt-5">
       <b-row class="justify-content-md-center">
         <b-col col xl="6" lg="8" md="8" sm="12">
@@ -182,10 +182,6 @@ export default {
     QRCode.toCanvas("I am a pony!", function (err, url) {
       console.log(url);
     });
-
-
-
-
   },
   metaInfo: {
     //title: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",

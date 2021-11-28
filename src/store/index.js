@@ -20,6 +20,7 @@ export default new Vuex.Store({
       from: null,
     },
     postUsertriedtopublicate: false,
+    username: localStorage.username,
   },
   getters: {
     getPostContentText: (state) => {
@@ -37,6 +38,9 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    setUsername: (state, payload) => {
+      state.username = payload.data;
+    },
     setPostUsertriedtopublicate: (state, payload) => {
       state.postUsertriedtopublicate = payload.data;
     },

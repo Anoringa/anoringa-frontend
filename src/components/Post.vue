@@ -111,7 +111,7 @@
               <div id="quill-container" class="quill-pre"></div>
             </div>
 
-            <div class="stats">
+            <div class="postOwnership">
               <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
               >por {{ userowner.username }}
             </div>
@@ -254,7 +254,7 @@
                     :key="currentComent._id"
                   >
                     <div
-                      class="stats"
+                      class="comment_owner"
                       style="word-wrap: break-word; white-space: pre-wrap"
                     >
                       <a class="pr-1" :href="'#' + currentComent._id"
@@ -1182,6 +1182,20 @@ header :last-child,
   text-transform: uppercase;
   font-weight: bold;
 }
+.postOwnership {
+  /*text-transform: uppercase;*/
+  font-weight: bold;
+  font-size: 0.7em;
+  color: #666;
+}
+
+.comment_owner{
+  font-weight: bold;
+  font-size: 0.7em;
+  color: #666;
+
+}
+
 .last-updated {
   font-style: italic;
 }

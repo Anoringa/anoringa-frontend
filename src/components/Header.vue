@@ -617,7 +617,8 @@ export default {
   },
   computed: {
     usernameValue() {
-      return localStorage.username;
+      return this.$store.state.username;
+      //return localStorage.username;
     },
 
     postPhotoValue() {
