@@ -60,37 +60,25 @@
     v-bind:class="['dev' ? 'bg-violet navbar-dark' : '']"
     -->
 
-    <nav class="navbar navbar-expand-md" 
-    :class="dev ? 'bg-violet navbar-dark' : 'bg-danger navbar-dark'">
-      <a class="navbar-brand loguito" href="/" style=""
-        ><!--
-        <img
-        v-if="windowWidth < 442"
-          src="/anoringa_logo.png"
-          class="d-inline-block align-top"
-          height="35"
-          alt="A"
-        />-->
-        <a v-if="windowWidth > 442" class="navbar-brand loguito mr-1" href="/">
-          {{ appName }}
-        </a>
+    <nav
+      class="navbar navbar-expand-md"
+      :class="dev ? 'bg-violet navbar-dark' : 'bg-danger navbar-dark'"
+    >
+      <a class="navbar-brand loguito" href="/">
         <img
           v-if="windowWidth < 442"
-          href="/"
           src="/anoringa_logo.png"
           class="d-inline-block align-top"
           height="35"
           alt="A"
         />
-        <a v-if="dev==false" class="badge badge--beta" href="/new">alpha</a>
-        <a v-if="dev==true" class="badge badge--dev" href="/new">dev</a>
 
+        <span class="app-name-label">{{ appName }}</span>
 
-
-
-
-
+        <span v-if="dev == false" class="badge badge--beta">alpha</span>
+        <span v-if="dev == true" class="badge badge--dev">dev</span>
       </a>
+
       <!--
       <button
         class="navbar-toggler order-last order-md-0"
@@ -1205,27 +1193,19 @@ main {
   color: #333333;
 }
 
+.badge--beta,
+.badge--dev {
+  padding: 2px 11px;
+  font-size: 12px;
+  vertical-align: middle;
+}
 .badge--beta {
-  //color:  lighten(hsl(267,64,44), 10%) !important;
-  color: hsl(267, 64, 44) !important;
-  //border: 2px solid lighten(hsl(267,64,44), 25%);
-  border: 1px solid hsl(267, 64, 44);
-  font-weight: 600;
-  /*
-    &:after {
-        content: "BETA";
-    }*/
+  color: #fff !important;
+  background-color: #6928b8;
 }
 .badge--dev {
-  //color:  lighten(hsl(267,64,44), 10%) !important;
-  color: rgb(255, 255, 255) !important;
-  //border: 2px solid lighten(hsl(267,64,44), 25%);
-  border: 1px solid rgb(255, 255, 255);
-  font-weight: 600;
-  /*
-    &:after {
-        content: "BETA";
-    }*/
+  color: #3f47cb !important;
+  background-color: #fff;
 }
 
 .bg-violet{
