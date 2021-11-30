@@ -67,8 +67,8 @@
       <a class="navbar-brand loguito" href="/">
         <img
           v-if="windowWidth < 442"
-          src="/anoringa_logo.png"
-          class="d-inline-block align-top"
+          src="/anoringa_logo_centered.png"
+          class="page-logo"
           height="45"
           alt="A"
         />
@@ -1051,6 +1051,20 @@ body {
   font-weight: m;
   text-decoration: none;
   color: #212529;
+}
+.page-logo {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.collapsed-nav li,
+.collapsed-nav button {
+  margin: 10px 0 0 0;
+}
+.collapsed-nav {
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
 }
 
 .user-options button {
