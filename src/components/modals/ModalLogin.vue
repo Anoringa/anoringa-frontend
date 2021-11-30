@@ -58,7 +58,10 @@
           </div>
         </transition>
       </div>
-      <b-button v-b-modal.modal-1 @click="showModal = true">Loguearse</b-button>
+      <b-button v-b-modal.modal-1 @click="showModal = true" variant="light">
+        <img src="/login.png" height="24" style="margin-right: 5px" />
+        Loguearse</b-button
+      >
     </div>
   </div>
 </template>

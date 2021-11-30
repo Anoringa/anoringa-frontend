@@ -120,7 +120,7 @@
 
         <button
           type="button"
-          class="btn btn-lg btn-secondary btn-sm post-creation-button"
+          class="btn btn-lg btn-light btn-sm post-creation-button"
         >
           <ModalCreatePost>CREAR POST</ModalCreatePost>
         </button>
