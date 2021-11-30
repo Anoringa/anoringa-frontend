@@ -108,11 +108,13 @@
             <a class="nav-link linker" href="/?sort=morecomments">Top</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link linker" href="/?sort=newercomments">Más Reciente</a>
+            <a class="nav-link linker" href="/?sort=newercomments"
+              >Más Reciente</a
+            >
           </li>
 
           <li class="nav-item">
-            <a class="nav-link linker" href="/tutorial">Como usar</a>
+            <a class="nav-link linker" href="/tutorial">Como Usar</a>
           </li>
         </ul>
 
@@ -124,85 +126,38 @@
         </button>
       </b-collapse>
 
-      <!--
-      <select
-        class="selectpicker ml-auto mr-2"
-        data-width="auto"
-        data-style="btn-primary"
-      >
-        <option
-          *ngFor="let lang of cirsaApp.translate.getLangs(); let i = index"
-          [value]="lang"
-          [selected]="lang === cirsaApp.translate.currentLang"
-        >
-          {{ cirsaApp._countries[i] }}
-        </option>
-      </select>
-        -->
-      <!--
-          
-          <b-nav-text class="pl-1 pr-1">
-            <b-dropdown
-              id="dropdown-right"
-              right
-              size="lg"
-              variant="link"
-              toggle-class="text-decoration-none"
-              no-caret
-
-          -->
-
       <div v-if="loggedstate === false">
         <ModalLogin v-on:event_child="eventChild"></ModalLogin>
       </div>
 
       <b-dropdown
-        v-else-if="loggedstate === true"
-        id="dropdown-1"
+        v-if="loggedstate === true"
+        size="sm"
+        variant="light"
+        toggle-class="text-decoration-none"
+        class="user-options"
         right
-        class="m-md-2"
       >
-        <template #button-content class="d-flex align-items-center">
+        <template #button-content>
           <img
             style="display: inline-block; border-radius: 50%"
             type="button"
             src="/user.png"
-            width="30"
-            height="30"
-            alt="logo"
-            class="dropdown-toggle"
-            data-toggle="dropdown"
+            width="24"
+            height="24"
+            alt="user-logo"
           />
-
-          <span class="pr-2" style="margin: 0 10px">
-            {{ usernameValue }}
-          </span>
+          <span>{{ usernameValue }}</span>
         </template>
 
-        <b-dropdown-item class="d-block d-sm-none" disabled>{{
-          usernameValue
-        }}</b-dropdown-item>
-        <!--
-        <b-dropdown-item @click="showPostModal = true"
-          >Postear algo</b-dropdown-item
-        >-->
         <b-dropdown-item>
           <ModalCreatePost>Postear algo</ModalCreatePost>
         </b-dropdown-item>
-
         <b-dropdown-item href="/perfil">Configuracion</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item href="/reportar">Soporte</b-dropdown-item>
         <b-dropdown-item href="/reportar">Sugerir cambios</b-dropdown-item>
         <b-dropdown-item @click="cerrarSecion()">Salir</b-dropdown-item>
-        <!--
-        <b-dropdown-item>First Action</b-dropdown-item>
-        <b-dropdown-item>Second Action</b-dropdown-item>
-        <b-dropdown-item>Third Action</b-dropdown-item>
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item active>Active action</b-dropdown-item>
-        <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-        -->
       </b-dropdown>
     </nav>
     <!--
@@ -1090,6 +1045,26 @@ body {
   font-weight: m;
   text-decoration: none;
   color: #212529;
+}
+
+.user-options button {
+  height: 40px;
+}
+.user-options span {
+  padding: 0 15px;
+  box-size: border-box;
+  vertical-align: middle;
+  color: $dark;
+
+  &:active,
+  &focus {
+    color: $dark;
+  }
+}
+
+.user-options img {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .post-creation-button {
