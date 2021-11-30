@@ -160,16 +160,9 @@
         v-else-if="loggedstate === true"
         id="dropdown-1"
         right
-        variant=""
         class="m-md-2"
       >
         <template #button-content class="d-flex align-items-center">
-          <span class="pr-2" style="display: inline-block"
-            ><p class="d-none d-sm-block" style="line-height: 0px">
-              {{ usernameValue }}
-            </p></span
-          >
-
           <img
             style="display: inline-block; border-radius: 50%"
             type="button"
@@ -180,6 +173,10 @@
             class="dropdown-toggle"
             data-toggle="dropdown"
           />
+
+          <span class="pr-2" style="margin: 0 10px">
+            {{ usernameValue }}
+          </span>
         </template>
 
         <b-dropdown-item class="d-block d-sm-none" disabled>{{
