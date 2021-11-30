@@ -116,7 +116,10 @@
           </li>
         </ul>
 
-        <button type="button" class="btn btn-lg btn-secondary btn-sm">
+        <button
+          type="button"
+          class="btn btn-lg btn-secondary btn-sm post-creation-button"
+        >
           <ModalCreatePost>CREAR POST</ModalCreatePost>
         </button>
       </b-collapse>
@@ -1093,7 +1096,7 @@ body {
 }
 
 .post-creation-button {
-  margin-left: 10px;
+  margin-left: 15px;
 }
 /*
 .navbar {
