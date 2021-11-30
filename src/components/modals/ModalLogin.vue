@@ -58,9 +58,14 @@
           </div>
         </transition>
       </div>
-      <b-button v-b-modal.modal-1 @click="showModal = true" variant="light">
-        <img src="/login.png" height="24" style="margin-right: 5px" />
-        Loguearse</b-button
+      <b-button
+        v-b-modal.modal-1
+        @click="showModal = true"
+        variant="light"
+        class="login-button"
+      >
+        <img src="/login.png" height="24" />
+        Iniciar Sesión</b-button
       >
     </div>
   </div>
@@ -302,6 +307,10 @@ export default {
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
+}
+
+.login-button {
+  margin-right: 7px;
 }
 
 //@import "vodal/common.css";
