@@ -1090,8 +1090,10 @@ body {
   font-weight: m;
   text-decoration: none;
   color: #212529;
-  /*
-  */
+}
+
+.post-creation-button {
+  margin-left: 10px;
 }
 /*
 .navbar {
