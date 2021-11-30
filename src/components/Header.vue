@@ -155,7 +155,7 @@
 
         <b-navbar-toggle
           v-if="windowWidth > 300"
-          class="navbar-toggler order-last order-md-0"
+          class="navbar-toggler order-last order-md-0 collapsable-toggle"
           target="nav-collapse"
         ></b-navbar-toggle>
       </div>
