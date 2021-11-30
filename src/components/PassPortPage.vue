@@ -1,7 +1,95 @@
 <template>
   <div id="index">
     <Header appName="Ano-PassPort"></Header>
-  <div id="canvas"></div>
+    <div id="canvas"></div>
+
+    <div class="container pt-3">
+      <h2>Configuraciones</h2>
+
+      <!--
+      <h3>Cambiar nombre de usuario</h3>
+      <p>Aqui podras cambiar el nombre de tu perfil.</p>
+      -->
+
+      <div class="pt-5">
+        <b-form v-if="show">
+          <b-form-group id="input-group-1" label-for="input-1">
+            <label for="email2" class="mb-2 mr-sm-2" inline
+              >Genera un TOKEN para poder loguearse en otros dispositivos</label
+            >
+          </b-form-group>
+
+          <!-- Using components -->
+
+
+          <!-- 
+            <b-form-input
+            v-show="true" 
+            v-model="usertoken"
+              type="text"
+              
+              readonly
+            ></b-form-input>
+            
+            -->
+          <p></p>
+
+          <b-skeleton-icon
+            v-if="usertoken == null"
+            icon="box-seam"
+            :icon-props="{ fontScale: 2, variant: 'dark' }"
+          ></b-skeleton-icon>
+
+          <b-input-group class="mt-3" v-if="usertoken != null">
+            <b-input-group-prepend>
+              <b-button disabled variant="outline-dark">Token</b-button>
+            </b-input-group-prepend>
+
+
+
+            <b-form-input
+              v-model="usertoken"
+              type="text"
+            id="testing-code" 
+              
+              readonly
+            ></b-form-input>
+            <b-input-group-append>
+              <b-button variant="outline-success" @click="copyTestingCode"
+                ><b-icon icon="clipboard" aria-hidden="true"></b-icon
+              ></b-button>
+            </b-input-group-append>
+
+
+            
+          </b-input-group>
+
+          <small class="form-text text-muted pt-1 pb-3">
+            No compartas este codigo con nadie y ten cuidado de donde lo guardas
+          </small>
+          <b-button type="submit" variant="danger" @click="generateToken"
+            >Generar TOKEN</b-button
+          >
+          <small class="form-text text-muted pt-1 pb-3">
+            este codigo lo puedes ingresar en
+            <b-link :href="qrendpoint">{{ qrendpoint }}</b-link
+            ><br />
+            o simplemente escanear el codigo qr con tu aplicacion de telefono
+            preferida
+          </small>
+
+          <div>
+            <b-img
+              v-if="usertoken != null"
+              :src="tokenqr"
+              fluid
+              alt="Token QR Code"
+            ></b-img>
+          </div>
+        </b-form>
+      </div>
+    </div>
+    <!--
     <b-container class="bv-example-row pt-5">
       <b-row class="justify-content-md-center">
         <b-col col xl="6" lg="8" md="8" sm="12">
@@ -14,32 +102,6 @@
 
           <div class="o-badge">
             <div class="o-badge__group">
-              <!--
-        <img class="m-badge__image" src="https://dummyimage.com/300x300/ffffff/000000&text=QR+Code" height="200" alt="">
--->
-              <!--
-        <img  class='m-badge__image2'src='https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Fanoringa.win%2F&chs=180x180&choe=UTF-8&chld=L|2' alt=''>
--->
-              <!--
-        <div class='m-badge__image2' id="qrcode"></div>
--->
-              <!--
-          <span class="a-instagram"><i class="fa fa-instagram -mr"></i>@futurejosh</span>
--->
-              <!--
-        <img class="m-badge__image" src="https://hoodzpahdesign.com/wp-content/uploads/2020/01/skillcamp_seal_black-300x300.png" height="200" alt="">
-        -->
-              <!--
-              <div class="m-badge">
-                <section class="m-badge__content">
-                  <div class="a-slot"></div>
-
-                  <div class="m-badge__info">
-                    <p class="m-badge__infoName">Robertus</p>
-                    <i class="m-badge__infoCompany">Acceso de usuario.</i>
-                  </div>
-                  <div class="m-badge__social">
-                    -->
               <div class="m-badge -amy" id="imageDIV">
                 <section class="m-badge__content">
                   <div class="a-slot"></div>
@@ -50,13 +112,7 @@
                     height="200"
                     alt=""
                   />
-                  <!--
-                  <div
-                    class="m-badge__image2"
-                    id="qrcodex"
-                    :v-model="base64qr"
-                  ></div>
-                  -->
+                 
 
                   <div class="m-badge__info">
                     <p class="m-badge__infoName -blackText">Robertus</p>
@@ -84,7 +140,7 @@
                   <div class="a-slot"></div>
                   <img
                     class="m-badge__image"
-                    src="https://hoodzpahdesign.com/wp-content/uploads/2020/01/skillcamp_seal_black-300x300.png"
+                    src="https://dummyimage.com/300x300/ffffff/000000&text=QR+Code"
                     height="200"
                     alt=""
                   />
@@ -110,24 +166,7 @@
                 <footer class="m-badge__footer">DESIGNER</footer>
               </div>
             </div>
-
-            <a
-              class="a-sourceButton"
-              href="https://dribbble.com/shots/10244535-Skill-Camp-2020-Badges-and-Buttons"
-              target="_blank"
-              >See on Dribble &nbsp;
-              <svg width="24" height="24">
-                <path
-                  d="M3 11h2v2H3v-2m8-6h2v4h-2V5m-2 6h4v4h-2v-2H9v-2m6 0h2v2h2v-2h2v2h-2v2h2v4h-2v2h-2v-2h-4v2h-2v-4h4v-2h2v-2h-2v-2m4 8v-4h-2v4h2M15 3h6v6h-6V3m2 2v2h2V5h-2M3 3h6v6H3V3m2 2v2h2V5H5M3 15h6v6H3v-6m2 2v2h2v-2H5z"
-                />
-              </svg>
-            </a>
-
-            <span class="m-copyright"
-              >Coded by Ender İmen
-              <i class="fa fa-hand-peace-o -ml"></i>
-            </span>
-          </div>
+            </div>
 
           <div class="o-badge">
             <a class="a-sourceButton" id="download" target="_blank"
@@ -144,6 +183,7 @@
         </b-col>
       </b-row>
     </b-container>
+    -->
     <footer class="pt-5"></footer>
   </div>
 </template>
@@ -169,6 +209,7 @@ export default {
     },
   },
   mounted() {
+    /*
     var QRCode = require("qrcode");
 
     var self = this;
@@ -182,10 +223,7 @@ export default {
     QRCode.toCanvas("I am a pony!", function (err, url) {
       console.log(url);
     });
-
-
-
-
+    */
   },
   metaInfo: {
     //title: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",
@@ -217,6 +255,8 @@ export default {
   },
   data() {
     return {
+      usertoken: null,
+      tokenqr: null,
       base64qr: null,
       urlISSUESAPI: process.env.VUE_APP_ISSUESAPI,
       report_loaded: "",
@@ -246,9 +286,107 @@ export default {
       hcaptchaResponse: "",
       loginurl: process.env.VUE_APP_API + "/api/user/register",
       hcaptchatoken: process.env.VUE_APP_HCAPTCHA,
+      apiurl: process.env.VUE_APP_API + "/api/user/login",
+      qrendpoint: process.env.VUE_APP_URL + "/token/",
     };
   },
   methods: {
+            copyTestingCode () {
+          let testingCodeToCopy = document.querySelector('#testing-code')
+          testingCodeToCopy.setAttribute('type', 'text')    // 不是 hidden 才能複製
+          testingCodeToCopy.select()
+
+          try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Testing code was copied ' + msg);
+          } catch (err) {
+            console.log('Oops, unable to copy');
+          }
+          //https://codepen.io/PJCHENder/pen/jamJpj
+
+          /* unselect the range */
+          //testingCodeToCopy.setAttribute('type', 'hidden')
+          //window.getSelection().removeAllRanges()
+        },
+    async copyURL(mytext = this.usertoken) {
+      //clipboard.writeText(mytext);
+      navigator.clipboard.writeText(mytext);
+      /*
+      try {
+        await navigator.clipboard.writeText(mytext);
+        console.log("clipboard: Copied");
+
+
+
+
+      } catch ($e) {
+        console.log("clipboard: Cannot copy");
+      }*/
+    },
+    setToken(theToken) {
+      console.log(theToken);
+      this.usertoken = theToken;
+
+      var QRCode = require("qrcode");
+
+      var self = this;
+      QRCode.toDataURL(this.qrendpoint + theToken, function (err, url) {
+        console.log(url);
+        self.tokenqr = url;
+      });
+    },
+    generateToken(event) {
+      event.preventDefault();
+      //alert(JSON.stringify(this.form));
+
+      var params = new URLSearchParams();
+
+      params.append("id", localStorage.userid);
+      params.append("username", localStorage.username);
+      params.append("password", localStorage.password);
+
+      console.log("params");
+      console.log(params);
+
+      //var self = this;
+      axios
+        .post(this.apiurl, params)
+        .then((response) => {
+          console.log("response");
+          console.log(response);
+          this.setToken(response.data.data.token);
+        })
+        /*
+        .then(
+          (response) =>
+            function () {
+              console.log("response");
+              console.log(response);
+              this.userStore(response);
+            }
+        )*/
+        //.then((response) => console.log(response))
+        .catch(function (error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log("error data", error.response.data);
+
+            console.log("error status", error.response.status);
+            console.log("error headers", error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+    },
     genPassPort() {
       html2canvas(document.querySelector("#imageDIV")).then((canvas) => {
         document.body.appendChild(canvas);
@@ -355,6 +493,10 @@ export default {
     },
   },
   computed: {
+    tokenState: function () {
+      // `this` points to the vm instance
+      return true;
+    },
     defaultValue: function () {
       // `this` points to the vm instance
       return this.tiposDeReporte[0];
@@ -603,7 +745,7 @@ body {
   }
 }*/
 
-#qrcode {
+.tokenqrcode {
   /*
   width:160px;
   height:160px;

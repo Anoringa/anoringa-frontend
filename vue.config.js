@@ -8,22 +8,25 @@ module.exports = {
         $: 'jquery',
         jquery: 'jquery',
         'window.jQuery': 'jquery',
-        jQuery: 'jquery'
+        jQuery: 'jquery',
+
+        'window.Quill': 'quill/dist/quill.js',
+        'Quill': 'quill/dist/quill.js',
       })
     ]
   },
   devServer: {
     //allowedHosts: ['test.mydomain.com','localhost',],
-    allowedHosts: ['all','test.mydomain.com'],
+    allowedHosts: ['all', 'test.mydomain.com'],
     //compress: true,
     port: 80,
 
     //http2: true,
     //client: {
-      //logging: 'info',
-      //progress: true,
+    //logging: 'info',
+    //progress: true,
 
-      //reconnect: true,
+    //reconnect: true,
     //},
     /*
     allowedHosts: [

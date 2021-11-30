@@ -5,69 +5,15 @@
       Post id : {{ $route.params.id }}
       -->
 
-      <Header :appName="appName"></Header>
+      <Header :appName="appName">
+        <p v-if="usernameValue == userowner.username">Editar</p>
+      </Header>
 
       <div v-if="music">
         <floatPlayer :idyoutube="music || 'gTFeDTVwUHM'"></floatPlayer>
       </div>
-      <!-- 
-      
-      <nav
-        class="navbar navbar-expand navbar-dark bg-danger justify-content-between"
-      >
-        <a class="navbar-brand" href="/">Back to Anoringa</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContentAW"
-          aria-controls="navbarSupportedContentAW"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div>
-          hola jorge
-          <b-dropdown
-            id="dropdown-right"
-            right
-            size="lg"
-            variant="link"
-            toggle-class="text-decoration-none"
-            no-caret
-          >
-            <template #button-content>
-              <img
-                type="button"
-                src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png"
-                width="30"
-                height="30"
-                alt="logo"
-                class="dropdown-toggle"
-                data-toggle="dropdown"
-              />
-            </template>
-            <b-dropdown-item href="#">Action</b-dropdown-item>
-            <b-dropdown-item href="#">Another action</b-dropdown-item>
-            <b-dropdown-item href="#">Something else here...</b-dropdown-item>
-          </b-dropdown>
-        </div>
-      </nav>
--->
 
       <div class="container-fluid">
-        <!--
-    <h1>Some Anoringa Post</h1>
-    <p>Resize the browser window to see the effect.</p>
-    <p>The columns will automatically stack on top of each other when the screen is less than 576px wide.</p>
-    -->
-        <!-- 
-        <b-row class="mb-12">
-          <b-col lg="6" class="p-3 bg-info">md="4"</b-col>
-          <b-col lg="6" class="ml-auto p-3 bg-info">md="4" .ml-auto</b-col>
-        </b-row>
--->
         <b-row class="mb-12 pt-5 pb-5">
           <b-col lg="6" style="background-color: lavender">
             <div>
@@ -76,21 +22,6 @@
                 class="img-fluid post-img"
                 alt="aca iria una foto pero nose donde esta"
               />
-
-              <!-- 
-              <img
-              
-                :src="[
-                photo
-                  ? {
-                      'background-image':
-                        'url(' + photo + '), url(' + photodefault + ')',
-                    }
-                  : { 'background-image': 'url(' + photodefault + ')' },
-              ]"
-                class="img-fluid post-img"
-                alt="Responsive image" />
-                -->
             </div>
 
             <h2 class="p-3" style="text-align: left">
@@ -111,12 +42,12 @@
               <div id="quill-container" class="quill-pre"></div>
             </div>
 
-            <div class="stats">
+            <div class="postOwnership text-center">
               <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
               >por {{ userowner.username }}
             </div>
 
-            <p class="last-updated">
+            <p class="last-updated text-center">
               Publicado
               {{
                 moment(new Date(postcreatedAt)).format(
@@ -126,7 +57,7 @@
             </p>
           </b-col>
           <b-col lg="6" style="background-color: lavenderblush">
-            <h2 class="p-2">Comentarios</h2>
+            <h2 class="p-2 text-center">Comentarios</h2>
             <div style="width: 100%">
               <form class="pt-3">
                 <div class="row">
@@ -169,14 +100,6 @@
                           </div>
                         </span>
                       </template>
-                      <!--
-                      <template slot="singleLabel" slot-scope="props"
-                        ><span class="option__desc"
-                          ><span class="option__title">{{
-                            props.option.text
-                          }}</span></span
-                        ></template
-                      >-->
                       <template slot="element" slot-scope="selected">
                         <div class="option__desc">
                           <span class="option__title">{{
@@ -228,10 +151,49 @@
                   </div>-->
                 </div>
               </form>
-              <div class="form-group pt-3">
+              <div class="form-group pt-3 cumBucket">
+                <!--
+                  <div id="commentToolbar">
+                    <span class="ql-formats">
+                      <button class="ql-link"></button>
+                      <button class="ql-image"></button>
+                      <button class="ql-video"></button>
+                      <button class="ql-code-block"></button>
+                    </span>
+                    <span class="ql-formats">
+                      <button class="ql-clean"></button>
+                    </span>
+                  </div>
+                  -->
+
+                <div id="commentEditor"></div>
+
+                <b-form-valid-feedback :state="commentContentState"
+                  >a comentar</b-form-valid-feedback
+                >
+                <b-form-invalid-feedback :state="commentContentState">
+                  Animate a escribir algo 🥸<br />podes comentar lo que
+                  <strong id="pepegrillo">quieras*</strong> recorda que nadie
+                  sabe quien sos jijio
+
+                  <b-popover
+                    :target="'pepegrillo'"
+                    triggers="hover"
+                    placement="top"
+                  >
+                    <template #title>Tene en cuenta</template>
+
+                    <small
+                      >lo que Quieras* siguiendo las normas comunitarias,
+                      terminos y condiciones</small
+                    >
+                  </b-popover>
+                </b-form-invalid-feedback>
+
                 <!--
                 <label for="comment">el comentario:</label>
                 -->
+                <!--
                 <textarea
                   v-model="nuevoComemtarioTexto"
                   class="form-control"
@@ -239,6 +201,7 @@
                   rows="2"
                   id="comment"
                 ></textarea>
+                -->
 
                 <b-button class="m-3" v-b-modal.modal-1 @click="crearComentario"
                   >Enviar Comentario</b-button
@@ -254,7 +217,7 @@
                     :key="currentComent._id"
                   >
                     <div
-                      class="stats"
+                      class="comment_owner"
                       style="word-wrap: break-word; white-space: pre-wrap"
                     >
                       <a class="pr-1" :href="'#' + currentComent._id"
@@ -339,11 +302,22 @@
                         </a>
                       </a>
                     </div>
+                    <!-- 
                     <p
                       class=""
                       style="word-wrap: break-word; white-space: pre-wrap"
-                    >{{currentComent.text}}
+                    >
+                      {{ currentComent.text }}
                     </p>
+                      
+                        -->
+
+                    <div class="quill-pre ql-container ql-snow ql-disabled">
+                      <div
+                        v-html="currentComent.text"
+                        class="commentRichTextViewer ql-editor ql-blank"
+                      ></div>
+                    </div>
                     <b-button
                       pill
                       variant="link topright"
@@ -400,11 +374,11 @@
         <Footer></Footer>
       </div>
     </div>
-    <div v-else-if="loaded_correctly == false" style="height: 100%">
+    <div v-else-if="loaded_correctly == false" class="loadOrError" style="">
       Cargando
       <b-spinner variant="danger" key="danger"></b-spinner>
     </div>
-    <div v-else-if="loaded_correctly == 'ERROR'" style="height: 100%">
+    <div v-else-if="loaded_correctly == 'ERROR'" style="">
       ERROR
       <p>no se encontro el post que estas buscando</p>
       <loadingspinner></loadingspinner>
@@ -416,9 +390,6 @@
 
 
 <script>
-import "quill/dist/quill.snow.css";
-import Quill from "quill";
-
 // https://stackoverflow.com/questions/1988349/array-push-if-does-not-exist
 // check if an element exists in array using a comparer function
 // comparer : function(currentElement)
@@ -483,6 +454,16 @@ moment.locale("es");
 import axios from "axios";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 import Vue2Filters from "vue2-filters";
+
+import "quill/dist/quill.snow.css";
+import Quill from "quill";
+
+const SizeStyle = Quill.import("attributors/style/size");
+Quill.register(SizeStyle, true);
+
+import ImageResize from "quill-image-resize-module";
+Quill.register("modules/imageResize", ImageResize);
+
 export default {
   created() {
     this.moment = moment;
@@ -498,24 +479,17 @@ export default {
     });
     */
 
-    var editorId = "quill-container";
-    setTimeout(() => {
-      var container = document.getElementById(editorId);
-      this.editor = new Quill(container, {
-        readOnly: true,
-        theme: "snow",
-        //tab: 'disabled',
-        showIndent : false,
-        modules: {
-          toolbar: false,
-        },
-      });
-      //this.editor.innerHTML = "lalala";
-      this.editor.root.innerHTML = this.content;
-    }, 2000);
+    setTimeout(() => {}, 2000);
 
     // 3000 millisec is maybe too long but too make sure that the problem is from creating
     // Quill before DOM
+
+    //var BackgroundClass = Quill.import("attributors/class/background");
+    //var ColorClass = Quill.import("attributors/class/color");
+    //var SizeStyle = Quill.import("attributors/style/size");
+    //Quill.register(BackgroundClass, true);
+    //Quill.register(ColorClass, true);
+    //Quill.register(SizeStyle, true);
   },
   metaInfo() {
     return {
@@ -604,6 +578,7 @@ export default {
       postcreatedAt: "",
       ambientmusic: true,
       music: false,
+      commentEditor: null,
     };
   } /*
 metaInfo() {
@@ -646,16 +621,180 @@ metaInfo() {
         data.createdAt = moment().toISOString();
         data.updatedAt = moment().toISOString();
         this.comments.push(data);
-      }
-      else{
+      } else {
         console.log("llego un comentario para otro post");
       }
-      
     },
     /*
      */
   },
+  updated: function () {
+    this.$nextTick(function () {
+      console.log("the next thicc");
+      var editorId = "quill-container";
+      var container = document.getElementById(editorId);
+      this.editor = new Quill(container, {
+        readOnly: true,
+        theme: "snow",
+        //tab: 'disabled',
+        showIndent: false,
+        modules: {
+          toolbar: false,
+        },
+      });
+      //this.editor.innerHTML = "lalala";
+      this.editor.root.innerHTML = this.content;
+    });
+  },
   mounted() {
+    setTimeout(() => {
+      var commentToolbar = [["link", "video", "image"]];
+      this.commentEditor = new Quill(document.getElementById("commentEditor"), {
+        modules: {
+          toolbar: {
+            container: commentToolbar,
+            handlers: {
+              image: imageHandler,
+              video: videoHandler,
+            },
+          },
+          imageResize: {
+            displayStyles: {
+              backgroundColor: "black",
+              border: "none",
+              color: "white",
+            },
+            modules: ["Resize", "DisplaySize", "Toolbar"],
+          },
+        },
+        readOnly: false,
+        placeholder: "Escribe aqui su comentario...",
+        theme: "snow",
+      });
+      this.commentEditor.on("text-change", () => {
+        this.nuevoComemtarioTexto = this.commentEditor.root.innerHTML;
+      });
+      function videoHandler() {
+        let url = prompt("copie y pegue la URL deL video Youtube aquí.");
+        url = getVideoUrl(url);
+        let range = this.quill.getSelection();
+        if (url != null) {
+          this.quill.insertEmbed(range.index, "video", url, Quill.sources.USER);
+        }
+      }
+      function getVideoUrl(url) {
+        let match =
+          url.match(
+            /^(?:(https?):\/\/)?(?:(?:www|m)\.)?youtube\.com\/watch.*v=([a-zA-Z0-9_-]+)/
+          ) ||
+          url.match(
+            /^(?:(https?):\/\/)?(?:(?:www|m)\.)?youtu\.be\/([a-zA-Z0-9_-]+)/
+          ) ||
+          url.match(/^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=).*/);
+        console.log(match[2]);
+        if (match && match[2].length === 11) {
+          return (
+            "https" + "://www.youtube.com/embed/" + match[2] + "?showinfo=0"
+          );
+        }
+        if (
+          (match = url.match(/^(?:(https?):\/\/)?(?:www\.)?vimeo\.com\/(\d+)/))
+        ) {
+          // eslint-disable-line no-cond-assign
+          return (
+            (match[1] || "https") +
+            "://player.vimeo.com/video/" +
+            match[2] +
+            "/"
+          );
+        }
+        return null;
+      }
+      function imageHandler() {
+        var range = this.quill.getSelection();
+        var value = prompt(
+          "Copie y Pegue la URL de la imagen aquí (jpg, png, gif, jpeg, etc)"
+        );
+        if (value) {
+          this.quill.insertEmbed(
+            range.index,
+            "image",
+            value,
+            Quill.sources.USER
+          );
+        }
+      }
+
+      function applyGoogleKeyboardWorkaround(editor) {
+        try {
+          if (!editor.applyGoogleKeyboardWorkaround) {
+            editor.applyGoogleKeyboardWorkaround = true;
+            editor.on("editor-change", (eventName, ...args) => {
+              if (eventName === "text-change") {
+                // args[0] will be delta
+                const ops = args[0].ops;
+                const oldSelection = editor.getSelection();
+                const oldPos = oldSelection?.index;
+                const oldSelectionLength = oldSelection
+                  ? oldSelection.length
+                  : 0;
+
+                if (
+                  ops[0].retain === undefined ||
+                  !ops[1] ||
+                  !ops[1].insert ||
+                  !ops[1].insert ||
+                  ops[1].insert !== "\n" ||
+                  oldSelectionLength > 0
+                ) {
+                  return;
+                }
+
+                setTimeout(() => {
+                  const newPos = editor.getSelection().index;
+                  if (newPos === oldPos) {
+                    console.log("Change selection bad pos");
+                    editor.setSelection(editor.getSelection().index + 1, 0);
+                  }
+                }, 30);
+              }
+            });
+          }
+        } catch {
+          console.log("error gboard");
+        }
+      }
+      applyGoogleKeyboardWorkaround(this.commentEditor);
+
+      this.commentEditor.clipboard.addMatcher(
+        Node.TEXT_NODE,
+        function (node, delta) {
+          var regex = /https?:\/\/[^\s]+/g;
+          if (typeof node.data !== "string") return;
+          var matches = node.data.match(regex);
+
+          if (matches && matches.length > 0) {
+            var ops = [];
+            var str = node.data;
+            matches.forEach(function (match) {
+              var split = str.split(match);
+              var beforeLink = split.shift();
+              ops.push({ insert: beforeLink });
+              ops.push({ insert: match, attributes: { link: match } });
+              str = split.join(match);
+            });
+            ops.push({ insert: str });
+            delta.ops = ops;
+          }
+
+          return delta;
+        }
+      );
+    }, 2000);
+
+    //this.$nextTick(()=>{
+    //this.two = "Two"
+    //})}
     /*
             window.EventHandler.listen('remove-dialog-' + this.id + '-called', (data) => {
                 window.location.reload(true);
@@ -757,7 +896,8 @@ metaInfo() {
       ) {
         if (
           this.nuevoComemtarioTexto != "" &&
-          this.nuevoComemtarioTexto != null
+          this.nuevoComemtarioTexto != null &&
+          this.commentContentState
         ) {
           console.log("this.nuevoComemtarioTexto if true");
           console.log(this.nuevoComemtarioTexto);
@@ -772,7 +912,8 @@ metaInfo() {
           };
           this.value = [];
           this.ListaDeIdsDeComentarios = [];
-          this.nuevoComemtarioTexto = "";
+          this.nuevoComemtarioTexto = null;
+          this.commentEditor.root.innerHTML = null;
           var self = this;
 
           //for troubleshooting console.log(data,self);
@@ -783,7 +924,7 @@ metaInfo() {
             datos.createdAt = moment().toISOString();
             datos.updatedAt = moment().toISOString();
             datos.user = [
-              { username: localStorage.username, _id: "not loaded" },
+              { username: localStorage.username, _id: localStorage.username },
             ];
             self.comments.push(datos);
             //this.$root.$emit("component1"); //like this
@@ -794,7 +935,9 @@ metaInfo() {
             //this.posts.push(datos);
           });
         } else {
-          console.log("this.nuevoComemtarioTexto if false");
+          console.log("el comentario esta vacio");
+          alert("apa\nal parecer te olvidaste de escribir tu comentario")
+          //console.log("this.nuevoComemtarioTexto if false");
           console.log(this.nuevoComemtarioTexto);
         }
       } else {
@@ -890,12 +1033,60 @@ metaInfo() {
           this.userowner = this.post.user[0];
           this.id = this.post._id;
           this.postcreatedAt = this.post.createdAt;
+
+          document
+            .querySelectorAll(".commentRichTextViewer")
+            .forEach(function (theDIV) {
+              console.log(theDIV);
+              /*
+
+                  new Quill(theDIV, {
+                    readOnly: true,
+                    theme: "snow",
+                    //tab: 'disabled',
+                    showIndent: false,
+                    modules: {
+                      toolbar: false,
+                    },
+                  });
+                  //this.editor.innerHTML = "lalala";
+                  this.editor.root.innerHTML = this.content;
+                  */
+            });
         })
         .catch((error) => {
           console.log("-----error-------");
           console.log(error);
           this.loaded = "ERROR";
         });
+    },
+  },
+  computed: {
+    commentContentState() {
+      console.log(this.nuevoComemtarioTexto);
+      if (this.nuevoComemtarioTexto) {
+        var postContent = this.nuevoComemtarioTexto;
+        console.log(postContent);
+        if (
+          postContent != null &&
+          postContent != "<p><br></p>" &&
+          postContent != "" &&
+          postContent.length >= 1
+        ) {
+          return true;
+        } else if (postContent == "") {
+          return null;
+        } else {
+          return false;
+        }
+      } else {
+        return null;
+      }
+    },
+
+    usernameValue() {
+      return this.$store.state.username;
+      //return localStorage.username;
     },
   },
 };
@@ -909,6 +1100,14 @@ metaInfo() {
 <style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
+
+
+.cumBucket > .ql-toolbar {
+  position: static !important;
+  /*
+  
+  */
+} 
 .quill-wrap {
   max-width: 900px;
   width: 100%;
@@ -926,21 +1125,21 @@ metaInfo() {
 .quill-wrap .ql-picker {
   margin-right: 2px;
 }
-  /*
+/*
   .ql-indent-8{
   padding-left: initial !important;
 }
   
   */
 
-  .ql-indent-8{
+.ql-indent-8 {
   padding-left: initial !important;
 }
-[class^="ql-indent"]{
+[class^="ql-indent"] {
   /*WE USE ^ HERE */
   /*padding-left: initial !important;
   padding-left: 0 !important;*/
-  
+
   padding-left: initial !important;
   /*background-color: green;*/
 }
@@ -969,19 +1168,44 @@ metaInfo() {
   margin: auto;
 
   height: auto;
-  max-height: 100%;
-
-  width: auto;
-  max-width: 100%;
+  width: 100%;
 }
 
+.commentRichTextViewer {
+  /*
+    box-sizing: border-box;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    height: 100%;
+    margin: 0px;
+    position: relative;
+
+box-sizing: border-box;
+    line-height: 1.42;
+    height: 100%;
+    outline: none;
+    overflow-y: auto;
+    padding: 12px 15px;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    */
+}
 /*
 .quill-container , 
 */
+/*
 .ql-editor {
   display: inline-block;
 }
-
+*/
+.loadOrError {
+  text-align: center;
+  height: 100%;
+}
 .container {
   position: relative;
 }
@@ -1153,6 +1377,10 @@ ul {
   margin: 0;
   list-style: none;
 }
+
+.quill-pre {
+  border: 0px;
+}
 header,
 .repo {
   border: 1px solid #eee;
@@ -1182,6 +1410,19 @@ header :last-child,
   text-transform: uppercase;
   font-weight: bold;
 }
+.postOwnership {
+  /*text-transform: uppercase;*/
+  font-weight: bold;
+  font-size: 0.7em;
+  color: #666;
+}
+
+.comment_owner {
+  font-weight: bold;
+  font-size: 0.7em;
+  color: #666;
+}
+
 .last-updated {
   font-style: italic;
 }

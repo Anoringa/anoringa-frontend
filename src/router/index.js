@@ -8,6 +8,7 @@ import ChangeUsernamePage from "../components/ChangeUsernamePage";
 import PassportPage from "../components/PassPortPage";
 import ReportPage from "../components/ReportPage";
 import DocsPage from "../components/DocsPage";
+import LoginFromQR from "../components/LoginFromQR";
 ///#
 const Foo = { template: "<div>foo</div>" };
 const Bar = { template: "<div>bar</div>" };
@@ -20,6 +21,12 @@ const routesx = [
   //{ name: "User",path: "/user/:id", component: User },
   //{ name: "Post",path: "/post/:id", component: About },
   { name: "Post",path: "/post/:id", component: Post },
+  { name: "LoginFromQR",path: "/loguearse", component: DocsPage },
+  { name: "Pasaporte",path: "/pasaporte2", component: PassportPage },
+  { name: "Pasaporte",path: "/qr/:token", component: LoginFromQR },
+  { name: "Token",path: "/token/:token", component: LoginFromQR },
+  { name: "Token",path: "/token/", component: LoginFromQR },
+  { name: "Pasaporte",path: "/pasaporte", component: PassportPage },
   { name: "Report",
     path: "/reportar", 
     component: ReportPage, 
@@ -35,7 +42,6 @@ const routesx = [
   { name: "Index",path: "/new",component: Index,},
   { name: "DevLogin",path: "/DevLogin", component: DevLogin },
   { name: "perfil",path: "/perfil", component: ChangeUsernamePage },
-  { name: "Pasaporte",path: "/pasaporte", component: PassportPage },
 ];
 /*
 const router = new VueRouter({
