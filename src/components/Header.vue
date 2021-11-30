@@ -85,17 +85,6 @@
         >
       </a>
 
-      <!--
-      <button
-        class="navbar-toggler order-last order-md-0"
-        type="button"
-        data-toggle="collapse"
-        data-target="#collapsibleNavbar"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      -->
-
       <b-collapse
         class="collapse navbar-collapse order-last order-md-0"
         :class="windowWidth < 300 ? 'collapsed-nav' : ''"
@@ -110,9 +99,7 @@
             <a class="nav-link linker" href="/?sort=morecomments">Top</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link linker" href="/?sort=newercomments"
-              >Más Reciente</a
-            >
+            <a class="nav-link linker" href="/?sort=newercomments">Recientes</a>
           </li>
 
           <li class="nav-item">
@@ -121,6 +108,7 @@
         </ul>
 
         <button
+          v-if="windowWidth > 800"
           type="button"
           class="btn btn-lg btn-light btn-sm post-creation-button"
         >
@@ -155,13 +143,15 @@
           </template>
 
           <b-dropdown-item>
-            <ModalCreatePost>Postear algo</ModalCreatePost>
+            <ModalCreatePost>Crear Post</ModalCreatePost>
           </b-dropdown-item>
-          <b-dropdown-item href="/perfil">Configuracion</b-dropdown-item>
+          <b-dropdown-item href="/perfil">Configuración</b-dropdown-item>
           <b-dropdown-divider></b-dropdown-divider>
           <b-dropdown-item href="/reportar">Soporte</b-dropdown-item>
-          <b-dropdown-item href="/reportar">Sugerir cambios</b-dropdown-item>
-          <b-dropdown-item @click="cerrarSecion()">Salir</b-dropdown-item>
+          <b-dropdown-item href="/reportar">Sugerir Cambios</b-dropdown-item>
+          <b-dropdown-item @click="cerrarSecion()"
+            >Cerrar Sesión</b-dropdown-item
+          >
         </b-dropdown>
 
         <b-navbar-toggle
