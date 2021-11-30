@@ -997,11 +997,6 @@ $darker: #222;
 $dark: #555;
 $bright: #ddd;
 
-$primary: red;
-$secondary: #fff;
-
-@import 'bootstrap';
-
 .nav {
   list-style: none;
   margin-left: 0;
