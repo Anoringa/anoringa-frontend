@@ -87,7 +87,7 @@
 
       <b-collapse
         class="collapse navbar-collapse order-last order-md-0"
-        :class="windowWidth < 300 ? 'collapsed-nav' : ''"
+        :class="windowWidth < 700 ? 'collapsed-nav' : ''"
         id="nav-collapse"
         is-nav
       >
@@ -108,7 +108,6 @@
         </ul>
 
         <button
-          v-if="windowWidth > 800"
           type="button"
           class="btn btn-lg btn-light btn-sm post-creation-button"
         >
@@ -1055,6 +1054,9 @@ body {
   align-items: center;
   justify-content: center;
   padding-bottom: 10px;
+}
+.collapsable-toggle {
+  margin-left: 7px;
 }
 
 .user-options button {

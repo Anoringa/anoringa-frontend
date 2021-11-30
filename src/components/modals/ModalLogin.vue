@@ -58,12 +58,7 @@
           </div>
         </transition>
       </div>
-      <b-button
-        v-b-modal.modal-1
-        @click="showModal = true"
-        variant="light"
-        class="login-button"
-      >
+      <b-button v-b-modal.modal-1 @click="showModal = true" variant="light">
         <img src="/login.png" height="24" />
         Iniciar Sesión</b-button
       >
