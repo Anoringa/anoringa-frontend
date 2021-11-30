@@ -69,14 +69,20 @@
           v-if="windowWidth < 442"
           src="/anoringa_logo.png"
           class="d-inline-block align-top"
-          height="35"
+          height="45"
           alt="A"
         />
 
-        <span class="app-name-label">{{ appName }}</span>
+        <span v-if="windowWidth > 442" class="app-name-label">{{
+          appName
+        }}</span>
 
-        <span v-if="dev == false" class="badge badge--beta">alpha</span>
-        <span v-if="dev == true" class="badge badge--dev">dev</span>
+        <span v-if="dev == false && windowWidth > 360" class="badge badge--beta"
+          >alpha</span
+        >
+        <span v-if="dev == true && windowWidth > 360" class="badge badge--dev"
+          >dev</span
+        >
       </a>
 
       <!--
@@ -90,13 +96,9 @@
       </button>
       -->
 
-      <b-navbar-toggle
-        v-if="windowWidth > 267"
-        class="navbar-toggler order-last order-md-0"
-        target="nav-collapse"
-      ></b-navbar-toggle>
       <b-collapse
         class="collapse navbar-collapse order-last order-md-0"
+        :class="windowWidth < 300 ? 'collapsed-nav' : ''"
         id="nav-collapse"
         is-nav
       >
@@ -126,39 +128,48 @@
         </button>
       </b-collapse>
 
-      <div v-if="loggedstate === false">
-        <ModalLogin v-on:event_child="eventChild"></ModalLogin>
+      <div style="display: flex">
+        <ModalLogin
+          v-if="loggedstate === false"
+          v-on:event_child="eventChild"
+        />
+
+        <b-dropdown
+          v-if="loggedstate === true"
+          size="sm"
+          variant="light"
+          toggle-class="text-decoration-none"
+          class="user-options"
+          right
+        >
+          <template #button-content>
+            <img
+              style="display: inline-block; border-radius: 50%"
+              type="button"
+              src="/user.png"
+              width="24"
+              height="24"
+              alt="user-logo"
+            />
+            <span>{{ usernameValue }}</span>
+          </template>
+
+          <b-dropdown-item>
+            <ModalCreatePost>Postear algo</ModalCreatePost>
+          </b-dropdown-item>
+          <b-dropdown-item href="/perfil">Configuracion</b-dropdown-item>
+          <b-dropdown-divider></b-dropdown-divider>
+          <b-dropdown-item href="/reportar">Soporte</b-dropdown-item>
+          <b-dropdown-item href="/reportar">Sugerir cambios</b-dropdown-item>
+          <b-dropdown-item @click="cerrarSecion()">Salir</b-dropdown-item>
+        </b-dropdown>
+
+        <b-navbar-toggle
+          v-if="windowWidth > 300"
+          class="navbar-toggler order-last order-md-0"
+          target="nav-collapse"
+        ></b-navbar-toggle>
       </div>
-
-      <b-dropdown
-        v-if="loggedstate === true"
-        size="sm"
-        variant="light"
-        toggle-class="text-decoration-none"
-        class="user-options"
-        right
-      >
-        <template #button-content>
-          <img
-            style="display: inline-block; border-radius: 50%"
-            type="button"
-            src="/user.png"
-            width="24"
-            height="24"
-            alt="user-logo"
-          />
-          <span>{{ usernameValue }}</span>
-        </template>
-
-        <b-dropdown-item>
-          <ModalCreatePost>Postear algo</ModalCreatePost>
-        </b-dropdown-item>
-        <b-dropdown-item href="/perfil">Configuracion</b-dropdown-item>
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item href="/reportar">Soporte</b-dropdown-item>
-        <b-dropdown-item href="/reportar">Sugerir cambios</b-dropdown-item>
-        <b-dropdown-item @click="cerrarSecion()">Salir</b-dropdown-item>
-      </b-dropdown>
     </nav>
     <!--
     </nav>
