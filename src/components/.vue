@@ -170,6 +170,10 @@ $bright: #ddd;
   padding: 0px;
   text-align: center;
 }
+.loadOrError {
+  text-align: center;
+  height: 100%;
+}
 /*
 html{
   margin: 0px;

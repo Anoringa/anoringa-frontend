@@ -185,9 +185,11 @@ export default {
 
 #app {
   //width: 80%;
+  /*
   margin: 0px;
   padding: 0px;
   text-align: center;
+  */
 }
 
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");

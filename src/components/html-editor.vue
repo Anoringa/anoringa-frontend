@@ -83,6 +83,13 @@ export default {
     //https://stackoverflow.com/questions/59602182/quill-add-image-url-instead-of-uploading-it
     //add the toolbar options
     var myToolbar = [
+      
+      ["link",
+        "video",
+        
+        "image",
+        { color: ["#F00", "#0F0", "#00F", "#000", "#FFF", "color-picker"] },
+      ],
       //[{ "header": [1, 2, false] }],
 
       //[{ size: ["small", false, "large", "huge"] }], // custom dropdown
@@ -94,13 +101,7 @@ export default {
         "code-block",
       ],
 
-      ["bold", "italic", "underline", "strike", "link"], // toggled buttons
-      [
-        "video",
-        "formula",
-        "image",
-        { color: ["#F00", "#0F0", "#00F", "#000", "#FFF", "color-picker"] },
-      ],
+      ["bold", "italic", "underline", "strike","formula"], // toggled buttons
       //{ indent: "-1" }, { indent: "+1" },
 
       [
@@ -115,17 +116,9 @@ export default {
     ];
     function imageHandler() {
       var range = this.quill.getSelection();
-      var value = prompt("copie y pegue la URL de la imagen aquí.");
+      var value = prompt("Copie y Pegue la URL de la imagen aquí (jpg, png, gif, jpeg, etc)");
       if (value) {
         this.quill.insertEmbed(range.index, "image", value, Quill.sources.USER);
-      }
-    }
-    function videoHandler() {
-      let url = prompt("copie y pegue la URL deL video Youtube aquí.");
-      url = getVideoUrl(url);
-      let range = this.quill.getSelection();
-      if (url != null) {
-        this.quill.insertEmbed(range.index, "video", url, Quill.sources.USER);
       }
     }
     function showColorPicker(value) {
@@ -152,6 +145,14 @@ export default {
         picker.click();
       } else {
         this.quill.format("color", value);
+      }
+    }
+    function videoHandler() {
+      let url = prompt("copie y pegue la URL deL video Youtube aquí.");
+      url = getVideoUrl(url);
+      let range = this.quill.getSelection();
+      if (url != null) {
+        this.quill.insertEmbed(range.index, "video", url, Quill.sources.USER);
       }
     }
     function getVideoUrl(url) {
@@ -185,7 +186,7 @@ export default {
           handlers: {
             image: imageHandler,
             video: videoHandler,
-          },
+          }
         },
       },
       scrollingContainer: this.$el.querySelector("#scrolling-container"),
@@ -313,15 +314,18 @@ export default {
   font-size: 1rem;
 }
 
+
+/*
 .ql-container.ql-snow {
   height: auto;
-  border: 0px;
+  border: 1px;
 }
+*/
+/*
 .ql-editor {
   height: 400px;
   overflow-y: scroll;
 }
-/*
 */
 
 /*
@@ -369,17 +373,35 @@ export default {
   height: auto;
   min-height: 100%;
   padding: 50px;
-}*/
+}
+*/
+#quill-container {
+  height: auto;
+  min-height: 100%;
+  /*
+  padding: 50px;
+  */
+}
+
+/*
+.ql-editor .ql-blank {
+  width:100%;
+}
+*/
+
+
+/*
 #quill-container .ql-editor {
   font-size: 18px;
   overflow-y: visible;
 }
+*/
 
 /* Specify our own scrolling container */
 #scrolling-container {
   height: 100%;
-  min-height: 100%;
-  overflow-y: auto;
+  min-height: 10em;
+  /*overflow-y: auto;*/
 }
 
 /* MY UPDATES */

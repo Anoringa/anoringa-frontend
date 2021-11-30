@@ -83,11 +83,11 @@
       </a>
     </div>
   </main>
-  <div v-else-if="loaded == false" style="height: 100%">
+  <div v-else-if="loaded == false" class="loadOrError">
     Cargando
     <b-spinner variant="danger" key="danger"></b-spinner>
   </div>
-  <div v-else-if="loaded == 'ERROR'" style="height: 100%">ERROR</div>
+  <div v-else-if="loaded == 'ERROR'" class="loadOrError">ERROR</div>
 </template>
 
 

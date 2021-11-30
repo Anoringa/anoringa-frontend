@@ -166,6 +166,7 @@
 
           -->
 
+      <slot></slot>
       <div v-if="loggedstate === false">
         <ModalLogin v-on:event_child="eventChild"></ModalLogin>
       </div>
@@ -206,6 +207,7 @@
         <b-dropdown-item>
           <ModalCreatePost>Postear algo</ModalCreatePost>
         </b-dropdown-item>
+        <b-dropdown-item href="/pasaporte">Loguearse en otro dispositivo</b-dropdown-item>
 
         <b-dropdown-item href="/perfil">Configuracion</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>

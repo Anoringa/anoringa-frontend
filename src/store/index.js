@@ -29,6 +29,9 @@ export default new Vuex.Store({
     getPostPhotoLink: (state) => {
       return state.postPhotoLink;
     },
+    getUsername: (state) => {
+      return state.username;
+    },
 
     getHistory(state) {
       return state.history;
