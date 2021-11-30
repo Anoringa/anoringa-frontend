@@ -111,19 +111,14 @@
             <a class="nav-link linker" href="/?sort=newercomments">Más Reciente</a>
           </li>
 
-          
           <li class="nav-item">
             <a class="nav-link linker" href="/tutorial">Como usar</a>
           </li>
-          <!--
-          <li class="nav-item">
-            <a class="nav-link linker" @click="showPostModal = true">Postear</a>
-          </li>
-            -->
-          <li class="nav-item">
-            <a class="nav-link linker"><ModalCreatePost>Crear Post</ModalCreatePost></a>
-          </li>
         </ul>
+
+        <button type="button" class="btn btn-lg btn-secondary btn-sm">
+          <ModalCreatePost>CREAR POST</ModalCreatePost>
+        </button>
       </b-collapse>
 
       <!--
@@ -1047,6 +1042,11 @@ $darker: #222;
 $dark: #555;
 $bright: #ddd;
 
+$primary: red;
+$secondary: #fff;
+
+@import 'bootstrap';
+
 .nav {
   list-style: none;
   margin-left: 0;
@@ -1074,7 +1074,11 @@ body {
   font-family: 'Roboto', sans-serif;
   */
 }
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Open+Sans&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Open+Sans&display=swap');
+
+.app-name-label {
+  margin-right: 7px;
+}
 .loguito {
   /*
   font-family: "Overpass Mono";
