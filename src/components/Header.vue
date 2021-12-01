@@ -131,14 +131,17 @@
           right
         >
           <template #button-content>
-            <img
-              style="display: inline-block; border-radius: 50%"
-              type="button"
-              src="/user.png"
-              width="24"
-              height="24"
-              alt="user-logo"
-            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 35.8 36"
+              width="30"
+              class="user-icon"
+              style="display: inline-block"
+            >
+              <path
+                d="M18 0a18 18 0 1 0 18 18A18 18 0 0 0 18 0Zm0 6c1.51 0 3.36 1.37 3.36 3a7.13 7.13 0 0 1-1.7 3.88 4.37 4.37 0 0 1-.68.68A1.66 1.66 0 0 1 18 14a1.67 1.67 0 0 1-1-.48 4.24 4.24 0 0 1-.67-.67A7.13 7.13 0 0 1 14.64 9c0-1.63 1.85-3 3.36-3Zm0 24c-4 0-8.73-1.15-8.73-4.41 0-2.95 3.19-8.76 6.53-10.89a3 3 0 0 0 4.4 0c3.34 2.13 6.53 7.94 6.53 10.89C26.73 28.85 22 30 18 30Z"
+              />
+            </svg>
             <span>{{ usernameValue }}</span>
           </template>
 
@@ -1056,6 +1059,11 @@ body {
 }
 .collapsable-toggle {
   margin-left: 7px;
+}
+
+.user-icon {
+  display: inline-block;
+  fill: $primary-color;
 }
 
 .user-options button {
