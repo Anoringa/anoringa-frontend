@@ -60,10 +60,7 @@
     v-bind:class="['dev' ? 'bg-violet navbar-dark' : '']"
     -->
 
-    <nav
-      class="navbar navbar-expand-md"
-      :class="dev ? 'bg-violet navbar-dark' : 'bg-danger navbar-dark'"
-    >
+    <nav class="navbar navbar-expand-md navbar-dark top-navbar">
       <a class="navbar-brand loguito" href="/">
         <img
           v-if="windowWidth < 442"
@@ -1027,6 +1024,10 @@ body {
 }
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Open+Sans&display=swap');
 
+.top-navbar {
+  background: $primary-color;
+}
+
 .app-name-label {
   margin-right: 7px;
   color: $light;
@@ -1190,25 +1191,10 @@ main {
   font-size: 0.875rem;
   position: relative;
   border-radius: 20px;
-  color: #333333;
-}
-
-.badge--beta,
-.badge--dev {
   padding: 2px 11px;
   font-size: 12px;
   vertical-align: middle;
-}
-.badge--beta {
-  color: #fff !important;
-  background-color: #6928b8;
-}
-.badge--dev {
-  color: #3f47cb !important;
-  background-color: #fff;
-}
-
-.bg-violet {
-  background-color: #3f47cb;
+  color: $badge-foreground-color;
+  background-color: $badge-background-color;
 }
 </style>
