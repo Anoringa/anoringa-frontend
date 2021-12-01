@@ -74,12 +74,8 @@
           appName
         }}</span>
 
-        <span v-if="dev == false && windowWidth > 360" class="badge badge--beta"
-          >alpha</span
-        >
-        <span v-if="dev == true && windowWidth > 360" class="badge badge--dev"
-          >dev</span
-        >
+        <span v-if="!dev && windowWidth > 360" class="badge">alpha</span>
+        <span v-if="dev && windowWidth > 360" class="badge">dev</span>
       </a>
 
       <b-collapse

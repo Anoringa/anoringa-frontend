@@ -59,7 +59,16 @@
         </transition>
       </div>
       <b-button v-b-modal.modal-1 @click="showModal = true" variant="light">
-        <img src="/login.png" height="24" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 32 32"
+          width="24"
+          class="login-icon"
+        >
+          <path
+            d="M26 2h-6c-1.479 0-2.762.822-3.454 2.024a36 36 0 0 1 .779.746l5.836 5.813C24.421 11.822 26 13.375 26 16s-1.579 4.178-2.848 5.426l-5.827 5.805c-.26.255-.519.504-.779.746C17.238 29.178 18.521 30 20 30h6c2.2 0 4-1.8 4-4V6c0-2.2-1.8-4-4-4zm-2 14c0-1.734-1-2.771-2.25-4L16 6.271C14.641 4.938 13.719 4 12 4 9.875 4 8 5.709 8 8v2H6c-2.2 0-4 1.8-4 4v4c0 2.2 1.8 4 4 4h2v2c0 2.291 1.875 4 4 4 1.719 0 2.641-.938 4-2.271L21.75 20C23 18.771 24 17.734 24 16z"
+          />
+        </svg>
         Iniciar Sesión</b-button
       >
     </div>
@@ -304,8 +313,10 @@ export default {
   vertical-align: middle;
 }
 
-.login-button {
-  margin-right: 7px;
+.login-icon {
+  display: inline;
+  vertical-align: middle;
+  fill: $primary-color;
 }
 
 //@import "vodal/common.css";
