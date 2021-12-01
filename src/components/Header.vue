@@ -63,14 +63,14 @@
     <nav class="navbar navbar-expand-md navbar-dark top-navbar">
       <a class="navbar-brand loguito" href="/">
         <img
-          v-if="windowWidth < 442"
+          v-if="windowWidth < 445"
           src="/anoringa_logo_centered.png"
           class="page-logo"
           height="45"
           alt="A"
         />
 
-        <span v-if="windowWidth > 442" class="app-name-label">{{
+        <span v-if="windowWidth > 445" class="app-name-label">{{
           appName
         }}</span>
 
@@ -985,6 +985,8 @@ export default {
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css?family=Sen&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Overpass+Mono:300,400,600,700|Overpass:100,100i,200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext');
 
 $darker: #222;
 $dark: #555;
@@ -1009,16 +1011,10 @@ $light: #fff;
   margin: 0px;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Overpass+Mono:300,400,600,700|Overpass:100,100i,200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext');
-
 html,
 body {
   font-family: 'Open Sans', sans-serif;
-  /*
-  font-family: 'Roboto', sans-serif;
-  */
 }
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Open+Sans&display=swap');
 
 .top-navbar {
   background: $primary-color;
@@ -1029,10 +1025,6 @@ body {
   color: $light;
 }
 .loguito {
-  /*
-  font-family: "Overpass Mono";
-  font-weight: 700;
-  */
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 28px;
@@ -1086,100 +1078,6 @@ body {
 .post-creation-button {
   margin-left: 15px;
 }
-/*
-.navbar {
-    background-color: #F95453;
-    margin-bottom: 20px;
-  font-family: "Segoe UI", "Roboto", Arial, Helvetica, sans-serif;
-}
-h1.white-header {
-    color: #FFFFFF;
-    font-size: 2em;
-}
-* {
-  box-sizing: border-box;
-  margin: 0;
-}
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-a {
-  text-decoration: none;
-  &:hover {
-  }
-}
-header {
-  margin: 0;
-    width: 100%;
-    padding: 0.5rem 0;
-    background: $darker;
-    color: $bright;
-    position: fixed;
-    z-index: 0;
-    > .container {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-}
-
-
-body {
-  margin: 0;
-  color: $dark;
-  background: $bright;
-  font-family: "Segoe UI", "Roboto", Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  > header {
-    width: 100%;
-    padding: 0.5rem 0;
-    background: $darker;
-    color: $bright;
-    position: fixed;
-    z-index: 1;
-    > .container {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-  > footer {
-    background-color: $darker;
-    color: $bright;
-    padding: 1rem;
-    text-align: center;
-  } // End Footer
-}
-nav {
-  padding: 0.5rem 0;
-  a {
-    color: $bright;
-    &:hover {
-      color: white;
-      text-decoration: underline;
-    }
-  }
-  ul {
-    list-style: none;
-    display: flex;
-    li {
-      padding-left: 1rem;
-    }
-  }
-}
-main {
-  padding-top: 5rem;
-  padding-bottom: 3rem;
-}
-.container {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-*/
 
 .badge {
   padding: 2px 4px;
@@ -1190,7 +1088,7 @@ main {
   padding: 2px 11px;
   font-size: 12px;
   vertical-align: middle;
-  color: $badge-foreground-color;
-  background-color: $badge-background-color;
+  color: $primary-color;
+  background-color: $secondary-color;
 }
 </style>
