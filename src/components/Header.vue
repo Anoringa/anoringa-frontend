@@ -993,6 +993,7 @@ export default {
 $darker: #222;
 $dark: #555;
 $bright: #ddd;
+$light: #fff;
 
 .nav {
   list-style: none;
@@ -1025,6 +1026,7 @@ body {
 
 .app-name-label {
   margin-right: 7px;
+  color: $light;
 }
 .loguito {
   /*
