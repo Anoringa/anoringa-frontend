@@ -1066,7 +1066,7 @@ body {
 
 .user-icon {
   display: inline-block;
-  fill: $primary-color;
+  fill: $primary-light-color;
 }
 
 .user-options button {
