@@ -1,7 +1,17 @@
-var webpack = require("webpack");
-const path = require('path');
+var webpack = require('webpack')
+const path = require('path')
 
 module.exports = {
+  css: {
+    loaderOptions: {
+      sass: {
+        additionalData:
+          process.env.VUE_APP_NAME === 'dev'
+            ? `@import '~/themes/dev.theme.scss';`
+            : `@import '~/themes/main.theme.scss';`
+      }
+    }
+  },
   configureWebpack: {
     plugins: [
       new webpack.ProvidePlugin({

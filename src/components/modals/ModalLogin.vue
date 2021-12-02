@@ -59,8 +59,26 @@
         </transition>
       </div>
       <b-button v-b-modal.modal-1 @click="showModal = true" variant="light">
-        <img src="/login.png" height="24" />
-        Iniciar Sesión</b-button
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          class="login-icon"
+          width="22"
+        >
+          <path
+            d="M241.5.5h223L297.5 448c-12.167.167-43.4.4-71 0-34.5-.5-55-44-55-57v-44c10.333-10 33.6-32.6 44-43 58-56 61-67.5 60-96s-13-32.5-60-82.5-44-38.5-44-60c-1.5-52.5 51-65 70-65Z"
+            class="icon-back-door"
+          />
+          <path
+            d="M106.5 131v60H19c-6 0-18 4.4-18 22s12 23 18 23.5h87.5v57c0 39 34 25 42.5 15.5s63-62.5 72-72.5 14-17.5 14-23.5c0-4.8-9.333-16.667-14-22-14.667-13.833-49.6-47.3-72-70.5-28-29-42.5 1.5-42.5 10.5Z"
+            class="icon-arrow-door"
+          />
+          <path
+            d="M323.5 47.5C307.5 54 299 65.5 299 97v356.5c0 65 48 58.5 57.5 55.5s126-41.5 135-45 20.5-20 20.5-41.5.5-330.5 0-375-43-49-55.5-45.5-117 39-133 45.5Z"
+            class="icon-front-door"
+          />
+        </svg>
+        <span class="login-button-text">Iniciar Sesión</span></b-button
       >
     </div>
   </div>
@@ -304,8 +322,24 @@ export default {
   vertical-align: middle;
 }
 
-.login-button {
+.login-icon {
+  display: inline;
+  vertical-align: middle;
+  fill: $primary-color;
   margin-right: 7px;
+
+  .icon-back-door {
+    fill: $primary-color;
+  }
+  .icon-front-door {
+    fill: $primary-light-color;
+  }
+  .icon-arrow-door {
+    fill: $dark-color;
+  }
+}
+.login-button-text {
+  vertical-align: middle;
 }
 
 //@import "vodal/common.css";
