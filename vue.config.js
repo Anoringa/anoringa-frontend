@@ -1,14 +1,16 @@
 var webpack = require('webpack')
 const path = require('path')
 
+const vueAppName = process.env.VUE_APP_NAME || ''
+const isDevEnv = vueAppName.toLowerCase().includes('dev')
+
 module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        additionalData:
-          process.env.VUE_APP_NAME === 'dev'
-            ? `@import '~/themes/dev.theme.scss';`
-            : `@import '~/themes/main.theme.scss';`
+        additionalData: isDevEnv
+          ? `@import '~/themes/dev.theme.scss';`
+          : `@import '~/themes/main.theme.scss';`
       }
     }
   },
