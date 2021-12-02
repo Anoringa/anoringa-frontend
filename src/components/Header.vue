@@ -85,17 +85,29 @@
         is-nav
       >
         <ul class="navbar-nav">
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            :class="windowSearch.includes('sort=newerpost') ? 'active' : ''"
+          >
             <a class="nav-link linker" href="/?sort=newerpost">Inicio</a>
           </li>
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            :class="windowSearch.includes('sort=morecomments') ? 'active' : ''"
+          >
             <a class="nav-link linker" href="/?sort=morecomments">Top</a>
           </li>
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            :class="windowSearch.includes('sort=newercomments') ? 'active' : ''"
+          >
             <a class="nav-link linker" href="/?sort=newercomments">Recientes</a>
           </li>
 
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            :class="windowPathname.includes('tutorial') ? 'active' : ''"
+          >
             <a class="nav-link linker" href="/tutorial">Como Usar</a>
           </li>
         </ul>
@@ -444,6 +456,8 @@ export default {
       },
       windowHeight: null,
       windowWidth: window.innerWidth,
+      windowPathname: window.location.pathname,
+      windowSearch: window.location.search,
       appNamex: process.env.VUE_APP_NAME,
       isnotcargando: false,
       imagebase64: '',
