@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="md" type="dark" variant="info" sticky>
+  <b-navbar toggleable="md" type="dark" variant="dark" sticky>
     <b-navbar-brand class="container-fluid">
       <b-button-group>
         <b-button
