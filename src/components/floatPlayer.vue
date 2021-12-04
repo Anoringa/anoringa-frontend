@@ -1,54 +1,22 @@
 <template>
-  <div id="float-player">
-    <div class="fixed-box example">
-            <!--
-    <div>Duration: {{ usernameValue }}</div>
-    <div>Player: {{ player.currentTime }}</div>
-    --->
-      <b-button
-        size="lg"
-        variant="outline-primary"
-        class="mb-2 butoncito"
-        @click="(playing = !playing), player.togglePlay()"
-      >
-        <b-icon
-          v-if="playing == true"
-          icon="play"
-          aria-label="Help"
-          variant="outline-primary"
-        >
-        </b-icon>
+  <b-navbar toggleable="md" type="dark" variant="info" sticky>
+    <b-navbar-brand class="container-fluid">
+      <b-button-group>
+        <b-button
+          variant="primary"
+          @click="(playing = !playing), player.togglePlay()"
+          ><b-icon :icon="playing ? 'play-circle-fill' : 'pause-circle-fill'"
+        /></b-button>
 
-        <b-icon
-          v-if="playing == false"
-          icon="pause"
-          aria-label="Help"
-          variant="outline-primary"
-        >
-        </b-icon>
-      </b-button>
-      <b-button
-        size="lg"
-        variant="outline-primary"
-        class="mb-2 butoncito"
-        v-b-toggle.my-collapse
-      >
-        <b-icon
-          icon="question-circle-fill"
-          aria-label="Help"
-          variant="outline-primary"
-        ></b-icon>
-      </b-button>
-      <!--
-      <div class="mb-3">
-        <b-button v-b-toggle.my-collapse>Toggle Collapse</b-button>
-      </div>
-      -->
+        <b-button variant="primary" v-b-toggle.my-collapse
+          ><b-icon icon="info-circle-fill"
+        /></b-button>
+      </b-button-group>
 
       <b-collapse id="my-collapse">
         <div class="container" style="width: 100%">
           <p>Musica ambiental del post</p>
-    <p id="duracion"></p>
+          <p id="duracion"></p>
           <div id="wrapper">
             <div
               style="display: inline-block"
@@ -58,40 +26,10 @@
               :data-plyr-embed-id="idyoutube"
             ></div>
           </div>
-          <!--
-          <div class="actions">
-            <button type="button" class="btn js-play">Play</button>
-            <button type="button" class="btn js-pause">Pause</button>
-            <button type="button" class="btn js-stop">Stop</button>
-            <button type="button" class="btn js-rewind">Rewind</button>
-            <button type="button" class="btn js-forward">Forward</button>
-          </div>
-          <div class="icons">
-            <a
-              href="https://www.youtube.com/channel/UCdxaLo9ALJgXgOUDURRPGiQ"
-              target="_blank"
-              ><i class="gg-youtube"></i
-            ></a>
-            <a href="https://facebook.com/webcifar" target="_blank"
-              ><i class="gg-facebook"></i
-            ></a>
-            <a href="https://instagram.com/web_cifar" target="_blank"
-              ><i class="gg-instagram"></i
-            ></a>
-            <a href="https://twitter.com/webcifar" target="_blank"
-              ><i class="gg-twitter"></i
-            ></a>
-          </div>
-          <a class="hire link">PLAY/STOP</a>
-          -->
         </div>
       </b-collapse>
-      <!--
-      <b-icon icon="play"></b-icon>
-      <b-icon icon="pause"></b-icon>
-      -->
-    </div>
-  </div>
+    </b-navbar-brand>
+  </b-navbar>
 </template>
 
 <script>

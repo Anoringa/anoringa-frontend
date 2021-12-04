@@ -9,9 +9,10 @@
         <p v-if="usernameValue == userowner.username">Editar</p>
       </Header>
 
-      <div v-if="music">
-        <floatPlayer :idyoutube="music || 'gTFeDTVwUHM'"></floatPlayer>
-      </div>
+      <floatPlayer
+        v-if="music"
+        :idyoutube="music || 'gTFeDTVwUHM'"
+      ></floatPlayer>
 
       <div class="container-fluid">
         <b-row class="mb-12 pt-5 pb-5">
