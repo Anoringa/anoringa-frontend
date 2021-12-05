@@ -16,8 +16,8 @@
 
         <b-collapse id="my-collapse">
           <div class="music-meta-data">
-            <h5 class="title">Song Name</h5>
-            <p id="duration" class="duration" />
+            <span class="title">Song Name</span>
+            <span id="duration" class="duration" />
           </div>
         </b-collapse>
       </div>
@@ -295,12 +295,14 @@ export default {
 
   .title {
     margin: 0;
-    font-size: 10px;
+    font-size: 12px;
+    display: block;
   }
 
   .duration {
     margin: 0;
-    font-size: 12px;
+    font-size: 10px;
+    display: block;
   }
 }
 
