@@ -21,6 +21,9 @@
         </b-button-group>
 
         <b-collapse id="my-collapse">
+          <div class="song-cover">
+            <img :style="`background-image: ${thumbnail}`" alt="" />
+          </div>
           <div class="music-meta-data">
             <span class="title">Song Name</span>
             <span id="duration" class="duration">{{ timeLabel }}</span>
@@ -95,6 +98,8 @@ export default {
       },
       timeLabel: "00:00:00 de 00:00:00",
 
+      thumbnail: "",
+
       fullName: "Foo Bar",
       currentmoment: "xd",
       duracion: "Foo Bar",
@@ -111,14 +116,6 @@ export default {
           
           "settings",
           */
-          "progress",
-          "current-time",
-          "duration",
-          "mute",
-          "volume",
-          "airplay",
-          "pip",
-          "fullscreen",
         ],
         quality: { options: [2160, 1440, 1080, 720, 576, 480, 360, 240] },
       },
@@ -128,11 +125,6 @@ export default {
   methods: {
     videoTimeUpdated: function () {
       this.duracion = this.player.currentTime;
-      // this if statement doesn't seem to do anything
-      /*
-      if (this.player.currentTime > 105) {
-        this.player.stop();
-      }*/
     },
     goForward: function () {
       this.player.rewind(10);
@@ -158,13 +150,6 @@ export default {
       this.playing = !this.playing;
 
       this.player.togglePlay();
-    },
-    nowPlaying: function (event) {
-      console.log(event);
-    },
-    playerReady() {
-      this.player.currentTime = 95;
-      console.log("player ready");
     },
   },
   mounted() {
@@ -193,6 +178,13 @@ export default {
       this.player.play();
       this.currentmoment = 0;
       this.playing = true;
+
+      setTimeout(() => {
+        const posterElement = document.querySelector(".plyr__poster");
+        const thubmnailBackground = posterElement.style.backgroundImage;
+
+        this.thumbnail = thubmnailBackground;
+      }, 0);
     });
 
     this.player.on("play", () => {
@@ -249,5 +241,43 @@ export default {
   display: flex;
   gap: 7px;
   height: 48px;
+}
+
+.song-cover {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  animation: rotation 10s linear infinite;
+  margin-right: 7px;
+
+  img {
+    width: 48px;
+    height: 48px;
+    background-size: cover;
+    border-radius: 50%;
+    background-position: center center;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    height: 40%;
+    width: 40%;
+    background-color: #333;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
