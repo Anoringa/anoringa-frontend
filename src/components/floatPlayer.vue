@@ -21,10 +21,8 @@
         </div>
 
         <div class="music-meta-data">
-          <div>
-            <span class="title">Song Name</span>
-            <span id="duration" class="duration">{{ timeLabel }}</span>
-          </div>
+          <span class="title">{{ title }}</span>
+          <span id="duration" class="duration">{{ timeLabel }}</span>
         </div>
       </div>
     </b-navbar-brand>
@@ -96,6 +94,7 @@ export default {
       timeLabel: "00:00:00 de 00:00:00",
 
       thumbnail: "",
+      title: "",
 
       fullName: "Foo Bar",
       currentmoment: "xd",
@@ -177,11 +176,9 @@ export default {
       this.playing = true;
 
       setTimeout(() => {
-        const posterElement = document.querySelector(".plyr__poster");
-        const thubmnailBackground = posterElement.style.backgroundImage;
-
-        this.thumbnail = thubmnailBackground;
-      }, 0);
+        this.thumbnail = `url("${this.player.poster}")`;
+        this.title = this.player.config.title;
+      }, 100);
     });
 
     this.player.on("play", () => {
@@ -201,15 +198,8 @@ export default {
   z-index: 300;
 }
 
-.butoncito {
-  background-color: white !important;
-}
-.butoncito:hover {
-  background-color: blue !important;
-}
-
 .music-meta-data {
-  width: 100%;
+  width: 400px;
   display: inline-block;
   position: relative;
 
@@ -217,12 +207,24 @@ export default {
     margin: 0;
     font-size: 12px;
     display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .duration {
     margin: 0;
     font-size: 10px;
     display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .music-meta-data {
+    width: 90px;
   }
 }
 
