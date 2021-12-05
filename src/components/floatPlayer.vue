@@ -158,27 +158,12 @@ export default {
     },
   },
   mounted() {
-    //const player = new Plyr("#player");
-
     this.player = new Plyr("#player", this.options);
-    /*
-    this.player.on("ready", function () {
-      this.player.currentTime = 20;
-      this.player.muted = true;
-      this.player.muted = false;
-      this.player.play();
-    });
-    */
-    this.player.on("timeupdate", function (event) {
-      //console.log("this.player.currentTime");
-      //console.log(event.detail.plyr.duration);
-      //console.log(event.detail.plyr.currentTime);
-      this.currentmoment = event.detail.plyr.currentTime;
-      this.usernameValue = event.detail.plyr.currentTime;
 
+    setInterval(() => {
       this.time = {
-        current: event.detail.plyr.currentTime,
-        final: event.detail.plyr.duration,
+        current: this.player.currentTime,
+        final: this.player.duration,
       };
 
       const newTimeLabel = generateTimeLabel(this.time);
@@ -188,13 +173,15 @@ export default {
 
         document.getElementById("duration").innerHTML = this.timeLabel;
       }
-    });
+    }, 1000);
+
     this.player.on("ready", () => {
       console.log("this.player.play");
       this.player.play();
       this.currentmoment = 0;
       this.playing = true;
     });
+
     // https://github.com/sampotts/plyr
     this.player.on("pause", function (e) {
       const formatted = moment
