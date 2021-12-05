@@ -14,21 +14,18 @@
           <b-button variant="primary"
             ><b-icon icon="skip-backward-circle-fill" @click="goBackward"
           /></b-button>
-
-          <b-button variant="primary" v-b-toggle.my-collapse
-            ><b-icon icon="info-circle-fill"
-          /></b-button>
         </b-button-group>
 
-        <b-collapse id="my-collapse">
-          <div class="song-cover">
-            <img :style="`background-image: ${thumbnail}`" alt="" />
-          </div>
-          <div class="music-meta-data">
+        <div class="song-cover">
+          <img :style="`background-image: ${thumbnail}`" alt="" />
+        </div>
+
+        <div class="music-meta-data">
+          <div>
             <span class="title">Song Name</span>
             <span id="duration" class="duration">{{ timeLabel }}</span>
           </div>
-        </b-collapse>
+        </div>
       </div>
     </b-navbar-brand>
 
