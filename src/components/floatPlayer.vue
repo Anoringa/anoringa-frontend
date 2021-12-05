@@ -3,7 +3,7 @@
     <b-navbar-brand class="container-fluid">
       <div class="player--actions">
         <b-button-group>
-          <b-button variant="primary" v-b-toggle.my-collapse
+          <b-button variant="primary"
             ><b-icon icon="skip-forward-circle-fill" @click="goForward"
           /></b-button>
 
@@ -11,7 +11,7 @@
             ><b-icon :icon="playing ? 'play-circle-fill' : 'pause-circle-fill'"
           /></b-button>
 
-          <b-button variant="primary" v-b-toggle.my-collapse
+          <b-button variant="primary"
             ><b-icon icon="skip-backward-circle-fill" @click="goBackward"
           /></b-button>
 
