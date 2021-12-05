@@ -8,7 +8,7 @@
           /></b-button>
 
           <b-button variant="primary" @click="toggleMetadata"
-            ><b-icon :icon="playing ? 'play-circle-fill' : 'pause-circle-fill'"
+            ><b-icon :icon="playing ? 'pause-circle-fill' : 'play-circle-fill'"
           /></b-button>
 
           <b-button variant="primary"
@@ -23,7 +23,7 @@
         <b-collapse id="my-collapse">
           <div class="music-meta-data">
             <span class="title">Song Name</span>
-            <span id="duration" class="duration" />
+            <span id="duration" class="duration">{{ timeLabel }}</span>
           </div>
         </b-collapse>
       </div>
@@ -48,6 +48,13 @@ moment.locale("es");
 
 import Plyr from "plyr";
 import "plyr/dist/plyr.css";
+
+const generateTimeLabel = ({ current, final }) => {
+  const currentTime = moment(current * 1000).format("HH:mm:ss");
+  const finalTime = moment(final * 1000).format("HH:mm:ss");
+
+  return `${currentTime} de ${finalTime}`;
+};
 
 export default {
   name: "FloatPlayer",
@@ -81,6 +88,12 @@ export default {
       },
       playing: true,
       iconval: "play",
+
+      time: {
+        current: 0,
+        final: 0,
+      },
+      timeLabel: "00:00:00 de 00:00:00",
 
       fullName: "Foo Bar",
       currentmoment: "xd",
@@ -122,10 +135,14 @@ export default {
       }*/
     },
     goForward: function () {
-      this.player.currentTime = this.player.currentTime - 10;
+      this.player.play();
+      this.player.rewind(10);
+      if (!this.playing) this.player.pause();
     },
     goBackward: function () {
-      this.player.currentTime = this.player.currentTime + 10;
+      this.player.play();
+      this.player.rewind(-10);
+      if (!this.playing) this.player.pause();
     },
     toggleMetadata: function () {
       this.playing = !this.playing;
@@ -152,25 +169,31 @@ export default {
       this.player.play();
     });
     */
-    this.player.on("timeupdate", function (e) {
+    this.player.on("timeupdate", function (event) {
       //console.log("this.player.currentTime");
-      //console.log(e.detail.plyr.duration);
-      //console.log(e.detail.plyr.currentTime);
-      this.currentmoment = e.detail.plyr.currentTime;
-      this.usernameValue = e.detail.plyr.currentTime;
-      document.getElementById("duration").innerHTML =
-        moment.utc(e.detail.plyr.currentTime * 1000).format("HH:mm:ss") +
-        " de " +
-        moment.utc(e.detail.plyr.duration * 1000).format("HH:mm:ss");
-      // moment.utc(e.detail.plyr.duration*1000).format('HH:mm:ss');
-      //currentTime
-      //duration
+      //console.log(event.detail.plyr.duration);
+      //console.log(event.detail.plyr.currentTime);
+      this.currentmoment = event.detail.plyr.currentTime;
+      this.usernameValue = event.detail.plyr.currentTime;
+
+      this.time = {
+        current: event.detail.plyr.currentTime,
+        final: event.detail.plyr.duration,
+      };
+
+      const newTimeLabel = generateTimeLabel(this.time);
+
+      if (this.timeLabel !== newTimeLabel) {
+        this.timeLabel = newTimeLabel;
+
+        document.getElementById("duration").innerHTML = this.timeLabel;
+      }
     });
     this.player.on("ready", () => {
       console.log("this.player.play");
       this.player.play();
       this.currentmoment = 0;
-      this.playing = false;
+      this.playing = true;
     });
     // https://github.com/sampotts/plyr
     this.player.on("pause", function (e) {
