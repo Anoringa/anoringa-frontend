@@ -160,7 +160,7 @@ export default {
   mounted() {
     this.player = new Plyr("#player", this.options);
 
-    setInterval(() => {
+    const updateDuration = () => {
       this.time = {
         current: this.player.currentTime,
         final: this.player.duration,
@@ -172,14 +172,19 @@ export default {
         this.timeLabel = newTimeLabel;
 
         document.getElementById("duration").innerHTML = this.timeLabel;
+        console.log("Updated");
       }
-    }, 1000);
+    };
+
+    let updateDurationEventId = null;
 
     this.player.on("ready", () => {
       console.log("this.player.play");
       this.player.play();
       this.currentmoment = 0;
       this.playing = true;
+
+      updateDurationEventId = setInterval(updateDuration, 1000);
     });
 
     // https://github.com/sampotts/plyr
@@ -188,6 +193,8 @@ export default {
         .utc(e.detail.plyr.currentTime * 1000)
         .format("HH:mm:ss");
       console.log(formatted);
+
+      clearInterval(updateDurationEventId);
     });
   },
 };
