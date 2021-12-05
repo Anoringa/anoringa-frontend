@@ -135,14 +135,24 @@ export default {
       }*/
     },
     goForward: function () {
-      this.player.play();
       this.player.rewind(10);
-      if (!this.playing) this.player.pause();
+      this.time = {
+        ...this.time,
+        current: this.player.currentTime,
+      };
+
+      this.timeLabel = generateTimeLabel(this.time);
+      document.getElementById("duration").innerHTML = this.timeLabel;
     },
     goBackward: function () {
-      this.player.play();
       this.player.rewind(-10);
-      if (!this.playing) this.player.pause();
+      this.time = {
+        ...this.time,
+        current: this.player.currentTime,
+      };
+
+      this.timeLabel = generateTimeLabel(this.time);
+      document.getElementById("duration").innerHTML = this.timeLabel;
     },
     toggleMetadata: function () {
       this.playing = !this.playing;
@@ -159,6 +169,7 @@ export default {
   },
   mounted() {
     this.player = new Plyr("#player", this.options);
+    const duration = document.getElementById("duration");
 
     const updateDuration = () => {
       this.time = {
@@ -171,8 +182,7 @@ export default {
       if (this.timeLabel !== newTimeLabel) {
         this.timeLabel = newTimeLabel;
 
-        document.getElementById("duration").innerHTML = this.timeLabel;
-        console.log("Updated");
+        duration.innerHTML = this.timeLabel;
       }
     };
 
@@ -183,12 +193,14 @@ export default {
       this.player.play();
       this.currentmoment = 0;
       this.playing = true;
+    });
 
+    this.player.on("play", () => {
       updateDurationEventId = setInterval(updateDuration, 1000);
     });
 
     // https://github.com/sampotts/plyr
-    this.player.on("pause", function (e) {
+    this.player.on("pause", (e) => {
       const formatted = moment
         .utc(e.detail.plyr.currentTime * 1000)
         .format("HH:mm:ss");
