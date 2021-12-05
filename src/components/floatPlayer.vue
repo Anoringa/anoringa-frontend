@@ -3,10 +3,16 @@
     <b-navbar-brand class="container-fluid">
       <div class="player--actions">
         <b-button-group>
-          <b-button
-            variant="primary"
-            @click="(playing = !playing), player.togglePlay()"
+          <b-button variant="primary" v-b-toggle.my-collapse
+            ><b-icon icon="skip-forward-circle-fill" @click="goForward"
+          /></b-button>
+
+          <b-button variant="primary" @click="toggleMetadata"
             ><b-icon :icon="playing ? 'play-circle-fill' : 'pause-circle-fill'"
+          /></b-button>
+
+          <b-button variant="primary" v-b-toggle.my-collapse
+            ><b-icon icon="skip-backward-circle-fill" @click="goBackward"
           /></b-button>
 
           <b-button variant="primary" v-b-toggle.my-collapse
@@ -107,15 +113,6 @@ export default {
   },
 
   methods: {
-    togglePlayGG: function () {
-      //(playing = !playing), player.togglePlay()
-      this.player.togglePlay();
-      if (this.player.playing == true) {
-        this.playing = 1;
-      } else {
-        this.playing = 0;
-      }
-    },
     videoTimeUpdated: function () {
       this.duracion = this.player.currentTime;
       // this if statement doesn't seem to do anything
@@ -123,6 +120,17 @@ export default {
       if (this.player.currentTime > 105) {
         this.player.stop();
       }*/
+    },
+    goForward: function () {
+      this.player.currentTime = this.player.currentTime - 10;
+    },
+    goBackward: function () {
+      this.player.currentTime = this.player.currentTime + 10;
+    },
+    toggleMetadata: function () {
+      this.playing = !this.playing;
+
+      this.player.togglePlay();
     },
     nowPlaying: function (event) {
       console.log(event);
@@ -166,111 +174,11 @@ export default {
     });
     // https://github.com/sampotts/plyr
     this.player.on("pause", function (e) {
-      //console.log("this.player.currentTime");
-      //console.log(e.detail.plyr.duration);
-      console.log(e);
-
       const formatted = moment
         .utc(e.detail.plyr.currentTime * 1000)
         .format("HH:mm:ss");
       console.log(formatted);
-
-      //document.getElementById("duration").innerHTML = e.detail.plyr.currentTime / e.detail.plyr.duration;
-      //currentTime
-      //duration
     });
-    /*
-
-    this.player.on("ready", () => {
-      console.log("this.player.play");
-      this.player.play();
-      this.currentmoment = 0;
-      this.playing = false;
-    });
-*/
-    //this.videoSearch();
-    /*
-    // Bind event listener
-    function on(selector, type, callback) {
-      document.querySelector(selector).addEventListener(type, callback, false);
-    }
-
-    on(".js-pause", "click", () => {
-      this.player.pause();
-      console.log("player.CurrentPosition");
-      console.log(this.player.currentTime);
-      console.log(this.player.download);
-    });
-    
-    document.querySelector("#test2").addEventListener("click", function () {
-      alert("HOVER2");
-    });
-
-    const icon = document.querySelector(".icon");
-
-    icon.addEventListener("click", () => {
-      icon.classList.toggle("close");
-      nav.classList.toggle("show");
-    });
-
-
-       document.querySelector(".float-text").addEventListener("click", function () {
-      document.querySelector(".icon").classList.toggle("close");
-      document.querySelector(".icon").classList.toggle("show");
-    });
-    */
-    /*
-    const touchButton = document.querySelector(".float-text");
-    const card = document.querySelector(".float-card-info");
-    const close = document.querySelector(".gg-close-r");
-
-    touchButton.addEventListener("click", moveCard);
-    close.addEventListener("click", moveCard);
-
-    function moveCard() {
-      card.classList.toggle("active");
-    }
-
-    // Bind event listener
-    function on(selector, type, callback) {
-      document.querySelector(selector).addEventListener(type, callback, false);
-    }
-
-    // Play
-    on(".js-play", "click", () => {
-      this.player.play();
-      console.log("player.play");
-    });
-    on(".js-play1", "click", () => {
-      this.player.togglePlay();
-      console.log("player.play");
-    });
-
-    // Pause
-    on(".js-pause", "click", () => {
-      this.player.pause();
-      console.log("player.CurrentPosition");
-      console.log(this.player.currentTime);
-      console.log(this.player.download);
-    });
-*/
-    /*
-
-    // Stop
-    on(".js-stop", "click", () => {
-      player.stop();
-    });
-
-    // Rewind
-    on(".js-rewind", "click", () => {
-      player.rewind();
-    });
-
-    // Forward
-    on(".js-forward", "click", () => {
-      player.forward();
-    });
-    */
   },
 };
 </script>
@@ -317,5 +225,6 @@ export default {
 .player--actions {
   display: flex;
   gap: 7px;
+  height: 48px;
 }
 </style>
