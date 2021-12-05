@@ -189,7 +189,7 @@ export default {
     let updateDurationEventId = null;
 
     this.player.on("ready", () => {
-      console.log("this.player.play");
+      updateDurationEventId = setInterval(updateDuration, 1000);
       this.player.play();
       this.currentmoment = 0;
       this.playing = true;
@@ -199,13 +199,7 @@ export default {
       updateDurationEventId = setInterval(updateDuration, 1000);
     });
 
-    // https://github.com/sampotts/plyr
-    this.player.on("pause", (e) => {
-      const formatted = moment
-        .utc(e.detail.plyr.currentTime * 1000)
-        .format("HH:mm:ss");
-      console.log(formatted);
-
+    this.player.on("pause", () => {
       clearInterval(updateDurationEventId);
     });
   },
