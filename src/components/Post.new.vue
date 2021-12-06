@@ -1201,14 +1201,11 @@ footer {
   }
 } MEDIA QUERIES */
 .post-img {
-  /*
-  position: absolute;
-  */
   top: 0;
   left: 0;
-  /*height: 300px;
-  width: 300px;*/
   object-fit: cover;
+  display: block;
+  margin: 0 auto;
 }
 
 /*
