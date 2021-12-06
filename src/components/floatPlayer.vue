@@ -12,7 +12,7 @@
     </div>
 
     <b-navbar-brand class="container-fluid">
-      <div class="player--actions">
+      <div class="player--actions m-auto">
         <b-button-group>
           <b-button variant="primary"
             ><b-icon icon="skip-forward-circle-fill" @click="goForward"
@@ -202,7 +202,7 @@ export default {
 }
 
 .music-meta-data {
-  width: 400px;
+  max-width: 400px;
   display: inline-block;
   position: relative;
 
