@@ -1,5 +1,16 @@
 <template>
   <b-navbar toggleable="md" type="dark" variant="dark" sticky>
+    <div id="wrapper" class="video--wrapper">
+      <div class="video">
+        <div
+          @timeupdate="videoTimeUpdated"
+          id="player"
+          data-plyr-provider="youtube"
+          :data-plyr-embed-id="idyoutube"
+        />
+      </div>
+    </div>
+
     <b-navbar-brand class="container-fluid">
       <div class="player--actions">
         <b-button-group>
@@ -26,17 +37,6 @@
         </div>
       </div>
     </b-navbar-brand>
-
-    <div id="wrapper" class="video--wrapper">
-      <div class="video">
-        <div
-          @timeupdate="videoTimeUpdated"
-          id="player"
-          data-plyr-provider="youtube"
-          :data-plyr-embed-id="idyoutube"
-        />
-      </div>
-    </div>
   </b-navbar>
 </template>
 
