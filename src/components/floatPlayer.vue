@@ -3,7 +3,6 @@
     <div id="wrapper" class="video--wrapper">
       <div class="video">
         <div
-          @timeupdate="videoTimeUpdated"
           id="player"
           data-plyr-provider="youtube"
           :data-plyr-embed-id="idyoutube"
@@ -19,7 +18,8 @@
           /></b-button>
 
           <b-button variant="primary" @click="toggleMetadata"
-            ><b-icon :icon="playing ? 'pause-circle-fill' : 'play-circle-fill'"
+            ><b-icon
+              :icon="isPlaying ? 'pause-circle-fill' : 'play-circle-fill'"
           /></b-button>
 
           <b-button variant="primary"
@@ -41,11 +41,7 @@
 </template>
 
 <script>
-import moment from "moment";
-moment.locale("es");
-
 import Plyr from "plyr";
-import "plyr/dist/plyr.css";
 
 const generateTimeLabel = ({ current, final }) => {
   const [currentTime] = new Date(current * 1000)
@@ -67,65 +63,25 @@ export default {
       default: "rQiHzcdUPAU",
     },
   },
-  created() {
-    this.moment = moment;
-  },
-  computed: {
-    jsonVal() {
-      return "this.player";
-    },
-    usernameValue() {
-      return this.currentmoment;
-    },
-    reversedMessage: function () {
-      // `this` points to the vm instance
-      return this.currentmoment;
-    },
-  },
   data() {
     return {
-      playvalue: {
-        selected: 0,
-        icon: ["play", "pause"],
-      },
-      playing: true,
-      iconval: "play",
-
+      isPlaying: false,
       time: {
         current: 0,
         final: 0,
       },
       timeLabel: "00:00:00 de 00:00:00",
-
       thumbnail: "",
       title: "",
-
-      fullName: "Foo Bar",
-      currentmoment: "xd",
-      duracion: "Foo Bar",
       player: {},
       options: {
         autoplay: true,
         volume: 0.3,
-        //captions: { active: true, update: true, language: "auto" },
-        controls: [
-          /*
-          "play",
-          "rewind", // Rewind by the seek time (default 10 seconds)
-          "fast-forward", // Fast forward by the seek time (default 10 seconds)
-          
-          "settings",
-          */
-        ],
-        quality: { options: [2160, 1440, 1080, 720, 576, 480, 360, 240] },
       },
     };
   },
 
   methods: {
-    videoTimeUpdated: function () {
-      this.duracion = this.player.currentTime;
-    },
     goForward: function () {
       this.player.rewind(10);
       this.time = {
@@ -146,8 +102,6 @@ export default {
       document.getElementById("duration").innerHTML = this.timeLabel;
     },
     toggleMetadata: function () {
-      this.playing = !this.playing;
-
       this.player.togglePlay();
     },
   },
@@ -173,23 +127,21 @@ export default {
     let playEventId = null;
 
     this.player.on("ready", () => {
-      this.currentmoment = 0;
-      this.playing = true;
-
       setTimeout(() => {
         this.thumbnail = `url("${this.player.poster}")`;
         this.title = this.player.config.title;
-        this.player.play();
       }, 1000);
     });
 
     this.player.on("play", () => {
       playEventId = setInterval(updateDuration, 1000);
+      this.isPlaying = true;
     });
 
     this.player.on("pause", () => {
       clearInterval(playEventId);
       playEventId = null;
+      this.isPlaying = false;
     });
   },
 };
@@ -237,6 +189,7 @@ export default {
   .video {
     position: absolute;
     opacity: 0;
+    pointer-events: none;
   }
 }
 .player--actions {
