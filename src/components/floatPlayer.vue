@@ -264,8 +264,8 @@ export default {
   &:before {
     content: "";
     position: absolute;
-    height: 40%;
-    width: 40%;
+    height: 30%;
+    width: 30%;
     background-color: #333;
     top: 50%;
     left: 50%;
