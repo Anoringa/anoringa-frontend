@@ -180,7 +180,7 @@ export default {
         this.thumbnail = `url("${this.player.poster}")`;
         this.title = this.player.config.title;
         this.player.play();
-      }, 100);
+      }, 1000);
     });
 
     this.player.on("play", () => {
