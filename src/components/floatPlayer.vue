@@ -48,8 +48,12 @@ import Plyr from "plyr";
 import "plyr/dist/plyr.css";
 
 const generateTimeLabel = ({ current, final }) => {
-  const currentTime = moment(current * 1000).format("HH:mm:ss");
-  const finalTime = moment(final * 1000).format("HH:mm:ss");
+  const [currentTime] = new Date(current * 1000)
+    .toUTCString()
+    .match(/(\d\d:\d\d:\d\d)/);
+  const [finalTime] = new Date(final * 1000)
+    .toUTCString()
+    .match(/(\d\d:\d\d:\d\d)/);
 
   return `${currentTime} de ${finalTime}`;
 };
@@ -138,7 +142,6 @@ export default {
         ...this.time,
         current: this.player.currentTime,
       };
-
       this.timeLabel = generateTimeLabel(this.time);
       document.getElementById("duration").innerHTML = this.timeLabel;
     },
@@ -167,26 +170,26 @@ export default {
       }
     };
 
-    let updateDurationEventId = null;
+    let playEventId = null;
 
     this.player.on("ready", () => {
-      updateDurationEventId = setInterval(updateDuration, 1000);
-      this.player.play();
       this.currentmoment = 0;
       this.playing = true;
 
       setTimeout(() => {
         this.thumbnail = `url("${this.player.poster}")`;
         this.title = this.player.config.title;
+        this.player.play();
       }, 100);
     });
 
     this.player.on("play", () => {
-      updateDurationEventId = setInterval(updateDuration, 1000);
+      playEventId = setInterval(updateDuration, 1000);
     });
 
     this.player.on("pause", () => {
-      clearInterval(updateDurationEventId);
+      clearInterval(playEventId);
+      playEventId = null;
     });
   },
 };
@@ -255,6 +258,7 @@ export default {
     background-size: cover;
     border-radius: 50%;
     background-position: center center;
+    border: 1px solid #fff;
   }
 
   &:before {
