@@ -42,6 +42,7 @@
 
 <script>
 import Plyr from "plyr";
+import "plyr/dist/plyr.css";
 
 const generateTimeLabel = ({ current, final }) => {
   const [currentTime] = new Date(current * 1000)
