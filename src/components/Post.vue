@@ -6,7 +6,18 @@
       -->
 
       <Header :appName="appName">
+        <div v-if="userowner.username == userowner.username">
+          <button
+            type="button"
+            class="btn btn-lg btn-light btn-sm post-creation-button"
+          >
+          <ModalEditePost>EDITAR</ModalEditePost>
+          </button>
+        </div>
+
+        <!--
         <p v-if="usernameValue == userowner.username">Editar</p>
+      -->
       </Header>
 
       <floatPlayer
@@ -326,9 +337,6 @@
                       @click="replyThisComment(currentComent)"
                     >
                       <i class="fa fa-reply" style="font-size: 12px"></i>
-                      <!-- 
-                        <i style="font-size:24px" class="fa">&#xf112;</i>
-                        -->
                     </b-button>
 
                     <b-popover
@@ -345,28 +353,7 @@
                     <p class="last-updated" style="color: red">
                       Publicado {{ currentComent.createdAt | moment }}.
                     </p>
-                    <!--
-                    <b-button
-                      v-if="
-                        currentComent.user[0].username == userowner.username
-                      "
-                      variant="primary"
-                      >Modify</b-button
-                    >
-                    -->
                   </div>
-
-                  <!--
-          id: 20949438,
-          username: "lukaneco",
-          content: "Hola pa, que haces",
-          inResponseTo: [],
-          created_at: 12312948123
-                      
-<div class="repo" id="20949439">
-  <div class="stats">
-    <a class="pr-1" href="#20949439">@20949439</a>POR raul12312 en respuesta de <a class="pl-1 pr-1" href="#20949438">@20949438</a></div><p class="">nada por suerte</p><p class="last-updated">Last updated: 3 weeks ago.</p></div>
-                    -->
                 </div>
               </div>
             </div>
@@ -458,6 +445,7 @@ import Vue2Filters from "vue2-filters";
 
 import "quill/dist/quill.snow.css";
 import Quill from "quill";
+import ModalEditePost from './modals/ModalEditPost.vue'
 
 const SizeStyle = Quill.import("attributors/style/size");
 Quill.register(SizeStyle, true);
@@ -502,16 +490,7 @@ export default {
         },
       ],
     };
-  } /*
-    metaInfo: {
-      title: 'My Example App',
-      titleTemplate: '%s - Yay!',
-      htmlAttrs: {
-        lang: 'en',
-        amp: true
-      }
-    },
-    title: ({ $t }) => $t(this.pagetitle),*/,
+  },
   mixins: [Vue2Filters.mixin],
   filters: {
     moment: function (date) {
@@ -581,29 +560,15 @@ export default {
       music: false,
       commentEditor: null,
     };
-  } /*
-metaInfo() {
-        return {
-            title: `${this.pagetitle} - Anoringa`,
-            meta: [
-                { name: 'description', content: 'Mira ' + this.pagetitle + ' en Anoringa'},
-                { property: 'og:title', content: this.pagetitle + ' - Anoringa'},
-                { property: 'og:site_name', content: "Anoringa" },
-                { property: 'og:description', content: this.content.substring(0, 30)+"..."},
-                {property: 'og:type', content: 'article'},
-                {property: 'og:url', content: 'https://anoringa.netlify.app/post/' + this.id},
-                {property: 'og:image', content: 'https://anoringa.netlify.app/'+"/anoringa.png" }    
-            ]
-        }
-    },*/,
+  },
   name: "Post",
   components: {
-    //History,
     Multiselect,
     Header,
     Footer,
     loadingspinner,
     floatPlayer,
+    ModalEditePost
   },
   sockets: {
     connect: function () {
@@ -937,7 +902,7 @@ metaInfo() {
           });
         } else {
           console.log("el comentario esta vacio");
-          alert("apa\nal parecer te olvidaste de escribir tu comentario")
+          alert("apa\nal parecer te olvidaste de escribir tu comentario");
           //console.log("this.nuevoComemtarioTexto if false");
           console.log(this.nuevoComemtarioTexto);
         }
@@ -1101,14 +1066,12 @@ metaInfo() {
 <style>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
-
-
 .cumBucket > .ql-toolbar {
   position: static !important;
   /*
   
   */
-} 
+}
 .quill-wrap {
   max-width: 900px;
   width: 100%;
@@ -1464,5 +1427,3 @@ section {
     0px -2px 2px #ec008c, 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 </style>
-
-

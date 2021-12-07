@@ -8,7 +8,7 @@
           <b-form @submit="onSubmit" @reset="onReset" v-if="show">
             <b-form-group id="input-group-3" label="Tipo:" label-for="input-3">
               <b-form-select
-              @change="onChangeFormSelect"
+                @change="onChangeFormSelect"
                 id="input-3"
                 v-model="tickettype"
                 :options="tiposDeReporte"
@@ -47,8 +47,8 @@
                 rows="4"
               ></b-form-textarea>
             </b-form-group>
-            
-                <!--
+
+            <!--
             <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
               <b-form-checkbox-group
                 v-model="issueForm.checked"
@@ -101,13 +101,34 @@ import axios from "axios";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 //import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
 export default {
+  /*
+  props: {
+    type: {
+      required: false,
+      default: "Sugerencia",
+    },
+  },*/
+  created() {
+    var typeFromQuery = this.$route.query.type;
+    //console.log(sortFromQuery);
+    if (typeFromQuery == "Reporte") {
+      this.tickettype = "Reporte";
+    } else if (typeFromQuery == "Denuncia") {
+      this.tickettype = "Denuncia";
+    } else if (typeFromQuery == "Falla") {
+      this.tickettype = "Falla";
+    } else {
+      this.tickettype = "Sugerencia";
+    }
+  },
+  /*
   props: {
     query: {
       type: String,
       required: false,
       default: "Sugerencia",
     },
-  },
+  },*/
   mounted() {
     /**/
   },
@@ -143,7 +164,7 @@ export default {
     return {
       urlISSUESAPI: process.env.VUE_APP_ISSUESAPI,
       report_loaded: "",
-      tickettype: this.query,
+      tickettype: "Sugerencia",
       issueForm: {
         form_title: "",
         form_description: "",
@@ -258,7 +279,7 @@ export default {
 
       axios
         .post(
-            this.urlISSUESAPI +
+          this.urlISSUESAPI +
             "/issue?ISSUE_TITLE=" +
             this.issueForm.form_title +
             "&ISSUE_BODY=" +
@@ -279,9 +300,9 @@ export default {
 
     onChangeFormSelect(event) {
       //event.preventDefault();
-      console.log("😎🔄onChangeFormSelect: ",event)
+      console.log("😎🔄onChangeFormSelect: ", event);
       this.issueForm.type = event;
-      console.log("form after onChangeFormSelect: ",this.issueForm)
+      console.log("form after onChangeFormSelect: ", this.issueForm);
     },
     onReset(event) {
       event.preventDefault();

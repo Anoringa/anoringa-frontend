@@ -158,8 +158,10 @@
           >
           <b-dropdown-item href="/perfil">Configuración</b-dropdown-item>
           <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item href="/reportar">Soporte</b-dropdown-item>
-          <b-dropdown-item href="/reportar">Sugerir Cambios</b-dropdown-item>
+          <b-dropdown-item href="/reportar?type=Falla">Soporte</b-dropdown-item>
+          <b-dropdown-item href="/reportar?type=Reporte">Reportar</b-dropdown-item>
+          <b-dropdown-item href="/reportar?type=Sugerencia">Sugerir Cambios</b-dropdown-item>
+          <b-dropdown-divider></b-dropdown-divider>
           <b-dropdown-item @click="cerrarSecion()"
             >Cerrar Sesión</b-dropdown-item
           >
