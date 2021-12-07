@@ -147,12 +147,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.fixed-box {
-  position: fixed;
-  z-index: 300;
-}
-
+<style lang="scss" scoped>
 .music-meta-data {
   max-width: 400px;
   display: inline-block;
@@ -174,12 +169,6 @@ export default {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .music-meta-data {
-    width: 90px;
   }
 }
 
@@ -232,8 +221,15 @@ export default {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .music-meta-data {
+    width: 90px;
   }
 }
 </style>
