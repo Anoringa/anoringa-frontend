@@ -1121,6 +1121,10 @@ metaInfo() {
 .comments--wrapper {
   border: 1px solid $light2-color;
   border-radius: 4px;
+
+  &:empty {
+    border: none;
+  }
 }
 
 .repo {
