@@ -167,31 +167,41 @@
 
                 <div id="editor-wrapper" class="editor--wrapper"></div>
 
-                <b-form-valid-feedback :state="commentContentState"
-                  >a comentar</b-form-valid-feedback
-                >
-                <b-form-invalid-feedback :state="commentContentState">
-                  Animate a escribir algo 🥸<br />podes comentar lo que
-                  <strong id="pepegrillo">quieras*</strong> recorda que nadie
-                  sabe quien sos jijio
-
-                  <b-popover
-                    :target="'pepegrillo'"
-                    triggers="hover"
-                    placement="top"
-                  >
-                    <template #title>Tene en cuenta</template>
-
-                    <small
-                      >lo que Quieras* siguiendo las normas comunitarias,
-                      terminos y condiciones</small
+                <div class="d-flex justify-content-between comment-footer">
+                  <div>
+                    <b-form-valid-feedback :state="commentContentState"
+                      >a comentar</b-form-valid-feedback
                     >
-                  </b-popover>
-                </b-form-invalid-feedback>
 
-                <b-button class="m-3" v-b-modal.modal-1 @click="crearComentario"
-                  >Enviar Comentario</b-button
-                >
+                    <b-form-invalid-feedback :state="commentContentState">
+                      Animate a escribir algo 🥸<br />podes comentar lo que
+                      <strong id="pepegrillo">quieras*</strong> recorda que
+                      nadie sabe quien sos jijio
+
+                      <b-popover
+                        :target="'pepegrillo'"
+                        triggers="hover"
+                        placement="top"
+                      >
+                        <template #title>Tene en cuenta</template>
+
+                        <small
+                          >lo que Quieras* siguiendo las normas comunitarias,
+                          terminos y condiciones</small
+                        >
+                      </b-popover>
+                    </b-form-invalid-feedback>
+                  </div>
+
+                  <b-button
+                    v-b-modal.modal-1
+                    @click="crearComentario"
+                    variant="primary"
+                    class="comment-button"
+                  >
+                    Comentar
+                  </b-button>
+                </div>
 
                 <div id="comentarios" class="pt-3"></div>
                 <div v-if="comments !== null">
@@ -1084,6 +1094,12 @@ metaInfo() {
 
 <style src="./Post.css"></style>
 
+<style lang="scss">
+.editor--wrapper .ql-editor {
+  min-height: 100px;
+}
+</style>
+
 <style lang="scss" scoped>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
@@ -1094,8 +1110,23 @@ metaInfo() {
 
 .editor--wrapper {
   background-color: $secondary-color;
+  border-radius: 0;
+
+  .ql-editor {
+    min-height: 100px;
+  }
+}
+
+.comment-footer {
+  background: $secondary-color;
   border-radius: 0 0 4px 4px;
-  min-height: 100px;
+  border: 1px solid #ccc;
+  border-top-width: 0;
+}
+
+.comment-button {
+  border-radius: 0 0 4px 0;
+  z-index: 1;
 }
 
 .cumBucket > .ql-toolbar {
