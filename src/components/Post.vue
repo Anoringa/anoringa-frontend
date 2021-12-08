@@ -177,6 +177,7 @@
                   >
                     <div>
                       <b-form-valid-feedback
+                        v-if="commentContentState"
                         :state="commentContentState"
                         class="d-inline-block"
                       >
@@ -528,6 +529,7 @@ export default {
       nuevoComemtarioTexto: "",
       nuevoComemtarioEnRespuestaDe: [],
       ListaDeIdsDeComentarios: [],
+      hasPushedAComment: false,
       value: [],
       options: [
         { name: "Vue.js", language: "JavaScript" },
@@ -677,6 +679,10 @@ metaInfo() {
       });
       this.commentEditor.on("text-change", () => {
         this.nuevoComemtarioTexto = this.commentEditor.root.innerHTML;
+
+        if (this.nuevoComemtarioTexto !== "<p><br></p>") {
+          this.hasPushedAComment = false;
+        }
       });
       function videoHandler() {
         let url = prompt("copie y pegue la URL deL video Youtube aquí.");
@@ -890,64 +896,41 @@ metaInfo() {
       console.log(this.ListaDeIdsDeComentarios);
     },
     crearComentario() {
-      if (
-        localStorage.username != "" &&
-        localStorage.username != undefined &&
-        localStorage.username != null &&
-        localStorage.password != "" &&
-        localStorage.password != undefined &&
-        localStorage.password != null
-      ) {
-        if (
-          this.nuevoComemtarioTexto != "" &&
-          this.nuevoComemtarioTexto != null &&
-          this.commentContentState
-        ) {
-          console.log("this.nuevoComemtarioTexto if true");
-          console.log(this.nuevoComemtarioTexto);
-          console.log("Comemtario Create");
-          var data = {
-            username: localStorage.username,
-            //password: "req.body.password",
-            password: localStorage.password,
-            text: this.nuevoComemtarioTexto,
-            inResponseTo: this.ListaDeIdsDeComentarios,
-            postid: this.$route.params.id,
-          };
-          this.value = [];
-          this.ListaDeIdsDeComentarios = [];
-          this.nuevoComemtarioTexto = null;
-          this.commentEditor.root.innerHTML = null;
-          var self = this;
+      const isUserNameValid = Boolean(localStorage.username);
+      const isPasswordValid = Boolean(localStorage.password);
+      const isCommentValid = Boolean(this.nuevoComemtarioTexto);
 
-          //for troubleshooting console.log(data,self);
-
-          this.$socket.emit("comment", data, function (datos) {
-            console.log("socket.io emit");
-            console.log(datos);
-            datos.createdAt = moment().toISOString();
-            datos.updatedAt = moment().toISOString();
-            datos.user = [
-              { username: localStorage.username, _id: localStorage.username },
-            ];
-            self.comments.push(datos);
-            //this.$root.$emit("component1"); //like this
-            //this.$root.$emit("component1", "datos", datos);
-            //this.$root.$emit("sendPostP2P", "datos", datos);
-            //EventBus.$emit("sendPostP2P", "datos", datos);
-            //window.Evento.$emit("sendPostP2P", "datos", datos);
-            //this.posts.push(datos);
-          });
-        } else {
-          console.log("el comentario esta vacio");
-          alert("APA!\nAl parecer te olvidaste de escribir tu comentario!");
-          //console.log("this.nuevoComemtarioTexto if false");
-          console.log(this.nuevoComemtarioTexto);
-        }
-      } else {
-        console.log("logueate hijo de puta");
-        alert("logueate hijo de puta");
+      if (!isUserNameValid || !isPasswordValid) {
+        return alert("Logueate hijo de puta!");
+      } else if (!isCommentValid || !this.commentContentState) {
+        return alert(
+          "APA!\nAl parecer te olvidaste de escribir tu comentario!"
+        );
       }
+
+      const data = {
+        username: localStorage.username,
+        password: localStorage.password,
+        text: this.nuevoComemtarioTexto,
+        inResponseTo: this.ListaDeIdsDeComentarios,
+        postid: this.$route.params.id,
+      };
+      const self = this;
+
+      this.value = [];
+      this.ListaDeIdsDeComentarios = [];
+      this.nuevoComemtarioTexto = null;
+      this.commentEditor.root.innerHTML = null;
+      this.hasPushedAComment = true;
+
+      this.$socket.emit("comment", data, function (datos) {
+        datos.createdAt = moment().toISOString();
+        datos.updatedAt = moment().toISOString();
+        datos.user = [
+          { username: localStorage.username, _id: localStorage.username },
+        ];
+        self.comments.push(datos);
+      });
     },
     postCreate(titulox, contenidox, photox) {
       /*
@@ -1067,24 +1050,21 @@ metaInfo() {
   },
   computed: {
     commentContentState() {
-      console.log(this.nuevoComemtarioTexto);
-      if (this.nuevoComemtarioTexto) {
-        var postContent = this.nuevoComemtarioTexto;
-        console.log(postContent);
-        if (
-          postContent != null &&
-          postContent != "<p><br></p>" &&
-          postContent != "" &&
-          postContent.length >= 1
-        ) {
-          return true;
-        } else if (postContent == "") {
-          return null;
-        } else {
-          return false;
-        }
-      } else {
+      const postContent = this.nuevoComemtarioTexto;
+
+      if (this.hasPushedAComment || !postContent) return null;
+
+      if (
+        postContent != null &&
+        postContent != "<p><br></p>" &&
+        postContent != "" &&
+        postContent.length >= 1
+      ) {
+        return true;
+      } else if (postContent == "") {
         return null;
+      } else {
+        return false;
       }
     },
 
