@@ -148,7 +148,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .music-meta-data {
   max-width: 400px;
   display: inline-block;
