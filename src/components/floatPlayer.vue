@@ -205,7 +205,7 @@ export default {
     background-size: cover;
     border-radius: 50%;
     background-position: center center;
-    border: 1px solid $secondary-color;
+    border: 1px solid $light-color;
   }
 
   &:before {
@@ -218,7 +218,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    border: 2px solid $secondary-color;
+    border: 2px solid $light-color;
   }
 }
 

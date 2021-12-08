@@ -168,7 +168,13 @@
 
                   <div id="editor-wrapper" class="editor--wrapper"></div>
 
-                  <div class="d-flex justify-content-between comment-footer">
+                  <div
+                    class="
+                      d-flex
+                      justify-content-between
+                      comment-creator-footer
+                    "
+                  >
                     <div>
                       <b-form-valid-feedback
                         :state="commentContentState"
@@ -209,7 +215,7 @@
                 </div>
 
                 <div id="comentarios" class="pt-3"></div>
-                <div v-if="comments !== null">
+                <div v-if="comments !== null" class="comments--wrapper">
                   <div
                     class="repo container"
                     style="text-align: left"
@@ -1097,26 +1103,26 @@ metaInfo() {
 
 <style lang="scss" scoped>
 .toolbar--wrapper {
-  background-color: darken($secondary-color, 3%);
+  background-color: darken($light-color, 3%);
   border-radius: 4px 4px 0 0;
   border: none;
 }
 
 .editor--wrapper {
-  background-color: $secondary-color;
+  background-color: $light-color;
   border-radius: 0;
-  border: 1px solid #eee;
-  border-top: 1px solid #eee !important;
+  border: 1px solid $light1-color;
+  border-top: 1px solid $light1-color !important;
   border-width: 1px 0;
 }
 
 .comment-box-creator {
-  border: 1px solid #ccc;
+  border: 1px solid $light2-color;
   border-radius: 4px;
 }
 
-.comment-footer {
-  background: $secondary-color;
+.comment-creator-footer {
+  background: $light-color;
   border-radius: 0 0 4px 4px;
   border: none;
   padding-left: 10px;
@@ -1130,6 +1136,24 @@ metaInfo() {
 .comment-button {
   border-radius: 0 0 4px 0;
   z-index: 1;
+}
+
+.comments--wrapper {
+  border: 1px solid $light2-color;
+  border-radius: 4px;
+}
+
+.repo {
+  padding: 1em;
+  background-color: $light-color;
+  border-bottom: 1px solid $light1-color;
+
+  &:first-child {
+    border-radius: 4px 4px 0 0;
+  }
+  &:last-child {
+    border-radius: 0 0 4px 4px;
+  }
 }
 </style>
 
@@ -1347,8 +1371,7 @@ ul {
 .quill-pre {
   border: 0px;
 }
-header,
-.repo {
+header {
   border: 1px solid #ccc;
   padding: 1em;
   border-radius: 4px;
@@ -1361,9 +1384,6 @@ header :first-child,
 header :last-child,
 .repo :last-child {
   margin-bottom: 0;
-}
-.repo {
-  margin-bottom: 1em;
 }
 .repo h3 {
   margin-bottom: 0;

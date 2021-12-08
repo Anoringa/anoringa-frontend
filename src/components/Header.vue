@@ -1103,6 +1103,6 @@ body {
   font-size: 12px;
   vertical-align: middle;
   color: $primary-color;
-  background-color: $secondary-color;
+  background-color: $light-color;
 }
 </style>
