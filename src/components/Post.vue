@@ -153,7 +153,7 @@
                 </div>
               </form>
               <div class="form-group pt-3 cumBucket">
-                <div id="toolbar-wrapper">
+                <div id="toolbar-wrapper" class="toolbar--wrapper">
                   <span class="ql-formats">
                     <button class="ql-link"></button>
                     <button class="ql-image"></button>
@@ -165,7 +165,7 @@
                   </span>
                 </div>
 
-                <div id="editor-wrapper"></div>
+                <div id="editor-wrapper" class="editor--wrapper"></div>
 
                 <b-form-valid-feedback :state="commentContentState"
                   >a comentar</b-form-valid-feedback
@@ -188,19 +188,6 @@
                     >
                   </b-popover>
                 </b-form-invalid-feedback>
-
-                <!--
-                <label for="comment">el comentario:</label>
-                -->
-                <!--
-                <textarea
-                  v-model="nuevoComemtarioTexto"
-                  class="form-control"
-                  placeholder="Comentario..."
-                  rows="2"
-                  id="comment"
-                ></textarea>
-                -->
 
                 <b-button class="m-3" v-b-modal.modal-1 @click="crearComentario"
                   >Enviar Comentario</b-button
@@ -1097,23 +1084,26 @@ metaInfo() {
 
 <style src="./Post.css"></style>
 
-<style>
+<style lang="scss" scoped>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
+.toolbar--wrapper {
+  background-color: darken($secondary-color, 3%);
+  border-radius: 4px 4px 0 0;
+}
 
+.editor--wrapper {
+  background-color: $secondary-color;
+  border-radius: 0 0 4px 4px;
+  min-height: 100px;
+}
 
 .cumBucket > .ql-toolbar {
   position: static !important;
-  /*
-  
-  */
-} 
+}
 .quill-wrap {
   max-width: 900px;
   width: 100%;
-  /*margin-left:auto;
-  margin-right:auto;
-  */
   margin-top: 20px;
 }
 
@@ -1125,43 +1115,13 @@ metaInfo() {
 .quill-wrap .ql-picker {
   margin-right: 2px;
 }
-/*
-  .ql-indent-8{
-  padding-left: initial !important;
-}
-  
-  */
 
 .ql-indent-8 {
   padding-left: initial !important;
 }
 [class^="ql-indent"] {
-  /*WE USE ^ HERE */
-  /*padding-left: initial !important;
-  padding-left: 0 !important;*/
-
   padding-left: initial !important;
-  /*background-color: green;*/
 }
-/*
-  .ql-indent-* {
-  padding-left:initial!important;
-}
-.ql-indent-1 {
-  padding-left:initial!important;
-}
-.ql-indent-8{
-  padding-left:initial!important;
-
-}
-  */
-
-/*
-.contenidodelpost{
-
-  display: inline-block;
-
-}  */
 .contenidodelpost img {
   zoom: 2;
   display: block;
@@ -1171,37 +1131,6 @@ metaInfo() {
   width: 100%;
 }
 
-.commentRichTextViewer {
-  /*
-    box-sizing: border-box;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    height: 100%;
-    margin: 0px;
-    position: relative;
-
-box-sizing: border-box;
-    line-height: 1.42;
-    height: 100%;
-    outline: none;
-    overflow-y: auto;
-    padding: 12px 15px;
-    -o-tab-size: 4;
-    tab-size: 4;
-    -moz-tab-size: 4;
-    text-align: left;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    */
-}
-/*
-.quill-container , 
-*/
-/*
-.ql-editor {
-  display: inline-block;
-}
-*/
 .loadOrError {
   text-align: center;
   height: 100%;
