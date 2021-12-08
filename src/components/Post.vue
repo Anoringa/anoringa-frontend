@@ -1095,15 +1095,7 @@ metaInfo() {
 
 <style src="./Post.css"></style>
 
-<style lang="scss">
-.editor--wrapper .ql-editor {
-  min-height: 100px;
-}
-</style>
-
 <style lang="scss" scoped>
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
-
 .toolbar--wrapper {
   background-color: darken($secondary-color, 3%);
   border-radius: 4px 4px 0 0;
@@ -1116,10 +1108,6 @@ metaInfo() {
   border: 1px solid #eee;
   border-top: 1px solid #eee !important;
   border-width: 1px 0;
-
-  .ql-editor {
-    min-height: 100px;
-  }
 }
 
 .comment-box-creator {
@@ -1142,6 +1130,14 @@ metaInfo() {
 .comment-button {
   border-radius: 0 0 4px 0;
   z-index: 1;
+}
+</style>
+
+<style lang="scss">
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+.editor--wrapper .ql-editor {
+  min-height: 100px;
 }
 
 .cumBucket > .ql-toolbar {
@@ -1330,13 +1326,8 @@ footer {
   }
 } MEDIA QUERIES */
 .post-img {
-  /*
-  position: absolute;
-  */
   top: 0;
   left: 0;
-  /*height: 300px;
-  width: 300px;*/
   object-fit: cover;
 }
 /*
