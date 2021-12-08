@@ -153,19 +153,17 @@
                 </div>
               </form>
               <div class="form-group pt-3 cumBucket">
-                <!--
-                  <div id="commentToolbar">
-                    <span class="ql-formats">
-                      <button class="ql-link"></button>
-                      <button class="ql-image"></button>
-                      <button class="ql-video"></button>
-                      <button class="ql-code-block"></button>
-                    </span>
-                    <span class="ql-formats">
-                      <button class="ql-clean"></button>
-                    </span>
-                  </div>
-                  -->
+                <div id="toolbar-container">
+                  <span class="ql-formats">
+                    <button class="ql-link"></button>
+                    <button class="ql-image"></button>
+                    <button class="ql-video"></button>
+                    <button class="ql-code-block"></button>
+                  </span>
+                  <span class="ql-formats">
+                    <button class="ql-clean"></button>
+                  </span>
+                </div>
 
                 <div id="commentEditor"></div>
 
@@ -649,11 +647,12 @@ metaInfo() {
   },
   mounted() {
     setTimeout(() => {
-      var commentToolbar = [["link", "video", "image"]];
-      this.commentEditor = new Quill(document.getElementById("commentEditor"), {
+      const commentEditorWrapper = document.getElementById("commentEditor");
+
+      this.commentEditor = new Quill(commentEditorWrapper, {
         modules: {
           toolbar: {
-            container: commentToolbar,
+            container: "#toolbar-container",
             handlers: {
               image: imageHandler,
               video: videoHandler,
@@ -669,7 +668,7 @@ metaInfo() {
           },
         },
         readOnly: false,
-        placeholder: "Escribe aqui su comentario...",
+        placeholder: "Escribe aqui tu comentario...",
         theme: "snow",
       });
       this.commentEditor.on("text-change", () => {
