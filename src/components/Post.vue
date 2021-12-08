@@ -223,11 +223,7 @@
                     >
                       <a class="pr-1" :href="'#' + currentComent._id"
                         >@{{ abreviate(currentComent._id) }}</a
-                      ><!--
-                      <a
-                        v-bind:style="[compare(currentComent.user[0].username,userowner.username) ? 'color: red;': 'color: white;',]"
-                        >por {{ currentComent.user[0].username }}</a
-                      >-->
+                      >
                       por
                       <div
                         style="display: inline"
@@ -1362,9 +1358,10 @@ ul {
 }
 header,
 .repo {
-  border: 1px solid #eee;
+  border: 1px solid #ccc;
   padding: 1em;
-  border-radius: 3px;
+  border-radius: 4px;
+  background-color: #fff;
 }
 header :first-child,
 .repo :first-child {
