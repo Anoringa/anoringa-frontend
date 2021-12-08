@@ -1148,6 +1148,7 @@ metaInfo() {
   padding: 1em;
   background-color: $light-color;
   border-bottom: 1px solid $light1-color;
+  max-width: initial;
 
   &:first-child {
     border-radius: 4px 4px 0 0;
@@ -1383,6 +1384,7 @@ header :last-child,
 }
 .repo h3 {
   margin-bottom: 0;
+  max-width: initial;
 }
 .stats,
 .last-updated {
