@@ -149,6 +149,10 @@ export default {
 </script>
 
 <style lang="scss">
+.sticky-top {
+  z-index: 300 !important;
+}
+
 .music-meta-data {
   max-width: 400px;
   display: inline-block;
