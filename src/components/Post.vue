@@ -153,56 +153,59 @@
                 </div>
               </form>
               <div class="form-group pt-3 cumBucket">
-                <div id="toolbar-wrapper" class="toolbar--wrapper">
-                  <span class="ql-formats">
-                    <button class="ql-link"></button>
-                    <button class="ql-image"></button>
-                    <button class="ql-video"></button>
-                    <button class="ql-code-block"></button>
-                  </span>
-                  <span class="ql-formats">
-                    <button class="ql-clean"></button>
-                  </span>
-                </div>
-
-                <div id="editor-wrapper" class="editor--wrapper"></div>
-
-                <div class="d-flex justify-content-between comment-footer">
-                  <div>
-                    <b-form-valid-feedback
-                      :state="commentContentState"
-                      class="d-inline-block"
-                    >
-                      Comenta libremente lo que
-                      <strong id="pepegrillo">quieras</strong>!
-
-                      <b-popover
-                        :target="'pepegrillo'"
-                        triggers="hover"
-                        placement="top"
-                      >
-                        <template #title>Ten en cuenta</template>
-
-                        <medium
-                          >Lo que <strong>quieras</strong> siempre y cuando siga
-                          las normas comunitarias, terminos y condiciones! ☭☭
-                        </medium>
-                      </b-popover>
-                    </b-form-valid-feedback>
-
-                    <b-form-invalid-feedback :state="commentContentState">
-                      El comentario no puede estar vacio!
-                    </b-form-invalid-feedback>
+                <div class="comment-box-creator">
+                  <div id="toolbar-wrapper" class="toolbar--wrapper">
+                    <span class="ql-formats">
+                      <button class="ql-link"></button>
+                      <button class="ql-image"></button>
+                      <button class="ql-video"></button>
+                      <button class="ql-code-block"></button>
+                    </span>
+                    <span class="ql-formats">
+                      <button class="ql-clean"></button>
+                    </span>
                   </div>
 
-                  <b-button
-                    v-b-modal.modal-1
-                    @click="crearComentario"
-                    variant="primary"
-                    class="comment-button"
-                  >
-                    Comentar
-                  </b-button>
+                  <div id="editor-wrapper" class="editor--wrapper"></div>
+
+                  <div class="d-flex justify-content-between comment-footer">
+                    <div>
+                      <b-form-valid-feedback
+                        :state="commentContentState"
+                        class="d-inline-block"
+                      >
+                        Comenta libremente lo que
+                        <strong id="pepegrillo">quieras</strong>!
+
+                        <b-popover
+                          :target="'pepegrillo'"
+                          triggers="hover"
+                          placement="bottom"
+                        >
+                          <template #title>Ten en cuenta</template>
+
+                          <medium
+                            >Lo que <strong>quieras</strong> siempre y cuando
+                            siga las normas comunitarias, terminos y
+                            condiciones! ☭☭
+                          </medium>
+                        </b-popover>
+                      </b-form-valid-feedback>
+
+                      <b-form-invalid-feedback :state="commentContentState">
+                        El comentario no puede estar vacio!
+                      </b-form-invalid-feedback>
+                    </div>
+
+                    <b-button
+                      v-b-modal.modal-1
+                      @click="crearComentario"
+                      variant="primary"
+                      class="comment-button"
+                    >
+                      Comentar
+                    </b-button>
+                  </div>
                 </div>
 
                 <div id="comentarios" class="pt-3"></div>
@@ -1108,22 +1111,30 @@ metaInfo() {
 .toolbar--wrapper {
   background-color: darken($secondary-color, 3%);
   border-radius: 4px 4px 0 0;
+  border: none;
 }
 
 .editor--wrapper {
   background-color: $secondary-color;
   border-radius: 0;
+  border: 1px solid #eee;
+  border-top: 1px solid #eee !important;
+  border-width: 1px 0;
 
   .ql-editor {
     min-height: 100px;
   }
 }
 
+.comment-box-creator {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .comment-footer {
   background: $secondary-color;
   border-radius: 0 0 4px 4px;
-  border: 1px solid #ccc;
-  border-top-width: 0;
+  border: none;
   padding-left: 10px;
 
   div:first-child {
