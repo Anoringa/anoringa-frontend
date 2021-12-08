@@ -154,64 +154,74 @@
               </form>
               <div class="form-group pt-3 cumBucket">
                 <div class="comment-box-creator">
-                  <div id="toolbar-wrapper" class="toolbar--wrapper">
-                    <span class="ql-formats">
-                      <button class="ql-link"></button>
-                      <button class="ql-image"></button>
-                      <button class="ql-video"></button>
-                      <button class="ql-code-block"></button>
-                    </span>
-                    <span class="ql-formats">
-                      <button class="ql-clean"></button>
-                    </span>
+                  <div class="loader">
+                    <b-spinner
+                      v-if="!isEditorLoaded"
+                      variant="primary"
+                      key="primary"
+                    ></b-spinner>
                   </div>
 
-                  <div id="editor-wrapper" class="editor--wrapper"></div>
-
-                  <div
-                    class="
-                      d-flex
-                      justify-content-between
-                      comment-creator-footer
-                    "
-                  >
-                    <div>
-                      <b-form-valid-feedback
-                        v-if="commentContentState"
-                        :state="commentContentState"
-                        class="d-inline-block"
-                      >
-                        Comenta libremente lo que
-                        <strong id="pepegrillo">quieras</strong>!
-
-                        <b-popover
-                          :target="'pepegrillo'"
-                          triggers="hover"
-                          placement="bottom"
-                        >
-                          <template #title>Ten en cuenta</template>
-
-                          <medium
-                            >Lo que <strong>quieras</strong> siempre y cuando
-                            siga las normas comunitarias, terminos y
-                            condiciones! ☭☭
-                          </medium>
-                        </b-popover>
-                      </b-form-valid-feedback>
-
-                      <b-form-invalid-feedback :state="commentContentState">
-                        El comentario no puede estar vacio!
-                      </b-form-invalid-feedback>
+                  <div :class="!isEditorLoaded ? 'hidden' : ''">
+                    <div id="toolbar-wrapper" class="toolbar--wrapper">
+                      <span class="ql-formats">
+                        <button class="ql-link"></button>
+                        <button class="ql-image"></button>
+                        <button class="ql-video"></button>
+                        <button class="ql-code-block"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-clean"></button>
+                      </span>
                     </div>
 
-                    <b-button
-                      v-b-modal.modal-1
-                      @click="crearComentario"
-                      variant="primary"
-                      class="comment-button"
+                    <div id="editor-wrapper" class="editor--wrapper"></div>
+
+                    <div
+                      class="
+                        d-flex
+                        justify-content-between
+                        comment-creator-footer
+                      "
                     >
-                      Comentar
-                    </b-button>
+                      <div>
+                        <b-form-valid-feedback
+                          v-if="commentContentState"
+                          :state="commentContentState"
+                          class="d-inline-block"
+                        >
+                          Comenta libremente lo que
+                          <strong id="pepegrillo">quieras</strong>!
+
+                          <b-popover
+                            :target="'pepegrillo'"
+                            triggers="hover"
+                            placement="bottom"
+                          >
+                            <template #title>Ten en cuenta</template>
+
+                            <medium
+                              >Lo que <strong>quieras</strong> siempre y cuando
+                              siga las normas comunitarias, terminos y
+                              condiciones! ☭☭
+                            </medium>
+                          </b-popover>
+                        </b-form-valid-feedback>
+
+                        <b-form-invalid-feedback :state="commentContentState">
+                          El comentario no puede estar vacio!
+                        </b-form-invalid-feedback>
+                      </div>
+
+                      <b-button
+                        v-b-modal.modal-1
+                        @click="crearComentario"
+                        variant="primary"
+                        class="comment-button"
+                      >
+                        Comentar
+                      </b-button>
+                    </div>
                   </div>
                 </div>
 
@@ -472,28 +482,6 @@ export default {
   created() {
     this.moment = moment;
     this.getPostDetail();
-
-    /*
-
-    // QuillJS rich text viewer
-
-    this.editor = new Quill(this.$el.querySelector("#quill-container"), {
-      readOnly: true,
-      theme: "snow",
-    });
-    */
-
-    setTimeout(() => {}, 2000);
-
-    // 3000 millisec is maybe too long but too make sure that the problem is from creating
-    // Quill before DOM
-
-    //var BackgroundClass = Quill.import("attributors/class/background");
-    //var ColorClass = Quill.import("attributors/class/color");
-    //var SizeStyle = Quill.import("attributors/style/size");
-    //Quill.register(BackgroundClass, true);
-    //Quill.register(ColorClass, true);
-    //Quill.register(SizeStyle, true);
   },
   metaInfo() {
     return {
@@ -530,6 +518,7 @@ export default {
       nuevoComemtarioEnRespuestaDe: [],
       ListaDeIdsDeComentarios: [],
       hasPushedAComment: false,
+      isEditorLoaded: false,
       value: [],
       options: [
         { name: "Vue.js", language: "JavaScript" },
@@ -677,13 +666,9 @@ metaInfo() {
         placeholder: "Escribe aqui tu comentario...",
         theme: "snow",
       });
-      this.commentEditor.on("text-change", () => {
-        this.nuevoComemtarioTexto = this.commentEditor.root.innerHTML;
 
-        if (this.nuevoComemtarioTexto !== "<p><br></p>") {
-          this.hasPushedAComment = false;
-        }
-      });
+      this.isEditorLoaded = true;
+
       function videoHandler() {
         let url = prompt("copie y pegue la URL deL video Youtube aquí.");
         url = getVideoUrl(url);
@@ -1099,6 +1084,20 @@ metaInfo() {
 .comment-box-creator {
   border: 1px solid $light2-color;
   border-radius: 4px;
+  transition: opacity 1s ease-in-out;
+  min-height: 181px;
+  position: relative;
+  background-color: $light-color;
+
+  .loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+.hidden {
+  opacity: 0;
 }
 
 .comment-creator-footer {
@@ -1203,12 +1202,7 @@ metaInfo() {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-* {
-  /*
-  margin: 0;
-  padding: 0;
-  */
-}
+
 html,
 body {
   height: 100%;
