@@ -169,27 +169,29 @@
 
                 <div class="d-flex justify-content-between comment-footer">
                   <div>
-                    <b-form-valid-feedback :state="commentContentState"
-                      >a comentar</b-form-valid-feedback
+                    <b-form-valid-feedback
+                      :state="commentContentState"
+                      class="d-inline-block"
                     >
-
-                    <b-form-invalid-feedback :state="commentContentState">
-                      Animate a escribir algo 🥸<br />podes comentar lo que
-                      <strong id="pepegrillo">quieras*</strong> recorda que
-                      nadie sabe quien sos jijio
+                      Comenta libremente lo que
+                      <strong id="pepegrillo">quieras</strong>!
 
                       <b-popover
                         :target="'pepegrillo'"
                         triggers="hover"
                         placement="top"
                       >
-                        <template #title>Tene en cuenta</template>
+                        <template #title>Ten en cuenta</template>
 
-                        <small
-                          >lo que Quieras* siguiendo las normas comunitarias,
-                          terminos y condiciones</small
-                        >
+                        <medium
+                          >Lo que <strong>quieras</strong> siempre y cuando siga
+                          las normas comunitarias, terminos y condiciones! ☭☭
+                        </medium>
                       </b-popover>
+                    </b-form-valid-feedback>
+
+                    <b-form-invalid-feedback :state="commentContentState">
+                      El comentario no puede estar vacio!
                     </b-form-invalid-feedback>
                   </div>
 
@@ -933,7 +935,7 @@ metaInfo() {
           });
         } else {
           console.log("el comentario esta vacio");
-          alert("apa\nal parecer te olvidaste de escribir tu comentario")
+          alert("APA!\nAl parecer te olvidaste de escribir tu comentario!");
           //console.log("this.nuevoComemtarioTexto if false");
           console.log(this.nuevoComemtarioTexto);
         }
@@ -1122,6 +1124,12 @@ metaInfo() {
   border-radius: 0 0 4px 4px;
   border: 1px solid #ccc;
   border-top-width: 0;
+  padding-left: 10px;
+
+  div:first-child {
+    margin: 0;
+    vertical-align: sub;
+  }
 }
 
 .comment-button {
