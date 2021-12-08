@@ -71,29 +71,12 @@
 -->
         <b-row class="mb-12 pt-5 pb-5">
           <b-col lg="6" style="background-color: lavender">
-            <div>
-              <img
-                :src="photo ? photo : photodefault"
-                class="img-fluid post-img"
-                alt="aca iria una foto pero nose donde esta"
-                :title="phototitle ? phototitle : 'default photo title'"
-              />
-
-              <!-- 
-              <img
-              
-                :src="[
-                photo
-                  ? {
-                      'background-image':
-                        'url(' + photo + '), url(' + photodefault + ')',
-                    }
-                  : { 'background-image': 'url(' + photodefault + ')' },
-              ]"
-                class="img-fluid post-img"
-                alt="Responsive image" />
-                -->
-            </div>
+            <img
+              :src="photo ? photo : photodefault"
+              class="img-fluid post-img"
+              alt="aca iria una foto pero nose donde esta"
+              :title="phototitle ? phototitle : 'default photo title'"
+            />
 
             <h2 class="p-3" style="text-align: left">
               {{ pagetitle }}
@@ -1201,14 +1184,8 @@ footer {
   }
 } MEDIA QUERIES */
 .post-img {
-  /*
-  position: absolute;
-  */
-  top: 0;
-  left: 0;
-  /*height: 300px;
-  width: 300px;*/
-  object-fit: cover;
+  display: block;
+  margin: 0 auto;
 }
 
 /*
