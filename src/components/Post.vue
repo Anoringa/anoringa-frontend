@@ -666,6 +666,9 @@ metaInfo() {
         placeholder: "Escribe aqui tu comentario...",
         theme: "snow",
       });
+      this.commentEditor.on("text-change", () => {
+        this.nuevoComemtarioTexto = this.commentEditor.root.innerHTML;
+      });
 
       this.isEditorLoaded = true;
 
@@ -881,41 +884,56 @@ metaInfo() {
       console.log(this.ListaDeIdsDeComentarios);
     },
     crearComentario() {
-      const isUserNameValid = Boolean(localStorage.username);
-      const isPasswordValid = Boolean(localStorage.password);
-      const isCommentValid = Boolean(this.nuevoComemtarioTexto);
+      if (
+        localStorage.username != "" &&
+        localStorage.username != undefined &&
+        localStorage.username != null &&
+        localStorage.password != "" &&
+        localStorage.password != undefined &&
+        localStorage.password != null
+      ) {
+        if (
+          this.nuevoComemtarioTexto != "" &&
+          this.nuevoComemtarioTexto != null &&
+          this.commentContentState
+        ) {
+          console.log("this.nuevoComemtarioTexto if true");
+          console.log(this.nuevoComemtarioTexto);
+          console.log("Comemtario Create");
+          var data = {
+            username: localStorage.username,
+            //password: "req.body.password",
+            password: localStorage.password,
+            text: this.nuevoComemtarioTexto,
+            inResponseTo: this.ListaDeIdsDeComentarios,
+            postid: this.$route.params.id,
+          };
+          this.value = [];
+          this.ListaDeIdsDeComentarios = [];
+          this.nuevoComemtarioTexto = null;
+          this.commentEditor.root.innerHTML = null;
+          var self = this;
 
-      if (!isUserNameValid || !isPasswordValid) {
-        return alert("Logueate hijo de puta!");
-      } else if (!isCommentValid || !this.commentContentState) {
-        return alert(
-          "APA!\nAl parecer te olvidaste de escribir tu comentario!"
-        );
+          this.$socket.emit("comment", data, function (datos) {
+            console.log("socket.io emit");
+            console.log(datos);
+            datos.createdAt = moment().toISOString();
+            datos.updatedAt = moment().toISOString();
+            datos.user = [
+              { username: localStorage.username, _id: localStorage.username },
+            ];
+            self.comments.push(datos);
+          });
+        } else {
+          console.log("el comentario esta vacio");
+          alert("apa\nal parecer te olvidaste de escribir tu comentario");
+          //console.log("this.nuevoComemtarioTexto if false");
+          console.log(this.nuevoComemtarioTexto);
+        }
+      } else {
+        console.log("logueate hijo de puta");
+        alert("logueate hijo de puta");
       }
-
-      const data = {
-        username: localStorage.username,
-        password: localStorage.password,
-        text: this.nuevoComemtarioTexto,
-        inResponseTo: this.ListaDeIdsDeComentarios,
-        postid: this.$route.params.id,
-      };
-      const self = this;
-
-      this.value = [];
-      this.ListaDeIdsDeComentarios = [];
-      this.nuevoComemtarioTexto = null;
-      this.commentEditor.root.innerHTML = null;
-      this.hasPushedAComment = true;
-
-      this.$socket.emit("comment", data, function (datos) {
-        datos.createdAt = moment().toISOString();
-        datos.updatedAt = moment().toISOString();
-        datos.user = [
-          { username: localStorage.username, _id: localStorage.username },
-        ];
-        self.comments.push(datos);
-      });
     },
     postCreate(titulox, contenidox, photox) {
       /*
