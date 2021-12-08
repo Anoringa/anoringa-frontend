@@ -153,7 +153,7 @@
                 </div>
               </form>
               <div class="form-group pt-3 cumBucket">
-                <div id="toolbar-container">
+                <div id="toolbar-wrapper">
                   <span class="ql-formats">
                     <button class="ql-link"></button>
                     <button class="ql-image"></button>
@@ -165,7 +165,7 @@
                   </span>
                 </div>
 
-                <div id="commentEditor"></div>
+                <div id="editor-wrapper"></div>
 
                 <b-form-valid-feedback :state="commentContentState"
                   >a comentar</b-form-valid-feedback
@@ -647,12 +647,12 @@ metaInfo() {
   },
   mounted() {
     setTimeout(() => {
-      const commentEditorWrapper = document.getElementById("commentEditor");
+      const commentEditorWrapper = document.getElementById("editor-wrapper");
 
       this.commentEditor = new Quill(commentEditorWrapper, {
         modules: {
           toolbar: {
-            container: "#toolbar-container",
+            container: "#toolbar-wrapper",
             handlers: {
               image: imageHandler,
               video: videoHandler,
