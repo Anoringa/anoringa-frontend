@@ -15,8 +15,8 @@
       ></floatPlayer>
 
       <div class="container-fluid">
-        <b-row class="mb-12 pt-5 pb-5">
-          <b-col lg="6" style="background-color: lavender">
+        <b-row class="mb-12 pb-5">
+          <b-col lg="6" class="post-column">
             <div>
               <img
                 :src="photo ? photo : photodefault"
@@ -29,16 +29,6 @@
               {{ pagetitle }}
             </h2>
 
-            <!--
-            <pre
-              class="pb-5 contenidodelpost"
-              style="
-                text-align: left;
-                word-wrap: break-word;
-                white-space: pre-wrap;
-              "
-            ><p v-html="content"></p></pre>
-            -->
             <div class="pb-3">
               <div id="quill-container" class="quill-pre"></div>
             </div>
@@ -57,7 +47,7 @@
               }}.
             </p>
           </b-col>
-          <b-col lg="6" style="background-color: lavenderblush">
+          <b-col lg="6">
             <h2 class="p-2 text-center">Comentarios</h2>
             <div style="width: 100%">
               <form class="pt-3">
@@ -1085,6 +1075,11 @@ metaInfo() {
 <style src="./Post.css"></style>
 
 <style lang="scss" scoped>
+.post-column {
+  padding-top: 15px;
+  border-right: 1px solid $light2-color;
+}
+
 .toolbar--wrapper {
   background-color: darken($light-color, 3%);
   border-radius: 4px 4px 0 0;
