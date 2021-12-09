@@ -82,14 +82,17 @@
       </a>
     </div>
   </main>
-  <div v-else-if="loaded == false" class="loadOrError">
-    <b-spinner
-      variant="danger"
-      key="danger"
-      style="width: 4rem; height: 4rem"
-    ></b-spinner>
+  <div v-else class="idle-wrapper">
+    <div v-if="loaded == false" class="loader">
+      <b-spinner
+        variant="danger"
+        key="danger"
+        style="width: 4rem; height: 4rem"
+      ></b-spinner>
+    </div>
+
+    <div v-else-if="loaded == 'ERROR'" class="loadOrError">ERROR</div>
   </div>
-  <div v-else-if="loaded == 'ERROR'" class="loadOrError">ERROR</div>
 </template>
 
 
@@ -497,12 +500,6 @@ export default {
 };
 </script>
 
-<style lang="postcss" scoped>
-/*
-@import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
-https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
-*/
-</style>
 <style lang="scss" scoped>
 #projects {
   padding: 1%;
@@ -511,16 +508,18 @@ https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
 #index {
   min-height: 100vh;
 }
+.idle-wrapper {
+  height: calc(100vh - 200px);
+  position: relative;
+}
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 </style>
 
-
-<style lang="postcss">
-/*
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-*/
-</style>
 
     <style>
 #projects {
@@ -597,7 +596,7 @@ https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
     */
     font-weight: initial;
     font-size: 1.3rem;
-    
+
     /*
     width: 90%;
     margin-left: 5% !important;
