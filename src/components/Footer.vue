@@ -140,6 +140,7 @@ $bright: #ddd;
   text-align: center;
   border-top: 1px solid $light2-color;
   padding: 15px 0;
+  background-color: $primary-light1-color;
 }
 .card {
   background: #fff;
