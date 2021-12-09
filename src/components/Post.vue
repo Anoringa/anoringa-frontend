@@ -15,7 +15,7 @@
       ></floatPlayer>
 
       <div class="container-fluid">
-        <b-row class="mb-12 pb-5">
+        <b-row class="mb-12">
           <b-col lg="6" class="post-column">
             <div>
               <img
@@ -375,8 +375,9 @@
             </div>
           </b-col>
         </b-row>
-        <Footer></Footer>
       </div>
+
+      <Footer></Footer>
     </div>
     <div v-else-if="loaded_correctly == false" class="loadOrError" style="">
       <b-spinner
