@@ -1238,7 +1238,9 @@ body {
   color: black;
   outline: 1px solid $light2-color;
   outline-offset: -1px;
+  outline-width: 0 1px;
   min-height: 100vh;
+  background-color: $primary-light1-color;
 }
 .container-fluid {
   background: $primary-light1-color;
