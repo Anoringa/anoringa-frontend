@@ -379,8 +379,11 @@
       </div>
     </div>
     <div v-else-if="loaded_correctly == false" class="loadOrError" style="">
-      Cargando
-      <b-spinner variant="danger" key="danger"></b-spinner>
+      <b-spinner
+        variant="danger"
+        key="danger"
+        style="width: 4rem; height: 4rem"
+      ></b-spinner>
     </div>
     <div v-else-if="loaded_correctly == 'ERROR'" style="">
       ERROR
@@ -1196,7 +1199,10 @@ metaInfo() {
 
 .loadOrError {
   text-align: center;
-  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 .container {
   position: relative;
@@ -1231,6 +1237,7 @@ body {
   color: black;
   outline: 1px solid $light2-color;
   outline-offset: -1px;
+  min-height: 100vh;
 }
 .container-fluid {
   background: $primary-light1-color;
