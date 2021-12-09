@@ -501,7 +501,11 @@ export default {
 https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
 */
 </style>
-<style scoped>
+<style lang="scss" scoped>
+#projects {
+  padding: 1%;
+  background-color: $primary-light1-color;
+}
 </style>
 
 
