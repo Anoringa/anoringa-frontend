@@ -179,17 +179,8 @@ export default {
 </style> 
 
 <style lang="scss" scoped>
-// include animation styles
-//@import "vodal/common.css";
-//@import "vodal/rotate.css";
-
 #app {
-  //width: 80%;
-  /*
-  margin: 0px;
-  padding: 0px;
-  text-align: center;
-  */
+  background-color: $light-color;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
