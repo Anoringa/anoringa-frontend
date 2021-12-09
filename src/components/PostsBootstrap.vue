@@ -509,8 +509,9 @@ export default {
   min-height: 100vh;
 }
 .idle-wrapper {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 250px);
   position: relative;
+  background-color: $primary-light1-color;
 }
 .loader {
   position: absolute;

@@ -181,6 +181,7 @@ export default {
 <style lang="scss" scoped>
 #app {
   background-color: $primary-light2-color;
+  min-height: 100vh;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");

@@ -139,7 +139,7 @@ $bright: #ddd;
 #bobafet {
   text-align: center;
   border-top: 1px solid $light2-color;
-  padding: 15px 0;
+  padding: 15px 0 100px;
   background-color: $primary-light1-color;
 }
 .card {
