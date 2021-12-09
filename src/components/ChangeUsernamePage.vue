@@ -5,7 +5,7 @@
       <p>{{appName}}</p>
     -->
 
-    <div class="container pt-3">
+    <div class="container pt-3 configuration-wrapper">
       <h2>Configuraciones</h2>
 
       <!--
@@ -49,12 +49,6 @@
       </div>
     </div>
 
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-
     <Footer></Footer>
   </div>
 </template>
@@ -76,7 +70,11 @@ export default {
       var NewName = this.posibleNewName;
       //console.log(NewName);
       let pattern = /^[¡!¿?@çÇ.,a-zA-Z\d\-_\s]{2,32}$/;
-      if (this.posibleNewName != null && NewName.match(pattern) && !this.usernameAlreadyInUse) {
+      if (
+        this.posibleNewName != null &&
+        NewName.match(pattern) &&
+        !this.usernameAlreadyInUse
+      ) {
         return true;
       } else if (this.posibleNewName == null && !this.usernameAlreadyInUse) {
         return null;
@@ -151,8 +149,8 @@ export default {
         autoHideDelay: 2500,
         appendToast: append,
         variant: variant, //"warning",
-        
-          toaster: 'b-toaster-bottom-right',
+
+        toaster: "b-toaster-bottom-right",
         solid: true,
       });
     },
@@ -277,5 +275,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+#index {
+  background-color: $primary-light1-color;
+  height: 100vh;
+}
+
+.configuration-wrapper {
+  padding-bottom: 40vh;
+}
 </style>
