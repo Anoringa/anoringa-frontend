@@ -1256,11 +1256,6 @@ header {
   width: 100%;
   background-color: #ccf;
 }
-footer {
-  width: 100%;
-  background-color: rgb(250, 241, 241);
-  height: 100px;
-}
 .nav {
   list-style: none;
   margin-left: 0;

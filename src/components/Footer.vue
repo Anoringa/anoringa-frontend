@@ -137,14 +137,9 @@ $dark: #555;
 $bright: #ddd;
 
 #bobafet {
-  //width: 80%;
-  /*
-  margin: 0px;
-  padding: 0px;
-  */
   text-align: center;
   border-top: 1px solid $light2-color;
-  padding-top: 15px;
+  padding: 15px 0;
 }
 .card {
   background: #fff;
