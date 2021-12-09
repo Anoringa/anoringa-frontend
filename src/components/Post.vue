@@ -15,8 +15,8 @@
       ></floatPlayer>
 
       <div class="container-fluid">
-        <b-row class="mb-12 pt-5 pb-5">
-          <b-col lg="6" style="background-color: lavender">
+        <b-row class="mb-12">
+          <b-col lg="6" class="post-column">
             <div>
               <img
                 :src="photo ? photo : photodefault"
@@ -29,16 +29,6 @@
               {{ pagetitle }}
             </h2>
 
-            <!--
-            <pre
-              class="pb-5 contenidodelpost"
-              style="
-                text-align: left;
-                word-wrap: break-word;
-                white-space: pre-wrap;
-              "
-            ><p v-html="content"></p></pre>
-            -->
             <div class="pb-3">
               <div id="quill-container" class="quill-pre"></div>
             </div>
@@ -57,7 +47,7 @@
               }}.
             </p>
           </b-col>
-          <b-col lg="6" style="background-color: lavenderblush">
+          <b-col lg="6">
             <h2 class="p-2 text-center">Comentarios</h2>
             <div style="width: 100%">
               <form class="pt-3">
@@ -385,12 +375,16 @@
             </div>
           </b-col>
         </b-row>
-        <Footer></Footer>
       </div>
+
+      <Footer></Footer>
     </div>
     <div v-else-if="loaded_correctly == false" class="loadOrError" style="">
-      Cargando
-      <b-spinner variant="danger" key="danger"></b-spinner>
+      <b-spinner
+        variant="danger"
+        key="danger"
+        style="width: 4rem; height: 4rem"
+      ></b-spinner>
     </div>
     <div v-else-if="loaded_correctly == 'ERROR'" style="">
       ERROR
@@ -1085,6 +1079,11 @@ metaInfo() {
 <style src="./Post.css"></style>
 
 <style lang="scss" scoped>
+.post-column {
+  padding-top: 15px;
+  border-right: 1px solid $light2-color;
+}
+
 .toolbar--wrapper {
   background-color: darken($light-color, 3%);
   border-radius: 4px 4px 0 0;
@@ -1201,7 +1200,10 @@ metaInfo() {
 
 .loadOrError {
   text-align: center;
-  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 .container {
   position: relative;
@@ -1213,7 +1215,7 @@ metaInfo() {
   font-size: 14px;
 }
 </style>
-<style lang="css" scoped>
+<style lang="scss" scoped>
 *,
 *:before,
 *:after {
@@ -1230,33 +1232,20 @@ body {
   */
 }
 .maindiv {
-  /*
-  margin: 3em auto;
-  max-width: 60em;
-  margin: auto;
-  */
-  max-width: 60em;
+  max-width: 70em;
   margin: auto;
   line-height: 1.5em;
   color: black;
-  background-color: gainsboro;
-  /*
-  background-image: url("https://www.w3schools.com/cssref/paper.gif");
-  background-repeat: repeat-y;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  */
+  outline: 1px solid $light2-color;
+  outline-offset: -1px;
+  outline-width: 0 1px;
+  min-height: 100vh;
+  background-color: $primary-light1-color;
 }
 .container-fluid {
-  /*
-  background-color: white;
-  */
-  background-color: lavenderblush;
+  background: $primary-light1-color;
 }
+
 header {
   background-color: #aaa;
   height: 50px;
@@ -1268,11 +1257,6 @@ header {
 .Content {
   width: 100%;
   background-color: #ccf;
-}
-footer {
-  width: 100%;
-  background-color: rgb(250, 241, 241);
-  height: 100px;
 }
 .nav {
   list-style: none;
@@ -1347,9 +1331,8 @@ footer {
   }
 } MEDIA QUERIES */
 .post-img {
-  top: 0;
-  left: 0;
-  object-fit: cover;
+  display: block;
+  margin: 0 auto;
 }
 /*
 comments
