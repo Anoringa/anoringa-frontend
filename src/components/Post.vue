@@ -1232,6 +1232,9 @@ body {
   outline: 1px solid $light2-color;
   outline-offset: -1px;
 }
+.container-fluid {
+  background: $primary-light1-color;
+}
 
 header {
   background-color: #aaa;
