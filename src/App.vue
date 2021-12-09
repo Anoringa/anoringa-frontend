@@ -180,7 +180,7 @@ export default {
 
 <style lang="scss" scoped>
 #app {
-  background-color: $light-color;
+  background-color: $primary-light1-color;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");

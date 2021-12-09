@@ -1208,7 +1208,7 @@ metaInfo() {
   font-size: 14px;
 }
 </style>
-<style lang="css" scoped>
+<style lang="scss" scoped>
 *,
 *:before,
 *:after {
@@ -1229,15 +1229,10 @@ body {
   margin: auto;
   line-height: 1.5em;
   color: black;
-  border: 1px solid #ccc;
-  border-width: 0 1px;
+  outline: 1px solid $light2-color;
+  outline-offset: -1px;
 }
-.container-fluid {
-  /*
-  background-color: white;
-  */
-  background-color: lavenderblush;
-}
+
 header {
   background-color: #aaa;
   height: 50px;
