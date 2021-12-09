@@ -1225,26 +1225,12 @@ body {
   */
 }
 .maindiv {
-  /*
-  margin: 3em auto;
-  max-width: 60em;
-  margin: auto;
-  */
-  max-width: 60em;
+  max-width: 70em;
   margin: auto;
   line-height: 1.5em;
   color: black;
-  background-color: gainsboro;
-  /*
-  background-image: url("https://www.w3schools.com/cssref/paper.gif");
-  background-repeat: repeat-y;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  */
+  border: 1px solid #ccc;
+  border-width: 0 1px;
 }
 .container-fluid {
   /*
