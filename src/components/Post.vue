@@ -1329,9 +1329,8 @@ header {
   }
 } MEDIA QUERIES */
 .post-img {
-  top: 0;
-  left: 0;
-  object-fit: cover;
+  display: block;
+  margin: 0 auto;
 }
 /*
 comments
