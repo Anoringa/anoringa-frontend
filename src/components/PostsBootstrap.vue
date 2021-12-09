@@ -44,7 +44,6 @@
           }"
         >
           <div class="project-card-content">
-
             <h4 class="cardtitle">{{ item.title }}</h4>
             <!--
             <h4>
@@ -84,8 +83,11 @@
     </div>
   </main>
   <div v-else-if="loaded == false" class="loadOrError">
-    Cargando
-    <b-spinner variant="danger" key="danger"></b-spinner>
+    <b-spinner
+      variant="danger"
+      key="danger"
+      style="width: 4rem; height: 4rem"
+    ></b-spinner>
   </div>
   <div v-else-if="loaded == 'ERROR'" class="loadOrError">ERROR</div>
 </template>
@@ -506,6 +508,9 @@ https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
   padding: 1%;
   background-color: $primary-light1-color;
 }
+#index {
+  min-height: 100vh;
+}
 </style>
 
 
@@ -578,8 +583,7 @@ https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
   text-overflow: ellipsis;
 }
 
-
-.cardtitle{
+.cardtitle {
   /*
   */
   font-weight: bold;
@@ -601,7 +605,4 @@ https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css
     */
   }
 }
-
-
-
 </style>
