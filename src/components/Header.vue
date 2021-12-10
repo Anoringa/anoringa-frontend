@@ -480,7 +480,9 @@ body {
 }
 
 .top-navbar {
-  background: $primary-color;
+  @include themed() {
+    background-color: t($primary-color);
+  }
 }
 
 .app-name-label {

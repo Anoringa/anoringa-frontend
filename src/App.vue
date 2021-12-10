@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="theme--light">
     <head>
       <title>
         {{ "process.env.VUE_APP_NAME" + " | Comenta y postea anonimamente" }}
@@ -180,8 +180,11 @@ export default {
 
 <style lang="scss" scoped>
 #app {
-  background-color: $primary-light2-color;
   min-height: 100vh;
+
+  @include themed() {
+    background-color: t($primary-light2-color);
+  }
 }
 
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
