@@ -3,7 +3,7 @@
     <Header appName="Ano-PassPort"></Header>
     <div id="canvas"></div>
 
-    <div class="container pt-3">
+    <div class="container pt-3 configuration-wrapper">
       <h2>Configuraciones</h2>
 
       <!--
@@ -541,6 +541,10 @@ $bright: #ddd;
 body {
   background-color: #0496ff;
   font-family: Montserrat, sans-serif;
+}
+
+.configuration-wrapper {
+  margin: 0 auto;
 }
 
 // Organisms
