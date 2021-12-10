@@ -44,7 +44,7 @@
             Entiendo que es posible que este nombre pueda no volver a estar
             disponible.
           </small>
-          <b-button type="submit" variant="danger">Cambiar</b-button>
+          <b-button type="submit" variant="primary">Cambiar</b-button>
         </b-form>
       </div>
     </div>

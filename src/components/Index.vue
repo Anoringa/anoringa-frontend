@@ -156,6 +156,12 @@ export default {
 
 
 
+<style lang="scss" >
+$primary: $primary-color;
+
+@import "node_modules/bootstrap/scss/bootstrap";
+</style>
+
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
