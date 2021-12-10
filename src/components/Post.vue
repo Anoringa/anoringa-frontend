@@ -381,8 +381,7 @@
     </div>
     <div v-else-if="loaded_correctly == false" class="loadOrError" style="">
       <b-spinner
-        variant="danger"
-        key="danger"
+        variant="primary"
         style="width: 4rem; height: 4rem"
       ></b-spinner>
     </div>

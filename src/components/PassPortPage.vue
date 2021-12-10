@@ -67,7 +67,11 @@
           <small class="form-text text-muted pt-1 pb-3">
             No compartas este codigo con nadie y ten cuidado de donde lo guardas
           </small>
-          <b-button type="submit" variant="danger" @click="generateToken"
+          <b-button
+            type="submit"
+            variant="primary"
+            class="p-2"
+            @click="generateToken"
             >Generar TOKEN</b-button
           >
           <small class="form-text text-muted pt-1 pb-3">

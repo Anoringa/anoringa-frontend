@@ -85,8 +85,7 @@
   <div v-else class="idle-wrapper">
     <div v-if="loaded == false" class="loader">
       <b-spinner
-        variant="danger"
-        key="danger"
+        variant="primary"
         style="width: 4rem; height: 4rem"
       ></b-spinner>
     </div>
