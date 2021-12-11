@@ -857,7 +857,6 @@ export default {
 
     userStore(response) {
       console.log('User Created', response)
-      console.log('User Created', response.data)
       var credenciales = response.data.data
       this.username = credenciales.username
       this.password = credenciales.password

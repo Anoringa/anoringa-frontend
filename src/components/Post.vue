@@ -445,7 +445,7 @@ import Vue2Filters from "vue2-filters";
 
 import "quill/dist/quill.snow.css";
 import Quill from "quill";
-import ModalEditePost from './modals/ModalEditPost.vue'
+import ModalEditePost from './modals/ModalABMPost.vue'
 
 const SizeStyle = Quill.import("attributors/style/size");
 Quill.register(SizeStyle, true);
