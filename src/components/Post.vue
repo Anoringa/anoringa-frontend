@@ -1097,12 +1097,13 @@ metaInfo() {
 .editor--wrapper {
   @include dynamic-theme() {
     background-color: theme($normal-background-color);
-    border: 1px solid theme($border2-color);
+    border-color: theme($border2-color);
     border-top: 1px solid theme($border2-color) !important;
   }
 
   border-radius: 0;
   border-width: 1px 0;
+  border-style: solid;
 }
 
 .comment-box-creator {
@@ -1182,6 +1183,27 @@ metaInfo() {
 
 .editor--wrapper .ql-editor {
   min-height: 100px;
+
+  &.ql-blank::before {
+    @include dynamic-theme() {
+      color: theme($placeholder-foreground-color);
+    }
+  }
+}
+.toolbar--wrapper {
+  @include dynamic-theme() {
+    .ql-stroke {
+      stroke: theme($foreground-color);
+    }
+
+    .ql-fill {
+      fill: theme($foreground-color);
+    }
+
+    .ql-picker {
+      color: theme($foreground-color);
+    }
+  }
 }
 
 .cumBucket > .ql-toolbar {

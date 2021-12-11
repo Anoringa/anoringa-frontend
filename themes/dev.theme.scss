@@ -11,6 +11,8 @@ $player-disc-border-color: 'player-disc-border-color';
 $primary-color: 'primary-color';
 $primary-light-color: 'primary-light-color';
 $foreground-color: 'foreground-color';
+$link-foreground-color: 'link-foreground-color';
+$placeholder-foreground-color: 'placeholder-foreground-color';
 
 $themes: (
   light: (
@@ -20,6 +22,8 @@ $themes: (
     border2-color: #e8e9ea,
     contrast-color: #343a40,
     foreground-color: #343a40,
+    link-foreground-color: $primary,
+    placeholder-foreground-color: #00000099,
     normal-background-color: #f8f9fa,
     player-disc-background-color: #343a40,
     player-disc-border-color: #f8f9fa,
@@ -27,14 +31,16 @@ $themes: (
     primary-light-color: lighten($primary, 15%)
   ),
   dark: (
-    background-color: #303030,
-    background1-color: #404040,
-    border-color: #343a40,
-    border2-color: #e8e9ea,
+    background-color: #454545,
+    background1-color: #505050,
+    border-color: #222a40,
+    border2-color: #232a40,
     contrast-color: #343a40,
     foreground-color: #f8f9fa,
-    normal-background-color: #f8f9fa,
-    player-disc-background-color: #343a40,
+    link-foreground-color: #f8f9fa,
+    placeholder-foreground-color: #f8f9fa55,
+    normal-background-color: #252728,
+    player-disc-background-color: #212424,
     player-disc-border-color: #f8f9fa,
     primary-color: $primary,
     primary-light-color: lighten($primary, 15%)
