@@ -147,8 +147,6 @@ export default {
     } else{
       this.sortPost = "updatedAt"
     }
-
-
   },
   data() {
     return {

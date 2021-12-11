@@ -99,8 +99,14 @@
           >
           <b-dropdown-item href="/perfil">Configuración</b-dropdown-item>
           <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item href="/reportar">Soporte</b-dropdown-item>
-          <b-dropdown-item href="/reportar">Sugerir Cambios</b-dropdown-item>
+          <b-dropdown-item href="/reportar?type=Falla">Soporte</b-dropdown-item>
+          <b-dropdown-item href="/reportar?type=Reporte"
+            >Reportar</b-dropdown-item
+          >
+          <b-dropdown-item href="/reportar?type=Sugerencia"
+            >Sugerir Cambios</b-dropdown-item
+          >
+          <b-dropdown-divider></b-dropdown-divider>
           <b-dropdown-item @click="cerrarSecion()"
             >Cerrar Sesión</b-dropdown-item
           >
@@ -373,7 +379,6 @@ export default {
 
     userStore(response) {
       console.log("User Created", response);
-      console.log("User Created", response.data);
       var credenciales = response.data.data;
       this.username = credenciales.username;
       this.password = credenciales.password;

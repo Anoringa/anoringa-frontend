@@ -1,5 +1,5 @@
 import Index from "../components/Index";
-import IndexNew from "../components/IndexNew";
+import IndexNew from "../components/IndexNew.vue";
 import HelloWorld from "../components/HelloWorld";
 //import PostsPage from "../components/PostPage";
 import Post from "../components/Post";
@@ -22,19 +22,22 @@ const routesx = [
   //{ name: "Post",path: "/post/:id", component: About },
   { name: "Post",path: "/post/:id", component: Post },
   { name: "LoginFromQR",path: "/loguearse", component: DocsPage },
-  { name: "Pasaporte",path: "/pasaporte2", component: PassportPage },
-  { name: "Pasaporte",path: "/qr/:token", component: LoginFromQR },
+  { name: "Pasaporte2",path: "/pasaporte2", component: PassportPage },
+  { name: "Pasaporte3",path: "/qr/:token", component: LoginFromQR },
   { name: "Token",path: "/token/:token", component: LoginFromQR },
-  { name: "Token",path: "/token/", component: LoginFromQR },
+  { name: "Token2",path: "/token/", component: LoginFromQR },
   { name: "Pasaporte",path: "/pasaporte", component: PassportPage },
-  { name: "Report",
-    path: "/reportar", 
-    component: ReportPage, 
-    props: 
+  { name: "Report",path: "/reportar",component: ReportPage },
+  /*
+  { name: "Report",path: "/reportar",component: ReportPage,
+  props: 
       route => ({ 
         query: route.query.q 
       })
   },
+*/
+
+
   { name: "Docs",path: "/tutorial", component: DocsPage },
 
   { name: "IndexNew",path: "/",component: IndexNew,},

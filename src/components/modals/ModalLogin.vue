@@ -27,8 +27,33 @@
                       >
                     </button>
                   </div>
-                  <div class="modal-body">
-                    <p>rellena el captcha</p>
+                  <div v-if="loginProcessStep == 'create'" class="modal-body">
+                    <b-form-group id="input-group-1" label-for="input-1">
+                      <label for="email2" class="mb-2 mr-sm-2" inline
+                        >Elegir mi nombre de usuario</label
+                      >
+                      <b-form-input
+                        id="input-1"
+                        v-model="theName"
+                        :state="newUsernameState"
+                        type="text"
+                        placeholder="Ingresa aca un nuevo nombre"
+                        required
+                      ></b-form-input>
+                    </b-form-group>
+
+                    <b-form-valid-feedback :state="newUsernameState">
+                      <p>Excelente</p>
+                    </b-form-valid-feedback>
+
+                    <b-form-invalid-feedback :state="newUsernameState">
+                      <p>
+                        Los nombres de usuario pueden tener desde 2 hasta 32
+                        caracteres entre letras minusculas, mayusculas, numeros
+                        y caracteres especiales como: ¡ ! ¿ ? @ ç Ç . ,
+                      </p></b-form-invalid-feedback
+                    >
+                    <p>Rellena el captcha</p>
 
                     <vue-hcaptcha
                       :sitekey="mySitekey"
@@ -36,6 +61,17 @@
                       theme="dark"
                     ></vue-hcaptcha>
                   </div>
+                  <div
+                    v-else-if="loginProcessStep == 'modify'"
+                    class="modal-body"
+                  >
+                    <p>Elije un nombre que te guste</p>
+                  </div>
+                  <div v-else class="modal-body">
+                    <p>nose que paso, putea aca a los desarrolladores</p>
+                    <a href="/reportar?type=Falla">Reportar Falla</a>
+                  </div>
+
                   <div class="modal-footer">
                     <button
                       type="button"
@@ -44,12 +80,23 @@
                     >
                       Cerrar
                     </button>
+                    <!--
                     <button
+                      v-if="loginProcessStep === 'create'"
                       type="button"
                       class="btn btn-primary"
                       @click="publicar"
                     >
                       Crear
+                    </button>
+                    -->
+                    <button
+                      v-if="loginProcessStep === 'modify'"
+                      type="button"
+                      class="btn btn-primary"
+                      @click="publicar"
+                    >
+                      Nombrar
                     </button>
                   </div>
                 </div>
@@ -118,8 +165,25 @@ export default {
     //VueModal,
     VueHcaptcha,
   },
+    computed: {
+    newUsernameState() {
+      var theName = this.theName;
+      //console.log(NewName);
+      let pattern = /^[¡!¿?@çÇ.,a-zA-Z\d\-_\s]{2,32}$/;
+      if (theName != null && theName.match(pattern) && !this.usernameAlreadyInUse) {
+        return true;
+      } else if (theName == null && !this.usernameAlreadyInUse) {
+        return null;
+      } else {
+        return false;
+      }
+    },
+    },
   data() {
     return {
+      usernameAlreadyInUse:false,
+      theName:null,
+      loginProcessStep: "create",
       mySitekey: process.env.VUE_APP_HCAPTCHA,
       showModal: false,
       hcaptchaResponse: "",
@@ -189,6 +253,7 @@ export default {
   methods: {
     emit: function () {
       this.$emit("event_child", this.hcaptchaResponse);
+      console.log("event_child 1");
     },
     created() {
       this.size = this.visible ? "normal" : "invisible";
@@ -200,7 +265,9 @@ export default {
       console.log(response);
       this.hcaptchaResponse = response;
       this.$emit("event_child", this.hcaptchaResponse);
-      this.showModal = false;
+
+      console.log("event_child 2");
+      //this.showModal = false;
       //emit()
       //createUser(this.hcaptchaResponse)
 
@@ -227,63 +294,6 @@ export default {
         console.log(error.config);
       });
       */
-    },
-    publicar() {
-      if (this.nuevoposttitulo != "" && this.nuevopostcomment != "") {
-        console.log("titulo");
-        console.log(this.nuevoposttitulo);
-        console.log("contenido");
-        console.log(this.nuevopostcomment);
-        this.postCreate(
-          this.nuevoposttitulo,
-          this.nuevopostcomment,
-          this.imagebase64
-        );
-        console.log("funciono kpo 😎");
-        this.showModal = false;
-        this.nuevoposttitulo = "";
-        this.nuevopostcomment = "";
-      } else {
-        console.log("no funciono kpo");
-      }
-    },
-    postCreate(titulox, contenidox, photox) {
-      /*
-      {
-        "username":"Afoxipeb",
-        "password":"JJAsjChPvmwvc2qOcRpMoJnogtv9jcQe",
-        "title":"Como ser como one punch man",
-        "photo":"somepick",
-        "content":"hola mundo este es mi nuevo blog"
-      }
-      */
-      axios
-        .post("http://127.0.0.1:8080/api/posts", {
-          username: localStorage.username,
-          password: localStorage.password,
-          title: titulox,
-          photo: photox,
-          content: contenidox,
-        })
-        .then((response) => console.log(response))
-        .catch(function (error) {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-          }
-          console.log(error.config);
-        });
     },
     toggleBind(attr) {
       this[attr] = !this[attr];

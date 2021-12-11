@@ -6,7 +6,18 @@
       -->
 
       <Header :appName="appName">
+        <div v-if="false">
+          <button
+            type="button"
+            class="btn btn-lg btn-light btn-sm post-creation-button"
+          >
+            <ModalEditePost>EDITAR</ModalEditePost>
+          </button>
+        </div>
+
+        <!--
         <p v-if="usernameValue == userowner.username">Editar</p>
+      -->
       </Header>
 
       <div class="content-wrapper">
@@ -470,6 +481,7 @@ import Vue2Filters from "vue2-filters";
 
 import "quill/dist/quill.snow.css";
 import Quill from "quill";
+import ModalEditePost from "./modals/ModalABMPost.vue";
 
 const SizeStyle = Quill.import("attributors/style/size");
 Quill.register(SizeStyle, true);
@@ -492,16 +504,7 @@ export default {
         },
       ],
     };
-  } /*
-    metaInfo: {
-      title: 'My Example App',
-      titleTemplate: '%s - Yay!',
-      htmlAttrs: {
-        lang: 'en',
-        amp: true
-      }
-    },
-    title: ({ $t }) => $t(this.pagetitle),*/,
+  },
   mixins: [Vue2Filters.mixin],
   filters: {
     moment: function (date) {
@@ -573,29 +576,15 @@ export default {
       music: false,
       commentEditor: null,
     };
-  } /*
-metaInfo() {
-        return {
-            title: `${this.pagetitle} - Anoringa`,
-            meta: [
-                { name: 'description', content: 'Mira ' + this.pagetitle + ' en Anoringa'},
-                { property: 'og:title', content: this.pagetitle + ' - Anoringa'},
-                { property: 'og:site_name', content: "Anoringa" },
-                { property: 'og:description', content: this.content.substring(0, 30)+"..."},
-                {property: 'og:type', content: 'article'},
-                {property: 'og:url', content: 'https://anoringa.netlify.app/post/' + this.id},
-                {property: 'og:image', content: 'https://anoringa.netlify.app/'+"/anoringa.png" }    
-            ]
-        }
-    },*/,
+  },
   name: "Post",
   components: {
-    //History,
     Multiselect,
     Header,
     Footer,
     loadingspinner,
     floatPlayer,
+    ModalEditePost,
   },
   sockets: {
     connect: function () {
@@ -1451,5 +1440,3 @@ section {
     0px -2px 2px #ec008c, 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 </style>
-
-

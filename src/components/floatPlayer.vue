@@ -148,6 +148,12 @@ export default {
 };
 </script>
 
+
+<style>
+.sticky-top{
+  z-index: 300!important;
+}
+</style>
 <style lang="scss">
 .sticky-top {
   z-index: 300 !important;
