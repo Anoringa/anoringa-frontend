@@ -485,7 +485,10 @@ body {
 
 .app-name-label {
   margin-right: 7px;
-  color: $light;
+
+  @include dynamic-theme() {
+    color: theme($normal-background-color);
+  }
 }
 .loguito {
   font-family: "Manrope", sans-serif;
