@@ -236,12 +236,13 @@ export default {
               "warning"
             );
 
-            if (error.response.data.data[0].msg == "Username is already in use") {
+            if (
+              error.response.data.data[0].msg == "Username is already in use"
+            ) {
               this.usernameAlreadyInUse = true;
-                console.log("SIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-            }
-            else{
-                console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+              console.log("SIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+            } else {
+              console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
             }
 
             console.log("error status", error.response.status);
@@ -277,7 +278,10 @@ export default {
 
 <style lang="scss" scoped>
 #index {
-  background-color: $primary-light1-color;
+  @include dynamic-theme() {
+    background-color: theme($primary-light1-color);
+  }
+
   height: 100vh;
 }
 

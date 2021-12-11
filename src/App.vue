@@ -49,7 +49,8 @@ export default {
       */
       //console.log("analytics");
       let script = document.createElement("script");
-      script.text = 'if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"chocomilk",utcoffset:"-3"}))};sessionStorage.setItem("_swa","1");'
+      script.text =
+        'if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"chocomilk",utcoffset:"-3"}))};sessionStorage.setItem("_swa","1");';
       //script.src = "";
       document.head.appendChild(script);
     },
@@ -179,33 +180,16 @@ export default {
 </style> 
 
 <style lang="scss" scoped>
-#app {
-  min-height: 100vh;
-
-  @include themed() {
-    background-color: t($primary-light2-color);
-  }
-}
-
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
-//@import '../node_modules/bootstrap/dist/css/bootstrap.css';
-//@import "node_modules/bootstrap-vue/src/index.scss";
-/*
-body {
-   overflow-x: hidden !important;
-}
 #app {
-   overflow-x: hidden !important;
+  min-height: 100vh;
+  @include dynamic-theme() {
+    background-color: theme($primary-light2-color);
+  }
 }
-#app {
-  //width: 80%;
-  margin: 0px;
-  padding: 0px;
-  text-align: center;
-}
-*/
+
 .custom-file-input:lang(en) ~ .custom-file-label::after {
   content: "Buscar";
 }

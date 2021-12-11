@@ -132,31 +132,25 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-$darker: #222;
 $dark: #555;
-$bright: #ddd;
 
 #bobafet {
   text-align: center;
-  border-top: 1px solid $light2-color;
   padding: 15px 0 100px;
-  background-color: $primary-light1-color;
+
+  @include dynamic-theme() {
+    border-top: 1px solid theme($light2-color);
+    background-color: theme($primary-light1-color);
+  }
 }
 .card {
   background: #fff;
   border-radius: 2px;
-  /*
-  background-image: url("http://placekitten.com/300/300");
-  display: inline-block;
-  */
   display: inline-block;
   height: 200px;
   width: 200px;
   margin: 1rem;
   position: relative;
-
-  /*
-  */
   flex-flow: column nowrap;
   overflow: hidden;
   color: #fff;
@@ -213,132 +207,4 @@ $bright: #ddd;
   padding: 100px;
   position: relative;
 }
-/*
-.thumb-anim {
-  margin-top: auto;  
-  position: relative;
-  transition: 0.5s;
-  transform: translateY(100%);
-}
-
-.thumb-title {
-  text-transform: uppercase;
-  padding: 10px;
-  transition: 0.5s;
-  transform: translateY(-100%);
-}
-
-.thumb-description {
-  padding: 10px 20px;
-  transition: 0.5s;
-  opacity: 0;
-  flex: 1;
-}
-
-.thumb-author {
-  padding: 100px;
-  position: relative;
-}
-
-.card:hover .thumb-anim {
-  transform: translateY(0);
-}
-
-.card:hover .thumb-title {
-  transform: translateY(0%);
-}
-
-.card:hover .thumb-description {
-  opacity: 1;
-}*/
-/*
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-a {
-  text-decoration: none;
-  &:hover {
-  }
-}
-
-.card {
-  display: grid;
-  grid-template-rows: auto auto 1fr auto;
-  background: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  min-width: 200px;
-  &:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.25);
-  }
-  header {
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    grid-template-rows: 24px 24px;
-    grid-template-areas: "logo title" "logo subtitle";
-    padding: 0.5rem;
-    align-items: center;
-    .logo {
-      grid-area: logo;
-      img {
-        border-radius: 50%;
-        padding: 0.25rem;
-      }
-    }
-    .title,
-    .subtitle {
-      padding: 0.25rem;
-    }
-    .title {
-      grid-area: title;
-      color: $darker;
-    }
-    .subtitle {
-      grid-area: subtitle;
-    }
-  } // End Card Header
-  .image {
-    overflow: hidden;
-    img {
-      filter: grayscale(50%);
-      transition: all 0.5s ease;
-      cursor: pointer;
-      &:hover {
-        filter: none;
-      }
-    }
-  }
-
-  // End card image
-  .content,
-  footer {
-    padding: 1em;
-  }
-  footer {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    a {
-      text-transform: uppercase;
-      padding-right: 0.5rem;
-      color: $dark;
-      font-weight: 500;
-      &:hover {
-        color: $darker;
-      }
-    }
-    i {
-      font-size: 1.2rem;
-      padding-left: 0.5rem;
-      color: $dark;
-      transition: 0.3s;
-      &:hover {
-        color: $darker;
-      }
-    }
-  } // End Card Footer
-} // End Card
-*/
 </style>

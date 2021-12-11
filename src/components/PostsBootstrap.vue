@@ -502,7 +502,10 @@ export default {
 <style lang="scss" scoped>
 #projects {
   padding: 1%;
-  background-color: $primary-light1-color;
+
+  @include dynamic-theme() {
+    background-color: theme($primary-light1-color);
+  }
 }
 #index {
   min-height: 100vh;
@@ -510,7 +513,10 @@ export default {
 .idle-wrapper {
   height: calc(100vh - 250px);
   position: relative;
-  background-color: $primary-light1-color;
+
+  @include dynamic-theme() {
+    background-color: theme($primary-light1-color);
+  }
 }
 .loader {
   position: absolute;
@@ -523,18 +529,12 @@ export default {
 
     <style>
 #projects {
-  /*
-        padding: 5%;
-        */
   padding: 1%;
   background-color: #dae0e6;
 }
 
 @media only screen and (min-width: 600px) {
   .project-card-wrapper {
-    /*
-        margin: 3% 0%;
-        */
     margin: 0.3% 0%;
 
     padding-left: 8px !important;
@@ -563,10 +563,6 @@ export default {
 .project-card {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   margin-top: 2%;
-  /*
-        background: rgb(255, 255, 255) url(https://picsum.photos/537/350)
-          no-repeat scroll left center / cover;
-          */
   min-width: 12em;
   min-height: 15em;
   border-radius: 8px;
@@ -591,17 +587,8 @@ export default {
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 1440px) and (min-width: 1200px) {
   .cardtitle {
-    /*
-    background: red;
-    */
     font-weight: initial;
     font-size: 1.3rem;
-
-    /*
-    width: 90%;
-    margin-left: 5% !important;
-    margin-right: 5% !important;
-    */
   }
 }
 </style>

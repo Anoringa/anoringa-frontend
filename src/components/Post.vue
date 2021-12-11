@@ -1080,30 +1080,41 @@ metaInfo() {
 <style lang="scss" scoped>
 .post-column {
   padding-top: 15px;
-  border-right: 1px solid $light2-color;
+  @include dynamic-theme() {
+    border-right: 1px solid theme($light2-color);
+  }
 }
 
 .toolbar--wrapper {
-  background-color: darken($light-color, 3%);
+  @include dynamic-theme() {
+    background-color: darken(theme($light-color), 3%);
+  }
+
   border-radius: 4px 4px 0 0;
   border: none;
 }
 
 .editor--wrapper {
-  background-color: $light-color;
+  @include dynamic-theme() {
+    background-color: theme($light-color);
+    border: 1px solid theme($light1-color);
+    border-top: 1px solid theme($light1-color) !important;
+  }
+
   border-radius: 0;
-  border: 1px solid $light1-color;
-  border-top: 1px solid $light1-color !important;
   border-width: 1px 0;
 }
 
 .comment-box-creator {
-  border: 1px solid $light2-color;
   border-radius: 4px;
   transition: opacity 1s ease-in-out;
   min-height: 181px;
   position: relative;
-  background-color: $light-color;
+
+  @include dynamic-theme() {
+    background-color: theme($light-color);
+    border: 1px solid theme($light2-color);
+  }
 
   .loader {
     position: absolute;
@@ -1117,10 +1128,13 @@ metaInfo() {
 }
 
 .comment-creator-footer {
-  background: $light-color;
   border-radius: 0 0 4px 4px;
   border: none;
   padding-left: 10px;
+
+  @include dynamic-theme() {
+    background: theme($light-color);
+  }
 
   div:first-child {
     margin: 0;
@@ -1134,8 +1148,11 @@ metaInfo() {
 }
 
 .comments--wrapper {
-  border: 1px solid $light2-color;
   border-radius: 4px;
+
+  @include dynamic-theme() {
+    border: 1px solid theme($light2-color);
+  }
 
   &:empty {
     border: none;
@@ -1144,9 +1161,12 @@ metaInfo() {
 
 .repo {
   padding: 1em;
-  background-color: $light-color;
-  border-bottom: 1px solid $light1-color;
   max-width: initial;
+
+  @include dynamic-theme() {
+    background-color: theme($light-color);
+    border-bottom: 1px solid theme($light1-color);
+  }
 
   &:first-child {
     border-radius: 4px 4px 0 0;
@@ -1235,14 +1255,20 @@ body {
   margin: auto;
   line-height: 1.5em;
   color: black;
-  outline: 1px solid $light2-color;
+  min-height: 100vh;
+
+  @include dynamic-theme() {
+    outline: 1px solid theme($light2-color);
+    background-color: theme($primary-light1-color);
+  }
+
   outline-offset: -1px;
   outline-width: 0 1px;
-  min-height: 100vh;
-  background-color: $primary-light1-color;
 }
 .container-fluid {
-  background: $primary-light1-color;
+  @include dynamic-theme() {
+    background-color: theme($primary-light1-color);
+  }
 }
 
 header {

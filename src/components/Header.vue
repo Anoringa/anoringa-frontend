@@ -451,9 +451,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Open+Sans&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Overpass+Mono:300,400,600,700|Overpass:100,100i,200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext");
 
-$darker: #222;
 $dark: #555;
-$bright: #ddd;
 $light: #fff;
 
 .nav {
@@ -480,8 +478,8 @@ body {
 }
 
 .top-navbar {
-  @include themed() {
-    background-color: t($primary-color);
+  @include dynamic-theme() {
+    background-color: theme($primary-color);
   }
 }
 
@@ -517,7 +515,10 @@ body {
 
 .user-icon {
   display: inline-block;
-  fill: $primary-light-color;
+
+  @include dynamic-theme() {
+    fill: theme($primary-light-color);
+  }
 }
 
 .user-options button {
@@ -553,7 +554,10 @@ body {
   padding: 2px 11px;
   font-size: 12px;
   vertical-align: middle;
-  color: $primary-color;
-  background-color: $light-color;
+
+  @include dynamic-theme() {
+    color: theme($primary-color);
+    background-color: theme($light-color);
+  }
 }
 </style>
