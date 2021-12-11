@@ -1313,48 +1313,6 @@ header {
 .inline-items li:last-child {
   padding-right: 0;
 }
-/* MEDIA QUERIES */
-@media screen and (min-width: 47.5em) {
-  /*
-  .Middle {
-    -webkit-flex: 1 1 auto;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 0;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    overflow: hidden;
-  }
-  .Content {
-    -webkit-flex: 1 1 auto;
-    -ms-flex: 1 1 auto;
-    flex: 1 0 0;
-    overflow: auto;
-  }
-  .LeftMenu {
-    margin-right: 50%;
-    display: block;
-  }
-  .Content {
-    top: 0;
-    right: 0;
-    width: 50%;
-    display: block;
-  }
-  */
-}
-/*
-@media screen and (min-width: 47.5em) {
-  .leftColumn {
-    margin-right: 19.5em;
-  }
-  .rightColumn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 18.75em;
-  }
-} MEDIA QUERIES */
 .post-img {
   display: block;
   margin: 0 auto;
@@ -1397,23 +1355,31 @@ header :last-child,
 .stats,
 .last-updated {
   font-size: 0.7em;
-  color: #666;
+
+  @include dynamic-theme() {
+    color: theme($foreground-color);
+  }
 }
 .stats {
   text-transform: uppercase;
   font-weight: bold;
 }
 .postOwnership {
-  /*text-transform: uppercase;*/
   font-weight: bold;
   font-size: 0.7em;
-  color: #666;
+
+  @include dynamic-theme() {
+    color: theme($foreground-color);
+  }
 }
 
 .comment_owner {
   font-weight: bold;
   font-size: 0.7em;
-  color: #666;
+
+  @include dynamic-theme() {
+    color: theme($foreground-color);
+  }
 }
 
 .last-updated {
@@ -1433,9 +1399,6 @@ header img {
 section {
   padding-left: 1em;
   float: left;
-  /*
-  width: 75%;
-  */
 }
 #comentarios {
   text-align: left !important;
@@ -1444,9 +1407,6 @@ section {
 </style>
 <style lang="css" scoped>
 .text-stroke {
-  /*
-  font-size: 70px;
-  */
   color: white;
   margin: 0px;
   padding: 0px;

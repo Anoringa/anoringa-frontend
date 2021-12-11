@@ -179,6 +179,21 @@ export default {
 /* global styles */
 </style> 
 
+<style lang="scss">
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include dynamic-theme() {
+    color: theme($foreground-color);
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
