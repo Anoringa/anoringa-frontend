@@ -21,14 +21,14 @@ $themes: (
     light2-color: #c4c5ca
   ),
   dark: (
-    primary-color: $primary-color,
-    primary-light-color: #333,
-    primary-light1-color: #333,
-    primary-light2-color: #333,
+    primary-color: $primary,
+    primary-light-color: lighten($primary, 15%),
+    primary-light1-color: lighten($primary, 43%),
+    primary-light2-color: lighten($primary, 45%),
     dark-color: #343a40,
-    light-color: #333,
-    light1-color: #333,
-    light2-color: #333
+    light-color: #f8f9fa,
+    light1-color: #e8e9ea,
+    light2-color: #c4c5ca
   )
 );
 
