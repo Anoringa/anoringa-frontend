@@ -52,7 +52,7 @@
               </b>
             </h4>
             -->
-            <div class="h-100 d-inline-block pb-3">
+            <div class="h-100 d-inline-block pb-3 card-metadata">
               <div v-if="postSort == 'lastComment'">
                 <p v-if="item[postSort] == ['2020-11-30T00:00:00.000Z']"></p>
                 <p v-else>
@@ -523,6 +523,16 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.cardtitle {
+  @include dynamic-theme() {
+    color: theme($card-foreground-color);
+  }
+}
+.card-metadata p {
+  @include dynamic-theme() {
+    color: theme($card-foreground-color);
+  }
 }
 </style>
 
