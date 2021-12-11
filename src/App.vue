@@ -1,15 +1,14 @@
 <template>
-  <div id="app" class="theme--light">
-    <head>
-      <title>
-        {{ "process.env.VUE_APP_NAME" + " | Comenta y postea anonimamente" }}
-      </title>
-    </head>
-    <router-view />
-    <!--
-  This component can be located anywhere in your App.
-  The slot content of the above portal component will be rendered here.
-  --></div>
+  <div class="theme--dark">
+    <div id="app">
+      <head>
+        <title>
+          {{ "process.env.VUE_APP_NAME" + " | Comenta y postea anonimamente" }}
+        </title>
+      </head>
+      <router-view />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -200,6 +199,7 @@ h6 {
 
 #app {
   min-height: 100vh;
+
   @include dynamic-theme() {
     background-color: theme($background1-color);
   }
