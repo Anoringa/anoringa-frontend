@@ -6,7 +6,7 @@
       -->
 
       <Header :appName="appName">
-        <div v-if="userowner.username == userowner.username">
+        <div v-if="false">
           <button
             type="button"
             class="btn btn-lg btn-light btn-sm post-creation-button"
