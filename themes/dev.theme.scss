@@ -14,6 +14,7 @@ $foreground-color: 'foreground-color';
 $link-foreground-color: 'link-foreground-color';
 $placeholder-foreground-color: 'placeholder-foreground-color';
 $foreground1-color: 'foreground1-color';
+$card-foreground-color: 'card-foreground-color';
 
 $themes: (
   light: (
@@ -30,11 +31,12 @@ $themes: (
     player-disc-background-color: #343a40,
     player-disc-border-color: #f8f9fa,
     primary-color: $primary,
-    primary-light-color: lighten($primary, 15%)
+    primary-light-color: lighten($primary, 15%),
+    card-foreground-color: #f8f9fa
   ),
   dark: (
-    background-color: #1f1f26,
-    background1-color: #292933,
+    background-color: #261f1f,
+    background1-color: #332929,
     border-color: #343a40,
     border2-color: #32333399,
     contrast-color: #343a40,
@@ -46,7 +48,8 @@ $themes: (
     player-disc-background-color: #343a40,
     player-disc-border-color: #f8f9fa,
     primary-color: $primary,
-    primary-light-color: lighten($primary, 15%)
+    primary-light-color: lighten($primary, 15%),
+    card-foreground-color: #b8b9ba
   )
 );
 
