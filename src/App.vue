@@ -191,6 +191,12 @@ h6 {
     color: theme($foreground-color);
   }
 }
+
+blockquote {
+  @include dynamic-theme() {
+    color: theme($foreground1-color);
+  }
+}
 </style>
 
 <style lang="scss" scoped>
