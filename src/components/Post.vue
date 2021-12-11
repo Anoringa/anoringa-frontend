@@ -1092,9 +1092,12 @@ metaInfo() {
 
   border-radius: 4px 4px 0 0;
   border: none;
+  margin: 0 1px;
 }
 
 .editor--wrapper {
+  margin: 0 1px;
+
   @include dynamic-theme() {
     background-color: theme($normal-background-color);
     border-color: theme($border2-color);
@@ -1111,11 +1114,13 @@ metaInfo() {
   transition: opacity 1s ease-in-out;
   min-height: 181px;
   position: relative;
+  padding-top: 1px;
 
   @include dynamic-theme() {
     background-color: theme($normal-background-color);
-    border: 1px solid theme($border-color);
+    outline: 1px solid theme($border-color);
   }
+  outline-offset: -1px;
 
   .loader {
     position: absolute;
@@ -1170,10 +1175,12 @@ metaInfo() {
   }
 
   &:first-child {
-    border-radius: 4px 4px 0 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
   }
   &:last-child {
-    border-radius: 0 0 4px 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 }
 </style>
@@ -1193,15 +1200,15 @@ metaInfo() {
 .toolbar--wrapper {
   @include dynamic-theme() {
     .ql-stroke {
-      stroke: theme($foreground-color);
+      stroke: theme($foreground1-color);
     }
 
     .ql-fill {
-      fill: theme($foreground-color);
+      fill: theme($foreground1-color);
     }
 
     .ql-picker {
-      color: theme($foreground-color);
+      color: theme($foreground1-color);
     }
   }
 }
