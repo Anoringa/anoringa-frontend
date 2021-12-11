@@ -139,8 +139,8 @@ $dark: #555;
   padding: 15px 0 100px;
 
   @include dynamic-theme() {
-    border-top: 1px solid theme($light2-color);
-    background-color: theme($primary-light1-color);
+    border-top: 1px solid theme($border-color);
+    background-color: theme($background-color);
   }
 }
 .card {

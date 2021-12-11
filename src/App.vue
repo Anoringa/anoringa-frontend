@@ -186,7 +186,7 @@ export default {
 #app {
   min-height: 100vh;
   @include dynamic-theme() {
-    background-color: theme($primary-light2-color);
+    background-color: theme($background1-color);
   }
 }
 

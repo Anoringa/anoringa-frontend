@@ -337,7 +337,7 @@ export default {
       fill: theme($primary-light-color);
     }
     .icon-arrow-door {
-      fill: theme($dark-color);
+      fill: theme($contrast-color);
     }
   }
 }

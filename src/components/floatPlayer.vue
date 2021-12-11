@@ -207,7 +207,7 @@ export default {
     background-position: center center;
 
     @include dynamic-theme() {
-      border: 1px solid theme($light-color);
+      border: 1px solid theme($player-disc-border-color);
     }
   }
 
@@ -222,8 +222,8 @@ export default {
     border-radius: 50%;
 
     @include dynamic-theme() {
-      background-color: theme($dark-color);
-      border: 2px solid theme($light-color);
+      background-color: theme($player-disc-background-color);
+      border: 2px solid theme($player-disc-border-color);
     }
   }
 }

@@ -279,7 +279,7 @@ export default {
 <style lang="scss" scoped>
 #index {
   @include dynamic-theme() {
-    background-color: theme($primary-light1-color);
+    background-color: theme($background-color);
   }
 
   height: 100vh;

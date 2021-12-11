@@ -1,34 +1,40 @@
 $primary: #3f47cb;
 
+$background-color: 'background-color';
+$background1-color: 'background1-color';
+$border-color: 'border-color';
+$border2-color: 'border2-color';
+$contrast-color: 'contrast-color';
+$normal-background-color: 'normal-background-color';
+$player-disc-background-color: 'player-disc-background-color';
+$player-disc-border-color: 'player-disc-border-color';
 $primary-color: 'primary-color';
 $primary-light-color: 'primary-light-color';
-$primary-light1-color: 'primary-light1-color';
-$primary-light2-color: 'primary-light2-color';
-$dark-color: 'dark-color';
-$light-color: 'light-color';
-$light1-color: 'light1-color';
-$light2-color: 'light2-color';
 
 $themes: (
   light: (
+    background-color: lighten($primary, 43%),
+    background1-color: lighten($primary, 45%),
+    border-color: #c4c5ca,
+    border2-color: #e8e9ea,
+    contrast-color: #343a40,
+    normal-background-color: #f8f9fa,
+    player-disc-background-color: #343a40,
+    player-disc-border-color: #f8f9fa,
     primary-color: $primary,
-    primary-light-color: lighten($primary, 15%),
-    primary-light1-color: lighten($primary, 43%),
-    primary-light2-color: lighten($primary, 45%),
-    dark-color: #343a40,
-    light-color: #f8f9fa,
-    light1-color: #e8e9ea,
-    light2-color: #c4c5ca
+    primary-light-color: lighten($primary, 15%)
   ),
   dark: (
+    background-color: lighten($primary, 43%),
+    background1-color: lighten($primary, 45%),
+    border-color: #c4c5ca,
+    border2-color: #e8e9ea,
+    contrast-color: #343a40,
+    normal-background-color: #f8f9fa,
+    player-disc-background-color: #343a40,
+    player-disc-border-color: #f8f9fa,
     primary-color: $primary,
-    primary-light-color: lighten($primary, 15%),
-    primary-light1-color: lighten($primary, 43%),
-    primary-light2-color: lighten($primary, 45%),
-    dark-color: #343a40,
-    light-color: #f8f9fa,
-    light1-color: #e8e9ea,
-    light2-color: #c4c5ca
+    primary-light-color: lighten($primary, 15%)
   )
 );
 

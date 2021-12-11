@@ -1081,13 +1081,13 @@ metaInfo() {
 .post-column {
   padding-top: 15px;
   @include dynamic-theme() {
-    border-right: 1px solid theme($light2-color);
+    border-right: 1px solid theme($border-color);
   }
 }
 
 .toolbar--wrapper {
   @include dynamic-theme() {
-    background-color: darken(theme($light-color), 3%);
+    background-color: darken(theme($normal-background-color), 3%);
   }
 
   border-radius: 4px 4px 0 0;
@@ -1096,9 +1096,9 @@ metaInfo() {
 
 .editor--wrapper {
   @include dynamic-theme() {
-    background-color: theme($light-color);
-    border: 1px solid theme($light1-color);
-    border-top: 1px solid theme($light1-color) !important;
+    background-color: theme($normal-background-color);
+    border: 1px solid theme($border2-color);
+    border-top: 1px solid theme($border2-color) !important;
   }
 
   border-radius: 0;
@@ -1112,8 +1112,8 @@ metaInfo() {
   position: relative;
 
   @include dynamic-theme() {
-    background-color: theme($light-color);
-    border: 1px solid theme($light2-color);
+    background-color: theme($normal-background-color);
+    border: 1px solid theme($border-color);
   }
 
   .loader {
@@ -1133,7 +1133,7 @@ metaInfo() {
   padding-left: 10px;
 
   @include dynamic-theme() {
-    background: theme($light-color);
+    background: theme($normal-background-color);
   }
 
   div:first-child {
@@ -1151,7 +1151,7 @@ metaInfo() {
   border-radius: 4px;
 
   @include dynamic-theme() {
-    border: 1px solid theme($light2-color);
+    border: 1px solid theme($border-color);
   }
 
   &:empty {
@@ -1164,8 +1164,8 @@ metaInfo() {
   max-width: initial;
 
   @include dynamic-theme() {
-    background-color: theme($light-color);
-    border-bottom: 1px solid theme($light1-color);
+    background-color: theme($normal-background-color);
+    border-bottom: 1px solid theme($border2-color);
   }
 
   &:first-child {
@@ -1258,8 +1258,8 @@ body {
   min-height: 100vh;
 
   @include dynamic-theme() {
-    outline: 1px solid theme($light2-color);
-    background-color: theme($primary-light1-color);
+    outline: 1px solid theme($border-color);
+    background-color: theme($background-color);
   }
 
   outline-offset: -1px;
@@ -1267,7 +1267,7 @@ body {
 }
 .container-fluid {
   @include dynamic-theme() {
-    background-color: theme($primary-light1-color);
+    background-color: theme($background-color);
   }
 }
 

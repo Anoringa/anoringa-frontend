@@ -557,7 +557,7 @@ body {
 
   @include dynamic-theme() {
     color: theme($primary-color);
-    background-color: theme($light-color);
+    background-color: theme($normal-background-color);
   }
 }
 </style>

@@ -504,7 +504,7 @@ export default {
   padding: 1%;
 
   @include dynamic-theme() {
-    background-color: theme($primary-light1-color);
+    background-color: theme($background-color);
   }
 }
 #index {
@@ -515,7 +515,7 @@ export default {
   position: relative;
 
   @include dynamic-theme() {
-    background-color: theme($primary-light1-color);
+    background-color: theme($background-color);
   }
 }
 .loader {
