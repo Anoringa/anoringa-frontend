@@ -23,14 +23,12 @@ export default {
   data() {
     return {
       count: 0,
-      isDarkModeEnabled: false,
+      isDarkModeEnabled: localStorage.getItem("darkMode") === "true",
     };
   },
   mounted() {
-    this.isDarkModeEnabled = localStorage.getItem("darkMode") || false;
-
-    window.addEventListener("storage", function () {
-      this.isDarkModeEnabled = localStorage.getItem("darkMode");
+    window.addEventListener("toggleDarkMode", () => {
+      this.isDarkModeEnabled = localStorage.getItem("darkMode") === "true";
     });
   },
   methods: {

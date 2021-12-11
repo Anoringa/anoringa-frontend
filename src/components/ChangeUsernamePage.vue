@@ -178,6 +178,9 @@ export default {
 
     toggleDarkMode(event) {
       window.localStorage.setItem("darkMode", event.target.checked);
+
+      const changeEvent = new Event("toggleDarkMode");
+      dispatchEvent(changeEvent);
     },
 
     userStore(response) {
