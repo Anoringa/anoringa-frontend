@@ -44,7 +44,22 @@
             Entiendo que es posible que este nombre pueda no volver a estar
             disponible.
           </small>
+
           <b-button type="submit" variant="primary">Cambiar</b-button>
+
+          <div class="custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="customSwitches"
+              @click="toggleDarkMode"
+              :checked="isDarkMode"
+            />
+
+            <label class="custom-control-label" for="customSwitches"
+              >Dark Mode</label
+            >
+          </div>
         </b-form>
       </div>
     </div>
@@ -121,6 +136,7 @@ export default {
       usertriedtosubmit: false,
       usernameAlreadyInUse: false,
       apiurl: process.env.VUE_APP_API + "/api/user/modify",
+      isDarkMode: false,
       form: {
         name: "",
         checked: false,
@@ -141,6 +157,11 @@ export default {
       userid: "",
     };
   },
+  mounted() {
+    const oldStateString = window.localStorage.getItem("darkMode");
+
+    this.isDarkMode = oldStateString === "true";
+  },
   methods: {
     makeToast(append = false, errorTitle, errorMessage, variant) {
       this.toastCount++;
@@ -153,6 +174,10 @@ export default {
         toaster: "b-toaster-bottom-right",
         solid: true,
       });
+    },
+
+    toggleDarkMode(event) {
+      window.localStorage.setItem("darkMode", event.target.checked);
     },
 
     userStore(response) {
@@ -283,6 +308,10 @@ export default {
   }
 
   height: 100vh;
+}
+
+.custom-switch {
+  margin-top: 1rem;
 }
 
 .configuration-wrapper {

@@ -1,5 +1,5 @@
 <template>
-  <div class="theme--dark">
+  <div :class="isDarkModeEnabled ? 'theme--dark' : 'theme--light'">
     <div id="app">
       <head>
         <title>
@@ -23,7 +23,15 @@ export default {
   data() {
     return {
       count: 0,
+      isDarkModeEnabled: false,
     };
+  },
+  mounted() {
+    this.isDarkModeEnabled = localStorage.getItem("darkMode") || false;
+
+    window.addEventListener("storage", function () {
+      this.isDarkModeEnabled = localStorage.getItem("darkMode");
+    });
   },
   methods: {
     analytics() {
@@ -192,7 +200,8 @@ h6 {
   }
 }
 
-blockquote {
+blockquote,
+label {
   @include dynamic-theme() {
     color: theme($foreground1-color);
   }
