@@ -1,13 +1,19 @@
 
 
 <template>
-    <footer id="bobafet">
-        <p>
-        <a href="https://www.youtube.com/watch?v=oszhW4gaI7k">Contactanos</a> | <!--<a href="https://www.youtube.com/watch?v=oszhW4gaI7k">Contactanos</a> | <a href="/reglas.html">Reglas</a> | --><a href="/reglas.html">Reglas</a> | <a href="https://github.com/Anoringa">Pagina del proyecto</a> | <a href="/reportar?type=Reporte">Reportar</a> |
-        <a href="/politicas.html">Politica de privacidad</a>
-        </p>
-        <p>&copy;2021 Copyright</p>
-    </footer>
+  <footer id="bobafet">
+    <p>
+      <a href="https://www.youtube.com/watch?v=oszhW4gaI7k">Contactanos</a> |
+      <!--<a href="https://www.youtube.com/watch?v=oszhW4gaI7k">Contactanos</a> | <a href="/reglas.html">Reglas</a> | --><a
+        href="/reglas.html"
+        >Reglas</a
+      >
+      | <a href="https://github.com/Anoringa">Pagina del proyecto</a> |
+      <a href="/reportar">Reportar</a> |
+      <a href="/politicas.html">Politica de privacidad</a>
+    </p>
+    <p>&copy;2021 Copyright</p>
+  </footer>
 
   <!--
 
@@ -130,14 +136,11 @@ $darker: #222;
 $dark: #555;
 $bright: #ddd;
 
-
-#bobafet{
-  //width: 80%;
-  /*
-  margin: 0px;
-  padding: 0px;
-  */
+#bobafet {
   text-align: center;
+  border-top: 1px solid $light2-color;
+  padding: 15px 0 100px;
+  background-color: $primary-light1-color;
 }
 .card {
   background: #fff;

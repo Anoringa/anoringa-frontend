@@ -26,8 +26,8 @@
       ></floatPlayer>
 
       <div class="container-fluid">
-        <b-row class="mb-12 pt-5 pb-5">
-          <b-col lg="6" style="background-color: lavender">
+        <b-row class="mb-12">
+          <b-col lg="6" class="post-column">
             <div>
               <img
                 :src="photo ? photo : photodefault"
@@ -40,16 +40,6 @@
               {{ pagetitle }}
             </h2>
 
-            <!--
-            <pre
-              class="pb-5 contenidodelpost"
-              style="
-                text-align: left;
-                word-wrap: break-word;
-                white-space: pre-wrap;
-              "
-            ><p v-html="content"></p></pre>
-            -->
             <div class="pb-3">
               <div id="quill-container" class="quill-pre"></div>
             </div>
@@ -68,7 +58,7 @@
               }}.
             </p>
           </b-col>
-          <b-col lg="6" style="background-color: lavenderblush">
+          <b-col lg="6">
             <h2 class="p-2 text-center">Comentarios</h2>
             <div style="width: 100%">
               <form class="pt-3">
@@ -164,63 +154,80 @@
                 </div>
               </form>
               <div class="form-group pt-3 cumBucket">
-                <!--
-                  <div id="commentToolbar">
-                    <span class="ql-formats">
-                      <button class="ql-link"></button>
-                      <button class="ql-image"></button>
-                      <button class="ql-video"></button>
-                      <button class="ql-code-block"></button>
-                    </span>
-                    <span class="ql-formats">
-                      <button class="ql-clean"></button>
-                    </span>
+                <div class="comment-box-creator">
+                  <div class="loader">
+                    <b-spinner
+                      v-if="!isEditorLoaded"
+                      variant="primary"
+                      key="primary"
+                    ></b-spinner>
                   </div>
-                  -->
 
-                <div id="commentEditor"></div>
+                  <div :class="!isEditorLoaded ? 'hidden' : ''">
+                    <div id="toolbar-wrapper" class="toolbar--wrapper">
+                      <span class="ql-formats">
+                        <button class="ql-link"></button>
+                        <button class="ql-image"></button>
+                        <button class="ql-video"></button>
+                        <button class="ql-code-block"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-clean"></button>
+                      </span>
+                    </div>
 
-                <b-form-valid-feedback :state="commentContentState"
-                  >a comentar</b-form-valid-feedback
-                >
-                <b-form-invalid-feedback :state="commentContentState">
-                  Animate a escribir algo 🥸<br />podes comentar lo que
-                  <strong id="pepegrillo">quieras*</strong> recorda que nadie
-                  sabe quien sos jijio
+                    <div id="editor-wrapper" class="editor--wrapper"></div>
 
-                  <b-popover
-                    :target="'pepegrillo'"
-                    triggers="hover"
-                    placement="top"
-                  >
-                    <template #title>Tene en cuenta</template>
-
-                    <small
-                      >lo que Quieras* siguiendo las normas comunitarias,
-                      terminos y condiciones</small
+                    <div
+                      class="
+                        d-flex
+                        justify-content-between
+                        comment-creator-footer
+                      "
                     >
-                  </b-popover>
-                </b-form-invalid-feedback>
+                      <div>
+                        <b-form-valid-feedback
+                          v-if="commentContentState"
+                          :state="commentContentState"
+                          class="d-inline-block"
+                        >
+                          Comenta libremente lo que
+                          <strong id="pepegrillo">quieras</strong>!
 
-                <!--
-                <label for="comment">el comentario:</label>
-                -->
-                <!--
-                <textarea
-                  v-model="nuevoComemtarioTexto"
-                  class="form-control"
-                  placeholder="Comentario..."
-                  rows="2"
-                  id="comment"
-                ></textarea>
-                -->
+                          <b-popover
+                            :target="'pepegrillo'"
+                            triggers="hover"
+                            placement="bottom"
+                          >
+                            <template #title>Ten en cuenta</template>
 
-                <b-button class="m-3" v-b-modal.modal-1 @click="crearComentario"
-                  >Enviar Comentario</b-button
-                >
+                            <medium
+                              >Lo que <strong>quieras</strong> siempre y cuando
+                              siga las normas comunitarias, terminos y
+                              condiciones! ☭☭
+                            </medium>
+                          </b-popover>
+                        </b-form-valid-feedback>
+
+                        <b-form-invalid-feedback :state="commentContentState">
+                          El comentario no puede estar vacio!
+                        </b-form-invalid-feedback>
+                      </div>
+
+                      <b-button
+                        v-b-modal.modal-1
+                        @click="crearComentario"
+                        variant="primary"
+                        class="comment-button"
+                      >
+                        Comentar
+                      </b-button>
+                    </div>
+                  </div>
+                </div>
 
                 <div id="comentarios" class="pt-3"></div>
-                <div v-if="comments !== null">
+                <div v-if="comments !== null" class="comments--wrapper">
                   <div
                     class="repo container"
                     style="text-align: left"
@@ -234,11 +241,7 @@
                     >
                       <a class="pr-1" :href="'#' + currentComent._id"
                         >@{{ abreviate(currentComent._id) }}</a
-                      ><!--
-                      <a
-                        v-bind:style="[compare(currentComent.user[0].username,userowner.username) ? 'color: red;': 'color: white;',]"
-                        >por {{ currentComent.user[0].username }}</a
-                      >-->
+                      >
                       por
                       <div
                         style="display: inline"
@@ -359,12 +362,16 @@
             </div>
           </b-col>
         </b-row>
-        <Footer></Footer>
       </div>
+
+      <Footer></Footer>
     </div>
     <div v-else-if="loaded_correctly == false" class="loadOrError" style="">
-      Cargando
-      <b-spinner variant="danger" key="danger"></b-spinner>
+      <b-spinner
+        variant="danger"
+        key="danger"
+        style="width: 4rem; height: 4rem"
+      ></b-spinner>
     </div>
     <div v-else-if="loaded_correctly == 'ERROR'" style="">
       ERROR
@@ -457,28 +464,6 @@ export default {
   created() {
     this.moment = moment;
     this.getPostDetail();
-
-    /*
-
-    // QuillJS rich text viewer
-
-    this.editor = new Quill(this.$el.querySelector("#quill-container"), {
-      readOnly: true,
-      theme: "snow",
-    });
-    */
-
-    setTimeout(() => {}, 2000);
-
-    // 3000 millisec is maybe too long but too make sure that the problem is from creating
-    // Quill before DOM
-
-    //var BackgroundClass = Quill.import("attributors/class/background");
-    //var ColorClass = Quill.import("attributors/class/color");
-    //var SizeStyle = Quill.import("attributors/style/size");
-    //Quill.register(BackgroundClass, true);
-    //Quill.register(ColorClass, true);
-    //Quill.register(SizeStyle, true);
   },
   metaInfo() {
     return {
@@ -505,6 +490,8 @@ export default {
       nuevoComemtarioTexto: "",
       nuevoComemtarioEnRespuestaDe: [],
       ListaDeIdsDeComentarios: [],
+      hasPushedAComment: false,
+      isEditorLoaded: false,
       value: [],
       options: [
         { name: "Vue.js", language: "JavaScript" },
@@ -614,11 +601,12 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      var commentToolbar = [["link", "video", "image"]];
-      this.commentEditor = new Quill(document.getElementById("commentEditor"), {
+      const commentEditorWrapper = document.getElementById("editor-wrapper");
+
+      this.commentEditor = new Quill(commentEditorWrapper, {
         modules: {
           toolbar: {
-            container: commentToolbar,
+            container: "#toolbar-wrapper",
             handlers: {
               image: imageHandler,
               video: videoHandler,
@@ -634,12 +622,15 @@ export default {
           },
         },
         readOnly: false,
-        placeholder: "Escribe aqui su comentario...",
+        placeholder: "Escribe aqui tu comentario...",
         theme: "snow",
       });
       this.commentEditor.on("text-change", () => {
         this.nuevoComemtarioTexto = this.commentEditor.root.innerHTML;
       });
+
+      this.isEditorLoaded = true;
+
       function videoHandler() {
         let url = prompt("copie y pegue la URL deL video Youtube aquí.");
         url = getVideoUrl(url);
@@ -882,8 +873,6 @@ export default {
           this.commentEditor.root.innerHTML = null;
           var self = this;
 
-          //for troubleshooting console.log(data,self);
-
           this.$socket.emit("comment", data, function (datos) {
             console.log("socket.io emit");
             console.log(datos);
@@ -893,12 +882,6 @@ export default {
               { username: localStorage.username, _id: localStorage.username },
             ];
             self.comments.push(datos);
-            //this.$root.$emit("component1"); //like this
-            //this.$root.$emit("component1", "datos", datos);
-            //this.$root.$emit("sendPostP2P", "datos", datos);
-            //EventBus.$emit("sendPostP2P", "datos", datos);
-            //window.Evento.$emit("sendPostP2P", "datos", datos);
-            //this.posts.push(datos);
           });
         } else {
           console.log("el comentario esta vacio");
@@ -1029,24 +1012,21 @@ export default {
   },
   computed: {
     commentContentState() {
-      console.log(this.nuevoComemtarioTexto);
-      if (this.nuevoComemtarioTexto) {
-        var postContent = this.nuevoComemtarioTexto;
-        console.log(postContent);
-        if (
-          postContent != null &&
-          postContent != "<p><br></p>" &&
-          postContent != "" &&
-          postContent.length >= 1
-        ) {
-          return true;
-        } else if (postContent == "") {
-          return null;
-        } else {
-          return false;
-        }
-      } else {
+      const postContent = this.nuevoComemtarioTexto;
+
+      if (this.hasPushedAComment || !postContent) return null;
+
+      if (
+        postContent != null &&
+        postContent != "<p><br></p>" &&
+        postContent != "" &&
+        postContent.length >= 1
+      ) {
+        return true;
+      } else if (postContent == "") {
         return null;
+      } else {
+        return false;
       }
     },
 
@@ -1063,21 +1043,99 @@ export default {
 
 <style src="./Post.css"></style>
 
-<style>
+<style lang="scss" scoped>
+.post-column {
+  padding-top: 15px;
+  border-right: 1px solid $light2-color;
+}
+
+.toolbar--wrapper {
+  background-color: darken($light-color, 3%);
+  border-radius: 4px 4px 0 0;
+  border: none;
+}
+
+.editor--wrapper {
+  background-color: $light-color;
+  border-radius: 0;
+  border: 1px solid $light1-color;
+  border-top: 1px solid $light1-color !important;
+  border-width: 1px 0;
+}
+
+.comment-box-creator {
+  border: 1px solid $light2-color;
+  border-radius: 4px;
+  transition: opacity 1s ease-in-out;
+  min-height: 181px;
+  position: relative;
+  background-color: $light-color;
+
+  .loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+.hidden {
+  opacity: 0;
+}
+
+.comment-creator-footer {
+  background: $light-color;
+  border-radius: 0 0 4px 4px;
+  border: none;
+  padding-left: 10px;
+
+  div:first-child {
+    margin: 0;
+    vertical-align: sub;
+  }
+}
+
+.comment-button {
+  border-radius: 0 0 4px 0;
+  z-index: 1;
+}
+
+.comments--wrapper {
+  border: 1px solid $light2-color;
+  border-radius: 4px;
+
+  &:empty {
+    border: none;
+  }
+}
+
+.repo {
+  padding: 1em;
+  background-color: $light-color;
+  border-bottom: 1px solid $light1-color;
+  max-width: initial;
+
+  &:first-child {
+    border-radius: 4px 4px 0 0;
+  }
+  &:last-child {
+    border-radius: 0 0 4px 4px;
+  }
+}
+</style>
+
+<style lang="scss">
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+.editor--wrapper .ql-editor {
+  min-height: 100px;
+}
 
 .cumBucket > .ql-toolbar {
   position: static !important;
-  /*
-  
-  */
 }
 .quill-wrap {
   max-width: 900px;
   width: 100%;
-  /*margin-left:auto;
-  margin-right:auto;
-  */
   margin-top: 20px;
 }
 
@@ -1089,43 +1147,13 @@ export default {
 .quill-wrap .ql-picker {
   margin-right: 2px;
 }
-/*
-  .ql-indent-8{
-  padding-left: initial !important;
-}
-  
-  */
 
 .ql-indent-8 {
   padding-left: initial !important;
 }
 [class^="ql-indent"] {
-  /*WE USE ^ HERE */
-  /*padding-left: initial !important;
-  padding-left: 0 !important;*/
-
   padding-left: initial !important;
-  /*background-color: green;*/
 }
-/*
-  .ql-indent-* {
-  padding-left:initial!important;
-}
-.ql-indent-1 {
-  padding-left:initial!important;
-}
-.ql-indent-8{
-  padding-left:initial!important;
-
-}
-  */
-
-/*
-.contenidodelpost{
-
-  display: inline-block;
-
-}  */
 .contenidodelpost img {
   zoom: 2;
   display: block;
@@ -1135,40 +1163,12 @@ export default {
   width: 100%;
 }
 
-.commentRichTextViewer {
-  /*
-    box-sizing: border-box;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    height: 100%;
-    margin: 0px;
-    position: relative;
-
-box-sizing: border-box;
-    line-height: 1.42;
-    height: 100%;
-    outline: none;
-    overflow-y: auto;
-    padding: 12px 15px;
-    -o-tab-size: 4;
-    tab-size: 4;
-    -moz-tab-size: 4;
-    text-align: left;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    */
-}
-/*
-.quill-container , 
-*/
-/*
-.ql-editor {
-  display: inline-block;
-}
-*/
 .loadOrError {
   text-align: center;
-  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 .container {
   position: relative;
@@ -1180,7 +1180,7 @@ box-sizing: border-box;
   font-size: 14px;
 }
 </style>
-<style lang="css" scoped>
+<style lang="scss" scoped>
 *,
 *:before,
 *:after {
@@ -1188,12 +1188,7 @@ box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-* {
-  /*
-  margin: 0;
-  padding: 0;
-  */
-}
+
 html,
 body {
   height: 100%;
@@ -1202,33 +1197,20 @@ body {
   */
 }
 .maindiv {
-  /*
-  margin: 3em auto;
-  max-width: 60em;
-  margin: auto;
-  */
-  max-width: 60em;
+  max-width: 70em;
   margin: auto;
   line-height: 1.5em;
   color: black;
-  background-color: gainsboro;
-  /*
-  background-image: url("https://www.w3schools.com/cssref/paper.gif");
-  background-repeat: repeat-y;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  */
+  outline: 1px solid $light2-color;
+  outline-offset: -1px;
+  outline-width: 0 1px;
+  min-height: 100vh;
+  background-color: $primary-light1-color;
 }
 .container-fluid {
-  /*
-  background-color: white;
-  */
-  background-color: lavenderblush;
+  background: $primary-light1-color;
 }
+
 header {
   background-color: #aaa;
   height: 50px;
@@ -1240,11 +1222,6 @@ header {
 .Content {
   width: 100%;
   background-color: #ccf;
-}
-footer {
-  width: 100%;
-  background-color: rgb(250, 241, 241);
-  height: 100px;
 }
 .nav {
   list-style: none;
@@ -1319,14 +1296,8 @@ footer {
   }
 } MEDIA QUERIES */
 .post-img {
-  /*
-  position: absolute;
-  */
-  top: 0;
-  left: 0;
-  /*height: 300px;
-  width: 300px;*/
-  object-fit: cover;
+  display: block;
+  margin: 0 auto;
 }
 /*
 comments
@@ -1345,11 +1316,11 @@ ul {
 .quill-pre {
   border: 0px;
 }
-header,
-.repo {
-  border: 1px solid #eee;
+header {
+  border: 1px solid #ccc;
   padding: 1em;
-  border-radius: 3px;
+  border-radius: 4px;
+  background-color: #fff;
 }
 header :first-child,
 .repo :first-child {
@@ -1359,11 +1330,9 @@ header :last-child,
 .repo :last-child {
   margin-bottom: 0;
 }
-.repo {
-  margin-bottom: 1em;
-}
 .repo h3 {
   margin-bottom: 0;
+  max-width: initial;
 }
 .stats,
 .last-updated {
