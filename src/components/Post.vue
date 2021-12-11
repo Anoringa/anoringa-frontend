@@ -153,19 +153,21 @@
                   </div>
 
                   <div :class="!isEditorLoaded ? 'hidden' : ''">
-                    <div id="toolbar-wrapper" class="toolbar--wrapper">
-                      <span class="ql-formats">
-                        <button class="ql-link"></button>
-                        <button class="ql-image"></button>
-                        <button class="ql-video"></button>
-                        <button class="ql-code-block"></button>
-                      </span>
-                      <span class="ql-formats">
-                        <button class="ql-clean"></button>
-                      </span>
-                    </div>
+                    <div>
+                      <div id="toolbar-wrapper" class="toolbar--wrapper">
+                        <span class="ql-formats">
+                          <button class="ql-link"></button>
+                          <button class="ql-image"></button>
+                          <button class="ql-video"></button>
+                          <button class="ql-code-block"></button>
+                        </span>
+                        <span class="ql-formats">
+                          <button class="ql-clean"></button>
+                        </span>
+                      </div>
 
-                    <div id="editor-wrapper" class="editor--wrapper"></div>
+                      <div id="editor-wrapper" class="editor--wrapper"></div>
+                    </div>
 
                     <div
                       class="
@@ -1092,12 +1094,9 @@ metaInfo() {
 
   border-radius: 4px 4px 0 0;
   border: none;
-  margin: 0 1px;
 }
 
 .editor--wrapper {
-  margin: 0 1px;
-
   @include dynamic-theme() {
     background-color: theme($normal-background-color);
     border-color: theme($border2-color);
@@ -1110,7 +1109,7 @@ metaInfo() {
 }
 
 .comment-box-creator {
-  border-radius: 4px;
+  border-radius: 5px;
   transition: opacity 1s ease-in-out;
   min-height: 181px;
   position: relative;
@@ -1118,9 +1117,8 @@ metaInfo() {
 
   @include dynamic-theme() {
     background-color: theme($normal-background-color);
-    outline: 1px solid theme($border-color);
+    border: 1px solid theme($border-color);
   }
-  outline-offset: -1px;
 
   .loader {
     position: absolute;
@@ -1154,7 +1152,7 @@ metaInfo() {
 }
 
 .comments--wrapper {
-  border-radius: 4px;
+  border-radius: 5px;
 
   @include dynamic-theme() {
     border: 1px solid theme($border-color);
@@ -1168,6 +1166,7 @@ metaInfo() {
 .repo {
   padding: 1em;
   max-width: initial;
+  border: none;
 
   @include dynamic-theme() {
     background-color: theme($normal-background-color);
@@ -1181,6 +1180,7 @@ metaInfo() {
   &:last-child {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
+    border-bottom: none;
   }
 }
 </style>
