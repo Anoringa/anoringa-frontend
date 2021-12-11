@@ -3,7 +3,7 @@
     <Header appName="Ano-PassPort"></Header>
     <div id="canvas"></div>
 
-    <div class="container pt-3">
+    <div class="container pt-3 configuration-wrapper">
       <h2>Configuraciones</h2>
 
       <!--
@@ -67,7 +67,11 @@
           <small class="form-text text-muted pt-1 pb-3">
             No compartas este codigo con nadie y ten cuidado de donde lo guardas
           </small>
-          <b-button type="submit" variant="danger" @click="generateToken"
+          <b-button
+            type="submit"
+            variant="primary"
+            class="p-2"
+            @click="generateToken"
             >Generar TOKEN</b-button
           >
           <small class="form-text text-muted pt-1 pb-3">
@@ -537,6 +541,10 @@ $bright: #ddd;
 body {
   background-color: #0496ff;
   font-family: Montserrat, sans-serif;
+}
+
+.configuration-wrapper {
+  margin: 0 auto;
 }
 
 // Organisms

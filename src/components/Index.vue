@@ -28,7 +28,8 @@ export default {
   metaInfo() {
     const title = process.env.VUE_APP_NAME + " | Comenta y postea anonimamente";
 
-    const content = "Anoringa es un sitio en el que podras discutir anonimamente";
+    const content =
+      "Anoringa es un sitio en el que podras discutir anonimamente";
     const link = process.env.VUE_APP_URL;
     const photolink = process.env.VUE_APP_URL + "/" + "anoringa.png";
     const app_name = process.env.VUE_APP_NAME;
@@ -155,6 +156,10 @@ export default {
 </script>
 
 
+
+<style lang="scss">
+@import "node_modules/bootstrap/scss/bootstrap";
+</style>
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");

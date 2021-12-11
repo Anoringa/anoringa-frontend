@@ -1,15 +1,14 @@
 <template>
-  <div id="app">
-    <head>
-      <title>
-        {{ "process.env.VUE_APP_NAME" + " | Comenta y postea anonimamente" }}
-      </title>
-    </head>
-    <router-view />
-    <!--
-  This component can be located anywhere in your App.
-  The slot content of the above portal component will be rendered here.
-  --></div>
+  <div :class="isDarkModeEnabled ? 'theme--dark' : 'theme--light'">
+    <div id="app">
+      <head>
+        <title>
+          {{ "process.env.VUE_APP_NAME" + " | Comenta y postea anonimamente" }}
+        </title>
+      </head>
+      <router-view />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -24,7 +23,13 @@ export default {
   data() {
     return {
       count: 0,
+      isDarkModeEnabled: localStorage.getItem("darkMode") === "true",
     };
+  },
+  mounted() {
+    window.addEventListener("toggleDarkMode", () => {
+      this.isDarkModeEnabled = localStorage.getItem("darkMode") === "true";
+    });
   },
   methods: {
     analytics() {
@@ -49,7 +54,8 @@ export default {
       */
       //console.log("analytics");
       let script = document.createElement("script");
-      script.text = 'if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"chocomilk",utcoffset:"-3"}))};sessionStorage.setItem("_swa","1");'
+      script.text =
+        'if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"chocomilk",utcoffset:"-3"}))};sessionStorage.setItem("_swa","1");';
       //script.src = "";
       document.head.appendChild(script);
     },
@@ -178,31 +184,40 @@ export default {
 /* global styles */
 </style> 
 
-<style lang="scss" scoped>
-#app {
-  background-color: $primary-light2-color;
-  min-height: 100vh;
+<style lang="scss">
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include dynamic-theme() {
+    color: theme($foreground-color);
+  }
 }
 
+blockquote,
+label {
+  @include dynamic-theme() {
+    color: theme($foreground1-color);
+  }
+}
+</style>
+
+<style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
-//@import '../node_modules/bootstrap/dist/css/bootstrap.css';
-//@import "node_modules/bootstrap-vue/src/index.scss";
-/*
-body {
-   overflow-x: hidden !important;
-}
 #app {
-   overflow-x: hidden !important;
+  min-height: 100vh;
+
+  @include dynamic-theme() {
+    background-color: theme($background1-color);
+  }
 }
-#app {
-  //width: 80%;
-  margin: 0px;
-  padding: 0px;
-  text-align: center;
-}
-*/
+
 .custom-file-input:lang(en) ~ .custom-file-label::after {
   content: "Buscar";
 }

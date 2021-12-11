@@ -211,7 +211,10 @@ export default {
     background-size: cover;
     border-radius: 50%;
     background-position: center center;
-    border: 1px solid $light-color;
+
+    @include dynamic-theme() {
+      border: 1px solid theme($player-disc-border-color);
+    }
   }
 
   &:before {
@@ -219,12 +222,15 @@ export default {
     position: absolute;
     height: 30%;
     width: 30%;
-    background-color: $dark-color;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    border: 2px solid $light-color;
+
+    @include dynamic-theme() {
+      background-color: theme($player-disc-background-color);
+      border: 2px solid theme($player-disc-border-color);
+    }
   }
 }
 

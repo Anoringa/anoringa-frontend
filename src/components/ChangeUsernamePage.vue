@@ -44,7 +44,22 @@
             Entiendo que es posible que este nombre pueda no volver a estar
             disponible.
           </small>
-          <b-button type="submit" variant="danger">Cambiar</b-button>
+
+          <b-button type="submit" variant="primary">Cambiar</b-button>
+
+          <div class="custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="customSwitches"
+              @click="toggleDarkMode"
+              :checked="isDarkMode"
+            />
+
+            <label class="custom-control-label" for="customSwitches"
+              >Dark Mode</label
+            >
+          </div>
         </b-form>
       </div>
     </div>
@@ -121,6 +136,7 @@ export default {
       usertriedtosubmit: false,
       usernameAlreadyInUse: false,
       apiurl: process.env.VUE_APP_API + "/api/user/modify",
+      isDarkMode: false,
       form: {
         name: "",
         checked: false,
@@ -141,6 +157,11 @@ export default {
       userid: "",
     };
   },
+  mounted() {
+    const oldStateString = window.localStorage.getItem("darkMode");
+
+    this.isDarkMode = oldStateString === "true";
+  },
   methods: {
     makeToast(append = false, errorTitle, errorMessage, variant) {
       this.toastCount++;
@@ -153,6 +174,13 @@ export default {
         toaster: "b-toaster-bottom-right",
         solid: true,
       });
+    },
+
+    toggleDarkMode(event) {
+      window.localStorage.setItem("darkMode", event.target.checked);
+
+      const changeEvent = new Event("toggleDarkMode");
+      dispatchEvent(changeEvent);
     },
 
     userStore(response) {
@@ -236,12 +264,13 @@ export default {
               "warning"
             );
 
-            if (error.response.data.data[0].msg == "Username is already in use") {
+            if (
+              error.response.data.data[0].msg == "Username is already in use"
+            ) {
               this.usernameAlreadyInUse = true;
-                console.log("SIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-            }
-            else{
-                console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+              console.log("SIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+            } else {
+              console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
             }
 
             console.log("error status", error.response.status);
@@ -277,8 +306,15 @@ export default {
 
 <style lang="scss" scoped>
 #index {
-  background-color: $primary-light1-color;
+  @include dynamic-theme() {
+    background-color: theme($background-color);
+  }
+
   height: 100vh;
+}
+
+.custom-switch {
+  margin-top: 1rem;
 }
 
 .configuration-wrapper {

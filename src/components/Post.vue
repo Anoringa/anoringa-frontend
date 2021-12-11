@@ -11,7 +11,7 @@
             type="button"
             class="btn btn-lg btn-light btn-sm post-creation-button"
           >
-          <ModalEditePost>EDITAR</ModalEditePost>
+            <ModalEditePost>EDITAR</ModalEditePost>
           </button>
         </div>
 
@@ -20,118 +20,118 @@
       -->
       </Header>
 
-      <floatPlayer
-        v-if="music"
-        :idyoutube="music || 'gTFeDTVwUHM'"
-      ></floatPlayer>
+      <div class="content-wrapper">
+        <floatPlayer
+          v-if="music"
+          :idyoutube="music || 'gTFeDTVwUHM'"
+        ></floatPlayer>
 
-      <div class="container-fluid">
-        <b-row class="mb-12">
-          <b-col lg="6" class="post-column">
-            <div>
-              <img
-                :src="photo ? photo : photodefault"
-                class="img-fluid post-img"
-                alt="aca iria una foto pero nose donde esta"
-              />
-            </div>
+        <div class="container-fluid">
+          <b-row class="mb-12">
+            <b-col lg="6" class="post-column">
+              <div>
+                <img
+                  :src="photo ? photo : photodefault"
+                  class="img-fluid post-img"
+                  alt="aca iria una foto pero nose donde esta"
+                />
+              </div>
 
-            <h2 class="p-3" style="text-align: left">
-              {{ pagetitle }}
-            </h2>
+              <h2 class="p-3" style="text-align: left">
+                {{ pagetitle }}
+              </h2>
 
-            <div class="pb-3">
-              <div id="quill-container" class="quill-pre"></div>
-            </div>
+              <div class="pb-3">
+                <div id="quill-container" class="quill-pre"></div>
+              </div>
 
-            <div class="postOwnership text-center">
-              <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
-              >por {{ userowner.username }}
-            </div>
+              <div class="postOwnership text-center">
+                <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
+                >por {{ userowner.username }}
+              </div>
 
-            <p class="last-updated text-center">
-              Publicado
-              {{
-                moment(new Date(postcreatedAt)).format(
-                  "DD/MM/YYYY [&nbsp;] HH:mm"
-                )
-              }}.
-            </p>
-          </b-col>
-          <b-col lg="6">
-            <h2 class="p-2 text-center">Comentarios</h2>
-            <div style="width: 100%">
-              <form class="pt-3">
-                <div class="row">
-                  <div class="form-group pl-3 pt-3">
-                    <!--
+              <p class="last-updated text-center">
+                Publicado
+                {{
+                  moment(new Date(postcreatedAt)).format(
+                    "DD/MM/YYYY [&nbsp;] HH:mm"
+                  )
+                }}.
+              </p>
+            </b-col>
+            <b-col lg="6">
+              <h2 class="p-2 text-center">Comentarios</h2>
+              <div style="width: 100%">
+                <form class="pt-3">
+                  <div class="row">
+                    <div class="form-group pl-3 pt-3">
+                      <!--
                     <label class="typo__label">Responder a...</label>
                     -->
-                    <multiselect
-                      v-if="value.length >= 1"
-                      v-model="value"
-                      :options="comments"
-                      :multiple="true"
-                      :close-on-select="false"
-                      :clear-on-select="false"
-                      :preserve-search="true"
-                      selectLabel="Seleccionar"
-                      deselectLabel="Deseleccionar"
-                      placeholder=""
-                      label="text"
-                      track-by="_id"
-                      :preselect-first="false"
-                      @input="onChange"
-                      @change="onChange"
-                      no-result="Oops! No list items."
-                      :custom-label="customLabel"
-                    >
-                      <template
-                        slot="selection"
-                        slot-scope="{ values, isOpen }"
+                      <multiselect
+                        v-if="value.length >= 1"
+                        v-model="value"
+                        :options="comments"
+                        :multiple="true"
+                        :close-on-select="false"
+                        :clear-on-select="false"
+                        :preserve-search="true"
+                        selectLabel="Seleccionar"
+                        deselectLabel="Deseleccionar"
+                        placeholder=""
+                        label="text"
+                        track-by="_id"
+                        :preselect-first="false"
+                        @input="onChange"
+                        @change="onChange"
+                        no-result="Oops! No list items."
+                        :custom-label="customLabel"
                       >
-                        <span
-                          class="multiselect__single"
-                          v-if="values.length &amp;&amp; !isOpen"
+                        <template
+                          slot="selection"
+                          slot-scope="{ values, isOpen }"
                         >
-                          <div v-if="values.length > 1">
-                            respondiendo a {{ values.length }} comentarios
+                          <span
+                            class="multiselect__single"
+                            v-if="values.length &amp;&amp; !isOpen"
+                          >
+                            <div v-if="values.length > 1">
+                              respondiendo a {{ values.length }} comentarios
+                            </div>
+                            <div v-else>
+                              respondiendo a {{ values.length }} comentario
+                            </div>
+                          </span>
+                        </template>
+                        <template slot="element" slot-scope="selected">
+                          <div class="option__desc">
+                            <span class="option__title">{{
+                              recortarTextoAdiez(props.option.text)
+                            }}</span>
+                            <br />
+                            <small>{{ selected.option._id }}</small>
                           </div>
-                          <div v-else>
-                            respondiendo a {{ values.length }} comentario
+                        </template>
+
+                        <template slot="noResult">
+                          no hay comentarios papu
+                        </template>
+
+                        <template slot="option" slot-scope="props">
+                          <div class="option__desc">
+                            <span class="option__title">{{
+                              recortarTextoAdiez(props.option.text)
+                            }}</span>
+                            <br />
+                            <small>{{ props.option._id }}</small>
                           </div>
-                        </span>
-                      </template>
-                      <template slot="element" slot-scope="selected">
-                        <div class="option__desc">
-                          <span class="option__title">{{
-                            recortarTextoAdiez(props.option.text)
-                          }}</span>
-                          <br />
-                          <small>{{ selected.option._id }}</small>
-                        </div>
-                      </template>
-
-                      <template slot="noResult">
-                        no hay comentarios papu
-                      </template>
-
-                      <template slot="option" slot-scope="props">
-                        <div class="option__desc">
-                          <span class="option__title">{{
-                            recortarTextoAdiez(props.option.text)
-                          }}</span>
-                          <br />
-                          <small>{{ props.option._id }}</small>
-                        </div>
-                      </template>
-                    </multiselect>
-                    <!--
+                        </template>
+                      </multiselect>
+                      <!--
                     <p>{{ value }}</p>
                     <pre class="language-json"><code>{{ value  }}</code></pre>
-                    -->
-                  </div>
-                  <!--
+                    --></div>
+                    <!--
                   <div class="col">
                     <input
                       type="text"
@@ -142,7 +142,7 @@
                     />
                   </div>
                   -->
-                  <!--
+                    <!--
                   <div class="col">
                     <input
                       type="password"
@@ -151,173 +151,179 @@
                       name="pswd"
                     />
                   </div>-->
-                </div>
-              </form>
-              <div class="form-group pt-3 cumBucket">
-                <div class="comment-box-creator">
-                  <div class="loader">
-                    <b-spinner
-                      v-if="!isEditorLoaded"
-                      variant="primary"
-                      key="primary"
-                    ></b-spinner>
                   </div>
-
-                  <div :class="!isEditorLoaded ? 'hidden' : ''">
-                    <div id="toolbar-wrapper" class="toolbar--wrapper">
-                      <span class="ql-formats">
-                        <button class="ql-link"></button>
-                        <button class="ql-image"></button>
-                        <button class="ql-video"></button>
-                        <button class="ql-code-block"></button>
-                      </span>
-                      <span class="ql-formats">
-                        <button class="ql-clean"></button>
-                      </span>
+                </form>
+                <div class="form-group pt-3 cumBucket">
+                  <div class="comment-box-creator">
+                    <div class="loader">
+                      <b-spinner
+                        v-if="!isEditorLoaded"
+                        variant="primary"
+                        key="primary"
+                      ></b-spinner>
                     </div>
 
-                    <div id="editor-wrapper" class="editor--wrapper"></div>
-
-                    <div
-                      class="
-                        d-flex
-                        justify-content-between
-                        comment-creator-footer
-                      "
-                    >
+                    <div :class="!isEditorLoaded ? 'hidden' : ''">
                       <div>
-                        <b-form-valid-feedback
-                          v-if="commentContentState"
-                          :state="commentContentState"
-                          class="d-inline-block"
-                        >
-                          Comenta libremente lo que
-                          <strong id="pepegrillo">quieras</strong>!
+                        <div id="toolbar-wrapper" class="toolbar--wrapper">
+                          <span class="ql-formats">
+                            <button class="ql-link"></button>
+                            <button class="ql-image"></button>
+                            <button class="ql-video"></button>
+                            <button class="ql-code-block"></button>
+                          </span>
+                          <span class="ql-formats">
+                            <button class="ql-clean"></button>
+                          </span>
+                        </div>
 
-                          <b-popover
-                            :target="'pepegrillo'"
-                            triggers="hover"
-                            placement="bottom"
-                          >
-                            <template #title>Ten en cuenta</template>
-
-                            <medium
-                              >Lo que <strong>quieras</strong> siempre y cuando
-                              siga las normas comunitarias, terminos y
-                              condiciones! ☭☭
-                            </medium>
-                          </b-popover>
-                        </b-form-valid-feedback>
-
-                        <b-form-invalid-feedback :state="commentContentState">
-                          El comentario no puede estar vacio!
-                        </b-form-invalid-feedback>
+                        <div id="editor-wrapper" class="editor--wrapper"></div>
                       </div>
 
-                      <b-button
-                        v-b-modal.modal-1
-                        @click="crearComentario"
-                        variant="primary"
-                        class="comment-button"
-                      >
-                        Comentar
-                      </b-button>
-                    </div>
-                  </div>
-                </div>
-
-                <div id="comentarios" class="pt-3"></div>
-                <div v-if="comments !== null" class="comments--wrapper">
-                  <div
-                    class="repo container"
-                    style="text-align: left"
-                    v-for="currentComent in orderBy(comments, 'updatedAt', -1)"
-                    :id="currentComent._id"
-                    :key="currentComent._id"
-                  >
-                    <div
-                      class="comment_owner"
-                      style="word-wrap: break-word; white-space: pre-wrap"
-                    >
-                      <a class="pr-1" :href="'#' + currentComent._id"
-                        >@{{ abreviate(currentComent._id) }}</a
-                      >
-                      por
                       <div
-                        style="display: inline"
-                        :class="
-                          compare(
-                            currentComent.user[0].username,
-                            userowner.username
-                          )
-                            ? 'comment_in_response'
-                            : 'comment'
+                        class="
+                          d-flex
+                          justify-content-between
+                          comment-creator-footer
                         "
                       >
-                        {{ currentComent.user[0].username }}
+                        <div>
+                          <b-form-valid-feedback
+                            v-if="commentContentState"
+                            :state="commentContentState"
+                            class="d-inline-block"
+                          >
+                            Comenta libremente lo que
+                            <strong id="pepegrillo">quieras</strong>!
+
+                            <b-popover
+                              :target="'pepegrillo'"
+                              triggers="hover"
+                              placement="bottom"
+                            >
+                              <template #title>Ten en cuenta</template>
+
+                              <medium
+                                >Lo que <strong>quieras</strong> siempre y
+                                cuando siga las normas comunitarias, terminos y
+                                condiciones! ☭☭
+                              </medium>
+                            </b-popover>
+                          </b-form-valid-feedback>
+
+                          <b-form-invalid-feedback :state="commentContentState">
+                            El comentario no puede estar vacio!
+                          </b-form-invalid-feedback>
+                        </div>
+
+                        <b-button
+                          v-b-modal.modal-1
+                          @click="crearComentario"
+                          variant="primary"
+                          class="comment-button"
+                        >
+                          Comentar
+                        </b-button>
                       </div>
-                      <!--
+                    </div>
+                  </div>
+
+                  <div id="comentarios" class="pt-3"></div>
+                  <div v-if="comments !== null" class="comments--wrapper">
+                    <div
+                      class="repo container"
+                      style="text-align: left"
+                      v-for="currentComent in orderBy(
+                        comments,
+                        'updatedAt',
+                        -1
+                      )"
+                      :id="currentComent._id"
+                      :key="currentComent._id"
+                    >
+                      <div
+                        class="comment_owner"
+                        style="word-wrap: break-word; white-space: pre-wrap"
+                      >
+                        <a class="pr-1" :href="'#' + currentComent._id"
+                          >@{{ abreviate(currentComent._id) }}</a
+                        >
+                        por
+                        <div
+                          style="display: inline"
+                          :class="
+                            compare(
+                              currentComent.user[0].username,
+                              userowner.username
+                            )
+                              ? 'comment_in_response'
+                              : 'comment'
+                          "
+                        >
+                          {{ currentComent.user[0].username }}
+                        </div>
+                        <!--
                       <div
                         v-bind:style="[currentComent.user[0].username == userowner.username ? 'color: red;': 'color: white;','color: white;']"
                         >por {{ currentComent.user[0].username }}</div
                       >-->
-                      <a
-                        v-if="
-                          currentComent.user[0].username == userowner.username
-                        "
-                        >👃</a
-                      >
-                      <!-- 
+                        <a
+                          v-if="
+                            currentComent.user[0].username == userowner.username
+                          "
+                          >👃</a
+                        >
+                        <!-- 
                       <a v-text="currentComent.inResponseTo"></a>
                       
                         -->
-                      <a v-if="currentComent.inResponseTo.length">
-                        en respuesta de
-                        <a
-                          class="pl-1 pr-1"
-                          style="text-align: left; color: orange"
-                          v-for="currentComentchild in currentComent.inResponseTo"
-                          :id="
-                            'popover-target-' +
-                            currentComent._id +
-                            '-' +
-                            currentComentchild
-                          "
-                          :key="currentComentchild"
-                          :href="'#' + currentComentchild"
-                          >@{{ abreviate(currentComentchild) }}
-
-                          <b-popover
-                            :target="
+                        <a v-if="currentComent.inResponseTo.length">
+                          en respuesta de
+                          <a
+                            class="pl-1 pr-1"
+                            style="text-align: left; color: orange"
+                            v-for="currentComentchild in currentComent.inResponseTo"
+                            :id="
                               'popover-target-' +
                               currentComent._id +
                               '-' +
                               currentComentchild
                             "
-                            triggers="hover"
-                            placement="top"
-                            :set="
-                              (item = getValueOfArray(
-                                comments,
+                            :key="currentComentchild"
+                            :href="'#' + currentComentchild"
+                            >@{{ abreviate(currentComentchild) }}
+
+                            <b-popover
+                              :target="
+                                'popover-target-' +
+                                currentComent._id +
+                                '-' +
                                 currentComentchild
-                              ))
-                            "
-                          >
-                            <template #title
-                              >🏷️ {{ currentComentchild }}</template
+                              "
+                              triggers="hover"
+                              placement="top"
+                              :set="
+                                (item = getValueOfArray(
+                                  comments,
+                                  currentComentchild
+                                ))
+                              "
                             >
-                            <div v-if="item.text">
-                              {{ item.text }}
-                              <br /><small
-                                ><i>por {{ item.user[0].username }}</i></small
+                              <template #title
+                                >🏷️ {{ currentComentchild }}</template
                               >
-                            </div>
-                            <div v-else>El Comentario no existe</div>
-                          </b-popover>
+                              <div v-if="item.text">
+                                {{ item.text }}
+                                <br /><small
+                                  ><i>por {{ item.user[0].username }}</i></small
+                                >
+                              </div>
+                              <div v-else>El Comentario no existe</div>
+                            </b-popover>
+                          </a>
                         </a>
-                      </a>
-                    </div>
-                    <!-- 
+                      </div>
+                      <!-- 
                     <p
                       class=""
                       style="word-wrap: break-word; white-space: pre-wrap"
@@ -327,49 +333,72 @@
                       
                         -->
 
-                    <div class="quill-pre ql-container ql-snow ql-disabled">
-                      <div
-                        v-html="currentComent.text"
-                        class="commentRichTextViewer ql-editor ql-blank"
-                      ></div>
-                    </div>
+                      <div class="quill-pre ql-container ql-snow ql-disabled">
+                        <div
+                          v-html="currentComent.text"
+                          class="commentRichTextViewer ql-editor ql-blank"
+                        ></div>
+                      </div>
+                      <b-button
+                        pill
+                        variant="link topright"
+                        :id="'popover-target-' + currentComent._id"
+                        @click="replyThisComment(currentComent)"
+                      >
+                        <i class="fa fa-reply" style="font-size: 12px"></i>
+                        <!-- 
+                        <i style="font-size:24px" class="fa">&#xf112;</i>
+                        -->
+                      </b-button>
+
+                      <b-popover
+                        :target="'popover-target-' + currentComent._id"
+                        triggers="hover"
+                        placement="top"
+                      >
+                        <template #title>Responder este comentario!</template>
+                        Haz click aqui para responder este comentario de
+                        <b>{{ currentComent.user[0].username }}</b
+                        >!
+                      </b-popover>
+
+                      <p class="last-updated" style="color: red">
+                        Publicado {{ currentComent.createdAt | moment }}.
+                      </p>
+                      <!--
                     <b-button
-                      pill
-                      variant="link topright"
-                      :id="'popover-target-' + currentComent._id"
-                      @click="replyThisComment(currentComent)"
+                      v-if="
+                        currentComent.user[0].username == userowner.username
+                      "
+                      variant="primary"
+                      >Modify</b-button
                     >
-                      <i class="fa fa-reply" style="font-size: 12px"></i>
-                    </b-button>
+                    --></div>
 
-                    <b-popover
-                      :target="'popover-target-' + currentComent._id"
-                      triggers="hover"
-                      placement="top"
-                    >
-                      <template #title>Responder este comentario!</template>
-                      Haz click aqui para responder este comentario de
-                      <b>{{ currentComent.user[0].username }}</b
-                      >!
-                    </b-popover>
-
-                    <p class="last-updated" style="color: red">
-                      Publicado {{ currentComent.createdAt | moment }}.
-                    </p>
+                    <!--
+          id: 20949438,
+          username: "lukaneco",
+          content: "Hola pa, que haces",
+          inResponseTo: [],
+          created_at: 12312948123
+                      
+<div class="repo" id="20949439">
+  <div class="stats">
+    <a class="pr-1" href="#20949439">@20949439</a>POR raul12312 en respuesta de <a class="pl-1 pr-1" href="#20949438">@20949438</a></div><p class="">nada por suerte</p><p class="last-updated">Last updated: 3 weeks ago.</p></div>
+                    -->
                   </div>
                 </div>
               </div>
-            </div>
-          </b-col>
-        </b-row>
-      </div>
+            </b-col>
+          </b-row>
+        </div>
 
-      <Footer></Footer>
+        <Footer></Footer>
+      </div>
     </div>
     <div v-else-if="loaded_correctly == false" class="loadOrError" style="">
       <b-spinner
-        variant="danger"
-        key="danger"
+        variant="primary"
         style="width: 4rem; height: 4rem"
       ></b-spinner>
     </div>
@@ -452,7 +481,7 @@ import Vue2Filters from "vue2-filters";
 
 import "quill/dist/quill.snow.css";
 import Quill from "quill";
-import ModalEditePost from './modals/ModalABMPost.vue'
+import ModalEditePost from "./modals/ModalABMPost.vue";
 
 const SizeStyle = Quill.import("attributors/style/size");
 Quill.register(SizeStyle, true);
@@ -555,7 +584,7 @@ export default {
     Footer,
     loadingspinner,
     floatPlayer,
-    ModalEditePost
+    ModalEditePost,
   },
   sockets: {
     connect: function () {
@@ -1046,30 +1075,43 @@ export default {
 <style lang="scss" scoped>
 .post-column {
   padding-top: 15px;
-  border-right: 1px solid $light2-color;
+  @include dynamic-theme() {
+    border-right: 1px solid theme($border-color);
+  }
 }
 
 .toolbar--wrapper {
-  background-color: darken($light-color, 3%);
+  @include dynamic-theme() {
+    background-color: darken(theme($normal-background-color), 3%);
+  }
+
   border-radius: 4px 4px 0 0;
   border: none;
 }
 
 .editor--wrapper {
-  background-color: $light-color;
+  @include dynamic-theme() {
+    background-color: theme($normal-background-color);
+    border-color: theme($border2-color);
+    border-top: 1px solid theme($border2-color) !important;
+  }
+
   border-radius: 0;
-  border: 1px solid $light1-color;
-  border-top: 1px solid $light1-color !important;
   border-width: 1px 0;
+  border-style: solid;
 }
 
 .comment-box-creator {
-  border: 1px solid $light2-color;
-  border-radius: 4px;
+  border-radius: 5px;
   transition: opacity 1s ease-in-out;
   min-height: 181px;
   position: relative;
-  background-color: $light-color;
+  padding-top: 1px;
+
+  @include dynamic-theme() {
+    background-color: theme($normal-background-color);
+    border: 1px solid theme($border-color);
+  }
 
   .loader {
     position: absolute;
@@ -1083,10 +1125,13 @@ export default {
 }
 
 .comment-creator-footer {
-  background: $light-color;
   border-radius: 0 0 4px 4px;
   border: none;
   padding-left: 10px;
+
+  @include dynamic-theme() {
+    background: theme($normal-background-color);
+  }
 
   div:first-child {
     margin: 0;
@@ -1100,8 +1145,11 @@ export default {
 }
 
 .comments--wrapper {
-  border: 1px solid $light2-color;
-  border-radius: 4px;
+  border-radius: 5px;
+
+  @include dynamic-theme() {
+    border: 1px solid theme($border-color);
+  }
 
   &:empty {
     border: none;
@@ -1110,15 +1158,22 @@ export default {
 
 .repo {
   padding: 1em;
-  background-color: $light-color;
-  border-bottom: 1px solid $light1-color;
   max-width: initial;
+  border: none;
+
+  @include dynamic-theme() {
+    background-color: theme($normal-background-color);
+    border-bottom: 1px solid theme($border2-color);
+  }
 
   &:first-child {
-    border-radius: 4px 4px 0 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
   }
   &:last-child {
-    border-radius: 0 0 4px 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom: none;
   }
 }
 </style>
@@ -1128,6 +1183,27 @@ export default {
 
 .editor--wrapper .ql-editor {
   min-height: 100px;
+
+  &.ql-blank::before {
+    @include dynamic-theme() {
+      color: theme($placeholder-foreground-color);
+    }
+  }
+}
+.toolbar--wrapper {
+  @include dynamic-theme() {
+    .ql-stroke {
+      stroke: theme($foreground1-color);
+    }
+
+    .ql-fill {
+      fill: theme($foreground1-color);
+    }
+
+    .ql-picker {
+      color: theme($foreground1-color);
+    }
+  }
 }
 
 .cumBucket > .ql-toolbar {
@@ -1201,14 +1277,22 @@ body {
   margin: auto;
   line-height: 1.5em;
   color: black;
-  outline: 1px solid $light2-color;
-  outline-offset: -1px;
-  outline-width: 0 1px;
   min-height: 100vh;
-  background-color: $primary-light1-color;
 }
+
+.content-wrapper {
+  @include dynamic-theme() {
+    background-color: theme($background-color);
+    outline: 1px solid theme($border-color);
+    outline-width: 0 1px;
+    outline-offset: -1px;
+  }
+}
+
 .container-fluid {
-  background: $primary-light1-color;
+  @include dynamic-theme() {
+    background-color: theme($background-color);
+  }
 }
 
 header {
@@ -1253,48 +1337,6 @@ header {
 .inline-items li:last-child {
   padding-right: 0;
 }
-/* MEDIA QUERIES */
-@media screen and (min-width: 47.5em) {
-  /*
-  .Middle {
-    -webkit-flex: 1 1 auto;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 0;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    overflow: hidden;
-  }
-  .Content {
-    -webkit-flex: 1 1 auto;
-    -ms-flex: 1 1 auto;
-    flex: 1 0 0;
-    overflow: auto;
-  }
-  .LeftMenu {
-    margin-right: 50%;
-    display: block;
-  }
-  .Content {
-    top: 0;
-    right: 0;
-    width: 50%;
-    display: block;
-  }
-  */
-}
-/*
-@media screen and (min-width: 47.5em) {
-  .leftColumn {
-    margin-right: 19.5em;
-  }
-  .rightColumn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 18.75em;
-  }
-} MEDIA QUERIES */
 .post-img {
   display: block;
   margin: 0 auto;
@@ -1337,23 +1379,31 @@ header :last-child,
 .stats,
 .last-updated {
   font-size: 0.7em;
-  color: #666;
+
+  @include dynamic-theme() {
+    color: theme($foreground-color);
+  }
 }
 .stats {
   text-transform: uppercase;
   font-weight: bold;
 }
 .postOwnership {
-  /*text-transform: uppercase;*/
   font-weight: bold;
   font-size: 0.7em;
-  color: #666;
+
+  @include dynamic-theme() {
+    color: theme($foreground-color);
+  }
 }
 
 .comment_owner {
   font-weight: bold;
   font-size: 0.7em;
-  color: #666;
+
+  @include dynamic-theme() {
+    color: theme($foreground-color);
+  }
 }
 
 .last-updated {
@@ -1373,9 +1423,6 @@ header img {
 section {
   padding-left: 1em;
   float: left;
-  /*
-  width: 75%;
-  */
 }
 #comentarios {
   text-align: left !important;
@@ -1384,9 +1431,6 @@ section {
 </style>
 <style lang="css" scoped>
 .text-stroke {
-  /*
-  font-size: 70px;
-  */
   color: white;
   margin: 0px;
   padding: 0px;

@@ -335,117 +335,23 @@ export default {
 .login-icon {
   display: inline;
   vertical-align: middle;
-  fill: $primary-color;
   margin-right: 7px;
 
-  .icon-back-door {
-    fill: $primary-color;
-  }
-  .icon-front-door {
-    fill: $primary-light-color;
-  }
-  .icon-arrow-door {
-    fill: $dark-color;
+  @include dynamic-theme() {
+    fill: theme($primary-color);
+
+    .icon-back-door {
+      fill: theme($primary-color);
+    }
+    .icon-front-door {
+      fill: theme($primary-light-color);
+    }
+    .icon-arrow-door {
+      fill: theme($contrast-color);
+    }
   }
 }
 .login-button-text {
   vertical-align: middle;
 }
-
-//@import "vodal/common.css";
-//@import "vodal/rotate.css";
-//@import "./custom.scss";
-/*
-html{
-  margin: 0px;
-  padding: 0px;
-}
-body{
-  margin: 0px;
-  padding: 0px;
-}
-body {
-  margin: 0;
-  color: $dark;
-  background: $bright;
-  font-family: "Segoe UI", "Roboto", Arial, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-#index {
-  width: 80%;
-  margin: auto;
-  text-align: center;
-  padding: 50px;
-}
-*/
-
-/*
-
-* {
-  --tw-ring-offset-shadow: 0 0 transparent;
-  --tw-ring-shadow: 0 0 transparent;
-}
-pre {
-  background-color: #e4e4e4;
-  padding: 2px;
-  display: inline-block;
-  box-shadow: 2px 2px 5px -3px #000000;
-  border-radius: 3px;
-}
-
-.demo-btn {
-  color: white;
-  background-color: indigo;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  transition: opacity ease-in-out 0.15s;
-}
-
-.demo-btn:hover {
-  opacity: 0.8;
-}
-
-.v-card {
-  border-radius: 10px;
-  background-color: white;
-  //box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000);
-}
-
-.v-card > * + * {
-  border-top-width: calc(1px * calc(1 - 0));
-  border-bottom-width: calc(1px * 0);
-}
-
-.v-card > * {
-  padding: 1rem;
-}
-
-
-$darker: #222;
-$dark: #555;
-$bright: #ddd;
-
-#index {
-  //width: 80%;
-  margin: 0px;
-  padding: 0px;
-  text-align: center;
-}
-.v-easy-dialog--backdrop-btn {
-    visibility: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    //width: 100%;
-    //height: 100%;
-    cursor: default;
-}
-*/
 </style>
