@@ -1193,6 +1193,12 @@ export default {
 .editor--wrapper .ql-editor {
   min-height: 100px;
 
+  div {
+    @include dynamic-theme() {
+      color: theme($foreground-color);
+    }
+  }
+
   &.ql-blank::before {
     @include dynamic-theme() {
       color: theme($placeholder-foreground-color);
@@ -1456,6 +1462,15 @@ section {
   text-align: left !important;
 }
 /*# sourceMappingURL=style.css.map */
+
+@media (max-width: 992px) {
+  .post-column,
+  .content-wrapper {
+    @include dynamic-theme() {
+      border: none;
+    }
+  }
+}
 </style>
 <style lang="css" scoped>
 .text-stroke {
