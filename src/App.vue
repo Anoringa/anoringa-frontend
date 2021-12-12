@@ -195,13 +195,26 @@ h5,
 h6 {
   @include dynamic-theme() {
     color: theme($foreground-color);
+
+    &::selection,
+    &::-moz-selection {
+      background-color: theme($primary-color);
+      color: theme($foreground-color);
+    }
   }
 }
 
 blockquote,
+li,
 label {
   @include dynamic-theme() {
     color: theme($foreground1-color);
+
+    &::selection,
+    &::-moz-selection {
+      background-color: theme($primary-color);
+      color: theme($foreground-color);
+    }
   }
 }
 </style>

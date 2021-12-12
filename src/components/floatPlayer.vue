@@ -175,6 +175,10 @@ export default {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    @include dynamic-theme() {
+      color: theme($foreground2-color);
+    }
   }
 
   .duration {
@@ -184,6 +188,10 @@ export default {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    @include dynamic-theme() {
+      color: theme($foreground2-color);
+    }
   }
 }
 
