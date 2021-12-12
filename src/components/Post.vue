@@ -1075,8 +1075,10 @@ export default {
 <style lang="scss" scoped>
 .post-column {
   padding-top: 15px;
+  
   @include dynamic-theme() {
-    border-right: 1px solid theme($border-color);
+    border: solid theme($border-color);
+    border-width: 0 1px;
   }
 }
 
