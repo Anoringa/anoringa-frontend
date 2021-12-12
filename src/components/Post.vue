@@ -1194,6 +1194,24 @@ export default {
 }
 .toolbar--wrapper {
   @include dynamic-theme() {
+    button:hover .ql-stroke,
+    button:focus .ql-stroke,
+    button:active .ql-stroke {
+      stroke: theme($primary-color);
+    }
+
+    button:hover .ql-fill,
+    button:focus .ql-fill,
+    button:active .ql-fill {
+      fill: theme($primary-color);
+    }
+
+    button:hover .ql-picker,
+    button:focus .ql-picker,
+    button:active .ql-picker {
+      color: theme($primary-color);
+    }
+
     .ql-stroke {
       stroke: theme($foreground1-color);
     }
