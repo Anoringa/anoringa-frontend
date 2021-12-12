@@ -10,6 +10,7 @@
       >
       | <a href="https://github.com/Anoringa">Pagina del proyecto</a> |
       <a href="/reportar">Reportar</a> |
+      <a href="/perfil">Configuracion</a> |
       <a href="/politicas.html">Politica de privacidad</a>
     </p>
     <p>&copy;2021 Copyright</p>
