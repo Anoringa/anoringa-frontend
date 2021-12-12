@@ -26,6 +26,7 @@
               type="text"
               placeholder="Ingresa aca un nuevo nombre"
               required
+              class="input-form"
             ></b-form-input>
           </b-form-group>
 
@@ -311,6 +312,13 @@ export default {
   }
 
   height: 100vh;
+}
+
+.input-form {
+  @include dynamic-theme() {
+    background-color: theme($background1-color);
+    color: theme($foreground1-color);
+  }
 }
 
 .custom-switch {
