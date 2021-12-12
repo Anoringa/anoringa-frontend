@@ -1105,7 +1105,7 @@ export default {
 
 .comment-box-creator {
   border-radius: 5px;
-  transition: opacity 1s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out;
   min-height: 181px;
   position: relative;
   padding-top: 1px;
@@ -1120,6 +1120,13 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  &:focus-within {
+    @include dynamic-theme() {
+      border-color: theme($primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(theme($primary-color), 80%);
+    }
   }
 }
 .hidden {
