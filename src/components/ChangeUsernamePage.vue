@@ -19,15 +19,17 @@
             <label for="email2" class="mb-2 mr-sm-2" inline
               >Cambiar mi nombre de usuario</label
             >
-            <b-form-input
-              id="input-1"
-              v-model="posibleNewName"
-              :state="newUsernameState"
-              type="text"
-              placeholder="Ingresa aca un nuevo nombre"
-              required
-              class="input-form"
-            ></b-form-input>
+            <b-input-group prepend="@" class="mb-2 mr-sm-2 mb-sm-0">
+              <b-form-input
+                id="input-1"
+                v-model="posibleNewName"
+                :state="newUsernameState"
+                type="text"
+                placeholder="Ingresa aca un nuevo nombre"
+                required
+                class="input-username"
+              ></b-form-input>
+            </b-input-group>
           </b-form-group>
 
           <b-form-valid-feedback :state="newUsernameState">
@@ -314,10 +316,18 @@ export default {
   height: 100vh;
 }
 
-.input-form {
+.input-username {
   @include dynamic-theme() {
     background-color: theme($background1-color);
     color: theme($foreground1-color);
+    border-color: theme($border-color);
+  }
+}
+.input-group-text {
+  @include dynamic-theme() {
+    background-color: theme($background-color);
+    color: theme($foreground1-color);
+    border-color: theme($border-color);
   }
 }
 
