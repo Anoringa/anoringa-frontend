@@ -1190,14 +1190,14 @@ export default {
 <style lang="scss">
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
+.commentRichTextViewer {
+  @include dynamic-theme() {
+    color: theme($foreground-color);
+  }
+}
+
 .editor--wrapper .ql-editor {
   min-height: 100px;
-
-  div {
-    @include dynamic-theme() {
-      color: theme($foreground-color);
-    }
-  }
 
   &.ql-blank::before {
     @include dynamic-theme() {
