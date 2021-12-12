@@ -1125,7 +1125,7 @@ export default {
   &:focus-within {
     @include dynamic-theme() {
       border-color: theme($primary-color);
-      box-shadow: 0 0 0 0.2rem rgba(theme($primary-color), 80%);
+      box-shadow: 0 0 0 0.2rem rgba(theme($primary-color), 60%);
     }
   }
 }
