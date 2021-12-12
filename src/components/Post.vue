@@ -5,7 +5,7 @@
       Post id : {{ $route.params.id }}
       -->
       <Header :appName="appName">
-        <div v-if="true">
+        <div v-if="false">
           <button
             type="button"
             class="btn btn-lg btn-sm post-creation-button"
