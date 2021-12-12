@@ -1283,9 +1283,8 @@ body {
 .content-wrapper {
   @include dynamic-theme() {
     background-color: theme($background-color);
-    outline: 1px solid theme($border-color);
-    outline-width: 0 1px;
-    outline-offset: -1px;
+    border: solid theme($border-color);
+    border-width: 0 1px;
   }
 }
 

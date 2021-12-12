@@ -150,11 +150,15 @@ export default {
 
 
 <style>
-.sticky-top{
-  z-index: 300!important;
+.sticky-top {
+  z-index: 300 !important;
 }
 </style>
 <style lang="scss">
+.container-fluid {
+  margin: 0 -1px;
+}
+
 .sticky-top {
   z-index: 300 !important;
 }
