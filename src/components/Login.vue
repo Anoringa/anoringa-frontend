@@ -205,6 +205,7 @@ export default {
     if (localStorage.password) {
       this.password = localStorage.password;
     }
+    /*
     if (localStorage.username && localStorage.password) {
       console.log("user has been logged previusly");
       this.loggedstate = true;
@@ -213,6 +214,7 @@ export default {
       this.loggedstate = false;
       //https://es.vuejs.org/v2/guide/conditional.html
     }
+    */
   },
   watch: {
     /*
@@ -245,7 +247,7 @@ export default {
       this.credenciales["password"] = credenciales.password;
       console.log("credencial", this.credenciales);
       store.commit("SET_PRODUCTS", this.credenciales);
-      this.loggedstate = true;
+      //this.loggedstate = true;
     },
     userCreate(hcaptchatoken) {
       var params = new URLSearchParams();

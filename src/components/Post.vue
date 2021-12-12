@@ -4,14 +4,18 @@
       <!--
       Post id : {{ $route.params.id }}
       -->
-
       <Header :appName="appName">
-        <div v-if="false">
+        <div v-if="true">
           <button
             type="button"
-            class="btn btn-lg btn-light btn-sm post-creation-button"
+            class="btn btn-lg btn-sm post-creation-button"
+            :class="isDarkModeEnabled ? 'btn-dark' : 'btn-light'"
           >
-            <ModalEditePost>EDITAR</ModalEditePost>
+            <ModalEditePost
+              :typeOfOperation="'edit'"
+              :postId="postId"
+              >EDITAR</ModalEditePost
+            >
           </button>
         </div>
 
@@ -514,6 +518,7 @@ export default {
   },
   data() {
     return {
+      postId:this.$route.params.id,
       editor: null,
       id: "",
       nuevoComemtarioTexto: "",
@@ -1039,7 +1044,11 @@ export default {
         });
     },
   },
+
   computed: {
+    isDarkModeEnabled() {
+      return localStorage.getItem("darkMode") === "true";
+    },
     commentContentState() {
       const postContent = this.nuevoComemtarioTexto;
 

@@ -408,7 +408,7 @@ export default {
     },
   },
   //directives: { "b-modal": VBModal },
-  name: "ModalLogin",
+  name: "ModalCreatePost",
   components: {
     HtmlEditor,
     ImageUploader,

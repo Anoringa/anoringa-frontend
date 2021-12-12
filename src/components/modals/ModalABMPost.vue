@@ -12,7 +12,7 @@
     <b-modal
       size="lg"
       v-model="showModal"
-      title="Nuevo Post"
+      :title="modalTitle"
       :header-bg-variant="headerBgVariant"
       :header-text-variant="headerTextVariant"
       :body-bg-variant="bodyBgVariant"
@@ -67,7 +67,7 @@
         </div>
         <div class="form-group">
           <label for="comment">Contenido</label>
-          <HtmlEditor />
+          <HtmlEditor></HtmlEditor>
 
           <b-form-valid-feedback :state="postContentState"
             >a rodar</b-form-valid-feedback
@@ -235,7 +235,6 @@
             size="sm"
             :disabled="publishButtonBusy"
             variant="success"
-            @click="publicar"
           >
             Publicar
           </b-button>
@@ -267,8 +266,9 @@
 
 
 <script>
-import { EventBus } from "../../event-bus";
-import HtmlEditor from "../html-editor";
+import postMixin from "../../mixins/postMixin.js";
+
+import HtmlEditor from "../html-editor.vue";
 //import History from "./History";
 //import { mapGetters } from "vuex";
 
@@ -286,11 +286,20 @@ import HtmlEditor from "../html-editor";
 //import { BModal, VBModal } from "bootstrap-vue";
 //import VEasyDialog from "v-easy-dialog";
 
-import ImageUploader from "../ImageUploader";
-
+import ImageUploader from "../ImageUploader.vue";
 import store from "../../store";
 
 export default {
+  name: "ModalLogin",
+  mixins: [postMixin],
+  props: {
+    typeOfOperation: {
+      required: true,
+    },
+    postId: {
+      required: true,
+    },
+  },
   computed: {
     postContentState() {
       var postContent = this.postContentTextValue;
@@ -408,7 +417,6 @@ export default {
     },
   },
   //directives: { "b-modal": VBModal },
-  name: "ModalLogin",
   components: {
     HtmlEditor,
     ImageUploader,
@@ -420,6 +428,8 @@ export default {
   },
   data() {
     return {
+      modalTitle: null,
+
       goToPostCreatedLink: null,
       publishButtonBusy: false,
       publishingStatus: "nopublicado",
@@ -439,46 +449,10 @@ export default {
       show: false,
       value: true,
       postMusicChecked: false,
-      modal: {
-        title: "Nuevo Post",
-        items: [
-          {
-            label: "Titulo",
-            name: "titulo",
-            type: "text",
-            attr: {
-              required: true,
-            },
-          },
-          {
-            label: "Contenido",
-            name: "contenido",
-            type: "textarea",
-            attr: {
-              readOnly: false,
-            },
-          },
-          /*
-          {
-            label: "Select Box",
-            name: "bio",
-            type: "select",
-            value: "t1",
-            options: [
-              { text: "1", value: "one" },
-              { text: "2", value: "two" },
-            ],
-          },*/
-          {
-            name: "file[]",
-            type: "file",
-            label: "Foto",
-            attr: {
-              required: false,
-              multiple: false,
-            },
-          },
-        ],
+      formLookAndFeel: {
+        edit: { title: "Editar el Post" },
+        new: { title: "ost" },
+        delete: { title: "Eliminar Post" },
       },
       overflowDialog: true,
       simpleDialog: false,
@@ -522,6 +496,26 @@ export default {
       console.log("This event was fired by eg. sio.emit('post')", data);
     });
     */
+    this.checkTypeOfOperation();
+    this.getPost(this.postId).then((r) => {
+      console.log(r); // prints 60 after 4 seconds.
+      var gettedPost = r;
+      this.nuevoposttitulo = gettedPost.title;
+      this.youtube_link = "https://www.youtube.com/watch?v=" + gettedPost.music;
+
+      this.setImageSource({
+        value: {
+          type: gettedPost.photo.value,
+          source: gettedPost.photo.source,
+        },
+        content: gettedPost.photo.content,
+      });
+
+      /*
+      content: "https://ik.imagekit.io/ym5grvwvw2m/b6cf07a3-9f5c-4e12-8979-4df56881ad3d_7bWbEBpgI"
+source: "upload"
+value: "photo" */
+    });
   },
   watch: {
     /*
@@ -530,6 +524,29 @@ export default {
     },*/
   },
   methods: {
+    setImageSource(data) {
+      //console.log("the media of the post has been setted");
+      //console.log(data);
+      //console.log("💥");
+
+      store.commit({
+        type: "setPostImage",
+        content: data.content,
+        value: { type: data.value.type, source: data.value.source },
+      });
+    },
+    checkTypeOfOperation() {
+      if (this.typeOfOperation == "edit") {
+        this.modalTitle = this.formLookAndFeel.edit.title;
+      } else if (this.typeOfOperation == "new") {
+        this.modalTitle = this.formLookAndFeel.new.title;
+      } else if (this.typeOfOperation == "delete") {
+        this.modalTitle = this.formLookAndFeel.delete.title;
+      } else {
+        this.modalTitle = "ERROR";
+      }
+      console.log(this.typeOfOperation);
+    },
     onHidden() {
       // Return focus to the button once hidden
       this.$refs.pbutton.focus();
@@ -538,159 +555,11 @@ export default {
       this.youtube_video_id = uno;
       this.youtube_thumbnail = dos;
     },
-    async publicar() {
-      console.log("publicar");
-      if (
-        localStorage.username != "" &&
-        localStorage.username != undefined &&
-        localStorage.username != null &&
-        localStorage.password != "" &&
-        localStorage.password != undefined &&
-        localStorage.password != null
-      ) {
-        if (
-          this.postTitleStatus == true &&
-          this.postContentState == true &&
-          this.postPhotoStatus == true &&
-          this.postTermsAndConditionsState == true
-        ) {
-          console.log("postPhotoValue");
-          console.log(this.postPhotoValue);
 
-          console.log("postPhotoStatus");
-          console.log(this.postPhotoStatus);
-
-          this.isnotcargando = false;
-
-          if (this.isnotcargando == false) {
-            console.log("<-----titulo----->");
-            console.log(this.nuevoposttitulo);
-            console.log("<-----contenido----->");
-            console.log(this.postContentTextValue);
-            console.log("<-----photo----->");
-            console.log(this.postPhotoValue);
-            console.log("<-----music----->");
-            console.log(this.youtube_video_id);
-
-            this.postCreate(
-              this.nuevoposttitulo,
-              this.postContentTextValue,
-              //this.imageuploadedurl,
-              this.postPhotoValue,
-              this.youtube_video_id
-            );
-            /*
-             */
-            console.log("funciono kpo 😎");
-            this.showPostModal = false;
-
-            this.nuevoposttitulo = null;
-            store.clearPostContentText;
-            //alert("redirecting to the post")
-
-            //console.log("redirecting to the post")
-            //console.log("postdata");
-            //console.log(postdata);
-
-            //window.location.href="./post/"+postdata._id;
-          } else {
-            console.log("no funciono kpo, sigue cargando algo");
-          }
-        } else {
-          console.log("no funciono kpo");
-          alert("revisa todos los campos gil");
-          console.log("postPhotoStatus");
-          console.log(this.postPhotoStatus);
-          console.log(this.postPhotoStatusFrom);
-          //this.usertriedtopublicate = true;
-          store.commit({
-            type: "setPostUsertriedtopublicate",
-            data: true,
-          });
-          console.log(this.usertriedtopublicate);
-        }
-      } else {
-        console.log("logueate hijo de puta");
-        alert("logueate hijo de puta");
-      }
-    },
-    postCreate(titulox, contenidox, photox, musix) {
-      console.log("----------💥💥----------");
-      console.log(titulox, contenidox, photox);
-      console.log("----------💥💥----------");
-      /*
-      {
-        "username":"Afoxipeb",
-        "password":"JJAsjChPvmwvc2qOcRpMoJnogtv9jcQe",
-        "title":"Como ser como one punch man",
-        "photo":"somepick",
-        "content":"hola mundo este es mi nuevo blog"
-      }
-      */
-
-      console.log("postCreate");
-      var data = {
-        title: titulox,
-        description: contenidox,
-        photo: photox,
-        music: musix,
-
-        _id: localStorage.userid,
-        username: localStorage.username,
-        password: localStorage.password,
-      };
-      this.publishButtonBusy = true;
-      //en la siguiente linea se encuentra una posible falla de seguridad si se hace una injeccion de codigo javascript del lado del cliente
-      //EventBus.$emit("sendPostP2P", (data));
-
-      /*
-      EventBus.$emit("sendPostP2P", (data), function (datos) {
-        console.log("from the publish form : ",datos);
-        this.footerBgVariant = "dark";
-        this.footerTextVariant = "warning";
-        this.publishingStatus = "publicado";
-        this.publishButtonBusy = false;
-      });
-      */
-
-      var self = this;
-
-      this.$socket.emit("post", data, function (datos) {
-        console.log("socket.io emit");
-        //console.log(datos);
-        //console.log("link", datos._id);
-
-
-        self.goToPostCreatedLink = "/post/" + datos._id;
-        //this.$root.$emit("component1"); //like this
-        //this.$root.$emit("component1", "datos", datos);
-        //this.$root.$emit("sendPostP2P", "datos", datos);
-
-        //en la siguiente linea se encuentra una posible falla de seguridad si se hace una injeccion de codigo javascript del lado del cliente
-        EventBus.$emit("sendPostP2P", "datos", datos);
-
-        //window.Evento.$emit("sendPostP2P", "datos", datos);
-        //this.posts.push(datos);
-        //console.log("redirecting to the post");
-
-        //console.log("from the publish form : ");
-        self.footerBgVariant = "dark";
-        self.footerTextVariant = "warning";
-        self.publishingStatus = "publicado";
-
-        self.publishButtonBusy = false;
-
-        //for the moment i will coment in order to user selenium
-        //☮
-        //window.location.href = "./post/" + datos._id;
-        return datos;
-      });
-      /*
-       */
-    },
     toggleBind(attr) {
       this[attr] = !this[attr];
     },
+
     clickConvert() {},
     convert() {},
     openForm() {
@@ -706,26 +575,6 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
-
-/*
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: table;
-  transition: opacity 0.3s ease;
-  color: black;
-}
-
-.modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
-}
-*/
 
 .file-select > .select-button {
   padding: 1rem;
@@ -744,102 +593,6 @@ export default {
   display: none;
 }
 
-//@import "vodal/common.css";
-//@import "vodal/rotate.css";
-//@import "./custom.scss";
-/*
-html{
-  margin: 0px;
-  padding: 0px;
-}
-body{
-  margin: 0px;
-  padding: 0px;
-}
-body {
-  margin: 0;
-  color: $dark;
-  background: $bright;
-  font-family: "Segoe UI", "Roboto", Arial, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-#index {
-  width: 80%;
-  margin: auto;
-  text-align: center;
-  padding: 50px;
-}
-*/
-
-/*
-
-* {
-  --tw-ring-offset-shadow: 0 0 transparent;
-  --tw-ring-shadow: 0 0 transparent;
-}
-pre {
-  background-color: #e4e4e4;
-  padding: 2px;
-  display: inline-block;
-  box-shadow: 2px 2px 5px -3px #000000;
-  border-radius: 3px;
-}
-
-.demo-btn {
-  color: white;
-  background-color: indigo;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  transition: opacity ease-in-out 0.15s;
-}
-
-.demo-btn:hover {
-  opacity: 0.8;
-}
-
-.v-card {
-  border-radius: 10px;
-  background-color: white;
-  //box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000);
-}
-
-.v-card > * + * {
-  border-top-width: calc(1px * calc(1 - 0));
-  border-bottom-width: calc(1px * 0);
-}
-
-.v-card > * {
-  padding: 1rem;
-}
-
-
-$darker: #222;
-$dark: #555;
-$bright: #ddd;
-
-#index {
-  //width: 80%;
-  margin: 0px;
-  padding: 0px;
-  text-align: center;
-}
-.v-easy-dialog--backdrop-btn {
-    visibility: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    //width: 100%;
-    //height: 100%;
-    cursor: default;
-}
-*/
 .clickable {
   cursor: pointer;
 }

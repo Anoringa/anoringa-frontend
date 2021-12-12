@@ -1,14 +1,13 @@
 <template>
   <div id="index">
     <Header appName="Ano-PassPort"></Header>
-    <div id="canvas"></div>
-
-    <div class="container pt-3 configuration-wrapper">
-      <h2>Configuraciones</h2>
+    <div v-if="loginState == true" class="container pt-3 configuration-wrapper">
+      <h2>Generar un token</h2>
 
       <!--
       <h3>Cambiar nombre de usuario</h3>
       <p>Aqui podras cambiar el nombre de tu perfil.</p>
+      <p>Con este token vas a poder usar tu perfil en otros dispositivos.</p>
       -->
 
       <div class="pt-5">
@@ -20,7 +19,6 @@
           </b-form-group>
 
           <!-- Using components -->
-
 
           <!-- 
             <b-form-input
@@ -45,23 +43,19 @@
               <b-button disabled variant="outline-dark">Token</b-button>
             </b-input-group-prepend>
 
-
-
             <b-form-input
               v-model="usertoken"
               type="text"
-            id="testing-code" 
-              
+              id="testing-code"
               readonly
             ></b-form-input>
             <b-input-group-append>
-              <b-button variant="outline-success" @click="copyTestingCode"
+              <b-button
+                variant="outline-success"
+                @click="copyTestingCode('testing-code')"
                 ><b-icon icon="clipboard" aria-hidden="true"></b-icon
               ></b-button>
             </b-input-group-append>
-
-
-            
           </b-input-group>
 
           <small class="form-text text-muted pt-1 pb-3">
@@ -74,9 +68,14 @@
             @click="generateToken"
             >Generar TOKEN</b-button
           >
-          <small class="form-text text-muted pt-1 pb-3">
+          <small
+            v-if="usertoken != null"
+            class="form-text text-muted pt-1 pb-3 text-break"
+          >
             este codigo lo puedes ingresar en
-            <b-link :href="qrendpoint">{{ qrendpoint }}</b-link
+            <b-link :href="qrendpoint + '?token=' + usertoken">{{
+              qrendpoint + "?token=" + usertoken
+            }}</b-link
             ><br />
             o simplemente escanear el codigo qr con tu aplicacion de telefono
             preferida
@@ -93,102 +92,95 @@
         </b-form>
       </div>
     </div>
-    <!--
-    <b-container class="bv-example-row pt-5">
-      <b-row class="justify-content-md-center">
-        <b-col col xl="6" lg="8" md="8" sm="12">
-          <input
-            id="text"
-            type="text"
-            value="{'user':'juan','password':'password'}"
-            style="width: 80%"
-          /><br />
 
-          <div class="o-badge">
-            <div class="o-badge__group">
-              <div class="m-badge -amy" id="imageDIV">
-                <section class="m-badge__content">
-                  <div class="a-slot"></div>
+    <div
+      v-if="loginState == false"
+      class="container pt-3 configuration-wrapper"
+    >
+      <small
+        >Si queres generar un token tenes que estar logueado si queres loguearte
+        con un token</small
+      >
+    </div>
 
-                  <img
-                    class="m-badge__image2"
-                    :src="base64qr"
-                    height="200"
-                    alt=""
-                  />
-                 
+    <div class="container pt-3 configuration-wrapper">
+      <h2>Login usando token</h2>
 
-                  <div class="m-badge__info">
-                    <p class="m-badge__infoName -blackText">Robertus</p>
-                    <i class="m-badge__infoCompany -blackText"
-                      >Acceso de usuario.</i
-                    >
-                  </div>
-                  <div class="m-badge__social">
-                    <span class="a-facebook -blackText"
-                      ><i class="fa fa-twitter -mr"></i>@anoringa2</span
-                    >
-                    <span class="a-link -blackText"
-                      ><i class="fa fa-link -mr"></i>visita
-                      <a class="linkeardo">https://anoringa.win</a></span
-                    >
-                  </div>
-                </section>
+      <p>
+        Este token debe haber sido generado desde una cuenta que ya halla
+        inciado sesion en otro dispositivo.
+      </p>
+      <div v-if="loginState == true" class="mt-3 pt-3 pb-3">
+        <b-card-group deck>
+          <b-card
+            bg-variant="danger"
+            text-variant="white"
+            header="Alerta"
+            class="text-center"
+          >
+            <b-card-text
+              >En este navegador ya has iniciado sesion en
+              Anoringa.</b-card-text
+            >
+          </b-card>
+        </b-card-group>
+      </div>
+      <!--
+      <h2>Loguearse haciendo uso de un token</h2>
+      <h3>Cambiar nombre de usuario</h3>
+      <p>Aqui podras cambiar el nombre de tu perfil.</p>
+      <p>Con este token vas a poder usar tu perfil en otros dispositivos.</p>
+      -->
 
-                <footer class="m-badge__footer2 -blackBg">
-                  <a class="anologo">ANO</a> <a class="-yellowText">PassPort</a>
-                </footer>
-              </div>
-              <div class="m-badge -katie">
-                <section class="m-badge__content">
-                  <div class="a-slot"></div>
-                  <img
-                    class="m-badge__image"
-                    src="https://dummyimage.com/300x300/ffffff/000000&text=QR+Code"
-                    height="200"
-                    alt=""
-                  />
-                  <div class="m-badge__info">
-                    <p class="m-badge__infoName -blackText">Katie Cooper</p>
-                    <i class="m-badge__infoCompany -blackText"
-                      >Real Tanecious</i
-                    >
-                  </div>
-                  <div class="m-badge__social -blackText">
-                    <span class="a-instagram"
-                      ><i class="fa fa-instagram -mr"></i>@realtanecious_</span
-                    >
-                    <span class="a-facebook"
-                      ><i class="fa fa-twitter -mr"></i>@realtanecious_</span
-                    >
-                    <span class="a-website"
-                      ><i class="fa fa-long-arrow-right -mr"></i
-                      >realtanecious.com</span
-                    >
-                  </div>
-                </section>
-                <footer class="m-badge__footer">DESIGNER</footer>
-              </div>
-            </div>
-            </div>
+      <b-input-group class="mt-3 pb-3">
+        <b-input-group-prepend>
+          <b-button disabled variant="outline-dark">Token</b-button>
+        </b-input-group-prepend>
 
-          <div class="o-badge">
-            <a class="a-sourceButton" id="download" target="_blank"
-              >Download &nbsp;
-              <svg width="24" height="24">
-                <path
-                  d="M3 11h2v2H3v-2m8-6h2v4h-2V5m-2 6h4v4h-2v-2H9v-2m6 0h2v2h2v-2h2v2h-2v2h2v4h-2v2h-2v-2h-4v2h-2v-4h4v-2h2v-2h-2v-2m4 8v-4h-2v4h2M15 3h6v6h-6V3m2 2v2h2V5h-2M3 3h6v6H3V3m2 2v2h2V5H5M3 15h6v6H3v-6m2 2v2h2v-2H5z"
-                />
-              </svg>
-            </a>
-          </div>
+        <b-form-input
+          type="text"
+          v-model="fromURLtokenValue"
+          id="fromURLtokenValue"
+          :state="tokenState"
+          :readonly="tokenURLState ? true : false"
+        ></b-form-input>
 
-          <div id="previewImage"></div>
-        </b-col>
-      </b-row>
-    </b-container>
-    -->
-    <footer class="pt-5"></footer>
+        <b-input-group-append>
+          <b-button
+            variant="outline-success"
+            @click="copyTestingCode('fromURLtokenValue')"
+            ><b-icon icon="clipboard" aria-hidden="true"></b-icon
+          ></b-button>
+        </b-input-group-append>
+      </b-input-group>
+
+      <b-form-valid-feedback :state="tokenState">
+        <p>Excelente</p>
+      </b-form-valid-feedback>
+
+      <b-form-invalid-feedback :state="tokenState" class="text-break">
+        <p>Los TOKENs de usuario deben ser parecidos al siguiente Ejemplo</p>
+        <pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code></pre>
+      </b-form-invalid-feedback>
+
+      <b-button
+        type="submit"
+        variant="primary"
+        class="p-2"
+        @click="loginWithToken"
+        :disabled="!tokenState || fromURLtokenValue == null ? true : false"
+        >Loguearse</b-button
+      >
+    </div>
+    <div v-if="false" class="container pt-3 configuration-wrapper">
+      si queres generar un token tenes que estar logueado si queres loguearte
+      con un token
+    </div>
+    <div v-if="false" class="container pt-3 configuration-wrapper">
+      si queres generar un token tenes que estar logueado si queres loguearte
+      con un token
+    </div>
+    <div v-else class="container pt-3 configuration-wrapper"></div>
   </div>
 </template>
 
@@ -203,32 +195,31 @@ import html2canvas from "html2canvas";
 import Header from "./Header";
 import axios from "axios";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+
+import userMixin from "../mixins/userMixin.js";
+//axios.defaults.headers['Content-Type'] = 'application/json';
+
 //import VueHcaptcha from "@hcaptcha/vue-hcaptcha";
 export default {
+  mixins: [userMixin],
+  /*
   props: {
-    query: {
-      type: String,
+    fromtoken: {
+      //type: String,
       required: false,
-      default: "Sugerencia",
+      default: null,
     },
+  },*/
+  created() {
+    if (this.validateJWT(this.$route.query.token)) {
+      console.log("we show the login with JWT");
+      this.fromURLtokenValue = this.$route.query.token;
+    } else {
+      console.log("you didn't give us a token, we can generate one for you");
+      this.fromURLtokenValue = null;
+    }
   },
-  mounted() {
-    /*
-    var QRCode = require("qrcode");
-
-    var self = this;
-    QRCode.toDataURL("I am a pony!", function (err, url) {
-      console.log(url);
-      self.base64qr = url;
-      self.genPassPort();
-    });
-
-    //var canvas = document.getElementById('canvas')
-    QRCode.toCanvas("I am a pony!", function (err, url) {
-      console.log(url);
-    });
-    */
-  },
+  mounted() {},
   metaInfo: {
     //title: process.env.VUE_APP_NAME + " | Comenta y postea anonimamente",
     meta: [
@@ -259,6 +250,7 @@ export default {
   },
   data() {
     return {
+      fromURLtokenValue: null,
       usertoken: null,
       tokenqr: null,
       base64qr: null,
@@ -291,28 +283,50 @@ export default {
       loginurl: process.env.VUE_APP_API + "/api/user/register",
       hcaptchatoken: process.env.VUE_APP_HCAPTCHA,
       apiurl: process.env.VUE_APP_API + "/api/user/login",
-      qrendpoint: process.env.VUE_APP_URL + "/token/",
+      qrendpoint: process.env.VUE_APP_URL + "/pasaporte",
     };
   },
   methods: {
-            copyTestingCode () {
-          let testingCodeToCopy = document.querySelector('#testing-code')
-          testingCodeToCopy.setAttribute('type', 'text')    // 不是 hidden 才能複製
-          testingCodeToCopy.select()
+    loginWithToken() {
+      var cred = this.getCredentialsFromToken(this.fromURLtokenValue);
 
-          try {
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'successful' : 'unsuccessful';
-            console.log('Testing code was copied ' + msg);
-          } catch (err) {
-            console.log('Oops, unable to copy');
-          }
-          //https://codepen.io/PJCHENder/pen/jamJpj
+      if (cred != false) {
+        this.userLogin(cred._id, cred.username, cred.password);
+      } else {
+        console.log("there is some error with the token");
+      }
+    },
+    validateJWT(jwtToValidate) {
+      var pattern = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/;
+      if (jwtToValidate == null) {
+        return null;
+      } else if (jwtToValidate != null && jwtToValidate.match(pattern)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
 
-          /* unselect the range */
-          //testingCodeToCopy.setAttribute('type', 'hidden')
-          //window.getSelection().removeAllRanges()
-        },
+    copyTestingCode(theid) {
+      //let testingCodeToCopy = document.querySelector("#testing-code");
+      let testingCodeToCopy = document.querySelector("#" + theid);
+
+      testingCodeToCopy.setAttribute("type", "text"); // 不是 hidden 才能複製
+      testingCodeToCopy.select();
+
+      try {
+        var successful = document.execCommand("copy");
+        var msg = successful ? "successful" : "unsuccessful";
+        console.log("Testing code was copied " + msg);
+      } catch (err) {
+        console.log("Oops, unable to copy");
+      }
+      //https://codepen.io/PJCHENder/pen/jamJpj
+
+      /* unselect the range */
+      //testingCodeToCopy.setAttribute('type', 'hidden')
+      //window.getSelection().removeAllRanges()
+    },
     async copyURL(mytext = this.usertoken) {
       //clipboard.writeText(mytext);
       navigator.clipboard.writeText(mytext);
@@ -335,10 +349,13 @@ export default {
       var QRCode = require("qrcode");
 
       var self = this;
-      QRCode.toDataURL(this.qrendpoint + theToken, function (err, url) {
-        console.log(url);
-        self.tokenqr = url;
-      });
+      QRCode.toDataURL(
+        this.qrendpoint + "?token=" + theToken,
+        function (err, url) {
+          console.log(url);
+          self.tokenqr = url;
+        }
+      );
     },
     generateToken(event) {
       event.preventDefault();
@@ -351,7 +368,7 @@ export default {
       params.append("password", localStorage.password);
 
       console.log("params");
-      console.log(params);
+      console.log(params.toString());
 
       //var self = this;
       axios
@@ -403,103 +420,35 @@ export default {
         },
       });
     },
-    onChangeFormSelect(event) {
-      //event.preventDefault();
-      console.log("😎🔄onChangeFormSelect: ", event);
-      this.issueForm.type = event;
-      console.log("form after onChangeFormSelect: ", this.issueForm);
-    },
-    onReset(event) {
-      event.preventDefault();
-      // Reset our form values
-      this.issueForm.email = "";
-      this.issueForm.name = "";
-      this.issueForm.food = null;
-      //this.issueForm.checked = [];
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
-    },
-    onErrorImagekit(err) {
-      console.log("Error");
-      console.log(err);
-    },
-    onSuccessImagekit(res) {
-      console.log("Success");
-      console.log(res);
-    },
-    clickConvert() {},
-    convert() {},
-    userStore(respuesta) {
-      console.log(respuesta);
-    },
-    userCreate(hcaptchatoken) {
-      var params = new URLSearchParams();
-      params.append("token", hcaptchatoken);
-      //axios.post("/foo", params);
-
-      axios
-        .post(this.loginurl, params)
-        .then((response) => this.userStore(response))
-        .catch(function (error) {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-          }
-          console.log(error.config);
-        });
-    },
-    onVerify(response) {
-      console.log(response);
-      this.hcaptchaResponse = response;
-      this.userCreate(response);
-      //this.$emit("event_child", this.hcaptchaResponse);
-      //this.showModal = false;
-      //emit()
-      //createUser(this.hcaptchaResponse)
-
-      /*
-    axios
-      .post("http://mediawiki.test:7070/api/auth", { token : this.hcaptchaResponse})
-      .then((response) => console.log(response))
-      .catch(function(error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message);
-        }
-        console.log(error.config);
-      });
-      */
-    },
   },
   computed: {
     tokenState: function () {
       // `this` points to the vm instance
-      return true;
+      return this.validateJWT(this.fromURLtokenValue);
+    },
+    tokenURLState: function () {
+      // `this` points to the vm instance
+      return this.validateJWT(this.$route.query.token);
+    },
+    tokenValue: function () {
+      // `this` points to the vm instance
+      return this.$route.query.token;
+    },
+    loginState: function () {
+      // `this` points to the vm instance
+
+      if (
+        localStorage.username &&
+        localStorage.password &&
+        localStorage.userid
+      ) {
+        console.log("user has been logged previusly");
+        return true;
+      } else {
+        console.log("user needs to log in");
+        //https://es.vuejs.org/v2/guide/conditional.html
+        return false;
+      }
     },
     defaultValue: function () {
       // `this` points to the vm instance
@@ -532,11 +481,15 @@ $bright: #ddd;
 
 <style lang="scss" scoped>
 // Mini Reset CSS
+
+/*
+commented to fix and issue with the padding of the token value
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+*/
 
 body {
   background-color: #0496ff;

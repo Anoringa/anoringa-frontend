@@ -59,15 +59,10 @@
         >
           <ModalCreatePost>CREAR POST</ModalCreatePost>
         </button>
+        <slot></slot>
       </b-collapse>
 
-      <slot></slot>
       <div style="display: flex">
-        <ModalLogin
-          v-if="loggedstate === false"
-          v-on:event_child="eventChild"
-        />
-
         <b-dropdown
           v-if="loggedstate === true"
           size="sm"
@@ -112,6 +107,7 @@
           >
         </b-dropdown>
 
+        <ModalLogin v-else v-on:event_child="eventChild" />
         <b-navbar-toggle
           v-if="windowWidth > 300"
           class="navbar-toggler order-last order-md-0 collapsable-toggle"
@@ -130,7 +126,7 @@ import axios from "axios";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 import ModalLogin from "./modals/ModalLogin";
-import ModalCreatePost from "./modals/ModalCreatePost";
+import ModalCreatePost from "./modals/ModalCreatePost.vue";
 
 global.jQuery = require("jquery");
 var $ = global.jQuery;
@@ -151,6 +147,10 @@ export default {
   },
   data() {
     return {
+      loggedstate: this.checkLocalStorage(
+        localStorage.username,
+        localStorage.password
+      ),
       dev: false,
       check: false,
       isDarkModeEnabled: localStorage.getItem("darkMode") === "true",
@@ -204,7 +204,6 @@ export default {
 
       convertClicked: false,
       showModal: false,
-      loggedstate: false,
       hcaptchatoken: "",
       jwt: "",
       credenciales: { username: "", password: "" },
@@ -238,17 +237,16 @@ export default {
       this.windowWidth = window.innerWidth;
     });
 
-    if (localStorage.username && localStorage.password) {
+    if (this.loggedstate) {
+      //https://es.vuejs.org/v2/guide/conditional.html
       console.log("user has been logged previusly");
       this.username = localStorage.username;
       this.password = localStorage.password;
       this.userid = localStorage.userid;
-      this.loggedstate = true;
     } else {
       console.log("user needs to log in");
-      this.loggedstate = false;
-      //https://es.vuejs.org/v2/guide/conditional.html
     }
+
     console.log(
       "is dev: ",
       process.env.VUE_APP_NAME.toLowerCase().includes("dev")
@@ -258,6 +256,24 @@ export default {
 
     window.addEventListener("toggleDarkMode", () => {
       this.isDarkModeEnabled = localStorage.getItem("darkMode") === "true";
+    });
+
+    window.addEventListener("userDataEvent", (event) => {
+      console.log("username localStorage change");
+      console.log(event);
+      console.log(this.loggedstate);
+      console.log("localStorage");
+      console.log(localStorage);
+      this.loggedstate = this.checkLocalStorage(localStorage.username, localStorage.password);
+      /*
+      if (event.logged) {
+        console.log(this.checkLocalStorage(localStorage.username, localStorage.password))
+        this.loggedstate = event.logged;
+      } else {
+        this.loggedstate = event.logged;
+      }
+      */
+
     });
   },
   watch: {
@@ -276,6 +292,11 @@ export default {
     },
   },
   computed: {
+    /*
+    loggedstate() {
+    },
+    */
+
     usernameValue() {
       return this.$store.state.username;
       //return localStorage.username;
@@ -292,6 +313,25 @@ export default {
     },
   },
   methods: {
+    checkLocalStorage(myUsername, myPassword) {
+      console.log("checkLocalStorage", myUsername, myPassword);
+      if (
+        myUsername &&
+        myPassword &&
+        /*
+        localStorage.username != null &&
+        localStorage.password != null &&
+        localStorage.username != false &&
+        localStorage.password != false &&
+        */
+        myUsername != "" &&
+        myPassword != ""
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     increment() {
       console.log("incrementing");
 
@@ -388,7 +428,7 @@ export default {
       this.credenciales["password"] = credenciales.password;
       console.log("credencial", this.credenciales);
       store.commit("SET_PRODUCTS", this.credenciales);
-      this.loggedstate = true;
+      dispatchEvent(new Event("userDataEvent"));
     },
     userCreate(hcaptchatoken) {
       var params = new URLSearchParams();
@@ -418,9 +458,17 @@ export default {
     },
 
     cerrarSecion() {
+      console.log("deslogueo");
+      localStorage.username = "";
+      localStorage.password = "";
+      localStorage.userid = "";
       this.username = "";
       this.password = "";
-      this.loggedstate = false;
+      this.userid = "";
+
+      let event = new Event("userDataEvent");
+
+      dispatchEvent(event);
     },
     openCreatePostModal() {
       swal({

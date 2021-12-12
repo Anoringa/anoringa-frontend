@@ -197,7 +197,6 @@ export default {
       this.credenciales["password"] = credenciales.password;
       console.log("credencial", this.credenciales);
       store.commit("SET_PRODUCTS", this.credenciales);
-      this.loggedstate = true;
 
       this.makeToast(
         false,

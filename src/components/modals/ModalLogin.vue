@@ -13,7 +13,7 @@
           <div class="modal-mask">
             <div class="modal-wrapper">
               <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content text-center">
                   <div class="modal-header">
                     <h3 class="modal-title">Crear un nuevo usuario</h3>
                     <button
@@ -28,6 +28,8 @@
                     </button>
                   </div>
                   <div v-if="loginProcessStep == 'create'" class="modal-body">
+
+                      <!--
                     <b-form-group id="input-group-1" label-for="input-1">
                       <label for="email2" class="mb-2 mr-sm-2" inline
                         >Elegir mi nombre de usuario</label
@@ -53,6 +55,7 @@
                         y caracteres especiales como: ¡ ! ¿ ? @ ç Ç . ,
                       </p></b-form-invalid-feedback
                     >
+                    -->
                     <p>Rellena el captcha</p>
 
                     <vue-hcaptcha
@@ -60,6 +63,12 @@
                       @verify="onVerify"
                       theme="dark"
                     ></vue-hcaptcha>
+
+
+                    <small>
+                      luego de generar tu usuario vas a poder cambiarle el nombre en el siguiente enlace 
+                      <b-link href="/perfil">{{ mySiteURL + "/perfil" }}</b-link>
+                    </small>
                   </div>
                   <div
                     v-else-if="loginProcessStep == 'modify'"
@@ -105,7 +114,10 @@
           </div>
         </transition>
       </div>
-      <b-button v-b-modal.modal-1 @click="showModal = true" variant="light">
+      <b-button v-b-modal.modal-1 @click="showModal = true"
+          :variant="isDarkModeEnabled ? 'light' : 'dark'"
+          
+          >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
@@ -125,7 +137,7 @@
             class="icon-front-door"
           />
         </svg>
-        <span class="login-button-text">Iniciar Sesión</span></b-button
+        <span class="login-button-text" >Iniciar Sesión</span></b-button
       >
     </div>
   </div>
@@ -185,6 +197,7 @@ export default {
       theName:null,
       loginProcessStep: "create",
       mySitekey: process.env.VUE_APP_HCAPTCHA,
+      mySiteURL: process.env.VUE_APP_URL,
       showModal: false,
       hcaptchaResponse: "",
       jwt: "",
