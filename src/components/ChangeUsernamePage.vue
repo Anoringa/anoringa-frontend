@@ -19,14 +19,17 @@
             <label for="email2" class="mb-2 mr-sm-2" inline
               >Cambiar mi nombre de usuario</label
             >
-            <b-form-input
-              id="input-1"
-              v-model="posibleNewName"
-              :state="newUsernameState"
-              type="text"
-              placeholder="Ingresa aca un nuevo nombre"
-              required
-            ></b-form-input>
+            <b-input-group prepend="@" class="mb-2 mr-sm-2 mb-sm-0">
+              <b-form-input
+                id="input-1"
+                v-model="posibleNewName"
+                :state="newUsernameState"
+                type="text"
+                placeholder="Ingresa aca un nuevo nombre"
+                required
+                class="input-form"
+              ></b-form-input>
+            </b-input-group>
           </b-form-group>
 
           <b-form-valid-feedback :state="newUsernameState">

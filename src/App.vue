@@ -185,6 +185,33 @@ export default {
 </style> 
 
 <style lang="scss">
+.input-form {
+  @include dynamic-theme() {
+    background-color: theme($background1-color);
+    color: theme($foreground1-color);
+    border-color: theme($border-color);
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    @include dynamic-theme() {
+      background-color: theme($background1-color);
+      color: theme($foreground1-color);
+      border-color: theme($border-color);
+    }
+  }
+}
+.input-group-text {
+  @include dynamic-theme() {
+    background-color: theme($background-color);
+    color: theme($foreground1-color);
+    border-color: theme($border-color);
+  }
+}
+</style>
+
+<style lang="scss">
 p,
 span,
 h1,
@@ -195,13 +222,26 @@ h5,
 h6 {
   @include dynamic-theme() {
     color: theme($foreground-color);
+
+    &::selection,
+    &::-moz-selection {
+      background-color: theme($primary-color);
+      color: theme($foreground-color);
+    }
   }
 }
 
 blockquote,
+li,
 label {
   @include dynamic-theme() {
     color: theme($foreground1-color);
+
+    &::selection,
+    &::-moz-selection {
+      background-color: theme($primary-color);
+      color: theme($foreground-color);
+    }
   }
 }
 </style>

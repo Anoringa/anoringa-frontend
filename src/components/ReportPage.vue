@@ -13,6 +13,7 @@
                 v-model="tickettype"
                 :options="tiposDeReporte"
                 required
+                class="input-form"
               ></b-form-select>
             </b-form-group>
 
@@ -23,7 +24,7 @@
               description=""
             >
               <figcaption>
-                <small>Acotada y sencilla </small>
+                <label style="font-size: 0.7rem">Acotada y sencilla</label>
               </figcaption>
               <b-form-input
                 id="input-1"
@@ -31,6 +32,7 @@
                 type="text"
                 placeholder="Describi brevemente"
                 required
+                class="input-form"
               ></b-form-input>
             </b-form-group>
 
@@ -45,6 +47,7 @@
                 placeholder="Describi detalladamente"
                 required
                 rows="4"
+                class="input-form"
               ></b-form-textarea>
             </b-form-group>
 
