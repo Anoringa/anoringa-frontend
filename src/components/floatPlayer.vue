@@ -150,11 +150,15 @@ export default {
 
 
 <style>
-.sticky-top{
-  z-index: 300!important;
+.sticky-top {
+  z-index: 300 !important;
 }
 </style>
 <style lang="scss">
+.container-fluid {
+  margin: 0 -1px;
+}
+
 .sticky-top {
   z-index: 300 !important;
 }
@@ -171,6 +175,10 @@ export default {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    @include dynamic-theme() {
+      color: theme($foreground2-color);
+    }
   }
 
   .duration {
@@ -180,6 +188,10 @@ export default {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    @include dynamic-theme() {
+      color: theme($foreground2-color);
+    }
   }
 }
 

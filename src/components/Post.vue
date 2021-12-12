@@ -1075,8 +1075,10 @@ export default {
 <style lang="scss" scoped>
 .post-column {
   padding-top: 15px;
+
   @include dynamic-theme() {
-    border-right: 1px solid theme($border-color);
+    border: solid theme($border-color);
+    border-width: 0 1px;
   }
 }
 
@@ -1103,7 +1105,7 @@ export default {
 
 .comment-box-creator {
   border-radius: 5px;
-  transition: opacity 1s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out;
   min-height: 181px;
   position: relative;
   padding-top: 1px;
@@ -1118,6 +1120,13 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  &:focus-within {
+    @include dynamic-theme() {
+      border-color: theme($primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(theme($primary-color), 60%);
+    }
   }
 }
 .hidden {
@@ -1184,6 +1193,12 @@ export default {
 .editor--wrapper .ql-editor {
   min-height: 100px;
 
+  div {
+    @include dynamic-theme() {
+      color: theme($foreground-color);
+    }
+  }
+
   &.ql-blank::before {
     @include dynamic-theme() {
       color: theme($placeholder-foreground-color);
@@ -1192,6 +1207,24 @@ export default {
 }
 .toolbar--wrapper {
   @include dynamic-theme() {
+    button:hover .ql-stroke,
+    button:focus .ql-stroke,
+    button:active .ql-stroke {
+      stroke: theme($primary-color);
+    }
+
+    button:hover .ql-fill,
+    button:focus .ql-fill,
+    button:active .ql-fill {
+      fill: theme($primary-color);
+    }
+
+    button:hover .ql-picker,
+    button:focus .ql-picker,
+    button:active .ql-picker {
+      color: theme($primary-color);
+    }
+
     .ql-stroke {
       stroke: theme($foreground1-color);
     }
@@ -1281,11 +1314,12 @@ body {
 }
 
 .content-wrapper {
+  min-height: calc(100vh - 56px);
+
   @include dynamic-theme() {
     background-color: theme($background-color);
-    outline: 1px solid theme($border-color);
-    outline-width: 0 1px;
-    outline-offset: -1px;
+    border: solid theme($border-color);
+    border-width: 0 1px;
   }
 }
 
@@ -1428,6 +1462,15 @@ section {
   text-align: left !important;
 }
 /*# sourceMappingURL=style.css.map */
+
+@media (max-width: 992px) {
+  .post-column,
+  .content-wrapper {
+    @include dynamic-theme() {
+      border: none;
+    }
+  }
+}
 </style>
 <style lang="css" scoped>
 .text-stroke {
