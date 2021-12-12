@@ -185,6 +185,33 @@ export default {
 </style> 
 
 <style lang="scss">
+.input-form {
+  @include dynamic-theme() {
+    background-color: theme($background1-color);
+    color: theme($foreground1-color);
+    border-color: theme($border-color);
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    @include dynamic-theme() {
+      background-color: theme($background1-color);
+      color: theme($foreground1-color);
+      border-color: theme($border-color);
+    }
+  }
+}
+.input-group-text {
+  @include dynamic-theme() {
+    background-color: theme($background-color);
+    color: theme($foreground1-color);
+    border-color: theme($border-color);
+  }
+}
+</style>
+
+<style lang="scss">
 p,
 span,
 h1,
