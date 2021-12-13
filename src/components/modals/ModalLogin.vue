@@ -360,7 +360,7 @@ export default {
       fill: theme($primary-light-color);
     }
     .icon-arrow-door {
-      fill: theme($contrast-color);
+      fill: theme($foreground-color);
     }
   }
 }
