@@ -958,6 +958,12 @@ export default {
 <style lang="scss">
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
+.commentRichTextViewer {
+  @include dynamic-theme() {
+    color: theme($foreground-color);
+  }
+}
+
 .contenidodelpost img {
   zoom: 2;
   display: block;

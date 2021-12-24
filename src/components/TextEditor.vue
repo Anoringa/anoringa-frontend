@@ -1,5 +1,5 @@
 <template>
-  <div class="comment-box-creator">
+  <div class="text-editor--wrapper">
     <div class="loader">
       <b-spinner
         v-if="!isEditorLoaded"
@@ -68,11 +68,11 @@ export default {
   mounted() {
     console.log("this.props", this.id);
     setTimeout(() => {
-      const commentEditorWrapper = document.getElementById(
+      const editorWrapper = document.getElementById(
         `editor-wrapper-${this.id}`
       );
 
-      this.editor = new Quill(commentEditorWrapper, {
+      this.editor = new Quill(editorWrapper, {
         modules: {
           toolbar: {
             container: `#toolbar-wrapper-${this.id}`,
@@ -238,7 +238,7 @@ export default {
   border-style: solid;
 }
 
-.comment-box-creator {
+.text-editor--wrapper {
   border-radius: 5px;
   transition: box-shadow 0.2s ease-in-out;
   min-height: 181px;
@@ -271,12 +271,6 @@ export default {
 </style>
 
 <style lang="scss">
-.commentRichTextViewer {
-  @include dynamic-theme() {
-    color: theme($foreground-color);
-  }
-}
-
 .editor--wrapper .ql-editor {
   min-height: 100px;
 
