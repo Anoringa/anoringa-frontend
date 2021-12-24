@@ -29,10 +29,6 @@ export default {
       type: String,
       required: true,
     },
-    placeholder: {
-      type: String,
-      default: "",
-    },
   },
   data() {
     return {
@@ -41,21 +37,17 @@ export default {
     };
   },
   mounted() {
-    setTimeout(() => {
-      const editorWrapper = document.getElementById(
-        `viewer-wrapper-${this.id}`
-      );
+    const editorWrapper = document.getElementById(`viewer-wrapper-${this.id}`);
 
-      this.editor = new Quill(editorWrapper, {
-        modules: {
-          toolbar: false,
-        },
-        readOnly: true,
-        theme: "snow",
-      });
+    this.editor = new Quill(editorWrapper, {
+      modules: {
+        toolbar: false,
+      },
+      readOnly: true,
+      theme: "snow",
+    });
 
-      this.isEditorLoaded = true;
-    }, 2000);
+    this.isEditorLoaded = true;
   },
   updated() {
     if (this.editor) {

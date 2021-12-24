@@ -48,11 +48,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: "",
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
+      default: "Escribe aqui tu comentario...",
     },
     onChange: {
       type: Function,
@@ -66,7 +62,6 @@ export default {
     };
   },
   mounted() {
-    console.log("this.props", this.id);
     setTimeout(() => {
       const editorWrapper = document.getElementById(
         `editor-wrapper-${this.id}`
@@ -91,7 +86,7 @@ export default {
           },
         },
         readOnly: false,
-        placeholder: "Escribe aqui tu comentario...",
+        placeholder: this.placeholder,
         theme: "snow",
       });
       this.editor.on("text-change", this.onChange);
