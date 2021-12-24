@@ -87,8 +87,8 @@ export default {
       default: "",
     },
     countOfComments: {
-      type: String,
-      default: "",
+      type: Number,
+      default: 0,
     },
     authorUsername: {
       type: String,
