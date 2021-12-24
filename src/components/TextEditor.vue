@@ -89,7 +89,9 @@ export default {
         placeholder: this.placeholder,
         theme: "snow",
       });
-      this.editor.on("text-change", this.onChange);
+      this.editor.on("text-change", () =>
+        this.onChange({ ...event, HTMLText: this.editor.root.innerHTML })
+      );
 
       this.isEditorLoaded = true;
 

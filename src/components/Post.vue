@@ -154,7 +154,10 @@
                   </div>
                 </form>
                 <div class="form-group pt-3 cumBucket">
-                  <TextEditor :id="'comment-box-creator'">
+                  <TextEditor
+                    :id="'comment-box-creator'"
+                    :onChange="handleCommentTextChange"
+                  >
                     <template
                       ><div
                         class="
@@ -592,6 +595,9 @@ export default {
      */
   },
   methods: {
+    handleCommentTextChange: function ({ HTMLText }) {
+      this.nuevoComemtarioTexto = HTMLText;
+    },
     customLabel({ text, _id }) {
       return `${this.recortarTextoAdiez(text)} - ${_id}`;
     },
@@ -696,7 +702,6 @@ export default {
           this.value = [];
           this.ListaDeIdsDeComentarios = [];
           this.nuevoComemtarioTexto = null;
-          this.commentEditor.root.innerHTML = null;
           var self = this;
 
           this.$socket.emit("comment", data, function (datos) {
