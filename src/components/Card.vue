@@ -19,13 +19,11 @@
       <div class="project-card-content">
         <h4 class="cardtitle">{{ title }}</h4>
 
-        <div class="h-100 d-inline-block pb-3 card-metadata">
+        <div class="h-100 d-inline-block card-metadata">
           <div v-if="postSort == 'lastComment'">
-            <p v-if="lastComment == ['2020-11-30T00:00:00.000Z']"></p>
-
-            <p v-else>
+            <p>
               <b-icon icon="plus-circle" aria-hidden="true"></b-icon>
-              Comentado {{ lastCommentDate }}
+              {{ lastCommentedLabel }}
             </p>
           </div>
 
@@ -99,14 +97,20 @@ export default {
     return {
       photodefault: "https://picsum.photos/200?random=1",
       postlink: "/post/" + this.id,
-      lastCommentDate: "",
     };
   },
   created() {
     this.moment = moment;
   },
-  mounted() {
-    this.lastCommentDate = moment(this.lastComment).fromNow();
+  computed: {
+    lastCommentedLabel: function () {
+      const isValidDate = this.lastComment !== "2020-11-30T00:00:00.000Z";
+      const dateLabel = isValidDate
+        ? moment(this.lastComment).fromNow()
+        : "nunca";
+
+      return `Comentado ${dateLabel}`;
+    },
   },
   methods: {
     getPhoto(photosonic) {
