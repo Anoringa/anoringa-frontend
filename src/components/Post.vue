@@ -43,9 +43,7 @@
                 {{ pagetitle }}
               </h2>
 
-              <div class="pb-3">
-                <div id="quill-container" class="quill-pre"></div>
-              </div>
+              <HTMLViewer id="post-viewer" :value="content" />
 
               <div class="postOwnership text-center">
                 <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
@@ -426,6 +424,7 @@ import Footer from "./Footer";
 import floatPlayer from "./floatPlayer";
 import loadingspinner from "./loadingspinner";
 import TextEditor from "./TextEditor";
+import HTMLViewer from "./HTMLViewer";
 /*
       <div class="repo">
           <div class="stats">en respuesta de @sjdkdj @asdas</div>
@@ -566,6 +565,7 @@ export default {
     floatPlayer,
     ModalEditePost,
     TextEditor,
+    HTMLViewer,
   },
   sockets: {
     connect: function () {
@@ -590,24 +590,6 @@ export default {
     },
     /*
      */
-  },
-  mounted: function () {
-    this.$nextTick(function () {
-      console.log("the next thicc");
-      var editorId = "quill-container";
-      var container = document.getElementById(editorId);
-      this.editor = new Quill(container, {
-        readOnly: true,
-        theme: "snow",
-        //tab: 'disabled',
-        showIndent: false,
-        modules: {
-          toolbar: false,
-        },
-      });
-      //this.editor.innerHTML = "lalala";
-      this.editor.root.innerHTML = this.content;
-    });
   },
   methods: {
     customLabel({ text, _id }) {
