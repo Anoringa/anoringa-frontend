@@ -28,8 +28,7 @@
                     </button>
                   </div>
                   <div v-if="loginProcessStep == 'create'" class="modal-body">
-
-                      <!--
+                    <!--
                     <b-form-group id="input-group-1" label-for="input-1">
                       <label for="email2" class="mb-2 mr-sm-2" inline
                         >Elegir mi nombre de usuario</label
@@ -64,10 +63,12 @@
                       theme="dark"
                     ></vue-hcaptcha>
 
-
                     <small>
-                      luego de generar tu usuario vas a poder cambiarle el nombre en el siguiente enlace 
-                      <b-link href="/perfil">{{ mySiteURL + "/perfil" }}</b-link>
+                      luego de generar tu usuario vas a poder cambiarle el
+                      nombre en el siguiente enlace
+                      <b-link href="/perfil">{{
+                        mySiteURL + "/perfil"
+                      }}</b-link>
                     </small>
                   </div>
                   <div
@@ -114,10 +115,11 @@
           </div>
         </transition>
       </div>
-      <b-button v-b-modal.modal-1 @click="showModal = true"
-          :variant="isDarkModeEnabled ? 'light' : 'dark'"
-          
-          >
+      <b-button
+        v-b-modal.modal-1
+        @click="showModal = true"
+        :variant="isDarkModeEnabled ? 'light' : 'dark'"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
@@ -137,7 +139,7 @@
             class="icon-front-door"
           />
         </svg>
-        <span class="login-button-text" >Iniciar Sesión</span></b-button
+        <span class="login-button-text">Iniciar Sesión</span></b-button
       >
     </div>
   </div>
@@ -177,12 +179,16 @@ export default {
     //VueModal,
     VueHcaptcha,
   },
-    computed: {
+  computed: {
     newUsernameState() {
       var theName = this.theName;
       //console.log(NewName);
       let pattern = /^[¡!¿?@çÇ.,a-zA-Z\d\-_\s]{2,32}$/;
-      if (theName != null && theName.match(pattern) && !this.usernameAlreadyInUse) {
+      if (
+        theName != null &&
+        theName.match(pattern) &&
+        !this.usernameAlreadyInUse
+      ) {
         return true;
       } else if (theName == null && !this.usernameAlreadyInUse) {
         return null;
@@ -190,11 +196,11 @@ export default {
         return false;
       }
     },
-    },
+  },
   data() {
     return {
-      usernameAlreadyInUse:false,
-      theName:null,
+      usernameAlreadyInUse: false,
+      theName: null,
       loginProcessStep: "create",
       mySitekey: process.env.VUE_APP_HCAPTCHA,
       mySiteURL: process.env.VUE_APP_URL,
@@ -327,6 +333,12 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css?family=Sen&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+.modal-content {
+  @include dynamic-theme() {
+    background: theme($normal-background-color);
+  }
+}
 
 .modal-mask {
   position: fixed;

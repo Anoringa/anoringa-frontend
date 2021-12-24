@@ -233,7 +233,8 @@ h6 {
 
 blockquote,
 li,
-label {
+label,
+small {
   @include dynamic-theme() {
     color: theme($foreground1-color);
 
