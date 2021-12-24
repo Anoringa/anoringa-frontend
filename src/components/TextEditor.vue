@@ -10,7 +10,7 @@
 
     <div :class="!isEditorLoaded ? 'hidden' : ''">
       <div>
-        <div id="toolbar-wrapper1" class="toolbar--wrapper">
+        <div id="toolbar-wrapper" class="toolbar--wrapper">
           <span class="ql-formats">
             <button class="ql-link"></button>
             <button class="ql-image"></button>
@@ -22,7 +22,7 @@
           </span>
         </div>
 
-        <div id="editor-wrapper1" class="editor--wrapper"></div>
+        <div id="editor-wrapper" class="editor--wrapper"></div>
       </div>
 
       <slot></slot>
@@ -62,12 +62,12 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      const commentEditorWrapper = document.getElementById("editor-wrapper1");
+      const commentEditorWrapper = document.getElementById("editor-wrapper");
 
       this.editor = new Quill(commentEditorWrapper, {
         modules: {
           toolbar: {
-            container: "#toolbar-wrapper1",
+            container: "#toolbar-wrapper",
             handlers: {
               image: imageHandler,
               video: videoHandler,
