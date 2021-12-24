@@ -10,19 +10,20 @@
 
     <div :class="!isEditorLoaded ? 'hidden' : ''">
       <div>
-        <div id="toolbar-wrapper" class="toolbar--wrapper">
+        <div :id="`toolbar-wrapper-${id}`" class="toolbar--wrapper">
           <span class="ql-formats">
             <button class="ql-link"></button>
             <button class="ql-image"></button>
             <button class="ql-video"></button>
             <button class="ql-code-block"></button>
           </span>
+
           <span class="ql-formats">
             <button class="ql-clean"></button>
           </span>
         </div>
 
-        <div id="editor-wrapper" class="editor--wrapper"></div>
+        <div :id="`editor-wrapper-${id}`" class="editor--wrapper"></div>
       </div>
 
       <slot></slot>
@@ -40,6 +41,10 @@ export default {
     value: {
       type: String,
       default: "",
+    },
+    id: {
+      type: String,
+      required: true,
     },
     placeholder: {
       type: String,
@@ -61,13 +66,16 @@ export default {
     };
   },
   mounted() {
+    console.log("this.props", this.id);
     setTimeout(() => {
-      const commentEditorWrapper = document.getElementById("editor-wrapper");
+      const commentEditorWrapper = document.getElementById(
+        `editor-wrapper-${this.id}`
+      );
 
       this.editor = new Quill(commentEditorWrapper, {
         modules: {
           toolbar: {
-            container: "#toolbar-wrapper",
+            container: `#toolbar-wrapper-${this.id}`,
             handlers: {
               image: imageHandler,
               video: videoHandler,

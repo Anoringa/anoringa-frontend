@@ -156,7 +156,7 @@
                   </div>
                 </form>
                 <div class="form-group pt-3 cumBucket">
-                  <TextEditor>
+                  <TextEditor :id="'comment-box-creator'">
                     <template
                       ><div
                         class="
