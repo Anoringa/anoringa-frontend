@@ -59,9 +59,9 @@
               :checked="isDarkMode"
             />
 
-            <label class="custom-control-label" for="customSwitches"
-              >Dark Mode</label
-            >
+            <label class="custom-control-label" for="customSwitches">
+              Modo Oscuro
+            </label>
           </div>
         </b-form>
       </div>

@@ -11,9 +11,7 @@
             class="btn btn-lg btn-sm post-creation-button"
             :class="isDarkModeEnabled ? 'btn-dark' : 'btn-light'"
           >
-            <ModalEditePost
-              :typeOfOperation="'edit'"
-              :postId="postId"
+            <ModalEditePost :typeOfOperation="'edit'" :postId="postId"
               >EDITAR</ModalEditePost
             >
           </button>
@@ -45,9 +43,7 @@
                 {{ pagetitle }}
               </h2>
 
-              <div class="pb-3">
-                <div id="quill-container" class="quill-pre"></div>
-              </div>
+              <HTMLViewer id="post-viewer" :value="content" />
 
               <div class="postOwnership text-center">
                 <a class="pr-1" :href="'/post/' + id">@{{ id }}</a
@@ -158,33 +154,12 @@
                   </div>
                 </form>
                 <div class="form-group pt-3 cumBucket">
-                  <div class="comment-box-creator">
-                    <div class="loader">
-                      <b-spinner
-                        v-if="!isEditorLoaded"
-                        variant="primary"
-                        key="primary"
-                      ></b-spinner>
-                    </div>
-
-                    <div :class="!isEditorLoaded ? 'hidden' : ''">
-                      <div>
-                        <div id="toolbar-wrapper" class="toolbar--wrapper">
-                          <span class="ql-formats">
-                            <button class="ql-link"></button>
-                            <button class="ql-image"></button>
-                            <button class="ql-video"></button>
-                            <button class="ql-code-block"></button>
-                          </span>
-                          <span class="ql-formats">
-                            <button class="ql-clean"></button>
-                          </span>
-                        </div>
-
-                        <div id="editor-wrapper" class="editor--wrapper"></div>
-                      </div>
-
-                      <div
+                  <TextEditor
+                    :id="'comment-box-creator'"
+                    :onChange="handleCommentTextChange"
+                  >
+                    <template
+                      ><div
                         class="
                           d-flex
                           justify-content-between
@@ -228,9 +203,9 @@
                         >
                           Comentar
                         </b-button>
-                      </div>
-                    </div>
-                  </div>
+                      </div></template
+                    >
+                  </TextEditor>
 
                   <div id="comentarios" class="pt-3"></div>
                   <div v-if="comments !== null" class="comments--wrapper">
@@ -451,6 +426,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import floatPlayer from "./floatPlayer";
 import loadingspinner from "./loadingspinner";
+import TextEditor from "./TextEditor";
+import HTMLViewer from "./HTMLViewer";
 /*
       <div class="repo">
           <div class="stats">en respuesta de @sjdkdj @asdas</div>
@@ -518,7 +495,7 @@ export default {
   },
   data() {
     return {
-      postId:this.$route.params.id,
+      postId: this.$route.params.id,
       editor: null,
       id: "",
       nuevoComemtarioTexto: "",
@@ -590,6 +567,8 @@ export default {
     loadingspinner,
     floatPlayer,
     ModalEditePost,
+    TextEditor,
+    HTMLViewer,
   },
   sockets: {
     connect: function () {
@@ -615,191 +594,10 @@ export default {
     /*
      */
   },
-  updated: function () {
-    this.$nextTick(function () {
-      console.log("the next thicc");
-      var editorId = "quill-container";
-      var container = document.getElementById(editorId);
-      this.editor = new Quill(container, {
-        readOnly: true,
-        theme: "snow",
-        //tab: 'disabled',
-        showIndent: false,
-        modules: {
-          toolbar: false,
-        },
-      });
-      //this.editor.innerHTML = "lalala";
-      this.editor.root.innerHTML = this.content;
-    });
-  },
-  mounted() {
-    setTimeout(() => {
-      const commentEditorWrapper = document.getElementById("editor-wrapper");
-
-      this.commentEditor = new Quill(commentEditorWrapper, {
-        modules: {
-          toolbar: {
-            container: "#toolbar-wrapper",
-            handlers: {
-              image: imageHandler,
-              video: videoHandler,
-            },
-          },
-          imageResize: {
-            displayStyles: {
-              backgroundColor: "black",
-              border: "none",
-              color: "white",
-            },
-            modules: ["Resize", "DisplaySize", "Toolbar"],
-          },
-        },
-        readOnly: false,
-        placeholder: "Escribe aqui tu comentario...",
-        theme: "snow",
-      });
-      this.commentEditor.on("text-change", () => {
-        this.nuevoComemtarioTexto = this.commentEditor.root.innerHTML;
-      });
-
-      this.isEditorLoaded = true;
-
-      function videoHandler() {
-        let url = prompt("copie y pegue la URL deL video Youtube aquí.");
-        url = getVideoUrl(url);
-        let range = this.quill.getSelection();
-        if (url != null) {
-          this.quill.insertEmbed(range.index, "video", url, Quill.sources.USER);
-        }
-      }
-      function getVideoUrl(url) {
-        let match =
-          url.match(
-            /^(?:(https?):\/\/)?(?:(?:www|m)\.)?youtube\.com\/watch.*v=([a-zA-Z0-9_-]+)/
-          ) ||
-          url.match(
-            /^(?:(https?):\/\/)?(?:(?:www|m)\.)?youtu\.be\/([a-zA-Z0-9_-]+)/
-          ) ||
-          url.match(/^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=).*/);
-        console.log(match[2]);
-        if (match && match[2].length === 11) {
-          return (
-            "https" + "://www.youtube.com/embed/" + match[2] + "?showinfo=0"
-          );
-        }
-        if (
-          (match = url.match(/^(?:(https?):\/\/)?(?:www\.)?vimeo\.com\/(\d+)/))
-        ) {
-          // eslint-disable-line no-cond-assign
-          return (
-            (match[1] || "https") +
-            "://player.vimeo.com/video/" +
-            match[2] +
-            "/"
-          );
-        }
-        return null;
-      }
-      function imageHandler() {
-        var range = this.quill.getSelection();
-        var value = prompt(
-          "Copie y Pegue la URL de la imagen aquí (jpg, png, gif, jpeg, etc)"
-        );
-        if (value) {
-          this.quill.insertEmbed(
-            range.index,
-            "image",
-            value,
-            Quill.sources.USER
-          );
-        }
-      }
-
-      function applyGoogleKeyboardWorkaround(editor) {
-        try {
-          if (!editor.applyGoogleKeyboardWorkaround) {
-            editor.applyGoogleKeyboardWorkaround = true;
-            editor.on("editor-change", (eventName, ...args) => {
-              if (eventName === "text-change") {
-                // args[0] will be delta
-                const ops = args[0].ops;
-                const oldSelection = editor.getSelection();
-                const oldPos = oldSelection?.index;
-                const oldSelectionLength = oldSelection
-                  ? oldSelection.length
-                  : 0;
-
-                if (
-                  ops[0].retain === undefined ||
-                  !ops[1] ||
-                  !ops[1].insert ||
-                  !ops[1].insert ||
-                  ops[1].insert !== "\n" ||
-                  oldSelectionLength > 0
-                ) {
-                  return;
-                }
-
-                setTimeout(() => {
-                  const newPos = editor.getSelection().index;
-                  if (newPos === oldPos) {
-                    console.log("Change selection bad pos");
-                    editor.setSelection(editor.getSelection().index + 1, 0);
-                  }
-                }, 30);
-              }
-            });
-          }
-        } catch {
-          console.log("error gboard");
-        }
-      }
-      applyGoogleKeyboardWorkaround(this.commentEditor);
-
-      this.commentEditor.clipboard.addMatcher(
-        Node.TEXT_NODE,
-        function (node, delta) {
-          var regex = /https?:\/\/[^\s]+/g;
-          if (typeof node.data !== "string") return;
-          var matches = node.data.match(regex);
-
-          if (matches && matches.length > 0) {
-            var ops = [];
-            var str = node.data;
-            matches.forEach(function (match) {
-              var split = str.split(match);
-              var beforeLink = split.shift();
-              ops.push({ insert: beforeLink });
-              ops.push({ insert: match, attributes: { link: match } });
-              str = split.join(match);
-            });
-            ops.push({ insert: str });
-            delta.ops = ops;
-          }
-
-          return delta;
-        }
-      );
-    }, 2000);
-
-    //this.$nextTick(()=>{
-    //this.two = "Two"
-    //})}
-    /*
-            window.EventHandler.listen('remove-dialog-' + this.id + '-called', (data) => {
-                window.location.reload(true);
-                console.log(data);
-            });*/
-    /*
-    this.$root.$on("component1", () => {
-      // your code goes here
-      //this.c1method()
-      console.log("from other component");
-    });*/
-    /**/
-  },
   methods: {
+    handleCommentTextChange: function ({ HTMLText }) {
+      this.nuevoComemtarioTexto = HTMLText;
+    },
     customLabel({ text, _id }) {
       return `${this.recortarTextoAdiez(text)} - ${_id}`;
     },
@@ -904,7 +702,6 @@ export default {
           this.value = [];
           this.ListaDeIdsDeComentarios = [];
           this.nuevoComemtarioTexto = null;
-          this.commentEditor.root.innerHTML = null;
           var self = this;
 
           this.$socket.emit("comment", data, function (datos) {
@@ -1091,57 +888,6 @@ export default {
   }
 }
 
-.toolbar--wrapper {
-  @include dynamic-theme() {
-    background-color: darken(theme($normal-background-color), 3%);
-  }
-
-  border-radius: 4px 4px 0 0;
-  border: none;
-}
-
-.editor--wrapper {
-  @include dynamic-theme() {
-    background-color: theme($normal-background-color);
-    border-color: theme($border2-color);
-    border-top: 1px solid theme($border2-color) !important;
-  }
-
-  border-radius: 0;
-  border-width: 1px 0;
-  border-style: solid;
-}
-
-.comment-box-creator {
-  border-radius: 5px;
-  transition: box-shadow 0.2s ease-in-out;
-  min-height: 181px;
-  position: relative;
-  padding-top: 1px;
-
-  @include dynamic-theme() {
-    background-color: theme($normal-background-color);
-    border: 1px solid theme($border-color);
-  }
-
-  .loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  &:focus-within {
-    @include dynamic-theme() {
-      border-color: theme($primary-color);
-      box-shadow: 0 0 0 0.2rem rgba(theme($primary-color), 60%);
-    }
-  }
-}
-.hidden {
-  opacity: 0;
-}
-
 .comment-creator-footer {
   border-radius: 0 0 4px 4px;
   border: none;
@@ -1205,73 +951,6 @@ export default {
   }
 }
 
-.editor--wrapper .ql-editor {
-  min-height: 100px;
-
-  &.ql-blank::before {
-    @include dynamic-theme() {
-      color: theme($placeholder-foreground-color);
-    }
-  }
-}
-.toolbar--wrapper {
-  @include dynamic-theme() {
-    button:hover .ql-stroke,
-    button:focus .ql-stroke,
-    button:active .ql-stroke {
-      stroke: theme($primary-color);
-    }
-
-    button:hover .ql-fill,
-    button:focus .ql-fill,
-    button:active .ql-fill {
-      fill: theme($primary-color);
-    }
-
-    button:hover .ql-picker,
-    button:focus .ql-picker,
-    button:active .ql-picker {
-      color: theme($primary-color);
-    }
-
-    .ql-stroke {
-      stroke: theme($foreground1-color);
-    }
-
-    .ql-fill {
-      fill: theme($foreground1-color);
-    }
-
-    .ql-picker {
-      color: theme($foreground1-color);
-    }
-  }
-}
-
-.cumBucket > .ql-toolbar {
-  position: static !important;
-}
-.quill-wrap {
-  max-width: 900px;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.quill-wrap .ql-active {
-  border: 1px solid #ccc !important;
-  border-radius: 4px;
-}
-.quill-wrap button,
-.quill-wrap .ql-picker {
-  margin-right: 2px;
-}
-
-.ql-indent-8 {
-  padding-left: initial !important;
-}
-[class^="ql-indent"] {
-  padding-left: initial !important;
-}
 .contenidodelpost img {
   zoom: 2;
   display: block;
@@ -1320,16 +999,6 @@ body {
   line-height: 1.5em;
   color: black;
   min-height: 100vh;
-}
-
-.content-wrapper {
-  min-height: calc(100vh - 56px);
-
-  @include dynamic-theme() {
-    background-color: theme($background-color);
-    border: solid theme($border-color);
-    border-width: 0 1px;
-  }
 }
 
 .container-fluid {
