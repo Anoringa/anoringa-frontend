@@ -118,7 +118,7 @@
       <b-button
         v-b-modal.modal-1
         @click="showModal = true"
-        :variant="isDarkModeEnabled ? 'light' : 'dark'"
+        :variant="isDarkModeEnabled ? 'dark' : 'light'"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -199,6 +199,7 @@ export default {
   },
   data() {
     return {
+      isDarkModeEnabled: localStorage.getItem("darkMode") === "true",
       usernameAlreadyInUse: false,
       theName: null,
       loginProcessStep: "create",
