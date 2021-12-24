@@ -152,6 +152,42 @@ export default {
 
 
 <style lang="scss" scoped>
+.project-card::before {
+  background-image: linear-gradient(
+    0deg,
+    #000,
+    rgba(0, 0, 0, 0.8) 25%,
+    rgba(0, 0, 0, 0.6) 50%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0.2)
+  );
+  background-position: center;
+  content: "";
+  border-radius: 8px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.project-card {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  margin-top: 2%;
+  min-width: 12em;
+  min-height: 15em;
+  border-radius: 8px;
+}
+.project-card:hover {
+  box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.5), 0 4px 20px 0 rgba(0, 0, 0, 0.49);
+}
+.project-card-content {
+  color: white;
+  opacity: 1;
+  position: absolute;
+  bottom: 0px;
+  text-overflow: ellipsis;
+}
+
 .project-card-content {
   color: white;
   opacity: 1;

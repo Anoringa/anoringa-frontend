@@ -389,16 +389,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.cardtitle {
-  @include dynamic-theme() {
-    color: theme($card-foreground-color);
-  }
-}
-.card-metadata p {
-  @include dynamic-theme() {
-    color: theme($card-foreground-color);
-  }
-}
 </style>
 
 
@@ -406,64 +396,5 @@ export default {
 #projects {
   padding: 1%;
   background-color: #dae0e6;
-}
-
-@media only screen and (min-width: 600px) {
-  .project-card-wrapper {
-    margin: 0.3% 0%;
-
-    padding-left: 8px !important;
-    padding-right: 8px !important;
-  }
-}
-
-.project-card::before {
-  background-image: linear-gradient(
-    0deg,
-    #000,
-    rgba(0, 0, 0, 0.8) 25%,
-    rgba(0, 0, 0, 0.6) 50%,
-    rgba(0, 0, 0, 0.4) 75%,
-    rgba(0, 0, 0, 0.2)
-  );
-  background-position: center;
-  content: "";
-  border-radius: 8px;
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-.project-card {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  margin-top: 2%;
-  min-width: 12em;
-  min-height: 15em;
-  border-radius: 8px;
-}
-.project-card:hover {
-  box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.5), 0 4px 20px 0 rgba(0, 0, 0, 0.49);
-}
-.project-card-content {
-  color: white;
-  opacity: 1;
-  position: absolute;
-  bottom: 0px;
-  text-overflow: ellipsis;
-}
-
-.cardtitle {
-  /*
-  */
-  font-weight: bold;
-}
-
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 1440px) and (min-width: 1200px) {
-  .cardtitle {
-    font-weight: initial;
-    font-size: 1.3rem;
-  }
 }
 </style>
