@@ -7,7 +7,7 @@
       <div class="card--shadow" />
 
       <div class="card--metadata">
-        <!-- <h1>Text</h1> -->
+        <h4 class="card--metadata-title">{{ title }}</h4>
       </div>
 
       <!-- <div
@@ -174,14 +174,17 @@ export default {
   object-position: center;
   border-radius: 4px;
 }
+.card--metadata,
+.card--shadow {
+  position: absolute;
+  width: calc(100% - 16px);
+}
 .card--shadow {
   $inside-box-shadow: -3px -61px 129px -10px #000000cc inset;
 
-  position: absolute;
   top: 8px;
-  width: calc(100% - 16px);
-  height: calc(100% - 16px);
   border-radius: 4px;
+  height: calc(100% - 16px);
 
   box-shadow: 0 0 0 0.2rem #00000020, $inside-box-shadow;
   transition: box-shadow 0.1s;
@@ -204,6 +207,22 @@ export default {
         $inside-box-shadow;
     }
   }
+}
+
+.card--metadata {
+  bottom: 8px;
+  border-radius: 0 0 4px 4px;
+  pointer-events: none;
+}
+.card--metadata-title {
+  margin: 0;
+  padding: 5px 6px;
+  box-sizing: border-box;
+  background-color: #00000070;
+  border-top: 1px solid #00000020;
+  font-size: 20px;
+  min-height: 88px;
+  border-radius: 0 0 4px 4px;
 }
 
 .project-card::before {
