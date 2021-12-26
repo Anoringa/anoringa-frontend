@@ -45,6 +45,11 @@
               <span class="group-value">{{ authorUsername }}</span>
             </span>
           </div>
+
+          <div v-else>
+            <b-icon icon="clock" aria-hidden="true"></b-icon>
+            {{ lastComment | moment }}
+          </div>
         </div>
       </div>
 
