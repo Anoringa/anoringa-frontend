@@ -1,55 +1,58 @@
 <template>
-  <a
-    :id="id"
-    :href="urlEndpoint"
-    class="
-      col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 col-12
-      project-card-wrapper
-    "
+  <div
+    class="col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 col-12 card--wrapper"
   >
-    <div
-      class="col-12 project-card"
-      v-bind:style="{
-        background:
-          'rgb(255, 255, 255) url(' +
-          getPhoto(photo) +
-          ') no-repeat scroll center / cover',
-      }"
-    >
-      <div class="project-card-content">
-        <h4 class="cardtitle">{{ title }}</h4>
+    <a :id="id" :href="urlEndpoint" class="card--link">
+      <img :src="getPhoto(photo)" alt="card-preview" class="card--image" />
 
-        <div class="h-100 d-inline-block card-metadata">
-          <div v-if="postSort == 'lastComment'">
-            <p>
-              <b-icon icon="plus-circle" aria-hidden="true"></b-icon>
-              {{ lastCommentedLabel }}
-            </p>
-          </div>
+      <div class="card--metadata">
+        <!-- <h1>Text</h1> -->
+      </div>
 
-          <div v-else-if="postSort == 'countOfComments'">
-            <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
-            {{ countOfComments }} comentarios
-          </div>
+      <!-- <div
+        class="project-card"
+        v-bind:style="{
+          background:
+            'rgb(255, 255, 255) url(' +
+            getPhoto(photo) +
+            ') no-repeat scroll center / cover',
+        }"
+      >
+        <div class="project-card-content">
+          <h4 class="cardtitle">{{ title }}</h4>
 
-          <div v-else-if="postSort == 'updatedAt'">
-            <p>
+          <div class="h-100 card-metadata">
+            <div v-if="postSort == 'lastComment'">
+              <p>
+                <b-icon icon="plus-circle" aria-hidden="true"></b-icon>
+                {{ lastCommentedLabel }}
+              </p>
+            </div>
+
+            <div v-else-if="postSort == 'countOfComments'">
               <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
-              {{ countOfComments }}
+              {{ countOfComments }} comentarios
+            </div>
 
-              <b-icon icon="pen" aria-hidden="true"></b-icon>
-              por: {{ authorUsername }}
-            </p>
-          </div>
+            <div v-else-if="postSort == 'updatedAt'">
+              <p>
+                <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
+                {{ countOfComments }}
 
-          <div v-else>
-            <b-icon icon="clock" aria-hidden="true"></b-icon>
-            {{ lastComment | moment }}
+                <b-icon icon="pen" aria-hidden="true"></b-icon>
+                por: {{ authorUsername }}
+              </p>
+            </div>
+
+            <div v-else>
+              <b-icon icon="clock" aria-hidden="true"></b-icon>
+              {{ lastComment | moment }}
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </a>
+      </div> -->
+    </a>
+  </div>
 </template>
 
 
@@ -156,6 +159,43 @@ export default {
 
 
 <style lang="scss" scoped>
+.card--wrapper {
+  height: 240px;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.card--link {
+  position: relative;
+}
+.card--image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 4px;
+  box-shadow: 0 0 0 0.2rem #00000020;
+  transition: box-shadow 0.1s;
+
+  @include dynamic-theme() {
+    box-shadow: 0 0 0 0.2rem rgba(theme($foreground-color), 8%);
+  }
+
+  &:hover {
+    @include dynamic-theme() {
+      box-shadow: 0 0 0 0.3rem rgba(theme($primary-color), 15%);
+    }
+  }
+  &:active,
+  &:focus {
+    @include dynamic-theme() {
+      box-shadow: 0 0 0 0.4rem rgba(theme($primary-color), 60%);
+    }
+  }
+}
+.card--metadata {
+}
+
 .project-card::before {
   background-image: linear-gradient(
     0deg,
@@ -180,16 +220,20 @@ export default {
   min-width: 12em;
   min-height: 15em;
   border-radius: 8px;
-}
-.project-card:hover {
-  box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.5), 0 4px 20px 0 rgba(0, 0, 0, 0.49);
+
+  &:hover {
+    box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.5),
+      0 4px 20px 0 rgba(0, 0, 0, 0.49);
+  }
 }
 .project-card-content {
   color: white;
   opacity: 1;
   position: absolute;
   bottom: 0px;
+  left: 0px;
   text-overflow: ellipsis;
+  width: 100%;
 }
 
 .project-card-content {
@@ -207,17 +251,12 @@ export default {
   }
 }
 .card-metadata p {
+  margin: 0;
+  background-color: #ccc;
+  width: inherit;
+
   @include dynamic-theme() {
     color: theme($card-foreground-color);
-  }
-}
-
-@media only screen and (min-width: 600px) {
-  .project-card-wrapper {
-    margin: 0.3% 0%;
-
-    padding-left: 8px !important;
-    padding-right: 8px !important;
   }
 }
 
