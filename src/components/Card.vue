@@ -200,16 +200,17 @@ export default {
   border-radius: 4px;
   height: calc(100% - 16px);
 
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.3s;
 
   @include dynamic-theme() {
     box-shadow: 0 0 0 0.2rem rgba(theme($foreground-color), 8%),
-      $inside-box-shadow;
+      0 0 0 2px rgba(theme($primary-color), 0), $inside-box-shadow;
   }
 
   &:hover {
     @include dynamic-theme() {
       box-shadow: 0 0 0 0.3rem rgba(theme($primary-color), 15%),
+        0 0 0 2px rgba(theme($primary-color), 15%),
         -3px -61px 140px -4px #000000ca inset;
     }
   }
@@ -217,7 +218,7 @@ export default {
   &:focus {
     @include dynamic-theme() {
       box-shadow: 0 0 0 0.4rem rgba(theme($primary-color), 60%),
-        $inside-box-shadow;
+        0 0 0 2px rgba(theme($primary-color), 15%), $inside-box-shadow;
     }
   }
 }
