@@ -186,7 +186,7 @@ export default {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  border-radius: 4px;
+  border-radius: 4px 4px 6px 6px;
 }
 .card--metadata,
 .card--shadow {
@@ -197,13 +197,13 @@ export default {
   $inside-box-shadow: -3px -61px 129px -10px #000000cc inset;
 
   top: 8px;
-  border-radius: 4px;
+  border-radius: 5px;
   height: calc(100% - 16px);
 
   transition: box-shadow 0.3s;
 
   @include dynamic-theme() {
-    box-shadow: 0 0 0 0.2rem rgba(theme($foreground-color), 8%),
+    box-shadow: 0 0 0 0.2rem rgba(theme($foreground-color), 6%),
       0 0 0 2px rgba(theme($primary-color), 0), $inside-box-shadow;
   }
 
@@ -211,7 +211,7 @@ export default {
     @include dynamic-theme() {
       box-shadow: 0 0 0 0.3rem rgba(theme($primary-color), 15%),
         0 0 0 2px rgba(theme($primary-color), 15%),
-        -3px -61px 140px -4px #000000ca inset;
+        -3px -140px 140px -4px #000000ee inset;
     }
   }
   &:active,
@@ -232,7 +232,7 @@ export default {
   margin: 0;
   padding: 5px 6px;
   box-sizing: border-box;
-  background-color: #00000070;
+  background-color: #00000020;
   border-top: 1px solid #00000020;
   font-size: 20px;
   min-height: 88px;
