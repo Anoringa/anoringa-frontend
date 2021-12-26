@@ -186,7 +186,7 @@ export default {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  border-radius: 4px 4px 6px 6px;
+  border-radius: 4px;
 }
 .card--metadata,
 .card--shadow {
@@ -194,10 +194,10 @@ export default {
   width: calc(100% - 16px);
 }
 .card--shadow {
-  $inside-box-shadow: -3px -61px 129px -10px #000000cc inset;
+  $inside-box-shadow: -3px -140px 140px -4px #000000dd inset;
 
   top: 8px;
-  border-radius: 5px;
+  border-radius: 4px;
   height: calc(100% - 16px);
 
   transition: box-shadow 0.3s;
@@ -210,7 +210,7 @@ export default {
   &:hover {
     @include dynamic-theme() {
       box-shadow: 0 0 0 0.3rem rgba(theme($primary-color), 15%),
-        0 0 0 2px rgba(theme($primary-color), 15%),
+        0 0 0 2px rgba(theme($primary-color), 30%),
         -3px -140px 140px -4px #000000ee inset;
     }
   }
@@ -227,19 +227,18 @@ export default {
   bottom: 8px;
   border-radius: 0 0 4px 4px;
   pointer-events: none;
+  background-color: #00000020;
+  padding: 0 4px;
 }
 .card--metadata-title {
   margin: 0;
   padding: 5px 6px;
   box-sizing: border-box;
-  background-color: #00000020;
   border-top: 1px solid #00000020;
-  font-size: 20px;
-  min-height: 88px;
-  text-align: center;
+  font-size: 21px;
 
   @include dynamic-theme() {
-    color: theme($foreground2-color);
+    color: theme($card-foreground1-color);
   }
 }
 .card--metadata-group {
@@ -248,7 +247,6 @@ export default {
   font-size: 12px;
 
   @include dynamic-theme() {
-    background-color: theme($normal-background-color);
     color: theme($card-foreground-color);
   }
 
@@ -258,7 +256,7 @@ export default {
     vertical-align: middle;
 
     @include dynamic-theme() {
-      color: theme($foreground1-color);
+      color: theme($card-foreground-color);
     }
   }
   .group-value {
