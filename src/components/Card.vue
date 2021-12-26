@@ -4,6 +4,7 @@
   >
     <a :id="id" :href="urlEndpoint" class="card--link">
       <img :src="getPhoto(photo)" alt="card-preview" class="card--image" />
+      <div class="card--shadow" />
 
       <div class="card--metadata">
         <!-- <h1>Text</h1> -->
@@ -163,37 +164,46 @@ export default {
   height: 240px;
   border-radius: 4px;
   padding: 8px;
-}
-
-.card--link {
   position: relative;
 }
+
 .card--image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   border-radius: 4px;
-  box-shadow: 0 0 0 0.2rem #00000020;
+}
+.card--shadow {
+  $inside-box-shadow: -3px -61px 129px -10px #000000cc inset;
+
+  position: absolute;
+  top: 8px;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  border-radius: 4px;
+
+  box-shadow: 0 0 0 0.2rem #00000020, $inside-box-shadow;
   transition: box-shadow 0.1s;
 
   @include dynamic-theme() {
-    box-shadow: 0 0 0 0.2rem rgba(theme($foreground-color), 8%);
+    box-shadow: 0 0 0 0.2rem rgba(theme($foreground-color), 8%),
+      $inside-box-shadow;
   }
 
   &:hover {
     @include dynamic-theme() {
-      box-shadow: 0 0 0 0.3rem rgba(theme($primary-color), 15%);
+      box-shadow: 0 0 0 0.3rem rgba(theme($primary-color), 15%),
+        $inside-box-shadow;
     }
   }
   &:active,
   &:focus {
     @include dynamic-theme() {
-      box-shadow: 0 0 0 0.4rem rgba(theme($primary-color), 60%);
+      box-shadow: 0 0 0 0.4rem rgba(theme($primary-color), 60%),
+        $inside-box-shadow;
     }
   }
-}
-.card--metadata {
 }
 
 .project-card::before {
