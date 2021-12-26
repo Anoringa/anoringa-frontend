@@ -12,21 +12,33 @@
         <div class="card--metadata-group">
           <div v-if="postSort == 'lastComment'">
             <span>
-              <b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
+              <b-icon
+                icon="plus-circle-fill"
+                aria-hidden="true"
+                class="icons"
+              ></b-icon>
               <span class="group-value">{{ lastCommentedLabel }}</span>
             </span>
           </div>
 
           <div v-else-if="postSort == 'countOfComments'">
             <span>
-              <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
+              <b-icon
+                icon="chat-left-text"
+                aria-hidden="true"
+                class="icons"
+              ></b-icon>
               <span class="group-value">{{ countOfComments }} comentarios</span>
             </span>
           </div>
 
           <div v-else-if="postSort == 'updatedAt'" class="updated-group">
             <span>
-              <b-icon icon="chat-square-text-fill" aria-hidden="true"></b-icon>
+              <b-icon
+                icon="chat-square-text-fill"
+                aria-hidden="true"
+                class="icons"
+              ></b-icon>
               <span class="group-value">{{ countOfComments }}</span>
             </span>
 
@@ -47,8 +59,10 @@
           </div>
 
           <div v-else>
-            <b-icon icon="clock" aria-hidden="true"></b-icon>
-            {{ lastComment | moment }}
+            <span>
+              <b-icon icon="clock" aria-hidden="true"></b-icon>
+              <span class="group-value">{{ lastComment | moment }}</span>
+            </span>
           </div>
         </div>
       </div>
@@ -161,7 +175,7 @@ export default {
 
 <style lang="scss" scoped>
 .card--wrapper {
-  height: 240px;
+  height: 260px;
   border-radius: 4px;
   padding: 8px;
   position: relative;
@@ -186,7 +200,7 @@ export default {
   border-radius: 4px;
   height: calc(100% - 16px);
 
-  transition: box-shadow 0.1s;
+  transition: box-shadow 0.2s;
 
   @include dynamic-theme() {
     box-shadow: 0 0 0 0.2rem rgba(theme($foreground-color), 8%),
@@ -196,7 +210,7 @@ export default {
   &:hover {
     @include dynamic-theme() {
       box-shadow: 0 0 0 0.3rem rgba(theme($primary-color), 15%),
-        $inside-box-shadow;
+        -3px -61px 140px -4px #000000ca inset;
     }
   }
   &:active,
@@ -221,13 +235,13 @@ export default {
   border-top: 1px solid #00000020;
   font-size: 20px;
   min-height: 88px;
+  text-align: center;
 
   @include dynamic-theme() {
     color: theme($foreground2-color);
   }
 }
 .card--metadata-group {
-  height: 30px;
   border-radius: 0 0 4px 4px;
   padding: 0 8px;
   font-size: 12px;
@@ -256,9 +270,12 @@ export default {
     justify-content: space-between;
   }
 }
+.icons,
 .user-icon {
   display: inline-block;
+  vertical-align: middle !important;
+}
+.user-icon {
   margin: 0 2px;
-  vertical-align: middle;
 }
 </style>
