@@ -186,7 +186,6 @@ export default {
   border-radius: 4px;
   height: calc(100% - 16px);
 
-  box-shadow: 0 0 0 0.2rem #00000020, $inside-box-shadow;
   transition: box-shadow 0.1s;
 
   @include dynamic-theme() {
@@ -222,6 +221,10 @@ export default {
   border-top: 1px solid #00000020;
   font-size: 20px;
   min-height: 88px;
+
+  @include dynamic-theme() {
+    color: theme($foreground2-color);
+  }
 }
 .card--metadata-group {
   height: 30px;
@@ -231,13 +234,17 @@ export default {
 
   @include dynamic-theme() {
     background-color: theme($normal-background-color);
-    color: theme($foreground-color);
+    color: theme($card-foreground-color);
   }
 
   span {
     margin: 0;
     line-height: 30px;
     vertical-align: middle;
+
+    @include dynamic-theme() {
+      color: theme($foreground1-color);
+    }
   }
   .group-value {
     margin-left: 3px;
