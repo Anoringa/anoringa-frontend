@@ -429,6 +429,9 @@ export default {
       console.log("credencial", this.credenciales);
       store.commit("SET_PRODUCTS", this.credenciales);
       dispatchEvent(new Event("userDataEvent"));
+
+      console.log("RELOAD");
+      window.location.reload(true);
     },
     userCreate(hcaptchatoken) {
       var params = new URLSearchParams();
