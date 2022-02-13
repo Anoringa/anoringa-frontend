@@ -67,6 +67,7 @@ module.exports = {
     //public: "0.0.0.0:80",
     //public: "test.mydomain.com",
   },
+  /*
   pages: {/*
     index: {
       entry: "./src/pages/Home/main.js",
@@ -74,20 +75,20 @@ module.exports = {
       title: "Anoringa",
       chunks: ["chunk-vendors", "chunk-common", "index"],
     },*/
+    /*
     index: {
       entry: "./src/main.js",
       title: "Anoringa",
       chunks: ["chunk-vendors", "chunk-common", "index"],
     },
-    /*
     l: {
       entry: "./src/pages/PostDetail/main.js",
       template: "public/index.html",
       //title: 'Post',
       chunks: ["chunk-vendors", "chunk-common", "post"],
     },
-    */
   },
+  */
   /**/
   /**/
   pwa: {
