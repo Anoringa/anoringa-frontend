@@ -25,7 +25,11 @@ module.exports = {
         'window.Quill': 'quill/dist/quill.js',
         'Quill': 'quill/dist/quill.js',
       })
-    ]
+    ],
+    
+    entry: {
+      app: './src/main.js' // or whatever your entry is
+    }
   },
   devServer: {
     //allowedHosts: ['test.mydomain.com','localhost',],
