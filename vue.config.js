@@ -75,12 +75,14 @@ module.exports = {
       title: "Anoringa",
       chunks: ["chunk-vendors", "chunk-common", "index"],
     },
+    /*
     l: {
       entry: "./src/pages/PostDetail/main.js",
       template: "public/index.html",
       //title: 'Post',
       chunks: ["chunk-vendors", "chunk-common", "post"],
     },
+    */
   },
   /**/
   /**/
