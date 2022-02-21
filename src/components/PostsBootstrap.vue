@@ -1,85 +1,18 @@
 <template>
   <main class="container-flex" id="projects" v-if="loaded == 'OK'">
-    <!--
-    <head>
-      <title>{{ "process.env.VUE_APP_NAME" + " | Posts" }}</title>
-    </head>
-            -->
-
     <div class="row pl-0 pr-0 mr-0 ml-0">
-      <!--
-      <div class="">
-              </div>
-            -->
-      <!--
-            v-for="item in orderBy(posts, postSort, -1)"
-            orderBy(posts,'updateAT',-1)
-          v-if="item.enabled == true"
-            -->
-      <a
+      <Card
         v-for="item in filterPostsByEnabledAndSortByVar"
         :key="item._id"
         :id="item._id"
-        :href="urlendpoint + item._id"
-        class="
-          col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 col-12
-          project-card-wrapper
-        "
-      >
-        <div
-          class="col-12 project-card"
-          v-bind:style="{
-            /*
-            'background-position': 'center',
-            'background-repeat': 'no-repeat',
-            'background-size': 'cover / cover',
-            //'background-image': 'rgb(255, 255, 255) url(' + getPhoto(item.photo) + ') no-repeat scroll left center / cover',
-            'background-image': 'url(' + getPhoto(item.photo) + ') ',
-            //'background-image': 'url(' + getPhoto(item.photo) + ') no-repeat scroll left center / cover',
-            */
-            background:
-              'rgb(255, 255, 255) url(' +
-              getPhoto(item.photo) +
-              ') no-repeat scroll center / cover',
-          }"
-        >
-          <div class="project-card-content">
-            <h4 class="cardtitle">{{ item.title }}</h4>
-            <!--
-            <h4>
-              <b>
-                {{ item.title }}
-              </b>
-            </h4>
-            -->
-            <div class="h-100 d-inline-block pb-3 card-metadata">
-              <div v-if="postSort == 'lastComment'">
-                <p v-if="item[postSort] == ['2020-11-30T00:00:00.000Z']"></p>
-                <p v-else>
-                  <b-icon icon="plus-circle" aria-hidden="true"></b-icon>
-                  comentado {{ item[postSort] | moment }}
-                </p>
-              </div>
-              <div v-else-if="postSort == 'countOfComments'">
-                <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
-                {{ item.countOfComments }} comentarios
-              </div>
-              <div v-else-if="postSort == 'updatedAt'">
-                <p>
-                  <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
-                  {{ item.countOfComments }}
-                  <b-icon icon="pen" aria-hidden="true"></b-icon>
-                  por: {{ item.owner.username }}
-                </p>
-              </div>
-              <div v-else>
-                <b-icon icon="clock" aria-hidden="true"></b-icon>
-                {{ item[postSort] | moment }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </a>
+        :urlEndpoint="urlendpoint + item._id"
+        :photo="item.photo"
+        :title="item.title"
+        :postSort="postSort"
+        :lastComment="item[postSort]"
+        :countOfComments="item.countOfComments"
+        :authorUsername="item.owner.username"
+      />
     </div>
   </main>
   <div v-else class="idle-wrapper">
@@ -106,6 +39,7 @@
 //import { mapGetters } from "vuex";
 //import Card from "./Card";
 import { EventBus } from "../event-bus";
+import Card from "./Card.vue";
 
 import axios from "axios";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
@@ -239,15 +173,6 @@ export default {
       ],
     };
   },
-  /*
-  computed: {
-    filteredOfficialScenarios() {
-      return posts
-        .filter(s => new Date(s.updatedAt) >= START_DATE)
-        .sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt)
-      );
-    },
-  },*/
   mixins: [Vue2Filters.mixin],
   data() {
     return {
@@ -271,7 +196,7 @@ export default {
     };
   },
   components: {
-    //CardPostBox: Card,
+    Card,
   },
 
   created() {
@@ -396,66 +321,6 @@ export default {
         variant: "info",
       });
     },
-    getPhoto(photosonic) {
-      //console.log("typeof photosonic");
-      //console.log(typeof photosonic);
-      function validURL(str) {
-        var pattern = new RegExp(
-          "^(https?:\\/\\/)?" + // protocol
-            "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-            "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-            "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-            "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-            "(\\#[-a-z\\d_]*)?$",
-          "i"
-        ); // fragment locator
-        return !!pattern.test(str);
-      }
-
-      // Photo object vs media
-      if (typeof photosonic === "object" || photosonic instanceof Object) {
-        //console.log("the image coms from object");
-        if (validURL(photosonic.content)) {
-          return photosonic.content;
-        } else {
-          return this.photosonicdefault;
-        }
-      } else if (
-        typeof photosonic === "string" ||
-        photosonic instanceof String
-      ) {
-        //console.log("the image coms from string");
-        if (validURL(photosonic)) {
-          return photosonic;
-        } else {
-          return this.photosonicdefault;
-        }
-      } else {
-        console.log("anyone know the image coms from ");
-      } /*else {
-        console.log("anyone know the image coms from ");
-        if (validURL(photosonic.content)) {
-          return photosonic.content;
-        } else {
-          return this.photosonicdefault;
-        }
-      }
-      if (photosonic.content) {
-        if (validURL(photosonic.content)) {
-          return photosonic.content;
-        } else {
-          return this.photosonicdefault;
-        }
-      }
-      else{
-        if (validURL(photosonic.content)) {
-          return photosonic;
-        } else {
-          return this.photosonicdefault;
-        }
-
-      }*/
-    },
     getPostsExample() {
       axios
         .get(this.examplesource)
@@ -524,16 +389,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.cardtitle {
-  @include dynamic-theme() {
-    color: theme($card-foreground-color);
-  }
-}
-.card-metadata p {
-  @include dynamic-theme() {
-    color: theme($card-foreground-color);
-  }
-}
 </style>
 
 
@@ -541,64 +396,5 @@ export default {
 #projects {
   padding: 1%;
   background-color: #dae0e6;
-}
-
-@media only screen and (min-width: 600px) {
-  .project-card-wrapper {
-    margin: 0.3% 0%;
-
-    padding-left: 8px !important;
-    padding-right: 8px !important;
-  }
-}
-
-.project-card::before {
-  background-image: linear-gradient(
-    0deg,
-    #000,
-    rgba(0, 0, 0, 0.8) 25%,
-    rgba(0, 0, 0, 0.6) 50%,
-    rgba(0, 0, 0, 0.4) 75%,
-    rgba(0, 0, 0, 0.2)
-  );
-  background-position: center;
-  content: "";
-  border-radius: 8px;
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-.project-card {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  margin-top: 2%;
-  min-width: 12em;
-  min-height: 15em;
-  border-radius: 8px;
-}
-.project-card:hover {
-  box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.5), 0 4px 20px 0 rgba(0, 0, 0, 0.49);
-}
-.project-card-content {
-  color: white;
-  opacity: 1;
-  position: absolute;
-  bottom: 0px;
-  text-overflow: ellipsis;
-}
-
-.cardtitle {
-  /*
-  */
-  font-weight: bold;
-}
-
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 1440px) and (min-width: 1200px) {
-  .cardtitle {
-    font-weight: initial;
-    font-size: 1.3rem;
-  }
 }
 </style>
