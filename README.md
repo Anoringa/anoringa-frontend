@@ -1,29 +1,10 @@
-<div align="center">
-  <br>
-  <img alt="Anoringa" src="https://i.imgur.com/Ay4NXPn.png" width="300px">
-  <h1>🕵️ Anoringa 🕵️</h1>
-  <strong>The path to your next Open Source contribution</strong>
-</div>
-<br>
-<p align="center">
-  <a href="(https://app.netlify.com/sites/anoringa/deploys">
-    <img src="https://api.netlify.com/api/v1/badges/8f6d440f-6f42-46f3-b462-82aa502f9bc4/deploy-status" alt="Netlify Status">
-  </a>
 
-  <img src="https://img.shields.io/github/languages/code-size/Anoringa/anoringa-frontend" alt="GitHub code size in bytes">
-<!---
-  <img src="https://badgen.net/dependabot/Anoringa/anoringa-frontend?icon=dependabot" alt="Dependabot Badge">
-  <img src="https://img.shields.io/github/commit-activity/w/Anoringa/anoringa-frontend" alt="GitHub commit activity">
--->
+# Anoringa FrontEnd
+## _The Anonimus social network_
 
-  <a href="https://github.com/Anoringa/anoringa-frontend/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Anoringa/anoringa-frontend"></a>
 
-  <a href="https://github.com/Anoringa/anoringa-frontend/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Anoringa/anoringa-frontend"></a>
+![](https://img.shields.io/github/stars/Anoringa/anoringa-frontend) ![](https://img.shields.io/github/forks/Anoringa/anoringa-frontend) ![](https://img.shields.io/github/issues/Anoringa/anoringa-frontend)[![Netlify Status](https://api.netlify.com/api/v1/badges/8f6d440f-6f42-46f3-b462-82aa502f9bc4/deploy-status)](https://app.netlify.com/sites/anoringa/deploys)![](https://img.shields.io/github/languages/code-size/Anoringa/anoringa-frontend)![](https://img.shields.io/twitter/follow/Anoringa1?label=Follow&style=social)
 
-  <a href="https://twitter.com/Anoringa1">
-    <img src="https://img.shields.io/twitter/follow/Anoringa1?label=Follow&style=social" alt="Twitter">
-  </a>
-</p>
 
 
 Anoringa is an open source anonymous posting social network, the goal is to provide people with a site to discuss current issues and news without bias from other people
