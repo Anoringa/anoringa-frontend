@@ -139,8 +139,8 @@
             class="icon-front-door"
           />
         </svg>
-        <span class="login-button-text">Iniciar Sesión</span></b-button
-      >
+        <span class="login-button-text">Iniciar Sesión</span>
+        </b-button>
     </div>
   </div>
 </template>
@@ -325,7 +325,11 @@ export default {
       this.show = true;
     },
   },
-  mounted() {},
+  mounted() {
+        window.addEventListener("toggleDarkMode", () => {
+      this.isDarkModeEnabled = localStorage.getItem("darkMode") === "true";
+    });
+  },
 };
 </script>
 
