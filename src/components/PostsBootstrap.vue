@@ -25,10 +25,32 @@
           col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-1 col-12
           project-card-wrapper
         "
-      >
+      ><!--
+background: url("https://ik.imagekit.io/ym5grvwvw2m/d869fe67-b120-479f-bdf2-06511621944e_ByQGgvwuG") center center / cover no-repeat scroll rgb(255, 255, 255);
+
+background-color: rgb(255, 255, 255); background-image: url("https://ik.imagekit.io/ym5grvwvw2m/d869fe67-b120-479f-bdf2-06511621944e_ByQGgvwuG");
+
+
+
+        -->
         <div
           class="col-12 project-card"
+          v-lazy:background-image=getPhoto(item.photo)
           v-bind:style="{
+            'background-color': 'rgb(255, 255, 255)',
+            /*
+            'background-position': 'no-repeat',
+            'background-size': 'scroll',
+            'background-repeat': 'center',
+            'background-origin': '/',
+            'background-clip': 'cover',
+*/
+            
+            'background-position': 'center',
+            'background-repeat': 'no-repeat',
+            'background-size': 'cover',
+            'background-origin': 'padding-box, content-box',
+        
             /*
             'background-position': 'center',
             'background-repeat': 'no-repeat',
@@ -37,10 +59,13 @@
             'background-image': 'url(' + getPhoto(item.photo) + ') ',
             //'background-image': 'url(' + getPhoto(item.photo) + ') no-repeat scroll left center / cover',
             */
+
+            /*
             background:
               'rgb(255, 255, 255) url(' +
               getPhoto(item.photo) +
               ') no-repeat scroll center / cover',
+            */
           }"
         >
           <div class="project-card-content">
@@ -69,7 +94,7 @@
                   <b-icon icon="chat-left-text" aria-hidden="true"></b-icon>
                   {{ item.countOfComments }}
                   <b-icon icon="pen" aria-hidden="true"></b-icon>
-                  por: {{ item.owner.username }}
+                  Publicado {{ item.updatedAt | moment }}
                 </p>
               </div>
               <div v-else>
@@ -256,7 +281,7 @@ export default {
       postexample: [],
       //endpoint: "http://localhost:3000/api/post",
       //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post",
-      endpoint: process.env.VUE_APP_API + "/api/post/new",
+      endpoint: process.env.VUE_APP_API + "/api/post",
       //endpoint: "http://localhost:3000/api/post",
       examplesource: "https://jsonplaceholder.typicode.com/posts/",
 

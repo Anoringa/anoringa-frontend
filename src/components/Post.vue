@@ -232,14 +232,14 @@
                           style="display: inline"
                           :class="
                             compare(
-                              currentComent.user[0].username,
+                              currentComent.username,
                               userowner.username
                             )
                               ? 'comment_in_response'
                               : 'comment'
                           "
                         >
-                          {{ currentComent.user[0].username }}
+                          {{ currentComent.username }}
                         </div>
                         <!--
                       <div
@@ -248,7 +248,7 @@
                       >-->
                         <a
                           v-if="
-                            currentComent.user[0].username == userowner.username
+                            currentComent.username == userowner.username
                           "
                           >👃</a
                         >
@@ -294,7 +294,7 @@
                               <div v-if="item.text">
                                 {{ item.text }}
                                 <br /><small
-                                  ><i>por {{ item.user[0].username }}</i></small
+                                  ><i>por {{ item.username }}</i></small
                                 >
                               </div>
                               <div v-else>El Comentario no existe</div>
@@ -420,7 +420,7 @@ array.pushIfNotExist(element, function(e) {
 //import { mapGetters } from "vuex";
 import $ from "jquery";
 import Multiselect from "vue-multiselect";
-import { EventBus } from "../event-bus";
+//import { EventBus } from "../event-bus";
 //Vue.component('multiselect', Multiselect)
 import Header from "./Header";
 import Footer from "./Footer";
@@ -504,6 +504,7 @@ export default {
       hasPushedAComment: false,
       isEditorLoaded: false,
       value: [],
+      /*
       options: [
         { name: "Vue.js", language: "JavaScript" },
         { name: "Adonis", language: "JavaScript" },
@@ -511,11 +512,12 @@ export default {
         { name: "Sinatra", language: "Ruby" },
         { name: "Laravel", language: "PHP" },
         { name: "Phoenix", language: "Elixir" },
-      ],
+      ],*/
       photodefault: "https://picsum.photos/200?random=1",
       appName: "Anoringa",
       userowner: null,
       comentarios: [],
+      /*
       comentariosList: [
         {
           id: 20949438,
@@ -539,6 +541,7 @@ export default {
           created_at: 12312948123,
         },
       ],
+      */
       postexample: [],
       //endpoint: "http://localhost:3000/api/post",
       //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post",
@@ -546,12 +549,17 @@ export default {
       //endpoint: "https://agile-everglades-15507.herokuapp.com/api/post/" + this.$route.params.id,
       endpoint: process.env.VUE_APP_API + "/api/post/" + this.$route.params.id,
       //https://agile-everglades-15507.herokuapp.com/api/post/5fea65d576140b6b2093cdb7
-      examplesource: "https://jsonplaceholder.typicode.com/posts/",
+      //examplesource: "https://jsonplaceholder.typicode.com/posts/",
       url: "asdasdasd",
       photo: "https://picsum.photos/200?random=1",
-      pagetitle: "some title",
+
+
+
+      pagetitle: null,
+      content: null,
+
+      // HERE ARE THE COMMENTS
       comments: [],
-      content: "some scrap contenido",
       loaded_correctly: false,
       postcreatedAt: "",
       ambientmusic: true,
@@ -725,36 +733,6 @@ export default {
         alert("logueate hijo de puta");
       }
     },
-    postCreate(titulox, contenidox, photox) {
-      /*
-      {
-        "username":"Afoxipeb",
-        "password":"JJAsjChPvmwvc2qOcRpMoJnogtv9jcQe",
-        "title":"Como ser como one punch man",
-        "photo":"somepick",
-        "content":"hola mundo este es mi nuevo blog"
-      }
-      */
-      console.log("postCreate");
-      var data = {
-        title: titulox,
-        description: contenidox,
-        username: localStorage.username,
-        //password: "req.body.password",
-        password: localStorage.password,
-        photo: photox,
-      };
-      this.$socket.emit("post", data, function (datos) {
-        console.log("socket.io emit");
-        console.log(datos);
-        //this.$root.$emit("component1"); //like this
-        //this.$root.$emit("component1", "datos", datos);
-        //this.$root.$emit("sendPostP2P", "datos", datos);
-        EventBus.$emit("sendPostP2P", "datos", datos);
-        //window.Evento.$emit("sendPostP2P", "datos", datos);
-        //this.posts.push(datos);
-      });
-    },
     getPostsExample() {
       axios
         .get(this.examplesource)
@@ -787,13 +765,20 @@ export default {
           if (this.post.music && this.post.music != "false") {
             this.music = this.post.music;
           }
-
+          /*
           if (this.post.comments.le) {
             this.comments = this.post.comments;
+
+
           } else {
             this.comments = this.post.comentarios;
           }
+          */
 
+          if (this.post.comments) {
+            this.comments = this.post.comments;
+          }
+            console.log("this.post.comments",this.post.comments);
           // Photo object vs media
           if (typeof this.post.photo === "object") {
             console.log("the image coms from object");

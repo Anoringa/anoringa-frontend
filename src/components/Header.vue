@@ -50,7 +50,13 @@
           >
             <a class="nav-link linker" href="/tutorial">Como Usar</a>
           </li>
+          <!--
+          <li class="nav-item">
+            <DarkModeSwitch></DarkModeSwitch>
+          </li>
+          -->
         </ul>
+            <DarkModeSwitch></DarkModeSwitch>
 
         <button
           type="button"
@@ -132,6 +138,8 @@ global.jQuery = require("jquery");
 var $ = global.jQuery;
 window.$ = $;
 
+import DarkModeSwitch from "./tools/DarkModeSwitch.vue";
+
 import store from "../store";
 
 export default {
@@ -144,6 +152,7 @@ export default {
   components: {
     ModalLogin,
     ModalCreatePost,
+    DarkModeSwitch,
   },
   data() {
     return {
@@ -264,7 +273,10 @@ export default {
       console.log(this.loggedstate);
       console.log("localStorage");
       console.log(localStorage);
-      this.loggedstate = this.checkLocalStorage(localStorage.username, localStorage.password);
+      this.loggedstate = this.checkLocalStorage(
+        localStorage.username,
+        localStorage.password
+      );
       /*
       if (event.logged) {
         console.log(this.checkLocalStorage(localStorage.username, localStorage.password))
@@ -273,7 +285,6 @@ export default {
         this.loggedstate = event.logged;
       }
       */
-
     });
   },
   watch: {

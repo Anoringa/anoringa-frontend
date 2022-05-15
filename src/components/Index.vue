@@ -4,7 +4,7 @@
     <!--
       <p>{{appName}}</p>
     -->
-    <Posts></Posts>
+    <Posts :postSort="sortPost"></Posts>
     <Footer></Footer>
   </div>
 </template>
@@ -14,7 +14,7 @@
 //import History from "./History";
 //import { mapGetters } from "vuex";
 import Header from "./Header";
-import Posts from "./Posts";
+import Posts from "./PostsBootstrap";
 import Footer from "./Footer";
 export default {
   head: {
@@ -28,8 +28,7 @@ export default {
   metaInfo() {
     const title = process.env.VUE_APP_NAME + " | Comenta y postea anonimamente";
 
-    const content =
-      "Anoringa es un sitio en el que podras discutir anonimamente";
+    const content = "Anoringa es un sitio en el que podras discutir anonimamente";
     const link = process.env.VUE_APP_URL;
     const photolink = process.env.VUE_APP_URL + "/" + "anoringa.png";
     const app_name = process.env.VUE_APP_NAME;
@@ -136,8 +135,22 @@ export default {
     Posts,
     Footer,
   },
+  created() {
+    var sortFromQuery = this.$route.query.sort
+    //console.log(sortFromQuery);
+    if (sortFromQuery == "newercomments") {
+      this.sortPost = "lastComment"
+    } else if (sortFromQuery == "newerpost") {
+      this.sortPost = "updatedAt"
+    } else if (sortFromQuery == "morecomments" || sortFromQuery == "mascomentarios") {
+      this.sortPost = "countOfComments"
+    } else{
+      this.sortPost = "updatedAt"
+    }
+  },
   data() {
     return {
+      sortPost: null,
       appName: "Anoringa",
       apiKey: "<YOUR_RAPIDAPI_KEY>",
       fromCurrency: "",

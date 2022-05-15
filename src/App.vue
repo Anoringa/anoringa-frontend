@@ -33,26 +33,6 @@ export default {
   },
   methods: {
     analytics() {
-      /*
-      if (
-        !sessionStorage.getItem("_swa") &&
-        document.referrer.indexOf(location.protocol + "//" + location.host) !==
-          0
-      ) {
-        fetch(
-          "https://counter.dev/track?" +
-            new URLSearchParams({
-              referrer: document.referrer,
-              screen: screen.width + "x" + screen.height,
-              user: "chocomilk",
-              utcoffset: "-3",
-            })
-        );
-      }
-      console.log("analytics");
-      sessionStorage.setItem("_swa", "1");
-      */
-      //console.log("analytics");
       let script = document.createElement("script");
       script.text =
         'if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"chocomilk",utcoffset:"-3"}))};sessionStorage.setItem("_swa","1");';
@@ -143,37 +123,8 @@ export default {
       lang: "es-AR",
       amp: true,
     },
-  } /*
-  metaInfo: {
-    title: "My Example App",
-    titleTemplate: "%s - Yay!",
-    htmlAttrs: {
-      lang: "es",
-      amp: true
-    }
-  }*/,
+  },
 
-  /*
-  metaInfo: {
-    // if no subcomponents specify a metaInfo.title, this title will be used
-    title: process.env.VUE_APP_NAME,
-    // all titles will be injected into this template
-    titleTemplate:
-      process.env.VUE_APP_NAME + "%s | Comenta y postea anonimamente",
-  },*/
-  /*
-  metaInfo: {
-    meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-    ],
-    title: process.env.VUE_APP_NAME,
-    titleTemplate: "%s - Yay!",
-    htmlAttrs: {
-      lang: "es",
-      amp: true,
-    },
-  },*/
 };
 </script>
 

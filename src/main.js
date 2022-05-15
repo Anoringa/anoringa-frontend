@@ -1,40 +1,14 @@
 // src/main.js
-
-// other imports...
-/*
-import runtime from "serviceworker-webpack-plugin/lib/runtime";
-
-if ("serviceWorker" in navigator) {
-  runtime.register();
-}
-*/
-
-// createApp...
-/*
-if ("serviceWorker" in navigator) {
-  // Register a service worker hosted at the root of the
-  // site using the default scope.
-  navigator.serviceWorker.register("/sw.js").then(
-    function(registration) {
-      console.log("Service worker registration succeeded:", registration);
-    },
-     function(error) {
-      console.log("Service worker registration failed:", error);
-    }
-  );
-} else {
-  console.log("Service workers are not supported.");
-}
-*/
-
-
-
 import Vue from "vue";
 import App from "./App.vue";
 import store from "./store";
 import VueRouter from "vue-router";
 
-//import '@/assets/css/tailwind.css';
+// VueLazyload
+import VueLazyload from 'vue-lazyload'
+ 
+Vue.use(VueLazyload)
+
 
 
 import routes from "./router/index";
@@ -49,44 +23,6 @@ Vue.use(VueMeta, {
   tagIDKeyName: 'vmid',
   refreshOnceOnNavigation: false
 })
-
-
-/*
-
-import VueMeta from 'vue-meta'
-
-Vue.use(VueMeta, {
-  keyName: 'metaInfo',
-  attribute: 'data-vue-meta',
-  ssrAttribute: 'data-vue-meta-server-rendered',
-  tagIDKeyName: 'vmid',
-  refreshOnceOnNavigation: true
-})
-
-*/
-
-/*
-import Meta from "vue-meta";
-Vue.use(Meta);
-Vue.use(VueMeta, {
-  // optional pluginOptions
-  refreshOnceOnNavigation: false
-})
-*/
-/*
-import PortalVue from 'portal-vue'
-Vue.use(PortalVue)
-*/
-
-
-/*
-import VuePageTitle from 'vue-page-title'
- 
-Vue.use(VuePageTitle, {
-  // prefix: 'My App - ',
-  suffix: '- Anoringa'
-})
-*/
 
 //import jQuery from "jquery";
 global.jQuery = require("jquery");
