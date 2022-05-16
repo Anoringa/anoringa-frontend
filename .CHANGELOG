@@ -1,8 +1,8 @@
 
 
-
-V 0.7 Anoringa
-    AnoUsers ✔️
+[already launched]
+V 0.7.0 Anoringa
+    more anonymous Anoriga Users ✔️
         example
             POST 1
                 AUTHOR: carlos      ->   anoringuero21
@@ -19,3 +19,48 @@ V 0.7 Anoringa
     Heroku anoringa backend deployment using github issue
 
     fix Iniciar Sesión Button DarkMode Enabled
+
+
+    front end
+        lazyload images
+    backend
+        add gzip express.js response compression
+
+
+[working on]
+V 0.7.1 Anoringa
+    FIX
+        dark mode switch
+            color and position
+        backend
+            anonymize users -> post owner that comments in his post now have the same random username
+
+
+[coming soon]
+V 0.7.2 Anoringa
+    COMMENTS
+        users inside comments with [random styles, profile photos,random usernames] to make differences
+        SUBTASK
+            random usernames
+                usernames db
+                SUBTASK
+                    profile photos according to the random username
+                        profile photos db
+
+
+    NOTIFICATIONS
+        notifications for new comments in commented posts and created
+
+    UI
+        enable/disable automatic music
+    
+    SOCKETIO
+        anonymize username and userid emit
+
+
+V 0.8.0 Anoringa
+    POST
+        modify existing posts
+
+    PERFORMANCE
+        improve frontend js size

@@ -87,7 +87,7 @@ body.dark p {
 }
 
 .label {
-  background-color: #111;
+  background-color: #252728;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -97,6 +97,10 @@ body.dark p {
   height: 26px;
   width: 50px;
 }
+.label {
+    margin-bottom: 0rem;
+}
+
 
 .ball {
   background-color: #fff;
