@@ -209,6 +209,14 @@ export default {
         return delta;
       });
     }, 2000);
+
+this.bus.$on('submit', this.submit)
+  },  
+  methods: {
+    submit() {
+      console.log("cleaned")
+      this.editor.root.innerHTML = null
+    }
   },
 };
 </script>

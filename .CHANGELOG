@@ -27,7 +27,6 @@ V 0.7.0 Anoringa
         add gzip express.js response compression
 
 
-[working on]
 V 0.7.1 Anoringa
     FIX
         dark mode switch
@@ -35,7 +34,10 @@ V 0.7.1 Anoringa
         backend
             anonymize users -> post owner that comments in his post now have the same random username
 
-
+[working on]
+V 0.7.1.1 Anoringa
+    FIX
+    remove content of coment after puclish comentarios
 [coming soon]
 V 0.7.2 Anoringa
     COMMENTS
@@ -56,7 +58,12 @@ V 0.7.2 Anoringa
     
     SOCKETIO
         anonymize username and userid emit
-
+    CATEGORYS
+        categorias
+    BUSCADOR
+        de post
+    MUSICA
+        subir y bajar volumen
 
 V 0.8.0 Anoringa
     POST
@@ -64,3 +71,19 @@ V 0.8.0 Anoringa
 
     PERFORMANCE
         improve frontend js size
+
+    FEATURES
+        Multi Languaje
+        Suport for blinds
+            keys to move into post and comments
+            text to speech
+        
+    OPCIONALES
+        likes comentarios
+
+
+        Confirma mayor de 18
+            puede haber contienido para mayores de 18
+                quieres entrar?
+
+        terminos y condificones

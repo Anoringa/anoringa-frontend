@@ -157,6 +157,7 @@
                   <TextEditor
                     :id="'comment-box-creator'"
                     :onChange="handleCommentTextChange"
+                    ref="form"
                   >
                     <template
                       ><div
@@ -710,6 +711,19 @@ export default {
           this.value = [];
           this.ListaDeIdsDeComentarios = [];
           this.nuevoComemtarioTexto = null;
+          // clean text inside TextEditor Component
+          // `editor-wrapper-${this.id}`
+          // comment-box-creator
+          // editor-wrapper-comment-box-creator
+          // this.editor.root.innerHTML
+          // var ajasdhjkasdhjk = document.getElementById("editor-wrapper-comment-box-creator");
+          // console.log("ajasdhjkasdhjk",ajasdhjkasdhjk);
+          //ajasdhjkasdhjk.textContent = ""
+          //ajasdhjkasdhjk.innerText = ""
+          //this.$emit("comment_commented", this.hcaptchaResponse);
+          this.$refs.form.submit()
+
+          
           var self = this;
 
           this.$socket.emit("comment", data, function (datos) {
