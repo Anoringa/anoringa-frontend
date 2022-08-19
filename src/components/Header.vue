@@ -554,6 +554,7 @@ body {
   @include dynamic-theme() {
     background-color: theme($primary-color);
   }
+  z-index: 300;
 }
 
 .app-name-label {
